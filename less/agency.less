@@ -157,7 +157,7 @@ h1, h2, h3, h4, h5, h6 {
         padding: 10px 0;
 		.navbar-brand {
 	        font-size: 1.5em;
-	    }    
+	    }
 	}
 }
 
@@ -283,8 +283,8 @@ section {
                     h4 {
                         margin: 0;
                     }
-                }                
-            }            
+                }
+            }
         }
         .portfolio-caption {
         	max-width: 400px;
@@ -527,58 +527,6 @@ aside.clients {
 	}
 }
 
-// Contact Section
-
-section#contact {
-	background-color: @gray-darkest;
-	background-image: url('../img/map-image.png');
-	background-position: center;
-	background-repeat: no-repeat;
-	.section-heading {
-		color: white;
-	}
-	.form-group {
-		margin-bottom: 25px;
-		input,
-		textarea {
-			padding: 20px;
-		}
-		input.form-control {
-			height: auto;
-		}
-		textarea.form-control {
-			height: 236px;
-		}
-	}
-	.form-control:focus {
-		border-color: @brand-primary;
-		box-shadow: none;
-	}
-	::-webkit-input-placeholder {
-	   .heading-font;
-	   font-weight: 700;
-	   color: @placeholder-text;
-	}
-	:-moz-placeholder { /* Firefox 18- */
-	   .heading-font;
-	   font-weight: 700;
-	   color: @placeholder-text;
-	}
-	::-moz-placeholder {  /* Firefox 19+ */
-	   .heading-font;
-	   font-weight: 700;
-	   color: @placeholder-text;
-	}
-	:-ms-input-placeholder {  
-	   .heading-font;
-	   font-weight: 700;
-	   color: @placeholder-text;
-	}
-	.text-danger {
-		color: @brand-danger;
-	}
-}
-
 // Footer
 
 footer {
@@ -640,7 +588,10 @@ ul.social-buttons {
 	    border: none;
 	    min-height: 100%;
 	    padding: 100px 0;
-	    text-align: center;
+	    text-align: left;
+		.modal-header {
+				text-align: center;
+		}
 		h2 {
 	    	margin-bottom: 15px;
 	    	font-size: 3em;
@@ -694,8 +645,8 @@ ul.social-buttons {
                 -webkit-transform: rotate(90deg);
                 /* Safari and Chrome */
                 z-index:1052;
-            }            
-        }        
+            }
+        }
     }
     .modal-backdrop {
     	opacity: 0;
