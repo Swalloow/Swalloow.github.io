@@ -11,14 +11,14 @@ url:
 owner:
   name:           Swalloow
   avatar:         avatar.jpg
-  bio:            "Your bio goes here. It shouldn't be super long but a good sentence or two should suffice."
+  bio:            "다양한 기술에 관심이 많고 도전을 좋아하는 개발자. 최근에는 데이터 엔지니어링과 인공지능에 관심을 가지고 있습니다."
   email:          joon9205@naver.com
   # Social networking links used in footer. Update and remove as you like.
   twitter:
   facebook:
-  github:
+  github:         https://github.com/Swalloow
   stackexchange:
-  linkedin:
+  linkedin:       https://kr.linkedin.com/in/swalloow
   instagram:
   flickr:
   tumblr:
