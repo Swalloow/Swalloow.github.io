@@ -7,20 +7,64 @@ comments: false
 modified: 2017-01-04
 ---
 
-They say three times the charm, so here is another free responsive Jekyll blog theme for you. I've learned a ton since open sourcing my first two themes [on Github](http://github.com/mmistakes), and wanted to try a few new things this time around.
+## Junyoung Park
 
-If you've used any of [my other themes](http://mademistakes.com/work/jekyll-themes/) most of this should be familiar territory...
+* A highly skilled developer of various technologies (I Wish)
+* Fast Learner (Language, Framework...)
+* Recent Interest
+  * Machine Learning, Deep Learning
+  * Natural Language Processing, Dialog system (Chatbot)
+  * Data Analysis, Engineering
+  * DNN for Recommendations
 
-## HPSTR Features:
+   ​
 
-* Compatible with Jekyll 3 and GitHub Pages.
-* Responsive templates for post, page, and post index `_layouts`. Looks great on mobile, tablet, and desktop devices.
-* Gracefully degrades in older browsers. Compatible with Internet Explorer 8+ and all modern browsers.  
-* Sweet animated menu.
-* Background image support.
-* Support for large images to call out your favorite posts.
-* Optional [Disqus](http://disqus.com) comments.
-* Simple and clear permalink structure[^1].
-* [Open Graph](https://developers.facebook.com/docs/opengraph/) and [Twitter Cards](https://dev.twitter.com/docs/cards) support for a better social sharing experience.
-* [Custom 404 page]({{ site.url }}/404.html) to get you started.
-* [Syntax highlighting]({{ site.url }}/code-highlighting-post/) stylesheets to make your code examples look snazzy.
+## Activities
+
+- Hannium Big Project (15.03 ~ 15.11)
+  - Project : Location based services (IoT)
+
+- Software Maestro 7th (16.07 ~)
+  - Project : Personalization news service
+  - Skill : News issue clustering, Ranking algorithm, Topic Modeling
+  - Used : KMeans, Word2Vec, TF-IDF, LDA ...
+
+- The 4th BigContest (16.08)
+
+  - Predicting the number of movie audience based on ML
+
+- Medical HACK 2016 (16.09)
+  - BigData Hackaton 2nd prize
+  - Project : Writing therapy for mental health improvement
+  - Skill : Korean Sentiment Analysis
+
+- Kaggle Competitions
+  - Tatanic Survivor
+  - San Francisco Crime Classification
+  - Digit Recognizer
+
+   ​
+
+## Open Source Contributions
+- [Glucosio/glucosio-android](https://github.com/Glucosio/glucosio-android)
+
+- [konlpy/konlpy](https://github.com/konlpy/konlpy)
+
+- [tensorflowkorea/tensorflow-kr](https://github.com/tensorflowkorea/tensorflow-kr) : translation
+
+   ​
+
+## Work Experiences
+
+- MJU Object Oriented System laboratory (15.03 ~)
+  - Undergraduate Researcher
+- Sentience (17.01 ~)
+  - Data Engineering, Backend Intern
+
+   ​
+
+## Contact
+
+- Previous blog : [http://swalloow.tistory.com/](http://swalloow.tistory.com/)
+- GitHub : [https://github.com/Swalloow](https://github.com/Swalloow)
+- Email : [joon9205@naver.com](joon9205@naver.com)
