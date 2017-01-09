@@ -19,6 +19,15 @@ modified: 2017-01-04
 
    ​
 
+## Lectures
+
+- Andrew Ng - Coursera Machine Learning
+- Sung Kim - Deep Learning
+- Stanford CS231n : CNN for Visual Recognition
+- Stanford CS224d : Deep Learning for NLP
+
+   ​
+
 ## Activities
 
 - Hannium Big Project (15.03 ~ 15.11)
