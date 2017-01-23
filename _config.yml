@@ -1,5 +1,5 @@
-title:            KoreaNLP
-description:      Korean Natural Language Processing Blog.
+title:            Blog Title
+description:      Describe your website here.
 
 # put your disqus here
 disqus_shortname:
@@ -10,7 +10,7 @@ excerpt_separator: <!--more-->
 # Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
 # When testing locally leave blank or use http://localhost:4000
 
-url: http://localhost:4000
+url: http://aronbordin.com/neo-hpstr-jekyll-theme
 
 # draw your top menu here
 # each item must have a title and a url.
@@ -39,24 +39,28 @@ menu:
 
 # Owner/author information
 owner:
-  name:           Junyoung Park
+  name:           Your name
   site:           http://aronbordin.com
   avatar:         images/avatar.jpg
   bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
   email:          you@email.com
   # Twitter nick for use in Twitter cards and follow button.
-  twitter: junyoung # if no twitter in this config, the twitter follow button will be removed
+  twitter: aron_bordin # if no twitter in this config, the twitter follow button will be removed
   # GitHub nick for use in follow button in author block.
-  github: Swalloow
+  github: aron-bordin
+
+# Twitter account associated with the site if different from owner/author twitter account.
+# Used in Twitter cards.
+twitter:
 
 # Social networking links used in author block underneath posts. Update and remove as you like.
 social:
   - title: "github"
-    url: "https://github.com/Swalloow"
+    url: "https://github.com/aron-bordin"
   - title: "linkedin"
-    url: "https://kr.linkedin.com/in/swalloow"
-  - title: "facebook"
-    url: "https://www.facebook.com/swalloooow"
+    url: "https://br.linkedin.com/in/aronbordin"
+  - title: "youtube"
+    url: "https://www.youtube.com/channel/UCfnSek-9HPWOx5e2pH7VFgg"
 
 # Background image to be tiled on all pages
 background:
@@ -68,8 +72,8 @@ google_verify:
 bing_verify:
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    Asia/Seoul
-locale:      KR
+timezone:    America/New_York
+locale:      en_US
 future:      true
 highlighter: rouge
 markdown:    kramdown
@@ -97,6 +101,6 @@ page_layout: page
 titlecase: true
 
 include: [".htaccess"]
-exclude: ["lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]
+exclude: ["demo/*", "lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]
 gems: [jekyll-paginate]
 theme: neo-hpstr-jekyll-theme
