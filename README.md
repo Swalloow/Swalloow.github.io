@@ -1,11 +1,11 @@
 # Swallow.github.io
 [![Gem Version](https://badge.fury.io/rb/neo-hpstr-jekyll-theme.svg)](https://badge.fury.io/rb/neo-hpstr-jekyll-theme)
 
-Swallow's blog by Neo-HPSTR Jekyll blog template.
+Swalloow's blog by Neo-HPSTR Jekyll blog template.
 
 Demo: http://swalloow.github.io
 
-  
+
 
 ## License
 

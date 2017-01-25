@@ -40,7 +40,7 @@ owner:
   name:           Swalloow
   site:           http://swalloow.github.io
   avatar:         images/avatar.jpg
-  bio:            "Interested in data science, engineering"
+  bio:            "Interested in data science & engineering"
   email:          joon920570@gmail.com
   # Twitter nick for use in Twitter cards and follow button.
   # if no twitter in this config, the twitter follow button will be removed
