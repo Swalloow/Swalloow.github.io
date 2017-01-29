@@ -277,11 +277,15 @@ header .entry-meta {
 }
 .author-container{
 	display: flex;
+	margin-bottom: 30px;
 }
 .author-bio{
 	padding-top: 30px;
 	padding-left: 20px;
 	flex-grow: 1;
+}
+.author-badge{
+	padding-bottom: 20px;
 }
 ul.social-buttons li a {
     display: block;
