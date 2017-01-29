@@ -2,7 +2,7 @@ title:            Swalloow
 description:      About Data Enginnering
 
 # put your disqus here
-disqus_shortname:
+disqus_shortname: swalloow
 reading_time:     true # if true, shows the estimated reading time for a post
 words_per_minute: 200
 logo:             images/logo.png # logo visible in the topbar
@@ -10,7 +10,7 @@ excerpt_separator: <!--more-->
 # Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
 # When testing locally leave blank or use http://localhost:4000
 
-url: https://swalloow.github.io
+url: http://swalloow.github.io
 
 # draw your top menu here
 # each item must have a title and a url.
@@ -64,7 +64,7 @@ social:
 background: main.jpg
 
 # Analytics and webmaster tools stuff goes here
-google_analytics:
+google_analytics: UA-89689523-1
 google_verify:
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
 bing_verify:
