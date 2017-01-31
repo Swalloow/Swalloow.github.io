@@ -19,6 +19,20 @@
 </script>
 {% endif %}
 
+<!-- Google Search Engine Code -->
+<script>
+  (function() {
+    var cx = '008308482182038277253:orh1k39yaym';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
 {% if page.comments != false %}{% include disqus_comments.html %}{% endif %}
 
 {% if site.float_share %}
