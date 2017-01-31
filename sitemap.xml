@@ -1,104 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<!-- www.check-domains.com sitemap generator -->
+---
+layout: null
+---
 
-<url>
-   <loc>http://swalloow.github.io/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>1.0000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/feed.xml</loc>
-   <lastmod>2017-01-29T09:49:15+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/categories/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/personal/%EB%A7%A5%EB%B6%81%ED%94%84%EB%A1%9C-%ED%84%B0%EC%B9%98%EB%B0%94-%EB%AA%A8%EB%8D%B8-%EC%B4%88%EA%B8%B0%EC%84%A4%EC%A0%95/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/about/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/develop/Jupyter-Notebook-%EB%8B%A4%EC%A4%91%EC%BB%A4%EB%84%90-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/develop/AWS-Cognito%EB%A1%9C-%EB%8B%A4%EC%96%91%ED%95%9C-%EC%86%8C%EC%85%9C-API%EB%A5%BC-%EC%89%BD%EA%B2%8C-%EC%97%B0%EB%8F%99%ED%95%B4%EB%B3%B4%EC%9E%90/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/develop/%EB%8B%A4%EC%96%91%ED%95%9C-%EC%86%8C%EC%85%9C-API%EB%A5%BC-%EC%97%B0%EB%8F%99%ED%95%98%EA%B8%B0-%EC%A0%84%EC%97%90-%EA%B3%A0%EB%A0%A4%ED%95%A0-%EA%B2%83%EB%93%A4-(AWS-Cognito)/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/korean%20nlp/CS224d-Lecture2.-Word-Vectors/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/page2/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.8000</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/develop/OAuth2%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.6400</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/develop/%EC%9C%88%EB%8F%84%EC%9A%B0-10%EC%97%90%EC%84%9C-bash%EB%A5%BC-%ED%86%B5%ED%95%B4-Jekyll-%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B0%84%EB%8B%A8%ED%95%98%EA%B2%8C-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.6400</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/korean%20nlp/CS224d-Lecture1.-Intro-to-NLP-and-Deep-Learning/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.6400</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/korean%20nlp/CS224d-%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC-%EA%B0%95%EC%9D%98-%EC%86%8C%EA%B0%9C/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.6400</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/tags/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.6400</priority>
-</url>
-<url>
-   <loc>http://swalloow.github.io/search/</loc>
-   <lastmod>2017-01-29T09:44:05+00:00</lastmod>
-   <changefreq>weekly</changefreq>
-   <priority>0.6400</priority>
-</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {% for post in site.posts %}
+    <url>
+      <loc>{{ site.url }}{{ post.url }}</loc>
+      {% if post.lastmod == null %}
+        <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
+      {% else %}
+        <lastmod>{{ post.lastmod | date_to_xmlschema }}</lastmod>
+      {% endif %}
+
+      {% if post.sitemap.changefreq == null %}
+        <changefreq>weekly</changefreq>
+      {% else %}
+        <changefreq>{{ post.sitemap.changefreq }}</changefreq>
+      {% endif %}
+
+      {% if post.sitemap.priority == null %}
+          <priority>0.5</priority>
+      {% else %}
+        <priority>{{ post.sitemap.priority }}</priority>
+      {% endif %}
+
+    </url>
+  {% endfor %}
 </urlset>
