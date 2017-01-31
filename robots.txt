@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: http://swalloow.github.io/sitemap.xml
