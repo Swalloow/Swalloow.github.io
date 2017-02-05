@@ -1,38 +1,38 @@
-<!doctype html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ko"><!--<![endif]-->
-<head>
-{% include head.html %}
-</head>
+---
+layout: default
+class: 'page-template'
+---
+<!-- < default -->
 
-<body id="page">
+<!-- This is a page template. A page outputs content just like any other post, and has all the same -->
+    <!-- attributes by default, but you can also customise it to behave differently if you prefer.  -->
 
-{% include browser-upgrade.html %}
-{% include header.html %}
-{% include author.html %}
+<!-- Everything inside the #post tags pulls data from the page -->
+<!-- #post -->
 
-<div id="main" role="main">
-  <article class="hentry">
-    <div class="entry-content">
-      {{ content }}
-      <footer class="entry-meta">
-        {% if page.modified %}<span>Updated on <span class="entry-date date published updated"><time datetime="{{ page.modified }}">{{ page.modified | date: "%B %d, %Y" }}</time></span></span>
-        <span class="author vcard"><span class="fn">{{ site.owner.name }}</span></span>{% endif %}
-      </footer>
-    </div><!-- /.entry-content -->
-    {% if page.comments != false and site.disqus_shortname %}<section id="disqus_thread"></section><!-- /#disqus_thread -->{% endif %}
-  </article>
-</div><!-- /#main -->
+<header class="main-header post-head {% if page.cover %}" style="background-image: url({{ site.baseurl }}{{ page.cover }}){% else %}no-cover{% endif %}">
+    <nav class="main-nav {% if page.cover %}overlay{% endif %} clearfix">
+        {% if page.logo %}<a class="blog-logo" href="{{ site.baseurl }}"><img src="{{ site.baseurl }}{{ page.logo }}" alt="Blog Logo" /></a>{% endif %}
+        {% if page.navigation %}
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+            {{ include navigation.html }}
+        {% endif %}
+    </nav>
+</header>
 
-{% include scripts.html %}
+<main class="content" role="main">
+    <article class="post">
+        <!-- Everything inside the #post tags pulls data from the post -->
 
-<div class="footer-wrapper">
-  <footer role="contentinfo">
-    {% include footer.html %}
-  </footer>
-</div><!-- /.footer-wrapper -->
+        <header class="post-header">
+            <h1 class="post-title">{{ page.title }}</h1>
+        </header>
 
-</body>
-</html>
+        <section class="post-content">
+            {{content}}
+        </section>
+
+    </article>
+
+</main>
+<!-- /post -->

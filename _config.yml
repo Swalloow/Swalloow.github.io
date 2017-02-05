@@ -1,104 +1,75 @@
-title:            Swalloow
-description:      About Data Enginnering
-
-# put your disqus here
-disqus_shortname: swalloow
-reading_time:     true # if true, shows the estimated reading time for a post
-words_per_minute: 200
-logo:             images/logo.png # logo visible in the topbar
-excerpt_separator: <!--more-->
-# Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
-# When testing locally leave blank or use http://localhost:4000
-
-url: http://swalloow.github.io
-
-# draw your top menu here
-# each item must have a title and a url.
-#   To list post categories. use type: 'categories'
-#   To create sub categories. add a submenu item
-# See the example
-menu:
-  - title: 'Home'
-    url: '/'
-  - title: 'About'
-    url: '/about'
-  - title: 'Tags'
-    url: '/tags'
-  - title: 'Categories'
-    url: '/categories'
-    type: 'categories'
-  # - title: 'Favorites'
-  #   url: '#'
-  #   submenu:
-  #     - title: 'Code Highlighter'
-  #       url: '/intro/code-highlighting-post/'
-  #     - title: 'Sample Post'
-  #       url: '/intro/sample-post/'
-
-# Owner/author information
-owner:
-  name:           Swalloow
-  site:           http://swalloow.github.io
-  avatar:         images/avatar.jpg
-  bio:            "Interested in data science & engineering"
-  email:          joon920570@gmail.com
-  # Twitter nick for use in Twitter cards and follow button.
-  # if no twitter in this config, the twitter follow button will be removed
-  twitter:
-
-  # GitHub nick for use in follow button in author block.
-  github: Swalloow
-
-# Twitter account associated with the site if different from owner/author twitter account.
-# Used in Twitter cards.
-twitter:
-
-# Social networking links used in author block underneath posts. Update and remove as you like.
-social:
-  - title: "github"
-    url: "https://github.com/Swalloow"
-  - title: "linkedin"
-    url: "https://www.linkedin.com/in/swalloow"
-
-# Background image to be tiled on all pages
-background: main.jpg
-
-# Analytics and webmaster tools stuff goes here
-google_analytics: UA-89689523-1
-google_verify:
-# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:
-
-# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    Asia/Seoul
-locale:      en_US
-future:      true
+# Jykell configuration
+#markdown: redcarpet
+#highlighter: pygments
+markdown: kramdown
 highlighter: rouge
-markdown:    kramdown
-sass:
-  sass_dir: _sass
-  style: compressed
+paginate: 6
+language: 'en-uk'
 
-# https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink:   /:categories/:title/
+# Website info
+name: 'Swalloow Blog'
+description: "About Data Science, Data Engineering"
 
-# Amount of post to show on home page
-paginate: 7
+# Author's info
+author: 'Swalloow'
+# edit 'categories' in the front matter of every post to match this username
+nickname: Swalloow
+bio: 'Interested in Data Science & Engineering'
+location: 'Seoul, Korea'
+url: 'http://swalloow.github.io/'
+image: 'assets/images/avatar.png'
 
-# if true, shows the floatting share buttons
-float_share: true
+short_url: 'swalloow.github.io/'
+google_analytics: UA-69281367-1
+disqus: swalloow
+# edit baseurl to simply '/' if using as your personal page (instead of a project page)
+baseurl: /
 
-# Octopress
-# Default extensions
-post_ext: md
-page_ext: md
-# Found in _templates/
-post_layout: post
-page_layout: page
-# Format titles with titlecase?
-titlecase: true
+# Permalinks
+permalink: /:title
+# permalink: /author/:username
+# permalink: /tag/:tag
 
-include: [".htaccess"]
-exclude: ["demo/*", "lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]
+
+# gems and other configs
 gems: [jekyll-paginate]
-theme: neo-hpstr-jekyll-theme
+exclude: [vendor]
+
+# Additional settings available on the front-matter
+# Site logo in the index.html (as in demo.ghost.io)
+# Author's page cover in _layouts/author.html
+# The same for page.html and tag.html layouts
+# Post's page cover as a per-post basis _posts/...
+# Disqus comments as a per-post basis
+# ...
+
+
+# Settings for builing master branch with travis-ci
+# with jekyll-travis
+
+# Settings for deploy rake task
+# Username and repo of Github repo, e.g.
+# https://github.com/USERNAME/REPO.git
+# username defaults to ENV['GIT_NAME'] used by Travis
+# repo defaults to USERNAME.github.io
+# Branch defaults to "source" for USERNAME.github.io
+# or "master" otherwise
+# safe: false
+# lsi: false
+# username: swalloow
+# repo: jasper
+# branch: master
+# relative_source: ../jasper/
+# destination: ../jasper-pages/
+# production_url:  https://biomadeira.github.io/jasper/
+# source_url:      https://github.com/biomadeira/jasper/
+#
+# exclude:
+#   - README.md
+#   - Rakefile
+#   - Gemfile
+#   - Gemfile.lock
+#   - changelog.md
+#   - "*.Rmd"
+#   - vendor
+#   - .travis.yml
