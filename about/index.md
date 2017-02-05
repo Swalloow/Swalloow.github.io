@@ -7,8 +7,13 @@ logo: 'assets/images/ghost.png'
 current: about
 ---
 
-This is a demo blog for Ghost, it contains dummy content which allows you to click around and see what a Ghost blog running the default theme looks like.
+공부하다가 기억해야 할 내용, 남겨두고 싶은 코드, 나의 히스토리 등 여러 이유로 시작하게 된 블로그입니다.
+아직 대학생이라 부족한 부분이 많기 때문에 오류가 있는 부분은 지적해주시면 감사하겠습니다!
 
-We use this for testing and for reference!
+   ​
 
-If you'd like to set up your own blog, head on over to [https://ghost.org](https://ghost.org) and sign up.
+## Contact
+
+- Previous blog : [http://swalloow.tistory.com/](http://swalloow.tistory.com/)
+- GitHub : [https://github.com/Swalloow](https://github.com/Swalloow)
+- Email : joon920570@gmail.com

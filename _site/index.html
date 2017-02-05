@@ -6,50 +6,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>Finding The Way Home</title>
-    <meta name="description" content="Finding The Way Home - A beautiful narrative written with the world's most elegant publishing platform. The story begins here." />
+    <title>Swalloow Blog</title>
+    <meta name="description" content="Swalloow Blog - About Data Science, Data Engineering" />
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="/jasper/assets/images/favicon.ico" >
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" >
 
     <!-- [[! Styles'n'Scripts ]] -->
-    <link rel="stylesheet" type="text/css" href="/jasper/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
     <link rel="stylesheet" type="text/css"
           href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
-    
-    <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
-        <link rel="canonical" href="/jasper/" />
-    <meta name="referrer" content="origin" />
-    <link rel="next" href="/jasper/page2/" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
 
-    <meta property="og:site_name" content="Finding The Way Home" />
+    <!-- [[! highlight.js ]] -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
+        <link rel="canonical" href="/" />
+    <meta name="referrer" content="origin" />
+    <link rel="next" href="/page2/" />
+
+    <meta property="og:site_name" content="Swalloow Blog" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Finding The Way Home" />
-    <meta property="og:description" content="A beautiful narrative written with the world's most elegant publishing platform. The story begins here." />
-    <meta property="og:url" content="/jasper/" />
-    <meta property="og:image" content="/jasper/assets/images/cover1.jpg" />
+    <meta property="og:title" content="Swalloow Blog" />
+    <meta property="og:description" content="About Data Science, Data Engineering" />
+    <meta property="og:url" content="/" />
+    <meta property="og:image" content="/assets/images/cover_main.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Finding The Way Home" />
-    <meta name="twitter:description" content="A beautiful narrative written with the world's most elegant publishing platform. The story begins here." />
-    <meta name="twitter:url" content="/jasper/" />
-    <meta name="twitter:image:src" content="/jasper/assets/images/cover1.jpg" />
+    <meta name="twitter:title" content="Swalloow Blog" />
+    <meta name="twitter:description" content="About Data Science, Data Engineering" />
+    <meta name="twitter:url" content="/" />
+    <meta name="twitter:image:src" content="/assets/images/cover_main.jpg" />
 
     <script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "Website",
-    "publisher": "Finding The Way Home",
-    "url": "/jasper/",
-    "image": "/jasper/assets/images/cover1.jpg",
-    "description": "A beautiful narrative written with the world's most elegant publishing platform. The story begins here."
+    "publisher": "Swalloow Blog",
+    "url": "/",
+    "image": "/assets/images/cover_main.jpg",
+    "description": "About Data Science, Data Engineering"
 }
     </script>
 
     <meta name="generator" content="Jekyll 3.0.0" />
-    <link rel="alternate" type="application/rss+xml" title="Finding The Way Home" href="/jasper/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Swalloow Blog" href="/feed.xml" />
+
 
 </head>
 <body class="home-template nav-closed">
@@ -60,16 +68,17 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-        <li class="nav-home  nav-current" role="presentation"><a href="/jasper/">Home</a></li>
-        <li class="nav-about " role="presentation"><a href="/jasper/about.html">About</a></li>
-        <li class="nav-fables " role="presentation"><a href="/jasper/tag/fables/">Fables</a></li>
-        <li class="nav-speeches " role="presentation"><a href="/jasper/tag/speeches/">Speeches</a></li>
-        <li class="nav-fiction " role="presentation"><a href="/jasper/tag/fiction/">Fiction</a></li>
-        <li class="nav-author " role="presentation"><a href="/jasper/author/casper/">Author</a></li>
+        <li class="nav-home  nav-current" role="presentation"><a href="/">Home</a></li>
+        <li class="nav-about " role="presentation"><a href="/about">About</a></li>
+        <li class="nav-personal " role="presentation"><a href="/tag/personal">Personal</a></li>
+        <li class="nav-develop " role="presentation"><a href="/tag/develop">Develop</a></li>
+        <li class="nav-datascience " role="presentation"><a href="/tag/datascience">DataScience</a></li>
+        <li class="nav-dataengineering " role="presentation"><a href="/tag/dataengineering">DataEngineering</a></li>
     </ul>
-    <a class="subscribe-button icon-feed" href="/jasper/rss.xml">Subscribe</a>
+    <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
 </div>
 <span class="nav-cover"></span>
+
 
     <div class="site-wrapper">
 
@@ -79,17 +88,17 @@
 
 <!-- The big featured header  -->
 <header class="main-header "
-        style="background-image: url(/jasper/assets/images/cover1.jpg) ">
+        style="background-image: url(/assets/images/cover_main.jpg) ">
     <nav class="main-nav overlay clearfix">
-        <a class="blog-logo" href="/jasper/"><img src="/jasper/assets/images/ghost.png" alt="Blog Logo" /></a>
+        <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
             <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
         
     </nav>
     <div class="vertical">
         <div class="main-header-content inner">
-            <h1 class="page-title">Finding The Way Home</h1>
-            <h2 class="page-description">A beautiful narrative written with the world's most elegant publishing platform. The story begins here.</h2>
+            <h1 class="page-title">Swalloow Blog</h1>
+            <h2 class="page-description">About Data Science, Data Engineering</h2>
         </div>
     </div>
     <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
@@ -106,7 +115,7 @@
     
     <span class="page-number"> Page 1 of 2 </span>
      
-        <a class="older-posts" href="/jasper/page2/" title="Next Page">Older Posts &raquo;</a>
+        <a class="older-posts" href="/page2/" title="Next Page">Older Posts &raquo;</a>
      
 </nav>
         
@@ -116,133 +125,145 @@
     
     <article class="post">
         <header class="post-header">
-            <h2 class="post-title"><a href="/jasper//a-full-and-comprehensive-style-test">A Full and Comprehensive Style Test</a></h2>
+            <h2 class="post-title"><a href="/macbook-touchbar-customizing">맥북프로 터치바를 커스터마이징 해보자</a></h2>
         </header>
         <section class="post-excerpt">
-            <p><p>This is just an <em>ipsis verbis</em> copy of the first example running on the <a href="http://demo.ghost.io">Ghost Demo</a>. This shows how you can use html styling to... <a class="read-more" href="/jasper//a-full-and-comprehensive-style-test">&raquo;</a></p>
+            <p>터치바를 쓰다보면 지문과 시스템 환경설정 말고 딱히 건드릴 일이 없다는 생각이 든다. 터치바를 아직 지원하지 않는 앱들이 많고, 익숙하지 않기 때문이다. 그래서 터치바를 좀 더 아름답게... <a class="read-more" href="/macbook-touchbar-customizing">&raquo;</a></p>
         </section>
         <footer class="post-meta">
-            <img class="author-thumb" src="/jasper/assets/images/casper.png" alt="Author image" nopin="nopin" />
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
             <!-- author -->
-            <a href='/jasper/author/casper'>Casper McFadden</a>
+            <a href='/author/Swalloow'>Swalloow</a>
             <!-- [[tags prefix=" on "]] -->
              
                 on 
                 
                     
-                       <a href='/jasper/tag/test'>Test</a>,
-                       
-                
-                    
-                       <a href='/jasper/tag/content'>Content</a>
+                       <a href='/tag/Personal'>Personal</a>
                        
                 
             
-            <time class="post-date" datetime="2014-09-27">27 Sep 2014</time>
+            <time class="post-date" datetime="2017-01-30">30 Jan 2017</time>
         </footer>
     </article>
     
     <article class="post">
         <header class="post-header">
-            <h2 class="post-title"><a href="/jasper//the-businessman-and-fisherman">The Businessman & the fisherman</a></h2>
+            <h2 class="post-title"><a href="/social-api-cognito">다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</a></h2>
         </header>
         <section class="post-excerpt">
-            <p><p>An American businessman took a vacation to a small coastal Mexican village on doctor’s orders. Unable to sleep after an urgent phone call from the office... <a class="read-more" href="/jasper//the-businessman-and-fisherman">&raquo;</a></p>
+            <p>최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다. 만약 우리가 만들어야 할 어플리케이션이 다양한 소셜 로그인 API와 연동하여 사용자를 관리해야한다면,... <a class="read-more" href="/social-api-cognito">&raquo;</a></p>
         </section>
         <footer class="post-meta">
-            <img class="author-thumb" src="/jasper/assets/images/casper.png" alt="Author image" nopin="nopin" />
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
             <!-- author -->
-            <a href='/jasper/author/casper'>Casper McFadden</a>
+            <a href='/author/Swalloow'>Swalloow</a>
             <!-- [[tags prefix=" on "]] -->
              
                 on 
                 
                     
-                       <a href='/jasper/tag/fables'>Fables</a>,
-                       
-                
-                    
-                       <a href='/jasper/tag/fiction'>Fiction</a>
+                       <a href='/tag/Develop'>Develop</a>
                        
                 
             
-            <time class="post-date" datetime="2014-08-12">12 Aug 2014</time>
+            <time class="post-date" datetime="2017-01-28">28 Jan 2017</time>
         </footer>
     </article>
     
     <article class="post">
         <header class="post-header">
-            <h2 class="post-title"><a href="/jasper//i-have-a-dream">I Have a Dream</a></h2>
+            <h2 class="post-title"><a href="/jupyter-notebook-kernel">Jupyter Notebook 다중커널 설정하기</a></h2>
         </header>
         <section class="post-excerpt">
-            <p><p>I am happy to join with you today in what will go down in history as the greatest demonstration for freedom in the history of our... <a class="read-more" href="/jasper//i-have-a-dream">&raquo;</a></p>
+            <p>Jupyer Notebook은 웹 기반의 대화형 노트북 지원으로 수식, 표, 그림 등을 표현하기 쉬운 개발 환경입니다. 코딩과 문서화(Markdown)까지 한 화면에서 가능하며 커널 확장을 통해 다양한 파이썬 버전... <a class="read-more" href="/jupyter-notebook-kernel">&raquo;</a></p>
         </section>
         <footer class="post-meta">
-            <img class="author-thumb" src="/jasper/assets/images/casper.png" alt="Author image" nopin="nopin" />
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
             <!-- author -->
-            <a href='/jasper/author/casper'>Casper McFadden</a>
+            <a href='/author/Swalloow'>Swalloow</a>
             <!-- [[tags prefix=" on "]] -->
              
                 on 
                 
                     
-                       <a href='/jasper/tag/speeches'>Speeches</a>
+                       <a href='/tag/Develop'>Develop</a>
                        
                 
             
-            <time class="post-date" datetime="1963-08-28">28 Aug 1963</time>
+            <time class="post-date" datetime="2017-01-28">28 Jan 2017</time>
         </footer>
     </article>
     
     <article class="post">
         <header class="post-header">
-            <h2 class="post-title"><a href="/jasper//the-purpose-of-education">The Purpose of Education</a></h2>
+            <h2 class="post-title"><a href="/year-2016">늦은 2016년 회고</a></h2>
         </header>
         <section class="post-excerpt">
-            <p><p>As I engage in the so-called &quot;bull sessions&quot; around and about the school, I too often find that most college men have a misconception of the... <a class="read-more" href="/jasper//the-purpose-of-education">&raquo;</a></p>
+            <p>늦었지만 간단하게 2016년을 정리해보려한다. 상반기는 사실 학부 수업과 안드로이드 공부에 매진 했던 것 같다. 매주 새벽에 했던 BC카드 빨간밥차 봉사단도 기억에 남는다. ​ 하반기는 소프트웨어 마에스트로라는... <a class="read-more" href="/year-2016">&raquo;</a></p>
         </section>
         <footer class="post-meta">
-            <img class="author-thumb" src="/jasper/assets/images/casper.png" alt="Author image" nopin="nopin" />
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
             <!-- author -->
-            <a href='/jasper/author/casper'>Casper McFadden</a>
+            <a href='/author/Swalloow'>Swalloow</a>
             <!-- [[tags prefix=" on "]] -->
              
                 on 
                 
                     
-                       <a href='/jasper/tag/speeches'>Speeches</a>,
-                       
-                
-                    
-                       <a href='/jasper/tag/fiction'>Fiction</a>
+                       <a href='/tag/Personal'>Personal</a>
                        
                 
             
-            <time class="post-date" datetime="1948-12-12">12 Dec 1948</time>
+            <time class="post-date" datetime="2017-01-28">28 Jan 2017</time>
         </footer>
     </article>
     
     <article class="post">
         <header class="post-header">
-            <h2 class="post-title"><a href="/jasper//out-to-sea">Out to Sea</a></h2>
+            <h2 class="post-title"><a href="/cs224d-lecture2">[CS224d] Lecture2. Word Vectors</a></h2>
         </header>
         <section class="post-excerpt">
-            <p><p>I had this story from one who had no business to tell it to me, or to any other. I may credit the seductive influence of... <a class="read-more" href="/jasper//out-to-sea">&raquo;</a></p>
+            <p>​ How do we represent the meaning of a word? “단어의 의미를 어떻게 표현해야 할까?”에 대한 고민은 예전부터 지속되어 왔다. 결국 사람이 단어나 몸짓으로 표현하는 것은... <a class="read-more" href="/cs224d-lecture2">&raquo;</a></p>
         </section>
         <footer class="post-meta">
-            <img class="author-thumb" src="/jasper/assets/images/casper.png" alt="Author image" nopin="nopin" />
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
             <!-- author -->
-            <a href='/jasper/author/casper'>Casper McFadden</a>
+            <a href='/author/Swalloow'>Swalloow</a>
             <!-- [[tags prefix=" on "]] -->
              
                 on 
                 
                     
-                       <a href='/jasper/tag/fiction'>Fiction</a>
+                       <a href='/tag/DataScience'>Datascience</a>
                        
                 
             
-            <time class="post-date" datetime="1912-07-24">24 Jul 1912</time>
+            <time class="post-date" datetime="2017-01-21">21 Jan 2017</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/db-to-dataframe">DB 테이블을 Pandas DataFrame으로 읽어오는 방법</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>본 포스팅에서는 예시를 MySQL로 들지만 sqlalchemy의 커넥터만 변경해주면, MySQL 뿐만 아니라 모든 데이터베이스에 적용가능하다. ​ 먼저 sqlalchemy가 설치되어 있지 않다면 설치해준다. sqlalchemy와 mysql을 연결하는 패키지가 필요한데,... <a class="read-more" href="/db-to-dataframe">&raquo;</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
+            <!-- author -->
+            <a href='/author/Swalloow'>Swalloow</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href='/tag/DataEngineering'>Dataengineering</a>
+                       
+                
+            
+            <time class="post-date" datetime="2017-01-14">14 Jan 2017</time>
         </footer>
     </article>
     
@@ -253,7 +274,7 @@
     
     <span class="page-number"> Page 1 of 2 </span>
      
-        <a class="older-posts" href="/jasper/page2/" title="Next Page">Older Posts &raquo;</a>
+        <a class="older-posts" href="/page2/" title="Next Page">Older Posts &raquo;</a>
      
 </nav>
     
@@ -263,15 +284,15 @@
 
 
         <footer class="site-footer clearfix">
-          <section class="copyright"><a href="/jasper/">Finding The Way Home</a> &copy; 2015</section>
-          <section class="poweredby">Proudly published with <a href="http://jekyllrb.com/">Jekyll</a> using <a href="http://github.com/biomadeira/jasper">Jasper</a></section>
+          <section class="copyright"><a href="/">Swalloow Blog</a> &copy; 2017</section>
+          <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> using <a href="https://github.com/biomadeira/jasper">Jasper</a></section>
         </footer>
     </div>
     <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- [[! The main JavaScript file for Casper ]] -->
-    <script type="text/javascript" src="/jasper/assets/js/jquery.fitvids.js"></script>
-    <script type="text/javascript" src="/jasper/assets/js/index.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
 
     <!-- Add Google Analytics  -->
         <!-- Google Analytics Tracking code -->

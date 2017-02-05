@@ -1,6 +1,6 @@
 ---
 layout: default
-cover: 'assets/images/cover2.jpg'
+cover: 'assets/images/cover_personal.jpg'
 class: 'tag-template'
 navigation: True
 logo: 'assets/images/ghost.png'
@@ -8,13 +8,15 @@ current: tag
 ---
 
 <!-- < dynamically overriding backgrounds for tags as well as descriptions -->
-{% if page.url contains 'fables' %}
-   {% assign tag_description='A series of short stories that make you think.' %}
-{% elsif page.url contains 'speeches' %}
-    {% assign new_cover='assets/images/cover7.jpg' %}
-    {% assign tag_description='Some of the greatest words ever spoken.' %}
-{% elsif page.url contains 'fiction' %}
-    {% assign new_cover='assets/images/cover1.jpg' %}
+{% if page.url contains == 'develop' %}
+    {% assign new_cover='assets/images/cover_develop.jpg' %}
+    {% assign tag_description='A series of short stories about develop.' %}
+{% elsif page.url contains 'datascience' %}
+    {% assign new_cover='assets/images/cover_datascience.jpg' %}
+    {% assign tag_description='A series of short stories about data science.' %}
+{% elsif page.url contains 'dataengineering' %}
+    {% assign new_cover='assets/images/cover_dataengineering.jpg' %}
+    {% assign tag_description='A series of short stories about data engineering.' %}
 {% endif %}
 
 <!-- < default}} -->

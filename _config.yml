@@ -3,27 +3,27 @@
 #highlighter: pygments
 markdown: kramdown
 highlighter: rouge
-paginate: 5
+paginate: 6
 language: 'en-uk'
 
 # Website info
-name: 'Finding The Way Home'
-description: "A beautiful narrative written with the world's most elegant publishing platform. The story begins here."
+name: 'Swalloow Blog'
+description: "About Data Science, Data Engineering"
 
 # Author's info
-author: 'Casper McFadden'
+author: 'Swalloow'
 # edit 'categories' in the front matter of every post to match this username
-nickname: casper
-bio: 'A paranormal expert and his daughter bunk in an abandoned house populated by 3 mischievous ghosts and one friendly one.'
-location: 'Maine, USA'
-url: 'http://biomadeira.github.io/jasper/'
-image: 'assets/images/casper.png'
+nickname: Swalloow
+bio: 'Interested in Data Science & Engineering'
+location: 'Seoul, Korea'
+url: 'http://swalloow.github.io/'
+image: 'assets/images/avatar.png'
 
-short_url: 'biomadeira.github.io/jasper/'
+short_url: 'swalloow.github.io/'
 google_analytics: UA-69281367-1
-disqus: username
+disqus: swalloow
 # edit baseurl to simply '/' if using as your personal page (instead of a project page)
-baseurl: /jasper/
+baseurl: /
 
 # Permalinks
 permalink: /:title
@@ -54,22 +54,22 @@ exclude: [vendor]
 # repo defaults to USERNAME.github.io
 # Branch defaults to "source" for USERNAME.github.io
 # or "master" otherwise
-safe: false
-lsi: false
-username: biomadeira
-repo: jasper
-branch: master
-relative_source: ../jasper/
-destination: ../jasper-pages/
-production_url:  https://biomadeira.github.io/jasper/
-source_url:      https://github.com/biomadeira/jasper/
-
-exclude:
-  - README.md
-  - Rakefile
-  - Gemfile
-  - Gemfile.lock
-  - changelog.md
-  - "*.Rmd"
-  - vendor
-  - .travis.yml
+# safe: false
+# lsi: false
+# username: swalloow
+# repo: jasper
+# branch: master
+# relative_source: ../jasper/
+# destination: ../jasper-pages/
+# production_url:  https://biomadeira.github.io/jasper/
+# source_url:      https://github.com/biomadeira/jasper/
+#
+# exclude:
+#   - README.md
+#   - Rakefile
+#   - Gemfile
+#   - Gemfile.lock
+#   - changelog.md
+#   - "*.Rmd"
+#   - vendor
+#   - .travis.yml
