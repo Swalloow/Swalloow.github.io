@@ -1,8 +1,11 @@
 _includes
 _layouts
 _plugins
--posts
+_posts
+assets
+_config.yml
 about
+
 .DS_Store
 *.sublime-project
 *.sublime-workspace
