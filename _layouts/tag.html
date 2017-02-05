@@ -8,7 +8,7 @@ current: tag
 ---
 
 <!-- < dynamically overriding backgrounds for tags as well as descriptions -->
-{% if page.current == 'develop' %}
+{% if page.url contains == 'develop' %}
     {% assign new_cover='assets/images/cover_develop.jpg' %}
     {% assign tag_description='A series of short stories about develop.' %}
 {% elsif page.url contains 'datascience' %}

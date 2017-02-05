@@ -21,7 +21,7 @@ OAuth2.0에 대해서는 이전에 쓴 글을 참조하길 바란다. [http://sw
 
 ## 1. OAuth 2.0 Grant Flow
 
-![OAuth2 Grant Flow1](/images/OAuth2 Grant Flow1.png)
+![OAuth2 Grant Flow1](assets/images/OAuth2 Grant Flow1.png)
 
 주로 자바스크립트 기반 웹 어플리케이션에서 많이 사용하는 방식이다. (스크립트 보안 유출 고려)
 
@@ -29,7 +29,7 @@ OAuth2.0에 대해서는 이전에 쓴 글을 참조하길 바란다. [http://sw
 
    ​
 
-![OAuth2 Grant Flow2](/images/OAuth2 Grant Flow2.png)
+![OAuth2 Grant Flow2](assets/images/OAuth2 Grant Flow2.png)
 
 직접 ID, PW 보내는 방식으로 파트너나 자사 시스템에 사용한다.
 
@@ -50,7 +50,7 @@ OAuth2.0에 대해서는 이전에 쓴 글을 참조하길 바란다. [http://sw
 
 ## 2. AWS EC2 + Cognito (BaaS)
 
-![AWS Authentication process](/images/AWS Authentication process.png)
+![AWS Authentication process](assets/images/AWS Authentication process.png)
 
 사용자 로그인, 인증 처리에 대해 AWS Cognito를 사용한 방법이다.
 
@@ -76,7 +76,7 @@ OAuth2.0에 대해서는 이전에 쓴 글을 참조하길 바란다. [http://sw
 
 ## 3. AWS Serverless Architecture (BaaS + FaaS)
 
-![AWS WebApp Application Architecture](/images/AWS WebApp Application Architecture.png)
+![AWS WebApp Application Architecture](assets/images/AWS WebApp Application Architecture.png)
 
 AWS API Gateway와 Lambda를 통한 서버리스 아키텍쳐에 대해서는 아래 링크를 참고하자.
 

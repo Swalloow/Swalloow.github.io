@@ -42,7 +42,7 @@ OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한
 
 OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.
 
-![oauth1_triangle](/images/oauth1_triangle.png)
+![oauth1_triangle](assets/images/oauth1_triangle.png)
 
 우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.
 

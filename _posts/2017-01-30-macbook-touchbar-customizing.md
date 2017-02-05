@@ -22,7 +22,7 @@ logo: 'assets/images/ghost.png'
 
    ​
 
-![BTT](/images/BTT1.png)
+![BTT](assets/images/BTT1.png)
 
 BTT를 설치하고 켜보면 다음과 같은 화면이 난다. 먼저 Global을 설정해보자.
 
@@ -38,7 +38,7 @@ BTT를 설치하고 켜보면 다음과 같은 화면이 난다. 먼저 Global�
 
    ​
 
-![BTT](/images/BTT2.png)
+![BTT](assets/images/BTT2.png)
 
 나 같은 경우 크롬을 켜는 과정조차 귀찮아서 Global은 즐겨찾기처럼 세팅해두었다.
 
@@ -52,7 +52,7 @@ Add Icon에 아이콘을 넣어주고 Naver라고 이름을 적는다.
 
    ​
 
-![BTT](/images/BTT3.png)
+![BTT](assets/images/BTT3.png)
 
 마지막으로 `Predefined Action`에 들어가서 `Utility Actions - Open URL`을 누르고,
 
@@ -60,7 +60,7 @@ Add Icon에 아이콘을 넣어주고 Naver라고 이름을 적는다.
 
    ​
 
-![BTT](/images/BTT4.png)
+![BTT](assets/images/BTT4.png)
 
 이와 같은 과정을 반복하면 이렇게 버튼을 만들 수 있다 !
 
@@ -84,7 +84,7 @@ Add Icon에 아이콘을 넣어주고 Naver라고 이름을 적는다.
 
 ### 이미지 리소스
 
-[https://github.com/Swalloow/Swalloow.github.io/tree/master/images/logo](https://github.com/Swalloow/Swalloow.github.io/tree/master/images/logo)
+[https://github.com/Swalloow/Swalloow.github.io/tree/master/assets/images/logo](https://github.com/Swalloow/Swalloow.github.io/tree/master/assets/images/logo)
 
 혹시 이미지 리소스가 필요하신 분들을 위해 올려드립니다.
 

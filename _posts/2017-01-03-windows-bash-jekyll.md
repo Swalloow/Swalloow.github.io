@@ -5,7 +5,7 @@ title: "윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치�
 date: 2017-01-03 10:18:00
 tags: Develop
 subclass: 'post tag-develop'
-cover: 'assets/images/cover_develop.jpg'
+cover: 'assets/images/jekyll.jpg'
 navigation: True
 logo: 'assets/images/ghost.png'
 ---

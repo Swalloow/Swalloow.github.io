@@ -10,7 +10,7 @@ navigation: True
 logo: 'assets/images/ghost.png'
 ---
 
-![macbook](/images/mac.png)
+![macbook](assets/images/mac.png)
 
 1년을 기다린 결과 드디어 맥북프로 터치바 모델을 질렀다!
 
