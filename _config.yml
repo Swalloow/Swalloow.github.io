@@ -74,4 +74,4 @@ exclude: [vendor]
 #   - vendor
 #   - .travis.yml
 
-theme: jekyll-theme-cayman
+theme: jekyll-theme-minimal
