@@ -73,5 +73,3 @@ exclude: [vendor]
 #   - "*.Rmd"
 #   - vendor
 #   - .travis.yml
-
-theme: jekyll-theme-minimal
