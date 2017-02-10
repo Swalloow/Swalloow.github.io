@@ -6,27 +6,33 @@ paginate = 6
 pluralizelisttitles = false
 theme = "casper"
 title = "Swalloow Blog"
+
 [[menu.main]]
 identifier = "blog"
 name = "Blog"
 url = "/"
 weight = -120
 [[menu.main]]
+identifier = "personal"
 name = "Personal"
-url = "/"
+url = "/personal"
 weight = 100
 [[menu.main]]
+identifier = "develop"
 name = "Develop"
-url = "/"
+url = "/develop"
 weight = 101
 [[menu.main]]
+identifier = "datascience"
 name = "Data Science"
-url = "/"
+url = "/datascience"
 weight = 102
 [[menu.main]]
+identifier = "dataengineering"
 name = "Data Engineering"
-url = "/"
+url = "/dataengineering"
 weight = 109
+
 [params]
 author = "Swalloow"
 authorlocation = "Seoul, Korea"
@@ -41,6 +47,7 @@ logo = "images/logo.png"
 twitterName = ""
 [permalinks]
 post = "/:slug/"
+
 [sitemap]
 ChangeFreq = ""
 Filename = "sitemap.xml"
