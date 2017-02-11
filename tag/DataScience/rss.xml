@@ -13,10 +13,10 @@
    
 	<item>
 	  <title>[CS224d] Lecture2. Word Vectors</title>
-	  <link>//author/:username</link>
+	  <link>//cs224d-lecture2</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-01-21T19:18:00+09:00</pubDate>
-	  <guid>//author/:username</guid>
+	  <guid>//cs224d-lecture2</guid>
 	  <description><![CDATA[
 	     <p>​</p>
 
@@ -291,10 +291,10 @@ wt가 나왔을 때, wt 주변의 단어가 나올 확률이 얼마나 되는지
 
 	<item>
 	  <title>[CS224d] Lecture1. Intro to NLP and Deep Learning</title>
-	  <link>//author/:username</link>
+	  <link>//cs224d-lecture1</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-01-14T19:18:00+09:00</pubDate>
-	  <guid>//author/:username</guid>
+	  <guid>//cs224d-lecture1</guid>
 	  <description><![CDATA[
 	     <p>​</p>
 
@@ -367,10 +367,10 @@ wt가 나왔을 때, wt 주변의 단어가 나올 확률이 얼마나 되는지
 
 	<item>
 	  <title>[CS224d] 자연어처리 강의 소개</title>
-	  <link>//author/:username</link>
+	  <link>//cs224d-intro</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-01-07T19:18:00+09:00</pubDate>
-	  <guid>//author/:username</guid>
+	  <guid>//cs224d-intro</guid>
 	  <description><![CDATA[
 	     <p>​</p>
 
