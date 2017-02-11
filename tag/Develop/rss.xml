@@ -13,10 +13,10 @@
    
 	<item>
 	  <title>다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</title>
-	  <link>//social-api-cognito</link>
+	  <link>//author/:username</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-01-28T19:18:00+09:00</pubDate>
-	  <guid>//social-api-cognito</guid>
+	  <guid>//author/:username</guid>
 	  <description><![CDATA[
 	     <p>최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다.
 만약 우리가 만들어야 할 어플리케이션이 다양한 소셜 로그인 API와 연동하여 사용자를 관리해야한다면, OAuth 인증, 보안 등 개발할 때 고려해야할 요소가 많을 것이다.</p>
@@ -130,10 +130,10 @@
 
 	<item>
 	  <title>Jupyter Notebook 다중커널 설정하기</title>
-	  <link>//jupyter-notebook-kernel</link>
+	  <link>//author/:username</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-01-28T19:18:00+09:00</pubDate>
-	  <guid>//jupyter-notebook-kernel</guid>
+	  <guid>//author/:username</guid>
 	  <description><![CDATA[
 	     <p>Jupyer Notebook은 웹 기반의 대화형 노트북 지원으로 수식, 표, 그림 등을 표현하기 쉬운 개발 환경입니다.
 코딩과 문서화(Markdown)까지 한 화면에서 가능하며 커널 확장을 통해 다양한 파이썬 버전 뿐만 아니라 여러 언어를 지원합니다.</p>
@@ -328,10 +328,10 @@ $ kill 37788
 
 	<item>
 	  <title>OAuth2에 대해 알아보자</title>
-	  <link>//about-oauth2</link>
+	  <link>//author/:username</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
-	  <guid>//about-oauth2</guid>
+	  <guid>//author/:username</guid>
 	  <description><![CDATA[
 	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
 
@@ -479,10 +479,10 @@ $ kill 37788
 
 	<item>
 	  <title>Open API를 설계할 때 알아야 하는 것들</title>
-	  <link>//open-api-guide</link>
+	  <link>//author/:username</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
-	  <guid>//open-api-guide</guid>
+	  <guid>//author/:username</guid>
 	  <description><![CDATA[
 	     <p>​</p>
 
@@ -746,10 +746,10 @@ Authorization: Bearer {access_token}
 
 	<item>
 	  <title>윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</title>
-	  <link>//windows-bash-jekyll</link>
+	  <link>//author/:username</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-01-03T19:18:00+09:00</pubDate>
-	  <guid>//windows-bash-jekyll</guid>
+	  <guid>//author/:username</guid>
 	  <description><![CDATA[
 	     <p>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준)</p>
 
