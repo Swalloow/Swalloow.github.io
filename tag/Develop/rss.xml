@@ -1,0 +1,930 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   
+      <title>swalloow.github.io/</title>
+   
+   <link>http://swalloow.github.io/</link>
+   <description>About Data Science, Data Engineering</description>
+   <language>ko-KO</language>
+   <managingEditor> Swalloow</managingEditor>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   
+	<item>
+	  <title>다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</title>
+	  <link>//social-api-cognito</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-28T19:18:00+09:00</pubDate>
+	  <guid>//social-api-cognito</guid>
+	  <description><![CDATA[
+	     <p>최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다.
+만약 우리가 만들어야 할 어플리케이션이 다양한 소셜 로그인 API와 연동하여 사용자를 관리해야한다면, OAuth 인증, 보안 등 개발할 때 고려해야할 요소가 많을 것이다.</p>
+
+<p>따라서, 이 글을 통해 최근 유행하는 클라우드 기반 웹 어플리케이션 설계 방식을 아주 간단히 보고 적합한 설계 방식을 선택하는데 도움이 되었으면 좋겠다.</p>
+
+<p>OAuth2.0에 대해서는 이전에 쓴 글을 참조하길 바란다. <a href="http://swalloow.github.io/develop/OAuth2%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90/">http://swalloow.github.io/develop/OAuth2%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90/</a></p>
+
+<p>​</p>
+
+<h2 id="oauth-20-grant-flow">1. OAuth 2.0 Grant Flow</h2>
+
+<p><img src="assets/images/OAuth2 Grant Flow1.png" alt="OAuth2 Grant Flow1" /></p>
+
+<p>주로 자바스크립트 기반 웹 어플리케이션에서 많이 사용하는 방식이다. (스크립트 보안 유출 고려)</p>
+
+<p>최근에는 모바일에서도 많이 사용한다고 한다.</p>
+
+<p>​</p>
+
+<p><img src="assets/images/OAuth2 Grant Flow2.png" alt="OAuth2 Grant Flow2" /></p>
+
+<p>직접 ID, PW 보내는 방식으로 파트너나 자사 시스템에 사용한다.</p>
+
+<p>기존의 HTTP 방식을 그대로 사용하기 용이하다.</p>
+
+<p>​</p>
+
+<p>위와 같은 방식을 사용했을 때의 장점은 OAuth 2.0을 몸소 체험할 수 있다는 것이다.</p>
+
+<p>반면에, 단점은 다음과 같다.
+- 사용자 데이터에 대한 보안을 고려해야 한다.
+- Facebook, Twitter 모두 각자에게 최적화 되어 있어 확장성을 고려한 인증 인터페이스를 만들기 힘들다.
+- Token만 존재하기 때문에 사용자 관리, 사용자를 구분하기가 힘들다.
+- 모바일과 웹 어플리케이션이 모두 존재한다면, 인증 및 디바이스 간 동기화 처리 문제가 있다.
+- 시스템 충돌과 네트워크 연결 문제 또한 감당해야 한다.</p>
+
+<p>​</p>
+
+<h2 id="aws-ec2--cognito-baas">2. AWS EC2 + Cognito (BaaS)</h2>
+
+<p><img src="assets/images/AWS Authentication process.png" alt="AWS Authentication process" /></p>
+
+<p>사용자 로그인, 인증 처리에 대해 AWS Cognito를 사용한 방법이다.</p>
+
+<p>기본적인 EC2 인스턴스에 Cognito만 추가해서 사용하면 된다.</p>
+
+<p>​</p>
+
+<p>이러한 방법을 적용했을 때의 단점은 일단 클라우드에 요금을 내야 한다는 것이다.</p>
+
+<p>또한, AWS Cognito에서 지원하지 않는 카카오 로그인 같은 경우 복잡한 과정이 필요하다.</p>
+
+<p>​</p>
+
+<p>반면에 장점은 다음과 같다.
+- SAML을 통한 보안 문제 해결.
+- 놀라운 확장성. (SOCIAL IDENTITY를 추가하기만 하면 끝, 모바일 앱까지 확장 가능)
+- 편리한 사용자 관리. (USER POOL 기능 제공)
+- 인증 및 디바이스간 동기화 처리. (Cognito Sync가 알아서 해준다)
+- 시스템 충돌과 네트워크 연결 문제. (Cognito Sync가 알아서 해준다)
+- 위와 같은 문제를 신경 안쓰므로 로직에 집중해서 빠른 개발이 가능하다.</p>
+
+<p>​</p>
+
+<h2 id="aws-serverless-architecture-baas--faas">3. AWS Serverless Architecture (BaaS + FaaS)</h2>
+
+<p><img src="assets/images/AWS WebApp Application Architecture.png" alt="AWS WebApp Application Architecture" /></p>
+
+<p>AWS API Gateway와 Lambda를 통한 서버리스 아키텍쳐에 대해서는 아래 링크를 참고하자.</p>
+
+<p>서버리스 아키텍쳐는 서버를 관리할 필요 없이 특정 이벤트에 반응하는 함수를 등록하고, 해당 이벤트가 발생하면 함수가 실행되는 구조이다.</p>
+
+<p>​</p>
+
+<p>장점은 다음과 같다.
+- 서버에 고성능이 필요할 시에는 비용이 절감된다.
+- 서비스 지향적인 설계가 가능하다. (마이크로 아키텍쳐)
+- 자동 스케일링
+- 코드 생산에 집중할 수 있고, 유연한 배포 및 테스트가 가능하다.</p>
+
+<p>​</p>
+
+<p>반면에 단점은 다음과 같다.
+- AWS 과금이 많이 나올 수 있다. (쓸데없이 많이 고려한 설계일수도)
+- API Gateway, Lambda에 대한 러닝 커브가 상당하다. (많은 스터디 필요)</p>
+
+<p>​</p>
+
+<h2 id="section">결론</h2>
+
+<p>최근에 유행하는 서버리스 아키텍쳐나 마이크로 아키텍쳐를 무조건 도입해야하는 것은 절대 아니다.</p>
+
+<p>각자 프로젝트의 상황에 맞는 방법을 선택하는게 답인듯하다.</p>
+
+<p>​​</p>
+
+<h2 id="section-1">참고하면 좋은 문서들</h2>
+
+<ul>
+  <li><a href="https://medium.com/@parkgeunhack/%EC%95%8C%EB%A0%89%EC%8A%A4%EC%9D%98-%EC%9D%B4%EC%95%BC%EA%B8%B0-%EA%B7%B8%EB%A6%AC%EA%B3%A0-%EC%84%9C%EB%B2%84-%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80-c3aa12baaa75#.kkskaeaqa">박근핵닷컴 서버 개발일지</a></li>
+  <li><a href="https://aws.amazon.com/ko/cognito/?nc2=h_m1">AWS Cognito</a></li>
+  <li><a href="https://aws.amazon.com/ko/blogs/korea/category/amazon-cognito/">AWS Cognito Blog</a></li>
+  <li><a href="http://blog.aliencube.org/ko/2016/06/23/serverless-architectures/">Serverless-Architecture</a></li>
+  <li><a href="http://www.popit.kr/why-microservice/">Popit - 마이크로서비스 아키텍쳐의 장단점</a></li>
+  <li><a href="http://bcho.tistory.com/942">조대협 블로그 - OAuth 2.0 Architecture</a></li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>Jupyter Notebook 다중커널 설정하기</title>
+	  <link>//jupyter-notebook-kernel</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-28T19:18:00+09:00</pubDate>
+	  <guid>//jupyter-notebook-kernel</guid>
+	  <description><![CDATA[
+	     <p>Jupyer Notebook은 웹 기반의 대화형 노트북 지원으로 수식, 표, 그림 등을 표현하기 쉬운 개발 환경입니다.
+코딩과 문서화(Markdown)까지 한 화면에서 가능하며 커널 확장을 통해 다양한 파이썬 버전 뿐만 아니라 여러 언어를 지원합니다.</p>
+
+<p>이제 파이썬을 처음 설치한다고 가정하고 맥 OS에서 간단하게 jupyter 환경설정하는 방법을 소개해드리고자 합니다.</p>
+
+<p>​</p>
+
+<h2 id="pyenv-">pyenv 설치하기</h2>
+
+<h3 id="homebrew--pyenv-">1. Homebrew를 통해 pyenv를 설치</h3>
+
+<p><code class="highlighter-rouge">shell
+$ brew install pyenv
+</code></p>
+
+<p>​</p>
+
+<h3 id="pyenv-init-bashrc--zsh---zshrc">2. pyenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h3>
+
+<p><code class="highlighter-rouge">shell
+$ echo 'eval "$(pyenv init -)"' &gt;&gt; ~/.bashrc
+</code></p>
+
+<p>​</p>
+
+<h3 id="pyenv--1">3. pyenv 사용해보기</h3>
+
+<p><code class="highlighter-rouge">shell
+$ pyenv versions
+system (set by /Users/USERNAME/.pyenv/version)
+</code></p>
+
+<p>​</p>
+
+<h3 id="pyenv--">4. pyenv 명령어 정리</h3>
+
+<p><code class="highlighter-rouge">shell
+$ pyenv install &lt;version&gt;
+$ pyenv uninstall &lt;version&gt;
+$ pyenv install -list
+$ pyenv shell &lt;version&gt;
+$ pyenv activate &lt;environment&gt;
+$ pyenv deactivate &lt;environment&gt;
+</code></p>
+
+<p>​</p>
+
+<h2 id="pyenv-virtualenv-">pyenv-virtualenv 설치하기</h2>
+
+<h3 id="homebrew--pyenv-virtualenv-">1. Homebrew를 통해 pyenv-virtualenv를 설치</h3>
+
+<p><code class="highlighter-rouge">shell
+$ brew install pyenv-virtualenv
+</code></p>
+
+<p>​</p>
+
+<h3 id="virtualenv-init-bashrc--zsh---zshrc">2. virtualenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h3>
+
+<p><code class="highlighter-rouge">shell
+$ echo 'eval "$(pyenv virtualenv-init -)"' &gt;&gt; ~/.bashrc
+</code></p>
+
+<p>​</p>
+
+<h3 id="pyenv-virtualenv--1">2. pyenv-virtualenv 사용해보기</h3>
+
+<p><code class="highlighter-rouge">shell
+# pyenv virtualenv [python version] [myname]
+$ pyenv virtualenv 2.7.11 python2
+$ pyenv virtualenv 3.5.1 python3
+</code></p>
+
+<p>​</p>
+
+<h3 id="virtualenv--">2. virtualenv 명령어 정리</h3>
+
+<p><code class="highlighter-rouge">shell
+$ pyenv virtualenv versions
+$ pyenv virtualenv [python version] [myname]
+$ pyenv shell [myname]
+</code></p>
+
+<p>​</p>
+
+<h2 id="jupyter-notebook-">Jupyter Notebook 설치</h2>
+
+<p>이제 방금 설치했던 파이썬 2와 3 버전의 환경에 python, notebook, jupyter를 설치할 차례입니다.</p>
+
+<p>따라서 방금 설치한 환경을 각각 activate한 다음에 아래와 같은 명령어를 실행시켜야 합니다.</p>
+
+<p>​</p>
+
+<h3 id="pip-install-python2-python3--">1. pip install (python2, python3 각각 실행)</h3>
+
+<p><code class="highlighter-rouge">shell
+$ pip install ipython
+$ pip install notebook
+$ pip install jupyter
+</code></p>
+
+<p>​</p>
+
+<h3 id="jupyter-configuration-----">2. 초기 Jupyter configuration 파일 생성 (마찬가지로 각각 실행)</h3>
+
+<p><code class="highlighter-rouge">shell
+$ jupyter notebook --generate-config
+Installed kernelspec python3 in /Users/username/Library/Jupyter/kernels/python3
+</code></p>
+
+<p>​</p>
+
+<h3 id="jupyternotebookconfigpy-----">3. 생성된 jupyter_notebook_config.py 설정 (원하는 경우에만 커스텀 설정)</h3>
+
+<p>```shell
+$ vi /Users/username/Library/Jupyter/kernels/python3/jupyter_notebook_config.py</p>
+
+<h1 id="jupyternotebookconfigpy">jupyter_notebook_config.py</h1>
+<p>$ c.NotebookApp.ip = ‘*’
+$ c.NotebookApp.open_browser = False
+$ c.NotebookApp.port = 8888
+$ c.NotebookApp.password = [SHA password]
+```</p>
+
+<p>​</p>
+
+<h3 id="ipykernel----">4. ipykernel 설정 (마찬가지로 각각 실행)</h3>
+
+<p><code class="highlighter-rouge">shell
+$ pyenv shell python2
+$ python -m ipykernel install --user
+Installed kernelspec python2 in /home/seen/.local/share/jupyter/kernels/python2
+</code></p>
+
+<p>​</p>
+
+<h3 id="kerneljson-----">5. kernel.json 확인 (원하는 경우에만 커스텀 설정)</h3>
+
+<p><code class="highlighter-rouge">shell
+$ vi /home/seen/.local/share/jupyter/kernels/python2/kernel.json
+{
+  "display_name": "Python 2",
+  "language": "python",
+  "argv": [
+    "/home/seen/.pyenv/versions/py27/bin/python",
+    "-m",
+    "ipykernel",
+    "-f",
+    "{connection_file}"
+    ]
+  }
+}
+</code></p>
+
+<p>​</p>
+
+<h3 id="jupyter-notebook--1">6. jupyter notebook을 실행</h3>
+
+<p>```shell
+# 일반적인 경우
+$ jupyter notebook</p>
+
+<h1 id="background---">background로 실행하고 싶은 경우</h1>
+<p>$ nohup jupyter notebook &amp;</p>
+
+<h1 id="background----">background로 실행한 경우 프로세스 종료</h1>
+<p>$ ps -a
+37788 ttys000 0:00:00 …python (노트북을 실행한 프로세스)
+$ kill 37788
+```</p>
+
+<p>​</p>
+
+<h2 id="section">정리</h2>
+
+<p>윈도우10 에서 아주 고생했던 환경설정이 맥 OS에서는 아주 간편하게 됩니다…</p>
+
+<p>잘 안되거나 오류가 생기시면 댓글로 알려주시면 감사하겠습니다!</p>
+
+<p>​</p>
+
+<h3 id="section-1">참고링크</h3>
+
+<ul>
+  <li><a href="https://github.com/yyuu/pyenv">https://github.com/yyuu/pyenv</a></li>
+  <li><a href="https://github.com/yyuu/pyenv-virtualenv">https://github.com/yyuu/pyenv-virtualenv</a></li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>OAuth2에 대해 알아보자</title>
+	  <link>//about-oauth2</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
+	  <guid>//about-oauth2</guid>
+	  <description><![CDATA[
+	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
+
+<p>​   ​</p>
+
+<h3 id="section">인증과 허가</h3>
+
+<ol>
+  <li>Authentication : 인증</li>
+  <li>
+    <p>Authorization : 허가</p>
+
+    <p>​   ​</p>
+  </li>
+</ol>
+
+<p>일반 로그인은 사원이 63빌딩에 출입하는 것이라면, (사원증이 있어야 출입가능)</p>
+
+<p>OAuth는 1층에서 방문증을 수령한 후 63빌딩에 출입하는 것이다. (방문증만 있어도 출입가능)</p>
+
+<p>​   ​</p>
+
+<h2 id="oauth-10-">OAuth 1.0의 특징</h2>
+
+<p>기존의 다른 인증방식(OpenID)과 구분되는 특징은 크게 두 가지이다.</p>
+
+<ol>
+  <li>API 인증 시, 써드파티 어플리케이션에게 사용자의 비번을 노출하지 않고 인증할 수 있다는 점</li>
+  <li>
+    <p>인증(Authentication)과 API 권한(Authorization) 부여를 동시에 할 수 있다는 점</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h2 id="oauth-10--1">OAuth 1.0의 동작방식</h2>
+
+<p>OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한다.</p>
+
+<p>OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.</p>
+
+<p><img src="assets/images/oauth1_triangle.png" alt="oauth1_triangle" /></p>
+
+<p>우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.</p>
+
+<p>​</p>
+
+<h3 id="outh-10-">Outh 1.0 프로세스</h3>
+
+<ol>
+  <li>사용자(User)가 트위터 로그인 요청</li>
+  <li>사용자를 트위터(Service Provider) 로그인 화면으로 리다이렉트</li>
+  <li>트위터 로그인 진행</li>
+  <li>
+    <p>서비스(Consumer)로 인증토큰(Access Token)이 전달</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h3 id="section-1">인증토큰의 장점</h3>
+
+<ul>
+  <li>사용자의 아이디 / 패스워드를 몰라도 토큰을 통해 허가 받은 API에 접근 가능</li>
+  <li>필요한 API에만 제한적으로 접근할 수 있도록 권한 제어 가능</li>
+  <li>저장되어 있는 인증토큰이 유출되더라도 트위터의 관리자 화면에서 인증토큰의 권한 취소 가능</li>
+  <li>
+    <p>사용자가 트위터(Service Provider)의 패스워드를 변경해도 인증토큰은 계속 유효</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="oauth-20-">OAuth 2.0의 개선사항</h2>
+
+<p>일단 OAuth 2.0은 1.0과 호환되지 않으며 용어부터 많은 것이 다르다. 모바일에서의 사용성 문제나 서명과 같은 개발이 복잡하고 기능과 규모의 확장성 등을 지원하기 위해 만들어진 표준이다. 표준이 매우 크고 복잡해서 이름도 “OAuth 인증 프레임워크(OAuth 2.0 Authorization Framework)” 이다. <a href="http://tools.ietf.org/wg/oauth/">http://tools.ietf.org/wg/oauth/</a> 에서 확인 가능</p>
+
+<p>​</p>
+
+<h3 id="oauth-10--">OAuth 1.0에서 개선된 사항</h3>
+
+<ol>
+  <li>용어 변경
+    <ul>
+      <li>Resource Owner : 사용자</li>
+      <li>Resource Server : REST API 서버</li>
+      <li>Authorization Server : 인증서버 (API 서버와 같을 수도 있음)</li>
+      <li>Client : 써드파티 어플리케이션 (서비스)</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>간단하고 직관적
+    <ul>
+      <li>OAuth 1.0에서는 HTTPS가 필수</li>
+      <li>Signature 없이 생성, 호출 가능</li>
+      <li>URL 인코딩이 필요없음</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>더 많은 인증 방법을 지원
+    <ul>
+      <li>이전에는 HMAC을 이용한 암호화 인증만 지원</li>
+      <li>OAuth 2.0은 여러 인증 방식을 통해 웹 / 모바일 등 다양한 시나리오에 대응 가능</li>
+      <li>Access Token의 Life-time을 지정하여 만료일 설정 가능</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>대형 서비스로의 확장성 지원
+    <ul>
+      <li>커다란 서비스는 인증 서버를 분리하거나 다중화 할 수 있어야 함</li>
+      <li>Authorization Server의 역할을 명확히 하여 이에 대한 고려가 되었음</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h2 id="oauth-20--">OAuth 2.0 사용 서비스</h2>
+
+<p>2013년까지만 해도 1.0만 지원하거나 2.0으로 개선하는 인터넷 서비스 기업이 많았지만,</p>
+
+<p>현재는 대부분 2.0만 지원한다고 봐도 무방하다. (1.0은 자체 로그인에만 사용하는 기업이 많음)</p>
+
+<ul>
+  <li>
+    <p>Facebook, Instagram, Google, LinkedIn, Twitter…</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="section-2">참고하면 좋은 자료</h2>
+
+<ul>
+  <li>Naver D2 : <a href="http://d2.naver.com/helloworld/24942">http://d2.naver.com/helloworld/24942</a></li>
+  <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
+  <li>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>Open API를 설계할 때 알아야 하는 것들</title>
+	  <link>//open-api-guide</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
+	  <guid>//open-api-guide</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>오픈 API를 사용하다보면 공통의 패턴을 발견할 수 있을 것이다.
+이처럼, API를 설계할 때도 개발자들이 쉽게 사용할 수 있도록 만든 규칙이라는게 존재한다.
+오늘은 RESTful한 Open API를 설계하기 위해 알아야 하는 것들에 대해 정리해보았다.</p>
+
+<p>​</p>
+
+<h1 id="open-api-">Open API 디자인</h1>
+
+<h3 id="api-">API 란?</h3>
+
+<blockquote>
+  <p>운영체제, 시스템, 애플리케이션, 라이브러리 등을 개발자들이 프로그래밍 작업을 통해 응용 프로그램을 작성할 수 있는 다양한 인터페이스들을 총칭한다. (예: Window API, Java API, HTML5 API, Android API…) - 네이버 개발자센터 인용</p>
+</blockquote>
+
+<p>​</p>
+
+<h3 id="api--1">오픈 API 란?</h3>
+
+<blockquote>
+  <p>API 중에서 플랫폼의 기능 또는 컨텐츠를 외부에서 쓸 수 있도록 웹 프로토콜(HTTP)로 호출할 수 있도록 개방(open)한 API를 의미한다. 네이버 개발자센터에서 제공하고 있는 지도, 검색을 비롯 기계번역, 캡차, 단축 URL 등 대부분 API 들은 HTTP로 호출할 수 있는 오픈 API에 해당한다. - 네이버 개발자센터 인용</p>
+</blockquote>
+
+<p>​</p>
+
+<p>이제 기업 또는 사용자에게 제공할 RESTful Open API를 어떻게 설계할지 고민해보자.</p>
+
+<p>기업에게 전문적으로 API를 공급하는 Apigee 사의 “Web ApI Design”을 레퍼런스로 삼았다.</p>
+
+<p>​</p>
+
+<h1 id="best-web-api-design-rules">Best Web API Design Rules</h1>
+
+<h3 id="url------2--url-">1. 기본 URL에는 동사가 아닌 명사를 사용, 리소스마다 2개의 기본 URL을 유지하자.</h3>
+
+<p><code class="highlighter-rouge">
+ /dogs (Collection), /dogs/1234 (Element)
+</code></p>
+
+<p>​</p>
+
+<h3 id="http-post-get-put-delete-">2. 올바른 HTTP 메서드(POST, GET, PUT, DELETE)를 사용하자.</h3>
+
+<p><code class="highlighter-rouge">
+ POST(create), GET(read), PUT(update), DELETE(delete)
+</code></p>
+
+<p>​</p>
+
+<h3 id="section">3. 복수형 명사와 구체적인 이름을 사용하자.</h3>
+<p><code class="highlighter-rouge">
+/animals, /dogs
+</code></p>
+
+<p>​</p>
+
+<h3 id="url----">4. 자원 간의 관계를 간단히 하여 URL 계층이 깊어지는 것을 피하자.</h3>
+
+<p><code class="highlighter-rouge">
+ GET	/owners/5678/dogs?color=red
+</code></p>
+
+<p>​</p>
+
+<h3 id="section-1">5. 오류 처리를 명확하게 하고 에러 스택은 절대 비공개 해야 한다.</h3>
+
+<p><code class="highlighter-rouge">
+ 200 - OK
+ 400 - Bad Request
+ 500 - Internal Server Error
+ 201 - Created
+ 304 - Not Modified
+ 404 - Not Found
+ 401 - Unauthorized
+ 403 - Forbidden
+</code></p>
+
+<p>​</p>
+
+<h3 id="v------">6. 접두사 “v”로 버전을 지정하고 지속적인 버전 관리를 하자.</h3>
+
+<p><code class="highlighter-rouge">
+ GET	/v1/dogs
+</code></p>
+
+<p>​</p>
+
+<h3 id="section-2">7. 데이터베이스에 없는 자원에 대한 응답일 경우 동사를 사용하자.</h3>
+
+<p><code class="highlighter-rouge">
+ ex) Caculate, Translate, Convert ...
+</code></p>
+
+<p>​</p>
+
+<h3 id="javascript-----">8. 속성의 네이밍은 Javascript의 관습을 따르고 카멜 케이스를 사용하자.</h3>
+
+<p><code class="highlighter-rouge">
+ "createdAt": 123415125
+</code></p>
+
+<p>​</p>
+
+<h3 id="api---">9. 하위 도메인의 독립적인 API 요청 처리는 통일하자.</h3>
+
+<p><code class="highlighter-rouge">
+ company.com
+ api.company.com	(브라우저에서 없는 도메인을 여는 경우 하위 도메인으로 redirect)
+ developers.company.com
+</code></p>
+
+<p>​</p>
+
+<h3 id="section-3">10. 기타</h3>
+
+<ul>
+  <li>권한 관리(OAuth)는 2.0을 사용하자.</li>
+  <li>필요한 경우, SDK로 API를 보완하자.</li>
+  <li>
+    <p>API Facade Pattern을 API 설계에 고려해라.</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="kakao-naver-api">Kakao, Naver API</h2>
+
+<p>기존의 Open API는 어떻게 디자인되어 있는지 확인해보자.</p>
+
+<p>​</p>
+
+<h3 id="naver-open-api">NAVER Open API</h3>
+
+<p>공식문서는 <a href="https://developers.naver.com">https://developers.naver.com</a> 을 참조.</p>
+
+<blockquote>
+  <p>이전(2015년 쯤)에는 네이버에서 제공하는 API를 사용하기 위해 ‘API 키’라는 유니크한 텍스트 문자열을 발급받고, 이를 API 호출시 같이 API 게이트웨이 서버로 전송함으로써 인증된 사용자임을 입증했다. 새로운 개발자센터에서는 API 키 방식은 더 이상 사용하지 않고 애플리케이션마다 일종의 유니크한 아이디와 비밀번호(클라이언트 아이디, 시크릿)값을 이용해서 인증하고 있다.</p>
+</blockquote>
+
+<p>​</p>
+
+<h3 id="api--url--">1. API 호출 URL과 요청 변수</h3>
+
+<ul>
+  <li>
+    <p>https://openapi.naver.com/버전/서비스구분/API 구분 형태</p>
+  </li>
+  <li>
+    <p>예시) 기계번역 API : https://openapi.naver.com/v1/language/translate</p>
+  </li>
+  <li>
+    <p>요청변수란, 오픈 API를 호출할 때 함께 서버로 전송해야 하는 값이다.</p>
+  </li>
+  <li>
+    <p>요청변수에 한글이나 특수문자가 요청 변수값에 포함되어 있을 경우, 서버 전송 시 값이 깨지기 때문에 인코딩/디코딩 과정이 필요하다.</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="section-4">2. 에러 코드 정의</h3>
+
+<h4 id="http--">HTTP 상태 코드</h4>
+<ul>
+  <li>400 (요청변수) : 필수 요청 변수가 빠졌거나 요청변수 이름이 잘못되었을 경우나 요청 변수 값을 URL 인코딩하지 않고 전송하였을 경우</li>
+  <li>401 (인증실패) : 애플리케이션 클라이언트 아이디와 시크릿 값이 없거나 잘못되었을 경우</li>
+  <li>401 (인증실패) : 클라이언트 아이디와 시크릿 값을 HTTP 헤더에 정확히 설정하지 않고 호출했을 경우</li>
+  <li>401 (인증실패) : API 권한 설정이 안되어 있을 경우</li>
+  <li>401 (인증오류) : 로그인 오픈 API를 호출할 때 접근 토큰(access_token) 값이 빠졌거나 잘못된 값 (기간 만료)을 설정하였을 경우</li>
+  <li>403 (호출금지) : https가 아닌 http로 호출하였을 경우</li>
+  <li>403 (호출금지) : 약관 동의를 하지 않고 호출할 경우 또는 권한이 없거나 비공개인 경우</li>
+  <li>404 (API없음) : API 요청 URL이 잘못되었을 경우</li>
+  <li>405 (메서드오류) : HTTP 메서드를 잘못하여 호출하였을 경우 (POST인데 GET으로 호출)</li>
+  <li>429 (한도초과) : 오픈 API를 호출할 때 일 허용량을 초과하였을 경우</li>
+  <li>
+    <p>500 (서버오류) : API 호출은 정상적으로 했지만, API 서버 유지보수나 시스템 오류로 인한 에러가 발생하였을 경우</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="kakao-rest-api--">Kakao REST API (카카오톡, 카카오페이)</h2>
+
+<h3 id="section-5">1. 먼저, 카카오 로그인 후에 사용자 토큰을 받아온다.</h3>
+
+<p>​</p>
+
+<h3 id="get-">2. 사용자 토큰을 헤더에 담아 GET으로 요청한다.</h3>
+
+<p><code class="highlighter-rouge">http
+GET /v1/api/talk/profile HTTP/1.1
+Host: kapi.kakao.com
+Authorization: Bearer {access_token}
+</code></p>
+
+<p>​</p>
+
+<h3 id="json-----">3. 응답은 JSON 형태로 다음과 같은 정보를 포함한다.</h3>
+
+<p><code class="highlighter-rouge">json
+{
+ "nickName":"홍길동",
+ "profileImageURL":"http://xxx.kakao.co.kr/.../aaa.jpg",
+ "thumbnailURL":"http://xxx.kakao.co.kr/.../bbb.jpg",
+ "countryISO":"KR"
+}
+</code></p>
+
+<p>​</p>
+
+<h3 id="response-code-example">Response Code Example</h3>
+
+<p><code class="highlighter-rouge">json
+{
+  "meta": {
+    "code": 200,
+    "response_time": {
+      "time": 0,
+      "measure": "seconds"
+    }
+  },
+  "notifications": {},
+  "response": {}
+}
+</code></p>
+
+<p>​</p>
+
+<h3 id="error-code-example">Error Code Example</h3>
+
+<p><code class="highlighter-rouge">json
+{
+  "meta": {
+    "code": 500,
+    "error_detail": "The user has not authorized this application or the token is invalid.",
+    "error_type": "invalid_auth",
+    "developer_friendly": "The user has not authorized this application or the token is invalid.",
+    "response_time": {
+      "time": 0,
+      "measure": "seconds"
+    }
+  }
+}
+</code></p>
+
+<p>​</p>
+
+<h2 id="section-6">참고자료</h2>
+
+<ul>
+  <li>API Platform Design : <a href="http://bcho.tistory.com/808">http://bcho.tistory.com/808</a></li>
+  <li>Web API Design : <a href="https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf">https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf</a></li>
+  <li>카카오 개발자센터 : <a href="https://developers.kakao.com">https://developers.kakao.com</a></li>
+  <li>네이버 개발자센터 : <a href="https://developers.naver.com">https://developers.naver.com</a></li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</title>
+	  <link>//windows-bash-jekyll</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-03T19:18:00+09:00</pubDate>
+	  <guid>//windows-bash-jekyll</guid>
+	  <description><![CDATA[
+	     <p>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준)</p>
+
+<p>​</p>
+
+<h2 id="ruby-">윈도우 10에서 Ruby 설치</h2>
+
+<ol>
+  <li><code class="highlighter-rouge">프로그램 및 기능 &gt; Windows 기능 켜기/끄기 &gt; Linux용 Windows 하위 시스템</code> 을 체크합니다.</li>
+  <li>이후 cmd 창에서 <code class="highlighter-rouge">bash</code> 를 입력하시면 Windows Subsystem for Linux 환경이 실행됩니다.</li>
+</ol>
+
+<p>처음 실행한다면, 아무것도 설치되지 않은 상태이기 때문에 초기 설정을 해주시면 좋습니다.</p>
+
+<p><code class="highlighter-rouge">
+$ sudo -s
+$ apt update
+$ apt install make gcc
+</code></p>
+
+<p>이제 루비를 설치해보겠습니다. 놀랍게도 윈도우 bash에서는 <code class="highlighter-rouge">apt install ruby</code> 를 통해 설치하려는 경우, 루비 1.9.3 버전만 설치됩니다 ! (rvm과 rbenv를 사용해봐도 동일) 하지만, Jekyll 에서 최소 2.0 이상의 버전을 요구하기 때문에 brightbox를 통해 최신 버전을 설치하였습니다.</p>
+
+<p><code class="highlighter-rouge">
+$ apt-add-repository ppa:brightbox/ruby-ng
+$ apt update
+$ apt install ruby2.3 ruby2.3-dev ruby-switch
+</code></p>
+
+<p>여기까지 설치되고 나면 뭔가 안심이 됩니다. 하지만 이제 시작에 불과합니다.</p>
+
+<p>​</p>
+
+<h2 id="jekyll-">Jekyll 설치하기</h2>
+
+<p>이제 설치하려는 경로로 이동해서 jekyll을 설치할 차례입니다. 여기에서는 바탕화면에 설치해보도록 하겠습니다.</p>
+
+<p><code class="highlighter-rouge">
+$ gem install jekyll
+$ cd /mnt/c/Users/&lt;your username&gt;/Desktop
+$ jekyll new myblog &amp;&amp; cd myblog
+$ jekyll serve -w
+</code></p>
+
+<p>속도를 측정해보면, Bash는 <code class="highlighter-rouge">0.329초</code>, PowerShell은 <code class="highlighter-rouge">0.364초</code> 로 Bash에서 실행시키는 것이 더 빠르다고 합니다. 여기까지가 아주 기본적인 형태의 jekyll 블로그 설치 과정입니다.</p>
+
+<p>​</p>
+
+<h2 id="jekyll--1">테마까지 한번에 적용하여 Jekyll 설치하기</h2>
+
+<p>기본 설치를 끝내면 그냥 빈 화면만 나타나기 때문에 허전합니다. 그래서 이번에는 테마까지 한번에 적용하여 설치하는 방법을 알려드리겠습니다. (방금꺼는 <code class="highlighter-rouge">gem uninstall -all</code> 명령어를 통해 삭제하셔도 됩니다)</p>
+
+<ol>
+  <li>먼저, <code class="highlighter-rouge">&lt;사용자이름&gt;.github.io</code> 라는 이름의 Repository를 생성합니다.</li>
+  <li>생성한 저장소를 로컬에 clone 하고 cd 명령어를 통해 위치로 이동합니다.</li>
+  <li>
+    <p>마음에 드는 Jekyll 테마를 다운로드 받아 로컬에 압축해제 합니다. (http://jekyllthemes.org/)</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<p>구조를 처음 보시면 복잡한데, 우리가 건드릴 부분은 <code class="highlighter-rouge">_config.yml</code> 과 <code class="highlighter-rouge">Gemfile</code> 입니다. Gemfile은 GitHub Pages에 필요한 라이브러리를 설치하도록 정의한 파일이라고 보시면 됩니다.
+데스크탑과 노트북 또는 맥북을 사용해보신 분은 아시겠지만, GitHub Pages에서 의존성 문제가 아주 빈번하게 발생합니다.</p>
+
+<ul>
+  <li>
+    <p>의존성을 가지는 라이브러리 참고 (<a href="https://pages.github.com/versions/">https://pages.github.com/versions/</a>)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<p>위의 링크처럼 각 라이브러리마다 버전 정보를 따로 관리해도 되지만, <code class="highlighter-rouge">gem 'github-pages'</code> 를 통해 관리하는 방법이 가장 간편합니다.
+이를 통해 github-pages의 최신 의존성 정보를 간단하게 업데이트할 수 있습니다.</p>
+
+<p>```
+$ vi Gemfile</p>
+
+<p>source ‘https://rubygems.org’
+gem ‘github-pages’
+```</p>
+
+<p>​</p>
+
+<p>이제 bundler를 설치할 차례입니다. bundler는 라이브러리 설치를 위한 패키지 매니저입니다.</p>
+
+<p><code class="highlighter-rouge">
+$ gem install bundler
+$ bundle install
+$ bundle update
+</code></p>
+
+<p>이제 Gemfile에 있는 라이브러리를 설치하고 업데이트까지 완료했습니다.</p>
+
+<p>의존성 정보를 확인하시려면 <code class="highlighter-rouge">github-pages versions</code> 명령어를 입력하시면 됩니다.</p>
+
+<p>​</p>
+
+<h2 id="section">삽질 방지를 위한 오류 해결 과정</h2>
+
+<h4 id="jeykll-331---">1. jeykll 3.3.1 버전에서 오류 발생</h4>
+
+<p>최근 <em>Windows+Bash Subsystem</em>에서 powershell을 defalut cmd로 확장하는 과정에서 생겨난 버그</p>
+
+<ul>
+  <li>
+    <p>(https://github.com/jekyll/jekyll/issues/5462 참조)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<p>해결방법은 다음과 같습니다. 첫번째 방법은 번거롭기 때문에 두번째 방법을 추천합니다.</p>
+
+<ol>
+  <li>
+    <p>jeykll 3.3.1 버전을 삭제하고 3.2.1 버전으로 하향시키기</p>
+  </li>
+  <li>
+    <p>build.rb에서 코드 수정하기</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<p>build.rb의 위치를 찾는 방법</p>
+
+<p><code class="highlighter-rouge">
+bundle show jekyll
+  </code></p>
+
+<p>그리고 <code class="highlighter-rouge">lib/jekyll/commands/build.rb</code>로 이동</p>
+
+<p><code class="highlighter-rouge">ruby
+if Utils::Platforms.windows?를 unless Utils::Platforms.windows?로 수정
+</code></p>
+
+<p>​</p>
+
+<h4 id="jekyll-serve--">2. jekyll serve에서 오류 발생</h4>
+
+<p>실행 명령어 <code class="highlighter-rouge">jekyll serve</code> 하면 여기서 끝날줄 알았는데!</p>
+
+<p>또 오류 발생… (https://github.com/jekyll/jekyll/issues/5233 참조)</p>
+
+<p>​</p>
+
+<p>역시 마찬가지로 <em>Windows+Bash Subsystem</em> 버그라고 합니다..</p>
+
+<p><code class="highlighter-rouge">jekyll serve --force_polling</code>  옵션을 통해 해결하실 수 있습니다.</p>
+
+<p>​</p>
+
+<h2 id="section-1">결론</h2>
+
+<p>쓰다보니 간단하지 않은 것 같지만 제가 삽질했던 부분을 빠르게 건너뛴다면,</p>
+
+<p>윈도우 사용자도 금방 설치할 수 있습니다 (Bash on Windows 만세 !)</p>
+
+<p>다만, 정신건강을 위해 맥을 사용하는걸 추천합니다.</p>
+
+<p>​</p>
+
+<h4 id="section-2">참고하면 좋은 페이지</h4>
+
+<ul>
+  <li>GitHub Help : https://help.github.com/articles/configuring-jekyll/</li>
+  <li>https://nolboo.kim/blog/2013/10/15/free-blog-with-github-jekyll/#configyml</li>
+  <li>http://my2kong.net/2016/07/07/jekyll-blogging-theme/</li>
+  <li>Jekyll QuickStart : http://jekyllbootstrap.com/usage/jekyll-quick-start.html</li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+
+</channel>
+</rss>
