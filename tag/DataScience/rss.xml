@@ -373,7 +373,11 @@ wt가 나왔을 때, wt 주변의 단어가 나올 확률이 얼마나 되는지
   <li>(단점) 말뭉치의 크기에 따라 Scale 가능</li>
   <li>(단점) 통계기법을 활용하지 않음</li>
   <li>대부분의 영역에서 좋은 성능을 내는 모델 생성</li>
-  <li>단어 유사도에 대해 복잡한 패턴도 잡아냄</li>
+  <li>
+    <p>단어 유사도에 대해 복잡한 패턴도 잡아냄</p>
+
+    <p>​</p>
+  </li>
 </ul>
 
 	  ]]></description>
@@ -449,7 +453,11 @@ wt가 나왔을 때, wt 주변의 단어가 나올 확률이 얼마나 되는지
 
 <ul>
   <li>levels : speech, morphology, syntax, semantics</li>
-  <li>applications : machine translation, sentiment analysis and question answering</li>
+  <li>
+    <p>applications : machine translation, sentiment analysis and question answering</p>
+
+    <p>​</p>
+  </li>
 </ul>
 
 	  ]]></description>
@@ -515,7 +523,11 @@ wt가 나왔을 때, wt 주변의 단어가 나올 확률이 얼마나 되는지
 
 <ul>
   <li>Syllabus : <a href="http://cs224d.stanford.edu/syllabus.html">http://cs224d.stanford.edu/syllabus.html</a></li>
-  <li>Youtube : <a href="https://www.youtube.com/playlist?list=PLlJy-eBtNFt4CSVWYqscHDdP58M3zFHIG">https://www.youtube.com/playlist?list=PLlJy-eBtNFt4CSVWYqscHDdP58M3zFHIG</a></li>
+  <li>
+    <p>Youtube : <a href="https://www.youtube.com/playlist?list=PLlJy-eBtNFt4CSVWYqscHDdP58M3zFHIG">https://www.youtube.com/playlist?list=PLlJy-eBtNFt4CSVWYqscHDdP58M3zFHIG</a></p>
+
+    <p>​</p>
+  </li>
 </ul>
 
 	  ]]></description>

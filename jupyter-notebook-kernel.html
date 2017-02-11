@@ -123,184 +123,154 @@
 
         <section class="post-content">
 
-            <p>Jupyer Notebook은 웹 기반의 대화형 노트북 지원으로 수식, 표, 그림 등을 표현하기 쉬운 개발 환경입니다.
+            <p>​</p>
+
+<p>Jupyer Notebook은 웹 기반의 대화형 노트북 지원으로 수식, 표, 그림 등을 표현하기 쉬운 개발 환경입니다.
 코딩과 문서화(Markdown)까지 한 화면에서 가능하며 커널 확장을 통해 다양한 파이썬 버전 뿐만 아니라 여러 언어를 지원합니다.</p>
 
 <p>이제 파이썬을 처음 설치한다고 가정하고 맥 OS에서 간단하게 jupyter 환경설정하는 방법을 소개해드리고자 합니다.</p>
 
 <p>​</p>
 
-<h2 id="pyenv-">pyenv 설치하기</h2>
+<h3 id="pyenv-">pyenv 설치하기</h3>
 
-<h3 id="homebrew--pyenv-">1. Homebrew를 통해 pyenv를 설치</h3>
+<h5 id="homebrew--pyenv-">1. Homebrew를 통해 pyenv를 설치</h5>
 
-<p><code class="highlighter-rouge">shell
-$ brew install pyenv
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">pyenv</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="pyenv-init-bashrc--zsh---zshrc">2. pyenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h3>
+<h5 id="pyenv-init-bashrc--zsh---zshrc">2. pyenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h5>
 
-<p><code class="highlighter-rouge">shell
-$ echo 'eval "$(pyenv init -)"' &gt;&gt; ~/.bashrc
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">echo</span> <span class="s">'eval "$(pyenv init -)"'</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="pyenv--1">3. pyenv 사용해보기</h3>
+<h5 id="pyenv--1">3. pyenv 사용해보기</h5>
 
-<p><code class="highlighter-rouge">shell
-$ pyenv versions
-system (set by /Users/USERNAME/.pyenv/version)
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
+<span class="n">system</span> <span class="p">(</span><span class="nb">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">USERNAME</span><span class="o">/.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="pyenv--">4. pyenv 명령어 정리</h3>
+<h5 id="pyenv--">4. pyenv 명령어 정리</h5>
 
-<p><code class="highlighter-rouge">shell
-$ pyenv install &lt;version&gt;
-$ pyenv uninstall &lt;version&gt;
-$ pyenv install -list
-$ pyenv shell &lt;version&gt;
-$ pyenv activate &lt;environment&gt;
-$ pyenv deactivate &lt;environment&gt;
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">uninstall</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">install</span> <span class="o">-</span><span class="nb">list</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">activate</span> <span class="o">&lt;</span><span class="n">environment</span><span class="o">&gt;</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">deactivate</span> <span class="o">&lt;</span><span class="n">environment</span><span class="o">&gt;</span></code></pre></figure>
 
 <p>​</p>
 
-<h2 id="pyenv-virtualenv-">pyenv-virtualenv 설치하기</h2>
+<h3 id="pyenv-virtualenv-">pyenv-virtualenv 설치하기</h3>
 
-<h3 id="homebrew--pyenv-virtualenv-">1. Homebrew를 통해 pyenv-virtualenv를 설치</h3>
+<h5 id="homebrew--pyenv-virtualenv-">1. Homebrew를 통해 pyenv-virtualenv를 설치</h5>
 
-<p><code class="highlighter-rouge">shell
-$ brew install pyenv-virtualenv
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">pyenv</span><span class="o">-</span><span class="n">virtualenv</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="virtualenv-init-bashrc--zsh---zshrc">2. virtualenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h3>
+<h5 id="virtualenv-init-bashrc--zsh---zshrc">2. virtualenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h5>
 
-<p><code class="highlighter-rouge">shell
-$ echo 'eval "$(pyenv virtualenv-init -)"' &gt;&gt; ~/.bashrc
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">echo</span> <span class="s">'eval "$(pyenv virtualenv-init -)"'</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="pyenv-virtualenv--1">2. pyenv-virtualenv 사용해보기</h3>
+<h5 id="pyenv-virtualenv--1">2. pyenv-virtualenv 사용해보기</h5>
 
-<p><code class="highlighter-rouge">shell
-# pyenv virtualenv [python version] [myname]
-$ pyenv virtualenv 2.7.11 python2
-$ pyenv virtualenv 3.5.1 python3
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># pyenv virtualenv [python version] [myname]</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="mf">2.7</span><span class="o">.</span><span class="mi">11</span> <span class="n">python2</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="mf">3.5</span><span class="o">.</span><span class="mi">1</span> <span class="n">python3</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="virtualenv--">2. virtualenv 명령어 정리</h3>
+<h5 id="virtualenv--">2. virtualenv 명령어 정리</h5>
 
-<p><code class="highlighter-rouge">shell
-$ pyenv virtualenv versions
-$ pyenv virtualenv [python version] [myname]
-$ pyenv shell [myname]
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="n">versions</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="p">[</span><span class="n">python</span> <span class="n">version</span><span class="p">]</span> <span class="p">[</span><span class="n">myname</span><span class="p">]</span>
+<span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="p">[</span><span class="n">myname</span><span class="p">]</span></code></pre></figure>
 
 <p>​</p>
 
-<h2 id="jupyter-notebook-">Jupyter Notebook 설치</h2>
+<h3 id="jupyter-notebook-">Jupyter Notebook 설치</h3>
 
-<p>이제 방금 설치했던 파이썬 2와 3 버전의 환경에 python, notebook, jupyter를 설치할 차례입니다.</p>
-
-<p>따라서 방금 설치한 환경을 각각 activate한 다음에 아래와 같은 명령어를 실행시켜야 합니다.</p>
-
-<p>​</p>
-
-<h3 id="pip-install-python2-python3--">1. pip install (python2, python3 각각 실행)</h3>
-
-<p><code class="highlighter-rouge">shell
-$ pip install ipython
-$ pip install notebook
-$ pip install jupyter
-</code></p>
+<p>이제 방금 설치했던 파이썬 2와 3 버전의 환경에 python, notebook, jupyter를 설치할 차례입니다.
+따라서 방금 설치한 환경을 각각 activate한 다음에 아래와 같은 명령어를 실행시켜야 합니다.</p>
 
 <p>​</p>
 
-<h3 id="jupyter-configuration-----">2. 초기 Jupyter configuration 파일 생성 (마찬가지로 각각 실행)</h3>
+<h5 id="pip-install-python2-python3--">1. pip install (python2, python3 각각 실행)</h5>
 
-<p><code class="highlighter-rouge">shell
-$ jupyter notebook --generate-config
-Installed kernelspec python3 in /Users/username/Library/Jupyter/kernels/python3
-</code></p>
-
-<p>​</p>
-
-<h3 id="jupyternotebookconfigpy-----">3. 생성된 jupyter_notebook_config.py 설정 (원하는 경우에만 커스텀 설정)</h3>
-
-<p>```shell
-$ vi /Users/username/Library/Jupyter/kernels/python3/jupyter_notebook_config.py</p>
-
-<h1 id="jupyternotebookconfigpy">jupyter_notebook_config.py</h1>
-<p>$ c.NotebookApp.ip = ‘*’
-$ c.NotebookApp.open_browser = False
-$ c.NotebookApp.port = 8888
-$ c.NotebookApp.password = [SHA password]
-```</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">ipython</span>
+<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">notebook</span>
+<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="ipykernel----">4. ipykernel 설정 (마찬가지로 각각 실행)</h3>
+<h5 id="jupyter-configuration-----">2. 초기 Jupyter configuration 파일 생성 (마찬가지로 각각 실행)</h5>
 
-<p><code class="highlighter-rouge">shell
-$ pyenv shell python2
-$ python -m ipykernel install --user
-Installed kernelspec python2 in /home/seen/.local/share/jupyter/kernels/python2
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">--</span><span class="n">generate</span><span class="o">-</span><span class="n">config</span>
+<span class="n">Installed</span> <span class="n">kernelspec</span> <span class="n">python3</span> <span class="ow">in</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">username</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python3</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="kerneljson-----">5. kernel.json 확인 (원하는 경우에만 커스텀 설정)</h3>
+<h5 id="jupyternotebookconfigpy-----">3. 생성된 jupyter_notebook_config.py 설정 (원하는 경우에만 커스텀 설정)</h5>
 
-<p><code class="highlighter-rouge">shell
-$ vi /home/seen/.local/share/jupyter/kernels/python2/kernel.json
-{
-  "display_name": "Python 2",
-  "language": "python",
-  "argv": [
-    "/home/seen/.pyenv/versions/py27/bin/python",
-    "-m",
-    "ipykernel",
-    "-f",
-    "{connection_file}"
-    ]
-  }
-}
-</code></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">username</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python3</span><span class="o">/</span><span class="n">jupyter_notebook_config</span><span class="o">.</span><span class="n">py</span>
+
+<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="s">'127.0.0.1'</span>
+<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">open_browser</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">8888</span>
+<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="p">[</span><span class="n">SHA</span> <span class="n">password</span><span class="p">]</span></code></pre></figure>
 
 <p>​</p>
 
-<h3 id="jupyter-notebook--1">6. jupyter notebook을 실행</h3>
+<h5 id="ipykernel----">4. ipykernel 설정 (마찬가지로 각각 실행)</h5>
 
-<p>```shell
-# 일반적인 경우
-$ jupyter notebook</p>
-
-<h1 id="background---">background로 실행하고 싶은 경우</h1>
-<p>$ nohup jupyter notebook &amp;</p>
-
-<h1 id="background----">background로 실행한 경우 프로세스 종료</h1>
-<p>$ ps -a
-37788 ttys000 0:00:00 …python (노트북을 실행한 프로세스)
-$ kill 37788
-```</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="n">python2</span>
+<span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ipykernel</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span>
+<span class="n">Installed</span> <span class="n">kernelspec</span> <span class="n">python2</span> <span class="ow">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">seen</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python2</span></code></pre></figure>
 
 <p>​</p>
 
-<h2 id="section">정리</h2>
+<h5 id="kerneljson-----">5. kernel.json 확인 (원하는 경우에만 커스텀 설정)</h5>
 
-<p>윈도우10 에서 아주 고생했던 환경설정이 맥 OS에서는 아주 간편하게 됩니다…</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">seen</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python2</span><span class="o">/</span><span class="n">kernel</span><span class="o">.</span><span class="n">json</span>
+<span class="p">{</span>
+  <span class="s">"display_name"</span><span class="p">:</span> <span class="s">"Python 2"</span><span class="p">,</span>
+  <span class="s">"language"</span><span class="p">:</span> <span class="s">"python"</span><span class="p">,</span>
+  <span class="s">"argv"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s">"/home/seen/.pyenv/versions/py27/bin/python"</span><span class="p">,</span>
+    <span class="s">"-m"</span><span class="p">,</span>
+    <span class="s">"ipykernel"</span><span class="p">,</span>
+    <span class="s">"-f"</span><span class="p">,</span>
+    <span class="s">"{connection_file}"</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
 
-<p>잘 안되거나 오류가 생기시면 댓글로 알려주시면 감사하겠습니다!</p>
+<p>​</p>
+
+<h5 id="jupyter-notebook--1">6. jupyter notebook을 실행</h5>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">jupyter</span> <span class="n">notebook</span>
+
+<span class="c"># background running</span>
+<span class="err">$</span> <span class="n">nohup</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">&amp;</span>
+
+<span class="c"># kill process</span>
+<span class="err">$</span> <span class="n">ps</span> <span class="o">-</span><span class="n">a</span>
+<span class="mi">37788</span> <span class="n">ttys000</span> <span class="mi">0</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="o">...</span><span class="n">python</span> <span class="p">(</span><span class="err">노트북을</span> <span class="err">실행한</span> <span class="err">프로세스</span><span class="p">)</span>
+<span class="err">$</span> <span class="n">kill</span> <span class="mi">37788</span></code></pre></figure>
+
+<p>​</p>
+
+<h3 id="section">정리</h3>
+
+<p>윈도우10 에서 아주 고생했던 환경설정이 맥 OS에서는 아주 간편하게 됩니다…
+잘 안되거나 오류가 생기시면 댓글로 알려주시면 감사하겠습니다!</p>
 
 <p>​</p>
 
@@ -308,7 +278,11 @@ $ kill 37788
 
 <ul>
   <li><a href="https://github.com/yyuu/pyenv">https://github.com/yyuu/pyenv</a></li>
-  <li><a href="https://github.com/yyuu/pyenv-virtualenv">https://github.com/yyuu/pyenv-virtualenv</a></li>
+  <li>
+    <p><a href="https://github.com/yyuu/pyenv-virtualenv">https://github.com/yyuu/pyenv-virtualenv</a></p>
+
+    <p>​</p>
+  </li>
 </ul>
 
 
@@ -357,6 +331,25 @@ $ kill 37788
 
             <!-- Add Disqus Comments -->
             
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
+        var disqus_identifier = '/jupyter-notebook-kernel';
+        var disqus_url = 'http://swalloow.github.io//jupyter-notebook-kernel';
+ 
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+
+            
 
         </footer>
 
@@ -371,7 +364,7 @@ $ kill 37788
         <a class="read-next-story " style="background-image: url(/assets/images/cover_develop.jpg)" href="/social-api-cognito">
             <section class="post">
                 <h2>다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</h2>
-                <p>최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다. 만약...</p>
+                <p>​ 최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다....</p>
             </section>
         </a>
     
