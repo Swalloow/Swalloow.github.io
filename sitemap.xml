@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://swalloow.github.io///pyml-intro2</loc>
+<loc>http://swalloow.github.io///decison-randomforest</loc>
 <lastmod>2017-02-10T19:18:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://swalloow.github.io///pyml-intro1</loc>
-<lastmod>2017-02-05T19:18:00+09:00</lastmod>
+<loc>http://swalloow.github.io///pyml-intro2</loc>
+<lastmod>2017-02-08T19:18:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://swalloow.github.io///decison-randomforest</loc>
+<loc>http://swalloow.github.io///pyml-intro1</loc>
 <lastmod>2017-02-05T19:18:00+09:00</lastmod>
 </url>
 <url>
@@ -80,12 +80,6 @@
 </url>
 <url>
 <loc>http://swalloow.github.io///tag/DataEngineering/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page2/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page3/</loc>
 </url>
 <url>
 <loc>http://swalloow.github.io///google0db23fb3261b8e88.html</loc>

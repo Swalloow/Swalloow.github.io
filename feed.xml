@@ -8,13 +8,28 @@
     
       
       <item>
-        <title>머신러닝을 시작하기 위한 기초 지식 (2)</title>
+        <title>DecisionTree와 RandomForest에 대하여</title>
         
           <description>&lt;p&gt;​&lt;/p&gt;
 
 </description>
         
         <pubDate>Fri, 10 Feb 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//decison-randomforest</link>
+        <guid isPermaLink="true">http://swalloow.github.io//decison-randomforest</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>머신러닝을 시작하기 위한 기초 지식 (2)</title>
+        
+          <description>&lt;p&gt;​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Wed, 08 Feb 2017 19:18:00 +0900</pubDate>
         <link>
         http://swalloow.github.io//pyml-intro2</link>
         <guid isPermaLink="true">http://swalloow.github.io//pyml-intro2</guid>
@@ -33,21 +48,6 @@
         <link>
         http://swalloow.github.io//pyml-intro1</link>
         <guid isPermaLink="true">http://swalloow.github.io//pyml-intro1</guid>
-      </item>
-      
-    
-      
-      <item>
-        <title>DecisionTree와 RandomForest에 대하여</title>
-        
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
-        
-        <pubDate>Sun, 05 Feb 2017 19:18:00 +0900</pubDate>
-        <link>
-        http://swalloow.github.io//decison-randomforest</link>
-        <guid isPermaLink="true">http://swalloow.github.io//decison-randomforest</guid>
       </item>
       
     
