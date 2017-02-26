@@ -126,17 +126,19 @@
             <p>​   ​</p>
 
 <p>맥북을 사용하면서 가장 좋았던 점은 기본 운영체제가 유닉스 계열이다보니,
-모든 것이 커멘드라인으로 해결된다는 점이었다. 특히 쉘 스크립트를 활용하면 간단히 자동화도 구현할 수 있다.
+모든 것이 커멘드라인으로 해결된다는 점이었다. 특히 쉘 스크립트를 활용하면 간단한 자동화도 구현할 수 있다.
 따라서, 이번 포스팅에서는 자동화를 위한 쉘 스크립트 문법을 정리해보려 한다.</p>
 
 <p>​   ​</p>
 
-<h2 id="shell-script">Shell Script</h2>
+<h2 id="section">쉘 스크립트란?</h2>
 
 <p>문법에 대해 알기 이전에 쉘 스크립트가 어떤 역할을 하는지 알아야 한다.
-우리의 운영체제는</p>
+기본적으로 우리가 사용하는 운영체제는 하드웨어 제어, CPU 스케줄링 등 많은 역할을 수행한다.
+쉘은 운영체제 위에서 다양한 운영 체제 기능과 서비스를 구현하는 인터페이스를 제공하는 프로그램이다.
+즉, 사용자와 맞닿아 있기 때문에 우리는 쉘의 명령어를 통해 직접 조작할 수 있는 것이다.</p>
 
-<p>아래는 쉘 스크립트에 관련된 명령어이다.</p>
+<p>아래는 쉘 스크립트와 관련된 기본 명령어이다.</p>
 
 <ul>
   <li>스크립트 실행 : sh {script.sh}</li>
@@ -145,7 +147,7 @@
 
 <p>​   ​</p>
 
-<h3 id="section">변수의 기본</h3>
+<h4 id="section-1">변수의 기본</h4>
 
 <ul>
   <li>변수에 넣는 모든 값은 문자열로 취급한다.</li>
@@ -154,26 +156,17 @@
 
 <p>​   ​</p>
 
-<h3 id="section-1">연산자</h3>
+<h4 id="section-2">연산자</h4>
 
 <ul>
-  <li>AND : &amp;&amp;</li>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>OR :</td>
-          <td> </td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
+  <li>OR : <code class="highlighter-rouge">||</code></li>
+  <li>AND : <code class="highlighter-rouge">&amp;&amp;</code></li>
   <li>문자열 비교 : “string1”=”string2”</li>
 </ul>
 
 <p>​   ​</p>
 
-<h3 id="if-else-">if-else 문</h3>
+<h4 id="if-else-">if-else 문</h4>
 
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">if</span> <span class="o">[</span> <span class="k">case</span> <span class="o">]</span>; <span class="k">then
   </span><span class="nb">true
@@ -183,28 +176,26 @@
 
 <p>​   ​</p>
 
-<h3 id="case-">case 문</h3>
+<h4 id="case-">case 문</h4>
 
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">case</span> <span class="nv">$answer</span> <span class="k">in
   </span>yes<span class="p">)</span>
   	<span class="nb">echo</span> <span class="s2">"yes"</span>
   no<span class="o">)</span>
   	<span class="nb">echo</span> <span class="s2">"no"</span>
-  <span class="k">*</span><span class="o">)</span>
-  	<span class="nb">echo</span> <span class="s2">"others"</span>
 <span class="k">esac</span></code></pre></figure>
 
 <p>​   ​</p>
 
-<h3 id="for-in-">for-in 문</h3>
+<h4 id="for-in-">for-in 문</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">for </span>fname <span class="k">in</span> <span class="k">$(</span>ls <span class="k">*</span>.sh<span class="k">)</span>; <span class="k">do
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">for </span>fname <span class="k">in</span> <span class="k">$(</span>ls .sh<span class="k">)</span>; <span class="k">do
   </span><span class="nb">echo</span> <span class="s2">"fname"</span>
 <span class="k">done</span></code></pre></figure>
 
 <p>​   ​</p>
 
-<h3 id="while-">while 문</h3>
+<h4 id="while-">while 문</h4>
 
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">while</span> <span class="o">[</span> 1 <span class="o">]</span>; <span class="k">do
   </span><span class="nb">echo</span> <span class="s2">"fname"</span>
