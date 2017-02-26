@@ -125,92 +125,35 @@
 
             <p>​   ​</p>
 
-<p>맥북을 사용하면서 가장 좋았던 점은 기본 운영체제가 유닉스 계열이다보니,
-모든 것이 커멘드라인으로 해결된다는 점이었다. 특히 쉘 스크립트를 활용하면 간단히 자동화도 구현할 수 있다.
-따라서, 이번 포스팅에서는 자동화를 위한 쉘 스크립트 문법을 정리해보려 한다.</p>
+<p>Screen은 여러 프로세스 간에 물리적 콘솔을 다중화하는데 사용할 수있는 전체 화면 소프트웨어 프로그램이다.
+하나의 단일 터미널 창 관리자에서 여러 개의 개별 터미널 인스턴스를 열 수 있는 사용자를 제공한다.</p>
+
+<p>사실 다중 터미널이 필요한거라면 tmux나 iTerm이 더 편하다고 생각한다.
+하지만, 스크린은 서버에서 백드라운드 데몬을 돌려야 할 때 아주 유용하다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">screen -S pingsession -d -m -L ping localhost</code></pre></figure>
+
+<p>이 명령은 화면에 새로운 세션 (-m)을 만들고, 출력 (-L)을 기록하고, 즉시 분리 (-d) 명령이 실행되도록 지시한다.
+로그는 현재 디렉토리의 screenlog.n 에 기록된다.</p>
+
+<p>여기서 n은 화면 세션의 “창” 번호이다. 로깅은 정기적으로 버퍼링되고 플러시되며 로그 파일을 기록 할 수 있다.
+화면 세션은 프로세스 제어, 즉 실행중인 데몬 중지 등을 지원한다.
+이를 수행하기 위해 화면 세션은 세션 이름 (-S 세션 이름)으로 시작되어야하며 나중에 이름과 함께 종료 될 수 있다.</p>
 
 <p>​   ​</p>
 
-<h2 id="shell-script">Shell Script</h2>
-
-<p>문법에 대해 알기 이전에 쉘 스크립트가 어떤 역할을 하는지 알아야 한다.
-우리의 운영체제는</p>
-
-<p>아래는 쉘 스크립트에 관련된 명령어이다.</p>
+<h2 id="screen--">Screen 명령어 정리</h2>
 
 <ul>
-  <li>스크립트 실행 : sh {script.sh}</li>
-  <li>스크립트 실행가능 지정 : chmod +x {script.sh}</li>
+  <li>ctrl + a / d : screen 나갈 때</li>
+  <li>ctrl + a / k : screen 죽일 때</li>
+  <li>screen -ls : screen 목록 확인</li>
+  <li>screen -r “name” : screen 재접속</li>
+  <li>screen -S “name” : screen 생성</li>
+  <li>~/.screenrc : 설정파일을 확인</li>
 </ul>
 
 <p>​   ​</p>
-
-<h2 id="section">변수의 기본</h2>
-
-<ul>
-  <li>변수에 넣는 모든 값은 문자열로 취급한다.</li>
-  <li>변수이름은 대소문자 구분, ‘=’ 좌우에는 공백 유지</li>
-</ul>
-
-<p>​   ​</p>
-
-<h2 id="section-1">연산자</h2>
-
-<ul>
-  <li>AND : &amp;&amp;</li>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>OR :</td>
-          <td> </td>
-        </tr>
-      </tbody>
-    </table>
-  </li>
-  <li>문자열 비교 : “string1”=”string2”</li>
-</ul>
-
-<p>​   ​</p>
-
-<h3 id="if-else-">if-else 문</h3>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">if</span> <span class="o">[</span> <span class="k">case</span> <span class="o">]</span>; <span class="k">then
-  </span><span class="nb">true
-</span><span class="k">else
-  </span><span class="nb">false
-</span><span class="k">fi</span></code></pre></figure>
-
-<p>​   ​</p>
-
-<h3 id="case-">case 문</h3>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">case</span> <span class="nv">$answer</span> <span class="k">in
-  </span>yes<span class="p">)</span>
-  	<span class="nb">echo</span> <span class="s2">"yes"</span>
-  no<span class="o">)</span>
-  	<span class="nb">echo</span> <span class="s2">"no"</span>
-  <span class="k">*</span><span class="o">)</span>
-  	<span class="nb">echo</span> <span class="s2">"others"</span>
-<span class="k">esac</span></code></pre></figure>
-
-<p>​   ​</p>
-
-<h3 id="for-in-">for-in 문</h3>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">for </span>fname <span class="k">in</span> <span class="k">$(</span>ls <span class="k">*</span>.sh<span class="k">)</span>; <span class="k">do
-  </span><span class="nb">echo</span> <span class="s2">"fname"</span>
-<span class="k">done</span></code></pre></figure>
-
-<p>​   ​</p>
-
-<h3 id="while-">while 문</h3>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">while</span> <span class="o">[</span> 1 <span class="o">]</span>; <span class="k">do
-  </span><span class="nb">echo</span> <span class="s2">"fname"</span>
-<span class="k">done</span></code></pre></figure>
-
-<p>​</p>
 
 
         </section>
