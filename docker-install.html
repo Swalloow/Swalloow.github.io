@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>자주 사용하는 리눅스 명령어 정리 (3) - Screen</title>
+    <title>Docker 간편한 설치부터 실행까지</title>
     <meta name="description" content="Swalloow Blog - About Data Science, Data Engineering" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -91,7 +91,7 @@
 <!-- Everything inside the #post tags pulls data from the post -->
 <!-- #post -->
 
-<header class="main-header post-head " style="background-image: url(/assets/images/cover_develop.jpg) ">
+<header class="main-header post-head " style="background-image: url(/assets/images/docker-logo.png) ">
     <nav class="main-nav  overlay  clearfix">
         <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
@@ -105,10 +105,10 @@
     <article class="post tag-Develop">
 
         <header class="post-header">
-            <h1 class="post-title">자주 사용하는 리눅스 명령어 정리 (3) - Screen</h1>
+            <h1 class="post-title">Docker 간편한 설치부터 실행까지</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-02-18">18 Feb 2017</time>
+            <time class="post-date" datetime="2017-02-21">21 Feb 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -125,33 +125,85 @@
 
             <p>​   ​</p>
 
-<p>Screen은 여러 프로세스 간에 물리적 콘솔을 다중화하는데 사용할 수있는 전체 화면 소프트웨어 프로그램이다.
-하나의 단일 터미널 창 관리자에서 여러 개의 개별 터미널 인스턴스를 열 수 있는 사용자를 제공한다.</p>
+<p>Docker는 오픈소스 컨테이너입니다. 기존의 가상머신과 비슷하면서도 훨씬 가벼운 형태라고 볼 수 있습니다. 그렇다면 VMWare, VirtualBox와 같은 기존의 가상머신과 Docker Container가 어떻게 다른지 살펴보겠습니다.</p>
 
-<p>사실 다중 터미널이 필요한거라면 tmux나 iTerm이 더 편하다고 생각한다.
-하지만, 스크린은 서버에서 백드라운드 데몬을 돌려야 할 때 아주 유용하다.</p>
+<p><img src="/assets/images/vm-docker.png" alt="vm-docker" /></p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">screen -S pingsession -d -m -L ping localhost</code></pre></figure>
+<p>먼저 기존의 가상머신(Virtual Machine)을 보면 Hypervisor(VMWare, VirtualBox…) 위에 GuestOS가 올라간 형태임을 알 수 있습니다. OS가 올라갔다는 것은 말 그대로 x86 하드웨어가 그대로 가상화 된 것입니다. 가상머신을 설치하고 메모리 영역을 확인해보면 호스트 메모리와 게스트 메모리를 볼 수 있는데, 게스트 메모리를 얼마나 할당할 것인지에 따라 가상머신의 성능이 변하기도 합니다.</p>
 
-<p>이 명령은 화면에 새로운 세션 (-m)을 만들고, 출력 (-L)을 기록하고, 즉시 분리 (-d) 명령이 실행되도록 지시한다.
-로그는 현재 디렉토리의 screenlog.n 에 기록된다.</p>
-
-<p>여기서 n은 화면 세션의 “창” 번호이다. 로깅은 정기적으로 버퍼링되고 플러시되며 로그 파일을 기록 할 수 있다.
-화면 세션은 프로세스 제어, 즉 실행중인 데몬 중지 등을 지원한다.
-이를 수행하기 위해 화면 세션은 세션 이름 (-S 세션 이름)으로 시작되어야하며 나중에 이름과 함께 종료 될 수 있다.</p>
+<p>반면에 Docker는 Docker Engine 위에 Application이 올라간 것을 볼 수 있습니다. 즉, Docker Engine을 통해 Host OS 위에서 컨테이너가 생성되는 것입니다. 여기서 컨테이너는 리눅스 커널의 <code class="highlighter-rouge">cgroups, namespaces</code> 등의 기능을 사용해 가상공간을 생성할 수 있도록 하는 기능입니다.</p>
 
 <p>​   ​</p>
 
-<h2 id="screen--">Screen 명령어 정리</h2>
+<h4 id="section">컨테이너가 가상머신보다 뛰어난 점은?</h4>
 
-<ul>
-  <li>ctrl + a / d : screen 나갈 때</li>
-  <li>ctrl + a / k : screen 죽일 때</li>
-  <li>screen -ls : screen 목록 확인</li>
-  <li>screen -r “name” : screen 재접속</li>
-  <li>screen -S “name” : screen 생성</li>
-  <li>~/.screenrc : 설정파일을 확인</li>
-</ul>
+<p>기본적으로 가상머신을 사용하게 되면 상세 설정을 해주지 않는 한 메모리, CPU 코어, 프로세스 등 각종 성능 손실이 발생합니다. 반면에 컨테이너는 Host OS의 커널은 그대로 사용하고 일부분만 패키징 되기 때문에 용량이 크게 줄어들 뿐만 아니라, 프로세스 영역도 기존의 OS와 공유해서 사용합니다. 정리하자면, <u>컨테이너는 하드웨어를 가상화하는 계층이 없기 때문에 메모리 접근, 파일시스템, 네트워크 속도가 가상 머신에 비해 월등히 빠릅니다</u>.</p>
+
+<p>​   ​</p>
+
+<h4 id="boot2docker">Boot2Docker</h4>
+
+<p>앞서 말했던 것 처럼 Docker는 리눅스 커널의 컨테이너 기능을 기반으로 하기 때문에 Windows나 OS X 환경에서 실행할 수 없습니다. 그래서 이를 지원하기 위해 나온 것이 <strong>Boot2Docker</strong> 입니다. Boot2Docker는 가상머신 안에 리눅스를 설치하고 Docker를 실행하는 방식으로 이를 해결했습니다.</p>
+
+<p>하지만 15년 9월쯤 부터 <strong>boot2docker-cil이 deprecated</strong> 되었습니다. 이제 공식 레퍼런스를 보면 toolbox를 이용하여 설치하는 방법을 권장하고 있으며 기존의 boot2docker에서 이전하는 방법에 대해서도 설명하고 있습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="os-x-docker-">OS X에서 Docker 설치</h2>
+
+<p>Docker를 설치하는 방법으로는 크게 2가지가 있습니다. 첫번째는 Docker for Mac으로 설치하는 방법이고, 두번째는 Docker Toolbox로 설치하는 방법입니다.</p>
+
+<p>​   ​</p>
+
+<h4 id="docker-for-mac-docker-toolbox-">Docker for Mac과 Docker Toolbox의 차이점은?</h4>
+
+<p>가장 큰 차이점은 사용하는 가상머신이 다르다는 점입니다. Docker Toolbox 같은 경우에는 Boot2Docker에서 사용해왔던 VirtualBox를 그대로 사용합니다. 반면에 Docker for Mac은 <strong>HyperKit</strong> 이라는 macOS를 위한 경량화 가상머신을 사용합니다.</p>
+
+<p><img src="/assets/images/docker-formac.png" alt="docker-formac" /></p>
+
+<p>Docker Toolbox를 사용하는 경우, 위와 같이 <code class="highlighter-rouge">/usr/local/bin</code> 폴더에 docker, docker-compose, docker-machine이 설치됩니다. 그리고 가상화는 VirtualBox를 통해 이루어지게 됩니다.</p>
+
+<p><img src="/assets/images/docker-toolbox.png" alt="docker-toolbox" /></p>
+
+<p>반면에 Docker for Mac은 <code class="highlighter-rouge">Applications</code> 폴더 내에 app으로 관리할 수 있게 됩니다. 그리고 가상화는 오라클의 <strong>VirtualBox</strong> 을 통해 이루어집니다. 따라서, 둘다 설치할 필요가 없습니다.</p>
+
+<p>만일 전부터 Docker를 써왔고, VirtualBox를 꼭 써야한다면, Docker Toolbox를 설치하시면 됩니다. 또는 “나는 App으로 관리하는게 편하다” 라고 한다면 Docker for Mac을 사용하시면 됩니다. 자세한 내용은 다음을 참고하시면 됩니다. <a href="https://docs.docker.com/docker-for-mac/docker-toolbox/">https://docs.docker.com/docker-for-mac/docker-toolbox/</a></p>
+
+<p>만일 둘 다 설치했고, Docker toolbox를 제거하고 싶다면 다음 링크를 참고하시면 됩니다.
+<a href="https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox">https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox</a></p>
+
+<p>​   ​</p>
+
+<h2 id="docker-">Docker 실행</h2>
+
+<p>저는 Docker for Mac을 사용하여 설치했습니다.</p>
+
+<p><img src="/assets/images/docker-run.png" alt="docker-run" /></p>
+
+<p>어플리케이션 데몬을 실행시키면 이제 docker 명령어를 사용할 수 있게 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker version
+docker info</code></pre></figure>
+
+<p>이제 한번 테스트 해볼 시간입니다.
+아래의 명령어를 통해 nginx 이미지를 만들고 80번 포트에 웹 서버를 띄워 보겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker run -d -p 80:80 --name webserver nginx</code></pre></figure>
+
+<p><img src="/assets/images/docker-test.png" alt="docker-test" /></p>
+
+<p>실행되고 있는 웹 서버를 중지하고 컨테이너를 삭제해보겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker ps
+docker stop webserver
+docker rm -f webserver</code></pre></figure>
+
+<p>아직 이미지는 남아있는 상태입니다. 이미지까지 삭제해줍니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker images
+docker rmi nginx</code></pre></figure>
+
+<p>자세한 Docker 사용법이나 명령어는 다음에 정리하도록 하겠습니다.</p>
 
 <p>​   ​</p>
 
@@ -185,15 +237,15 @@
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=자주 사용하는 리눅스 명령어 정리 (3) - Screen&amp;url=http://swalloow.github.io/linux3"
+                <a class="icon-twitter" href="http://twitter.com/share?text=Docker 간편한 설치부터 실행까지&amp;url=http://swalloow.github.io/docker-install"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/linux3"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/docker-install"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/linux3"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/docker-install"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -205,8 +257,8 @@
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/linux3';
-        var disqus_url = 'http://swalloow.github.io//linux3';
+        var disqus_identifier = '/docker-install';
+        var disqus_url = 'http://swalloow.github.io//docker-install';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -231,20 +283,13 @@
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/docker-logo.png)" href="/docker-install">
-            <section class="post">
-                <h2>Docker 간편한 설치부터 실행까지</h2>
-                <p>​ ​ Docker는 오픈소스 컨테이너입니다. 기존의 가상머신과 비슷하면서도 훨씬 가벼운 형태라고 볼 수 있습니다. 그렇다면...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev " style="background-image: url(/assets/images/cover_develop.jpg)" href="/linux2">
+        <a class="read-next-story prev " style="background-image: url(/assets/images/cover_develop.jpg)" href="/linux3">
             <section class="post">
-                <h2>자주 사용하는 리눅스 명령어 정리 (2) - 쉘 스크립트</h2>
-                <p>​ ​ 맥북을 사용하면서 가장 좋았던 점은 기본 운영체제가 유닉스 계열이다보니, 모든 것이 커멘드라인으로 해결된다는...</p>
+                <h2>자주 사용하는 리눅스 명령어 정리 (3) - Screen</h2>
+                <p>​ ​ Screen은 여러 프로세스 간에 물리적 콘솔을 다중화하는데 사용할 수있는 전체 화면 소프트웨어 프로그램이다....</p>
             </section>
         </a>
     

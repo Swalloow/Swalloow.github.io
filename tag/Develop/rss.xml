@@ -12,6 +12,100 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Docker 간편한 설치부터 실행까지</title>
+	  <link>//docker-install</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-02-21T19:18:00+09:00</pubDate>
+	  <guid>//docker-install</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>Docker는 오픈소스 컨테이너입니다. 기존의 가상머신과 비슷하면서도 훨씬 가벼운 형태라고 볼 수 있습니다. 그렇다면 VMWare, VirtualBox와 같은 기존의 가상머신과 Docker Container가 어떻게 다른지 살펴보겠습니다.</p>
+
+<p><img src="/assets/images/vm-docker.png" alt="vm-docker" /></p>
+
+<p>먼저 기존의 가상머신(Virtual Machine)을 보면 Hypervisor(VMWare, VirtualBox…) 위에 GuestOS가 올라간 형태임을 알 수 있습니다. OS가 올라갔다는 것은 말 그대로 x86 하드웨어가 그대로 가상화 된 것입니다. 가상머신을 설치하고 메모리 영역을 확인해보면 호스트 메모리와 게스트 메모리를 볼 수 있는데, 게스트 메모리를 얼마나 할당할 것인지에 따라 가상머신의 성능이 변하기도 합니다.</p>
+
+<p>반면에 Docker는 Docker Engine 위에 Application이 올라간 것을 볼 수 있습니다. 즉, Docker Engine을 통해 Host OS 위에서 컨테이너가 생성되는 것입니다. 여기서 컨테이너는 리눅스 커널의 <code class="highlighter-rouge">cgroups, namespaces</code> 등의 기능을 사용해 가상공간을 생성할 수 있도록 하는 기능입니다.</p>
+
+<p>​   ​</p>
+
+<h4 id="section">컨테이너가 가상머신보다 뛰어난 점은?</h4>
+
+<p>기본적으로 가상머신을 사용하게 되면 상세 설정을 해주지 않는 한 메모리, CPU 코어, 프로세스 등 각종 성능 손실이 발생합니다. 반면에 컨테이너는 Host OS의 커널은 그대로 사용하고 일부분만 패키징 되기 때문에 용량이 크게 줄어들 뿐만 아니라, 프로세스 영역도 기존의 OS와 공유해서 사용합니다. 정리하자면, <u>컨테이너는 하드웨어를 가상화하는 계층이 없기 때문에 메모리 접근, 파일시스템, 네트워크 속도가 가상 머신에 비해 월등히 빠릅니다</u>.</p>
+
+<p>​   ​</p>
+
+<h4 id="boot2docker">Boot2Docker</h4>
+
+<p>앞서 말했던 것 처럼 Docker는 리눅스 커널의 컨테이너 기능을 기반으로 하기 때문에 Windows나 OS X 환경에서 실행할 수 없습니다. 그래서 이를 지원하기 위해 나온 것이 <strong>Boot2Docker</strong> 입니다. Boot2Docker는 가상머신 안에 리눅스를 설치하고 Docker를 실행하는 방식으로 이를 해결했습니다.</p>
+
+<p>하지만 15년 9월쯤 부터 <strong>boot2docker-cil이 deprecated</strong> 되었습니다. 이제 공식 레퍼런스를 보면 toolbox를 이용하여 설치하는 방법을 권장하고 있으며 기존의 boot2docker에서 이전하는 방법에 대해서도 설명하고 있습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="os-x-docker-">OS X에서 Docker 설치</h2>
+
+<p>Docker를 설치하는 방법으로는 크게 2가지가 있습니다. 첫번째는 Docker for Mac으로 설치하는 방법이고, 두번째는 Docker Toolbox로 설치하는 방법입니다.</p>
+
+<p>​   ​</p>
+
+<h4 id="docker-for-mac-docker-toolbox-">Docker for Mac과 Docker Toolbox의 차이점은?</h4>
+
+<p>가장 큰 차이점은 사용하는 가상머신이 다르다는 점입니다. Docker Toolbox 같은 경우에는 Boot2Docker에서 사용해왔던 VirtualBox를 그대로 사용합니다. 반면에 Docker for Mac은 <strong>HyperKit</strong> 이라는 macOS를 위한 경량화 가상머신을 사용합니다.</p>
+
+<p><img src="/assets/images/docker-formac.png" alt="docker-formac" /></p>
+
+<p>Docker Toolbox를 사용하는 경우, 위와 같이 <code class="highlighter-rouge">/usr/local/bin</code> 폴더에 docker, docker-compose, docker-machine이 설치됩니다. 그리고 가상화는 VirtualBox를 통해 이루어지게 됩니다.</p>
+
+<p><img src="/assets/images/docker-toolbox.png" alt="docker-toolbox" /></p>
+
+<p>반면에 Docker for Mac은 <code class="highlighter-rouge">Applications</code> 폴더 내에 app으로 관리할 수 있게 됩니다. 그리고 가상화는 오라클의 <strong>VirtualBox</strong> 을 통해 이루어집니다. 따라서, 둘다 설치할 필요가 없습니다.</p>
+
+<p>만일 전부터 Docker를 써왔고, VirtualBox를 꼭 써야한다면, Docker Toolbox를 설치하시면 됩니다. 또는 “나는 App으로 관리하는게 편하다” 라고 한다면 Docker for Mac을 사용하시면 됩니다. 자세한 내용은 다음을 참고하시면 됩니다. <a href="https://docs.docker.com/docker-for-mac/docker-toolbox/">https://docs.docker.com/docker-for-mac/docker-toolbox/</a></p>
+
+<p>만일 둘 다 설치했고, Docker toolbox를 제거하고 싶다면 다음 링크를 참고하시면 됩니다.
+<a href="https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox">https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox</a></p>
+
+<p>​   ​</p>
+
+<h2 id="docker-">Docker 실행</h2>
+
+<p>저는 Docker for Mac을 사용하여 설치했습니다.</p>
+
+<p><img src="/assets/images/docker-run.png" alt="docker-run" /></p>
+
+<p>어플리케이션 데몬을 실행시키면 이제 docker 명령어를 사용할 수 있게 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker version
+docker info</code></pre></figure>
+
+<p>이제 한번 테스트 해볼 시간입니다.
+아래의 명령어를 통해 nginx 이미지를 만들고 80번 포트에 웹 서버를 띄워 보겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker run -d -p 80:80 --name webserver nginx</code></pre></figure>
+
+<p><img src="/assets/images/docker-test.png" alt="docker-test" /></p>
+
+<p>실행되고 있는 웹 서버를 중지하고 컨테이너를 삭제해보겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker ps
+docker stop webserver
+docker rm -f webserver</code></pre></figure>
+
+<p>아직 이미지는 남아있는 상태입니다. 이미지까지 삭제해줍니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker images
+docker rmi nginx</code></pre></figure>
+
+<p>자세한 Docker 사용법이나 명령어는 다음에 정리하도록 하겠습니다.</p>
+
+<p>​   ​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>자주 사용하는 리눅스 명령어 정리 (3) - Screen</title>
 	  <link>//linux3</link>
 	  <author>Swalloow</author>
@@ -328,6 +422,128 @@ cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
 	</item>
 
 	<item>
+	  <title>다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</title>
+	  <link>//social-api-cognito</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-28T19:18:00+09:00</pubDate>
+	  <guid>//social-api-cognito</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다.
+만약 우리가 만들어야 할 어플리케이션이 다양한 소셜 로그인 API와 연동하여 사용자를 관리해야한다면, OAuth 인증, 보안 등 개발할 때 고려해야할 요소가 많을 것이다.</p>
+
+<p>따라서, 이 글을 통해 최근 유행하는 클라우드 기반 웹 어플리케이션 설계 방식을 아주 간단히 보고 적합한 설계 방식을 선택하는데 도움이 되었으면 좋겠다.</p>
+
+<p>OAuth2.0에 대해서는 이전에 쓴 글을 참조하길 바란다. <a href="http://swalloow.github.io/about-oauth2/">http://swalloow.github.io/about-oauth2/</a></p>
+
+<p>​</p>
+
+<h2 id="oauth-20-grant-flow">1. OAuth 2.0 Grant Flow</h2>
+
+<p><img src="assets/images/OAuth2 Grant Flow1.png" alt="OAuth2 Grant Flow1" /></p>
+
+<p>주로 자바스크립트 기반 웹 어플리케이션에서 많이 사용하는 방식이다. (스크립트 보안 유출 고려)
+최근에는 모바일에서도 많이 사용한다고 한다.</p>
+
+<p>​</p>
+
+<p><img src="assets/images/OAuth2 Grant Flow2.png" alt="OAuth2 Grant Flow2" /></p>
+
+<p>이 방식은 직접 ID, PW 보내는 방식으로 파트너나 자사 시스템에 사용한다.
+기존의 HTTP 방식을 그대로 사용하기 용이하다.</p>
+
+<p>위와 같은 방식을 사용했을 때의 장점은 OAuth 2.0을 몸소 체험할 수 있다는 것이다.
+반면에, 단점은 다음과 같다.</p>
+
+<ul>
+  <li>사용자 데이터에 대한 보안을 고려해야 한다.</li>
+  <li>Facebook, Twitter 모두 각자에게 최적화 되어 있어 확장성을 고려한 인증 인터페이스를 만들기 힘들다.</li>
+  <li>Token만 존재하기 때문에 사용자 관리, 사용자를 구분하기가 힘들다.</li>
+  <li>모바일과 웹 어플리케이션이 모두 존재한다면, 인증 및 디바이스 간 동기화 처리 문제가 있다.</li>
+  <li>
+    <p>시스템 충돌과 네트워크 연결 문제 또한 감당해야 한다.</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="aws-ec2--cognito-baas">2. AWS EC2 + Cognito (BaaS)</h2>
+
+<p><img src="assets/images/AWS Authentication process.png" alt="AWS Authentication process" /></p>
+
+<p>사용자 로그인, 인증 처리에 대해 AWS Cognito를 사용한 방법이다.
+기본적인 EC2 인스턴스에 Cognito만 추가해서 사용하면 된다.</p>
+
+<p>이러한 방법을 적용했을 때의 단점은 일단 클라우드에 요금을 내야 한다는 것이다.
+또한, AWS Cognito에서 지원하지 않는 카카오 로그인 같은 경우 복잡한 과정이 필요하다.
+반면에 장점은 다음과 같다.</p>
+
+<ul>
+  <li>SAML을 통한 보안 문제 해결.</li>
+  <li>놀라운 확장성. (SOCIAL IDENTITY를 추가하기만 하면 끝, 모바일 앱까지 확장 가능)</li>
+  <li>편리한 사용자 관리. (USER POOL 기능 제공)</li>
+  <li>인증 및 디바이스간 동기화 처리. (Cognito Sync가 알아서 해준다)</li>
+  <li>시스템 충돌과 네트워크 연결 문제. (Cognito Sync가 알아서 해준다)</li>
+  <li>
+    <p>위와 같은 문제를 신경 안쓰므로 로직에 집중해서 빠른 개발이 가능하다.</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="aws-serverless-architecture-baas--faas">3. AWS Serverless Architecture (BaaS + FaaS)</h2>
+
+<p><img src="assets/images/AWS WebApp Application Architecture.png" alt="AWS WebApp Application Architecture" /></p>
+
+<p>AWS API Gateway와 Lambda를 통한 서버리스 아키텍쳐에 대해서는 아래 링크를 참고하자.
+서버리스 아키텍쳐는 서버를 관리할 필요 없이 특정 이벤트에 반응하는 함수를 등록하고, 해당 이벤트가 발생하면 함수가 실행되는 구조이다.
+장점은 다음과 같다.</p>
+
+<ul>
+  <li>서버에 고성능이 필요할 시에는 비용이 절감된다.</li>
+  <li>서비스 지향적인 설계가 가능하다. (마이크로 아키텍쳐)</li>
+  <li>자동 스케일링</li>
+  <li>코드 생산에 집중할 수 있고, 유연한 배포 및 테스트가 가능하다.</li>
+</ul>
+
+<p>반면에 단점은 다음과 같다.</p>
+
+<ul>
+  <li>AWS 과금이 많이 나올 수 있다. (쓸데없이 많이 고려한 설계일수도)</li>
+  <li>
+    <p>API Gateway, Lambda에 대한 러닝 커브가 상당하다. (많은 스터디 필요)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="section">결론</h2>
+
+<p>최근에 유행하는 서버리스 아키텍쳐나 마이크로 아키텍쳐를 무조건 도입해야하는 것은 절대 아니다.
+각자 프로젝트의 상황에 맞는 방법을 선택하는게 답인듯하다.</p>
+
+<p>​​</p>
+
+<h2 id="section-1">참고하면 좋은 문서들</h2>
+
+<ul>
+  <li><a href="https://medium.com/@parkgeunhack/%EC%95%8C%EB%A0%89%EC%8A%A4%EC%9D%98-%EC%9D%B4%EC%95%BC%EA%B8%B0-%EA%B7%B8%EB%A6%AC%EA%B3%A0-%EC%84%9C%EB%B2%84-%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80-c3aa12baaa75#.kkskaeaqa">박근핵닷컴 서버 개발일지</a></li>
+  <li><a href="https://aws.amazon.com/ko/cognito/?nc2=h_m1">AWS Cognito</a></li>
+  <li><a href="https://aws.amazon.com/ko/blogs/korea/category/amazon-cognito/">AWS Cognito Blog</a></li>
+  <li><a href="http://blog.aliencube.org/ko/2016/06/23/serverless-architectures/">Serverless-Architecture</a></li>
+  <li><a href="http://www.popit.kr/why-microservice/">Popit - 마이크로서비스 아키텍쳐의 장단점</a></li>
+  <li>
+    <p><a href="http://bcho.tistory.com/942">조대협 블로그 - OAuth 2.0 Architecture</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Jupyter Notebook 다중커널 설정하기</title>
 	  <link>//jupyter-notebook-kernel</link>
 	  <author>Swalloow</author>
@@ -500,119 +716,152 @@ cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
 	</item>
 
 	<item>
-	  <title>다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</title>
-	  <link>//social-api-cognito</link>
+	  <title>OAuth2에 대해 알아보자</title>
+	  <link>//about-oauth2</link>
 	  <author>Swalloow</author>
-	  <pubDate>2017-01-28T19:18:00+09:00</pubDate>
-	  <guid>//social-api-cognito</guid>
+	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
+	  <guid>//about-oauth2</guid>
 	  <description><![CDATA[
-	     <p>​</p>
+	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
 
-<p>최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다.
-만약 우리가 만들어야 할 어플리케이션이 다양한 소셜 로그인 API와 연동하여 사용자를 관리해야한다면, OAuth 인증, 보안 등 개발할 때 고려해야할 요소가 많을 것이다.</p>
+<p>​   ​</p>
 
-<p>따라서, 이 글을 통해 최근 유행하는 클라우드 기반 웹 어플리케이션 설계 방식을 아주 간단히 보고 적합한 설계 방식을 선택하는데 도움이 되었으면 좋겠다.</p>
+<h3 id="section">인증과 허가</h3>
 
-<p>OAuth2.0에 대해서는 이전에 쓴 글을 참조하길 바란다. <a href="http://swalloow.github.io/about-oauth2/">http://swalloow.github.io/about-oauth2/</a></p>
+<ol>
+  <li>Authentication : 인증</li>
+  <li>
+    <p>Authorization : 허가</p>
+
+    <p>​   ​</p>
+  </li>
+</ol>
+
+<p>일반 로그인은 사원이 63빌딩에 출입하는 것이라면, (사원증이 있어야 출입가능)</p>
+
+<p>OAuth는 1층에서 방문증을 수령한 후 63빌딩에 출입하는 것이다. (방문증만 있어도 출입가능)</p>
+
+<p>​   ​</p>
+
+<h2 id="oauth-10-">OAuth 1.0의 특징</h2>
+
+<p>기존의 다른 인증방식(OpenID)과 구분되는 특징은 크게 두 가지이다.</p>
+
+<ol>
+  <li>API 인증 시, 써드파티 어플리케이션에게 사용자의 비번을 노출하지 않고 인증할 수 있다는 점</li>
+  <li>
+    <p>인증(Authentication)과 API 권한(Authorization) 부여를 동시에 할 수 있다는 점</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h2 id="oauth-10--1">OAuth 1.0의 동작방식</h2>
+
+<p>OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한다.</p>
+
+<p>OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.</p>
+
+<p><img src="assets/images/oauth1_triangle.png" alt="oauth1_triangle" /></p>
+
+<p>우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.</p>
 
 <p>​</p>
 
-<h2 id="oauth-20-grant-flow">1. OAuth 2.0 Grant Flow</h2>
+<h3 id="outh-10-">Outh 1.0 프로세스</h3>
 
-<p><img src="assets/images/OAuth2 Grant Flow1.png" alt="OAuth2 Grant Flow1" /></p>
+<ol>
+  <li>사용자(User)가 트위터 로그인 요청</li>
+  <li>사용자를 트위터(Service Provider) 로그인 화면으로 리다이렉트</li>
+  <li>트위터 로그인 진행</li>
+  <li>
+    <p>서비스(Consumer)로 인증토큰(Access Token)이 전달</p>
 
-<p>주로 자바스크립트 기반 웹 어플리케이션에서 많이 사용하는 방식이다. (스크립트 보안 유출 고려)
-최근에는 모바일에서도 많이 사용한다고 한다.</p>
+    <p>​</p>
+  </li>
+</ol>
+
+<h3 id="section-1">인증토큰의 장점</h3>
+
+<ul>
+  <li>사용자의 아이디 / 패스워드를 몰라도 토큰을 통해 허가 받은 API에 접근 가능</li>
+  <li>필요한 API에만 제한적으로 접근할 수 있도록 권한 제어 가능</li>
+  <li>저장되어 있는 인증토큰이 유출되더라도 트위터의 관리자 화면에서 인증토큰의 권한 취소 가능</li>
+  <li>
+    <p>사용자가 트위터(Service Provider)의 패스워드를 변경해도 인증토큰은 계속 유효</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="oauth-20-">OAuth 2.0의 개선사항</h2>
+
+<p>일단 OAuth 2.0은 1.0과 호환되지 않으며 용어부터 많은 것이 다르다. 모바일에서의 사용성 문제나 서명과 같은 개발이 복잡하고 기능과 규모의 확장성 등을 지원하기 위해 만들어진 표준이다. 표준이 매우 크고 복잡해서 이름도 “OAuth 인증 프레임워크(OAuth 2.0 Authorization Framework)” 이다. <a href="http://tools.ietf.org/wg/oauth/">http://tools.ietf.org/wg/oauth/</a> 에서 확인 가능</p>
 
 <p>​</p>
 
-<p><img src="assets/images/OAuth2 Grant Flow2.png" alt="OAuth2 Grant Flow2" /></p>
+<h3 id="oauth-10--">OAuth 1.0에서 개선된 사항</h3>
 
-<p>이 방식은 직접 ID, PW 보내는 방식으로 파트너나 자사 시스템에 사용한다.
-기존의 HTTP 방식을 그대로 사용하기 용이하다.</p>
+<ol>
+  <li>용어 변경
+    <ul>
+      <li>Resource Owner : 사용자</li>
+      <li>Resource Server : REST API 서버</li>
+      <li>Authorization Server : 인증서버 (API 서버와 같을 수도 있음)</li>
+      <li>Client : 써드파티 어플리케이션 (서비스)</li>
+    </ul>
 
-<p>위와 같은 방식을 사용했을 때의 장점은 OAuth 2.0을 몸소 체험할 수 있다는 것이다.
-반면에, 단점은 다음과 같다.</p>
+    <p>​</p>
+  </li>
+  <li>간단하고 직관적
+    <ul>
+      <li>OAuth 1.0에서는 HTTPS가 필수</li>
+      <li>Signature 없이 생성, 호출 가능</li>
+      <li>URL 인코딩이 필요없음</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>더 많은 인증 방법을 지원
+    <ul>
+      <li>이전에는 HMAC을 이용한 암호화 인증만 지원</li>
+      <li>OAuth 2.0은 여러 인증 방식을 통해 웹 / 모바일 등 다양한 시나리오에 대응 가능</li>
+      <li>Access Token의 Life-time을 지정하여 만료일 설정 가능</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>대형 서비스로의 확장성 지원
+    <ul>
+      <li>커다란 서비스는 인증 서버를 분리하거나 다중화 할 수 있어야 함</li>
+      <li>Authorization Server의 역할을 명확히 하여 이에 대한 고려가 되었음</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h2 id="oauth-20--">OAuth 2.0 사용 서비스</h2>
+
+<p>2013년까지만 해도 1.0만 지원하거나 2.0으로 개선하는 인터넷 서비스 기업이 많았지만,</p>
+
+<p>현재는 대부분 2.0만 지원한다고 봐도 무방하다. (1.0은 자체 로그인에만 사용하는 기업이 많음)</p>
 
 <ul>
-  <li>사용자 데이터에 대한 보안을 고려해야 한다.</li>
-  <li>Facebook, Twitter 모두 각자에게 최적화 되어 있어 확장성을 고려한 인증 인터페이스를 만들기 힘들다.</li>
-  <li>Token만 존재하기 때문에 사용자 관리, 사용자를 구분하기가 힘들다.</li>
-  <li>모바일과 웹 어플리케이션이 모두 존재한다면, 인증 및 디바이스 간 동기화 처리 문제가 있다.</li>
   <li>
-    <p>시스템 충돌과 네트워크 연결 문제 또한 감당해야 한다.</p>
+    <p>Facebook, Instagram, Google, LinkedIn, Twitter…</p>
 
     <p>​</p>
   </li>
 </ul>
 
-<h2 id="aws-ec2--cognito-baas">2. AWS EC2 + Cognito (BaaS)</h2>
-
-<p><img src="assets/images/AWS Authentication process.png" alt="AWS Authentication process" /></p>
-
-<p>사용자 로그인, 인증 처리에 대해 AWS Cognito를 사용한 방법이다.
-기본적인 EC2 인스턴스에 Cognito만 추가해서 사용하면 된다.</p>
-
-<p>이러한 방법을 적용했을 때의 단점은 일단 클라우드에 요금을 내야 한다는 것이다.
-또한, AWS Cognito에서 지원하지 않는 카카오 로그인 같은 경우 복잡한 과정이 필요하다.
-반면에 장점은 다음과 같다.</p>
+<h2 id="section-2">참고하면 좋은 자료</h2>
 
 <ul>
-  <li>SAML을 통한 보안 문제 해결.</li>
-  <li>놀라운 확장성. (SOCIAL IDENTITY를 추가하기만 하면 끝, 모바일 앱까지 확장 가능)</li>
-  <li>편리한 사용자 관리. (USER POOL 기능 제공)</li>
-  <li>인증 및 디바이스간 동기화 처리. (Cognito Sync가 알아서 해준다)</li>
-  <li>시스템 충돌과 네트워크 연결 문제. (Cognito Sync가 알아서 해준다)</li>
+  <li>Naver D2 : <a href="http://d2.naver.com/helloworld/24942">http://d2.naver.com/helloworld/24942</a></li>
+  <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
   <li>
-    <p>위와 같은 문제를 신경 안쓰므로 로직에 집중해서 빠른 개발이 가능하다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="aws-serverless-architecture-baas--faas">3. AWS Serverless Architecture (BaaS + FaaS)</h2>
-
-<p><img src="assets/images/AWS WebApp Application Architecture.png" alt="AWS WebApp Application Architecture" /></p>
-
-<p>AWS API Gateway와 Lambda를 통한 서버리스 아키텍쳐에 대해서는 아래 링크를 참고하자.
-서버리스 아키텍쳐는 서버를 관리할 필요 없이 특정 이벤트에 반응하는 함수를 등록하고, 해당 이벤트가 발생하면 함수가 실행되는 구조이다.
-장점은 다음과 같다.</p>
-
-<ul>
-  <li>서버에 고성능이 필요할 시에는 비용이 절감된다.</li>
-  <li>서비스 지향적인 설계가 가능하다. (마이크로 아키텍쳐)</li>
-  <li>자동 스케일링</li>
-  <li>코드 생산에 집중할 수 있고, 유연한 배포 및 테스트가 가능하다.</li>
-</ul>
-
-<p>반면에 단점은 다음과 같다.</p>
-
-<ul>
-  <li>AWS 과금이 많이 나올 수 있다. (쓸데없이 많이 고려한 설계일수도)</li>
-  <li>
-    <p>API Gateway, Lambda에 대한 러닝 커브가 상당하다. (많은 스터디 필요)</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="section">결론</h2>
-
-<p>최근에 유행하는 서버리스 아키텍쳐나 마이크로 아키텍쳐를 무조건 도입해야하는 것은 절대 아니다.
-각자 프로젝트의 상황에 맞는 방법을 선택하는게 답인듯하다.</p>
-
-<p>​​</p>
-
-<h2 id="section-1">참고하면 좋은 문서들</h2>
-
-<ul>
-  <li><a href="https://medium.com/@parkgeunhack/%EC%95%8C%EB%A0%89%EC%8A%A4%EC%9D%98-%EC%9D%B4%EC%95%BC%EA%B8%B0-%EA%B7%B8%EB%A6%AC%EA%B3%A0-%EC%84%9C%EB%B2%84-%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80-c3aa12baaa75#.kkskaeaqa">박근핵닷컴 서버 개발일지</a></li>
-  <li><a href="https://aws.amazon.com/ko/cognito/?nc2=h_m1">AWS Cognito</a></li>
-  <li><a href="https://aws.amazon.com/ko/blogs/korea/category/amazon-cognito/">AWS Cognito Blog</a></li>
-  <li><a href="http://blog.aliencube.org/ko/2016/06/23/serverless-architectures/">Serverless-Architecture</a></li>
-  <li><a href="http://www.popit.kr/why-microservice/">Popit - 마이크로서비스 아키텍쳐의 장단점</a></li>
-  <li>
-    <p><a href="http://bcho.tistory.com/942">조대협 블로그 - OAuth 2.0 Architecture</a></p>
+    <p>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></p>
 
     <p>​</p>
   </li>
@@ -850,324 +1099,6 @@ cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
   <li>카카오 개발자센터 : <a href="https://developers.kakao.com">https://developers.kakao.com</a></li>
   <li>
     <p>네이버 개발자센터 : <a href="https://developers.naver.com">https://developers.naver.com</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>OAuth2에 대해 알아보자</title>
-	  <link>//about-oauth2</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
-	  <guid>//about-oauth2</guid>
-	  <description><![CDATA[
-	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
-
-<p>​   ​</p>
-
-<h3 id="section">인증과 허가</h3>
-
-<ol>
-  <li>Authentication : 인증</li>
-  <li>
-    <p>Authorization : 허가</p>
-
-    <p>​   ​</p>
-  </li>
-</ol>
-
-<p>일반 로그인은 사원이 63빌딩에 출입하는 것이라면, (사원증이 있어야 출입가능)</p>
-
-<p>OAuth는 1층에서 방문증을 수령한 후 63빌딩에 출입하는 것이다. (방문증만 있어도 출입가능)</p>
-
-<p>​   ​</p>
-
-<h2 id="oauth-10-">OAuth 1.0의 특징</h2>
-
-<p>기존의 다른 인증방식(OpenID)과 구분되는 특징은 크게 두 가지이다.</p>
-
-<ol>
-  <li>API 인증 시, 써드파티 어플리케이션에게 사용자의 비번을 노출하지 않고 인증할 수 있다는 점</li>
-  <li>
-    <p>인증(Authentication)과 API 권한(Authorization) 부여를 동시에 할 수 있다는 점</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h2 id="oauth-10--1">OAuth 1.0의 동작방식</h2>
-
-<p>OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한다.</p>
-
-<p>OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.</p>
-
-<p><img src="assets/images/oauth1_triangle.png" alt="oauth1_triangle" /></p>
-
-<p>우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.</p>
-
-<p>​</p>
-
-<h3 id="outh-10-">Outh 1.0 프로세스</h3>
-
-<ol>
-  <li>사용자(User)가 트위터 로그인 요청</li>
-  <li>사용자를 트위터(Service Provider) 로그인 화면으로 리다이렉트</li>
-  <li>트위터 로그인 진행</li>
-  <li>
-    <p>서비스(Consumer)로 인증토큰(Access Token)이 전달</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h3 id="section-1">인증토큰의 장점</h3>
-
-<ul>
-  <li>사용자의 아이디 / 패스워드를 몰라도 토큰을 통해 허가 받은 API에 접근 가능</li>
-  <li>필요한 API에만 제한적으로 접근할 수 있도록 권한 제어 가능</li>
-  <li>저장되어 있는 인증토큰이 유출되더라도 트위터의 관리자 화면에서 인증토큰의 권한 취소 가능</li>
-  <li>
-    <p>사용자가 트위터(Service Provider)의 패스워드를 변경해도 인증토큰은 계속 유효</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="oauth-20-">OAuth 2.0의 개선사항</h2>
-
-<p>일단 OAuth 2.0은 1.0과 호환되지 않으며 용어부터 많은 것이 다르다. 모바일에서의 사용성 문제나 서명과 같은 개발이 복잡하고 기능과 규모의 확장성 등을 지원하기 위해 만들어진 표준이다. 표준이 매우 크고 복잡해서 이름도 “OAuth 인증 프레임워크(OAuth 2.0 Authorization Framework)” 이다. <a href="http://tools.ietf.org/wg/oauth/">http://tools.ietf.org/wg/oauth/</a> 에서 확인 가능</p>
-
-<p>​</p>
-
-<h3 id="oauth-10--">OAuth 1.0에서 개선된 사항</h3>
-
-<ol>
-  <li>용어 변경
-    <ul>
-      <li>Resource Owner : 사용자</li>
-      <li>Resource Server : REST API 서버</li>
-      <li>Authorization Server : 인증서버 (API 서버와 같을 수도 있음)</li>
-      <li>Client : 써드파티 어플리케이션 (서비스)</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>간단하고 직관적
-    <ul>
-      <li>OAuth 1.0에서는 HTTPS가 필수</li>
-      <li>Signature 없이 생성, 호출 가능</li>
-      <li>URL 인코딩이 필요없음</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>더 많은 인증 방법을 지원
-    <ul>
-      <li>이전에는 HMAC을 이용한 암호화 인증만 지원</li>
-      <li>OAuth 2.0은 여러 인증 방식을 통해 웹 / 모바일 등 다양한 시나리오에 대응 가능</li>
-      <li>Access Token의 Life-time을 지정하여 만료일 설정 가능</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>대형 서비스로의 확장성 지원
-    <ul>
-      <li>커다란 서비스는 인증 서버를 분리하거나 다중화 할 수 있어야 함</li>
-      <li>Authorization Server의 역할을 명확히 하여 이에 대한 고려가 되었음</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h2 id="oauth-20--">OAuth 2.0 사용 서비스</h2>
-
-<p>2013년까지만 해도 1.0만 지원하거나 2.0으로 개선하는 인터넷 서비스 기업이 많았지만,</p>
-
-<p>현재는 대부분 2.0만 지원한다고 봐도 무방하다. (1.0은 자체 로그인에만 사용하는 기업이 많음)</p>
-
-<ul>
-  <li>
-    <p>Facebook, Instagram, Google, LinkedIn, Twitter…</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="section-2">참고하면 좋은 자료</h2>
-
-<ul>
-  <li>Naver D2 : <a href="http://d2.naver.com/helloworld/24942">http://d2.naver.com/helloworld/24942</a></li>
-  <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
-  <li>
-    <p>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</title>
-	  <link>//windows-bash-jekyll</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-03T19:18:00+09:00</pubDate>
-	  <guid>//windows-bash-jekyll</guid>
-	  <description><![CDATA[
-	     <p>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준)</p>
-
-<p>​</p>
-
-<h2 id="ruby-">윈도우 10에서 Ruby 설치</h2>
-
-<ol>
-  <li><code class="highlighter-rouge">프로그램 및 기능 &gt; Windows 기능 켜기/끄기 &gt; Linux용 Windows 하위 시스템</code> 체큰</li>
-  <li>cmd 창에서 <code class="highlighter-rouge">bash</code> 를 입력, Windows Subsystem for Linux 환경실행</li>
-</ol>
-
-<p>처음 실행한다면, 아무것도 설치되지 않은 상태이기 때문에 초기 설정을 해주시면 좋습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">update</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">make</span> <span class="n">gcc</span></code></pre></figure>
-
-<p>이제 루비를 설치해보겠습니다. 놀랍게도 윈도우 bash에서는 <code class="highlighter-rouge">apt install ruby</code> 를 통해 설치하려는 경우, 루비 1.9.3 버전만 설치됩니다 ! (rvm과 rbenv를 사용해봐도 동일) 하지만, Jekyll 에서 최소 2.0 이상의 버전을 요구하기 때문에 brightbox를 통해 최신 버전을 설치하였습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="p">:</span><span class="n">brightbox</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="n">ng</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">update</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">ruby2</span><span class="o">.</span><span class="mi">3</span> <span class="n">ruby2</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">dev</span> <span class="n">ruby</span><span class="o">-</span><span class="n">switch</span></code></pre></figure>
-
-<p>여기까지 설치되고 나면 뭔가 안심이 됩니다. 하지만 이제 시작에 불과합니다.</p>
-
-<p>​</p>
-
-<h2 id="jekyll-">Jekyll 설치하기</h2>
-
-<p>이제 설치하려는 경로로 이동해서 jekyll을 설치할 차례입니다. 여기에서는 바탕화면에 설치해보도록 하겠습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span>
-<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">Users</span><span class="o">/&lt;</span><span class="n">your</span> <span class="n">username</span><span class="o">&gt;/</span><span class="n">Desktop</span>
-<span class="err">$</span> <span class="n">jekyll</span> <span class="n">new</span> <span class="n">myblog</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">myblog</span>
-<span class="err">$</span> <span class="n">jekyll</span> <span class="n">serve</span> <span class="o">-</span><span class="n">w</span></code></pre></figure>
-
-<p>속도를 측정해보면, Bash는 <code class="highlighter-rouge">0.329초</code>, PowerShell은 <code class="highlighter-rouge">0.364초</code> 로 Bash에서 실행시키는 것이 더 빠르다고 합니다.
-여기까지가 아주 기본적인 형태의 jekyll 블로그 설치 과정입니다.</p>
-
-<p>​</p>
-
-<h2 id="jekyll--1">테마까지 한번에 적용하여 Jekyll 설치하기</h2>
-
-<p>기본 설치를 끝내면 그냥 빈 화면만 나타나기 때문에 허전합니다. 그래서 이번에는 테마까지 한번에 적용하여 설치하는 방법을 알려드리겠습니다. (방금꺼는 <code class="highlighter-rouge">gem uninstall -all</code> 명령어를 통해 삭제하셔도 됩니다)</p>
-
-<ol>
-  <li>먼저, <code class="highlighter-rouge">&lt;사용자이름&gt;.github.io</code> 라는 이름의 Repository를 생성합니다.</li>
-  <li>생성한 저장소를 로컬에 clone 하고 cd 명령어를 통해 위치로 이동합니다.</li>
-  <li>
-    <p>마음에 드는 Jekyll 테마를 다운로드 받아 로컬에 압축해제 합니다. <a href="http://jekyllthemes.org/">http://jekyllthemes.org/</a></p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<p>구조를 처음 보시면 복잡한데, 우리가 건드릴 부분은 <code class="highlighter-rouge">_config.yml</code> 과 <code class="highlighter-rouge">Gemfile</code> 입니다. Gemfile은 GitHub Pages에 필요한 라이브러리를 설치하도록 정의한 파일이라고 보시면 됩니다.
-데스크탑과 노트북 또는 맥북을 사용해보신 분은 아시겠지만, GitHub Pages에서 의존성 문제가 아주 빈번하게 발생합니다.</p>
-
-<ul>
-  <li>
-    <p>의존성을 가지는 라이브러리 참고 (<a href="https://pages.github.com/versions/">https://pages.github.com/versions/</a>)</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<p>위의 링크처럼 각 라이브러리마다 버전 정보를 따로 관리해도 되지만, <code class="highlighter-rouge">gem 'github-pages'</code> 를 통해 관리하는 방법이 가장 간편합니다.
-이를 통해 github-pages의 최신 의존성 정보를 간단하게 업데이트할 수 있습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="n">Gemfile</span>
-
-<span class="n">source</span> <span class="s">'https://rubygems.org'</span>
-<span class="n">gem</span> <span class="s">'github-pages'</span></code></pre></figure>
-
-<p>​</p>
-
-<p>이제 bundler를 설치할 차례입니다. bundler는 라이브러리 설치를 위한 패키지 매니저입니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-<span class="err">$</span> <span class="n">bundle</span> <span class="n">install</span>
-<span class="err">$</span> <span class="n">bundle</span> <span class="n">update</span></code></pre></figure>
-
-<p>이제 Gemfile에 있는 라이브러리를 설치하고 업데이트까지 완료했습니다.
-의존성 정보를 확인하시려면 <code class="highlighter-rouge">github-pages versions</code> 명령어를 입력하시면 됩니다.</p>
-
-<p>​</p>
-
-<h4 id="jeykll-331---">1. jeykll 3.3.1 버전에서 오류 발생</h4>
-
-<p>최근 <em>Windows+Bash Subsystem</em> 에서 powershell을 defalut cmd로 확장하는 과정에서 생겨난 버그</p>
-
-<ul>
-  <li>
-    <p>(https://github.com/jekyll/jekyll/issues/5462 참조)</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<p>해결방법은 다음과 같습니다. 첫번째 방법은 번거롭기 때문에 두번째 방법을 추천합니다.</p>
-
-<ol>
-  <li>
-    <p>jeykll 3.3.1 버전을 삭제하고 3.2.1 버전으로 하향시키기</p>
-  </li>
-  <li>
-    <p>build.rb에서 코드 수정하기</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<p>build.rb의 위치를 찾는 방법</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">bundle</span> <span class="n">show</span> <span class="n">jekyll</span></code></pre></figure>
-
-<p>그리고 <code class="highlighter-rouge">lib/jekyll/commands/build.rb</code>로 이동해서 다음과 같이 수정합니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">if</span> <span class="no">Utils</span><span class="o">::</span><span class="no">Platforms</span><span class="p">.</span><span class="nf">windows?</span> <span class="o">-&gt;</span> <span class="k">unless</span> <span class="no">Utils</span><span class="o">::</span><span class="no">Platforms</span><span class="p">.</span><span class="nf">windows?</span></code></pre></figure>
-
-<p>​</p>
-
-<h4 id="jekyll-serve--">2. jekyll serve에서 오류 발생</h4>
-
-<p>실행 명령어 <code class="highlighter-rouge">jekyll serve</code> 하면 여기서 끝날줄 알았는데
-또 오류 발생 (https://github.com/jekyll/jekyll/issues/5233 참조)
-역시 마찬가지로 <em>Windows+Bash Subsystem</em> 버그라고 합니다..</p>
-
-<p><code class="highlighter-rouge">jekyll serve --force_polling</code>  옵션을 통해 해결하실 수 있습니다.</p>
-
-<p>​</p>
-
-<h2 id="section">결론</h2>
-
-<p>쓰다보니 간단하지 않은 것 같지만 제가 삽질했던 부분을 빠르게 건너뛴다면,
-윈도우 사용자도 금방 설치할 수 있습니다 (Bash on Windows 만세 !)
-다만, 정신건강을 위해 맥을 사용하는걸 추천합니다.</p>
-
-<p>​</p>
-
-<h4 id="section-1">참고하면 좋은 페이지</h4>
-
-<ul>
-  <li>GitHub Help : https://help.github.com/articles/configuring-jekyll/</li>
-  <li>https://nolboo.kim/blog/2013/10/15/free-blog-with-github-jekyll/#configyml</li>
-  <li>http://my2kong.net/2016/07/07/jekyll-blogging-theme/</li>
-  <li>
-    <p>Jekyll QuickStart : http://jekyllbootstrap.com/usage/jekyll-quick-start.html</p>
 
     <p>​</p>
   </li>
