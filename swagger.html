@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>충돌을 해결하기 위한 git stash 명령어</title>
+    <title>Swagger로 API 문서화하기</title>
     <meta name="description" content="Swalloow Blog - About Data Science, Data Engineering" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -109,10 +109,10 @@
     <article class="post tag-Develop">
 
         <header class="post-header">
-            <h1 class="post-title">충돌을 해결하기 위한 git stash 명령어</h1>
+            <h1 class="post-title">Swagger로 API 문서화하기</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-02-23">23 Feb 2017</time>
+            <time class="post-date" datetime="2017-02-25">25 Feb 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -129,61 +129,67 @@
 
             <p>​   ​</p>
 
-<p>git을 사용하다보면 여러 변경내역이 생기게 됩니다.
-예를 들면 내 로컬에서 변경된 내역을 아직 commit을 하지 않은 상태로 pull을 하게 되면,
-충돌이 발생하게 되어 초보자에게는 난감한 상황이 됩니다.
-이런 경우에 git stash 명령어를 사용하시면 편리합니다.</p>
+<p>개발에 있어서 API 문서화는 아주 중요하지만 번거로운 일 중에 하나입니다.
+특히 pdf 또는 한글 파일로 관리하고 있다면 갱신할때마다 아주 번거롭습니다.</p>
 
-<p>git stash 명령어는 unstaged 상태인 변경사항을 일시적으로 백업하고 워킹디렉토리를 깨끗한 상태로 유지합니다.
-즉, 일종의 책갈피 역할을 한다고 보시면 됩니다.</p>
+<p>이를 해결하기 위해 자칭 세계에서 가장 유명한 API 프레임워크인 <strong>Swagger</strong> 를 사용해보겠습니다.
+<a href="http://swagger.io/">Swagger 공식 홈페이지</a>를 보면 많은 정보가 있습니다.</p>
 
 <p>​   ​</p>
 
-<h4 id="git-stash">1. git stash</h4>
+<h3 id="swagger-ui">Swagger UI</h3>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash
-Saved working directory and index state <span class="se">\</span>
-  <span class="s2">"WIP on master: 049d078 added the index file"</span>
-HEAD is now at 049d078 added the index file
-<span class="o">(</span>To restore them <span class="nb">type</span> <span class="s2">"git stash apply"</span><span class="o">)</span></code></pre></figure>
-
-<p>git stash 명령어를 실행하면 작업 중인 파일을 새로운 Stash에 저장합니다.</p>
+<p>Swagger UI를 사용하면 웹 브라우저를 통해 Swagger에 정의된 REST API를 시각화하고 테스트할 수 있습니다.
+내장된 테스트 기능을 사용하면 GUI로 API를 테스트하며 결과를 확인할 수 있습니다.
+자세한 정보는 <a href="https://github.com/swagger-api/swagger-ui">GitHub: Swagger UI</a> 를 참고하시면 됩니다.</p>
 
 <p>​   ​</p>
 
-<h4 id="git-stash-list">2. git stash list</h4>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash list
-stash@<span class="o">{</span>0<span class="o">}</span>: WIP on master: 049d078 added the index file
-stash@<span class="o">{</span>1<span class="o">}</span>: WIP on master: c264051 Revert <span class="s2">"added file_size"</span>
-stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 added number to log</code></pre></figure>
-
-<p>git stash list 명령어를 통해 저장된 책갈피들의 리스트를 볼 수 있습니다.</p>
+<h3 id="swagger-codegen">Swagger Codegen</h3>
+<p>Swagger Codegen을 사용하면 REST API용 Swagger 문서를 통해 다양한 언어로 SDK를 생성할 수 있습니다.
+생성된 SDK를 사용하여 API를 완전히 구현하기 전에 생성된 샘플 서버 구현에서 실시간으로 API를 테스트할 수 있습니다.
+자세한 정보는 <a href="https://github.com/swagger-api/swagger-codegen">GitHub: Swagger Codegen</a> 를 참조하시면 됩니다.</p>
 
 <p>​   ​</p>
 
-<h4 id="git-stash-apply">3. git stash apply</h4>
+<h3 id="swagger-editor">Swagger Editor</h3>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash apply
-<span class="c"># On branch master</span>
-<span class="c"># Changes not staged for commit:</span>
-<span class="c">#   (use "git add &lt;file&gt;..." to update what will be committed)</span>
-<span class="c">#</span>
-<span class="c">#      modified:   index.html</span>
-<span class="c">#      modified:   lib/simplegit.rb</span>
-<span class="c">#</span></code></pre></figure>
+<p><a href="editor.swagger.io">editor.swagger.io</a> 에서 Swagger Editor, Swagger UI 및 Swagger Codegen을 제공합니다.
+최대한 간편한 용도로 사용하시겠다면 yaml 이나 json 파일을 이곳에 import 해서 사용하셔도 됩니다.</p>
 
-<p>git stash apply 명령어를 사용하면 저장된 stash를 적용할 수 있습니다.</p>
+<p>이외에도 <a href="http://bigstickcarpet.com/swagger-parser/www/index.html">http://bigstickcarpet.com/swagger-parser/www/index.html</a>
+Swagger Validator와 Parser가 있습니다.</p>
 
 <p>​   ​</p>
 
-<h4 id="git-stash-drop">4. git stash drop</h4>
+<h3 id="docker-swagger-ui-">Docker로 Swagger UI를 적용해보자</h3>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash drop stash@<span class="o">{</span>0<span class="o">}</span>
-Dropped stash@<span class="o">{</span>0<span class="o">}</span> <span class="o">(</span>364e91f3f268f0900bc3ee613f9f733e82aaed43<span class="o">)</span></code></pre></figure>
+<p>앞서 설명하자면 Docker로 실행하는 이유는 “아직 맥북에 npm 환경구축이 안되어서” 입니다.
+<code class="highlighter-rouge">npm install</code> 을 통해 빌드하셔도 됩니다.</p>
 
-<p>apply 명령어로 stash를 적용한다고 해서 스택에서 사라지는게 아닙니다.
-git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
+<h5 id="section">1.</h5>
+<p>먼저 로컬에 <a href="https://github.com/swagger-api/swagger-ui">Swagger UI GitHub 저장소</a>를 clone 해줍니다.</p>
+
+<h5 id="section-1">2.</h5>
+<p>그 다음 Docker를 실행하고 아래의 명령어를 통해 Dockerfile을 빌드합니다.
+localhost:80 에 접속하면 Swagger-UI가 실행된 것을 볼 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker build -t swagger-ui-builder .
+docker run -p 80:8080 swagger-ui-builder</code></pre></figure>
+
+<h5 id="section-2">3.</h5>
+<p>이제 Swagger Editor로 문서를 작성하고 yaml 형식으로 다운로드 받고, 파일을 Swagger/dist/로 이동합니다.
+그리고 Swagger/dist/index.html 파일의 url을 swagger.yaml로 수정합니다.</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+   <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/url=</span><span class="se">([^</span><span class="sr">&amp;</span><span class="se">]</span><span class="sr">+</span><span class="se">)</span><span class="sr">/</span><span class="p">);</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">url</span> <span class="o">&amp;&amp;</span> <span class="nx">url</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">url</span> <span class="o">=</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">url</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+     <span class="nx">url</span> <span class="o">=</span> <span class="s2">"swagger.yaml"</span><span class="p">;</span>
+   <span class="p">}</span></code></pre></figure>
+
+<p>이제 웹 서버에 올리기만 하면 API 문서를 쉽게 확인할 수 있습니다!</p>
 
 <p>​   ​</p>
 
@@ -217,15 +223,15 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=충돌을 해결하기 위한 git stash 명령어&amp;url=http://swalloow.github.io/git-stash"
+                <a class="icon-twitter" href="http://twitter.com/share?text=Swagger로 API 문서화하기&amp;url=http://swalloow.github.io/swagger"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/git-stash"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/swagger"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/git-stash"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/swagger"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -237,8 +243,8 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/git-stash';
-        var disqus_url = 'http://swalloow.github.io//git-stash';
+        var disqus_identifier = '/swagger';
+        var disqus_url = 'http://swalloow.github.io//swagger';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -263,20 +269,13 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/cover_develop.jpg)" href="/swagger">
-            <section class="post">
-                <h2>Swagger로 API 문서화하기</h2>
-                <p>​ ​ 개발에 있어서 API 문서화는 아주 중요하지만 번거로운 일 중에 하나입니다. 특히 pdf 또는...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev " style="background-image: url(/assets/images/docker-logo.png)" href="/docker-install">
+        <a class="read-next-story prev " style="background-image: url(/assets/images/cover_develop.jpg)" href="/git-stash">
             <section class="post">
-                <h2>Docker 간편한 설치부터 실행까지</h2>
-                <p>​ ​ Docker는 오픈소스 컨테이너입니다. 기존의 가상머신과 비슷하면서도 훨씬 가벼운 형태라고 볼 수 있습니다. 그렇다면...</p>
+                <h2>충돌을 해결하기 위한 git stash 명령어</h2>
+                <p>​ ​ git을 사용하다보면 여러 변경내역이 생기게 됩니다. 예를 들면 내 로컬에서 변경된 내역을 아직...</p>
             </section>
         </a>
     
