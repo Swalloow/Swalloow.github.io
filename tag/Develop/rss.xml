@@ -12,411 +12,71 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
-	  <title>Docker 간편한 설치부터 실행까지</title>
-	  <link>//docker-install</link>
+	  <title>충돌을 해결하기 위한 git stash 명령어</title>
+	  <link>//git-stash</link>
 	  <author>Swalloow</author>
-	  <pubDate>2017-02-21T19:18:00+09:00</pubDate>
-	  <guid>//docker-install</guid>
+	  <pubDate>2017-02-23T19:18:00+09:00</pubDate>
+	  <guid>//git-stash</guid>
 	  <description><![CDATA[
 	     <p>​   ​</p>
 
-<p>Docker는 오픈소스 컨테이너입니다. 기존의 가상머신과 비슷하면서도 훨씬 가벼운 형태라고 볼 수 있습니다. 그렇다면 VMWare, VirtualBox와 같은 기존의 가상머신과 Docker Container가 어떻게 다른지 살펴보겠습니다.</p>
+<p>git을 사용하다보면 여러 변경내역이 생기게 됩니다.
+예를 들면 내 로컬에서 변경된 내역을 아직 commit을 하지 않은 상태로 pull을 하게 되면,
+충돌이 발생하게 되어 초보자에게는 난감한 상황이 됩니다.
+이런 경우에 git stash 명령어를 사용하시면 편리합니다.</p>
 
-<p><img src="/assets/images/vm-docker.png" alt="vm-docker" /></p>
-
-<p>먼저 기존의 가상머신(Virtual Machine)을 보면 Hypervisor(VMWare, VirtualBox…) 위에 GuestOS가 올라간 형태임을 알 수 있습니다. OS가 올라갔다는 것은 말 그대로 x86 하드웨어가 그대로 가상화 된 것입니다. 가상머신을 설치하고 메모리 영역을 확인해보면 호스트 메모리와 게스트 메모리를 볼 수 있는데, 게스트 메모리를 얼마나 할당할 것인지에 따라 가상머신의 성능이 변하기도 합니다.</p>
-
-<p>반면에 Docker는 Docker Engine 위에 Application이 올라간 것을 볼 수 있습니다. 즉, Docker Engine을 통해 Host OS 위에서 컨테이너가 생성되는 것입니다. 여기서 컨테이너는 리눅스 커널의 <code class="highlighter-rouge">cgroups, namespaces</code> 등의 기능을 사용해 가상공간을 생성할 수 있도록 하는 기능입니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="section">컨테이너가 가상머신보다 뛰어난 점은?</h4>
-
-<p>기본적으로 가상머신을 사용하게 되면 상세 설정을 해주지 않는 한 메모리, CPU 코어, 프로세스 등 각종 성능 손실이 발생합니다. 반면에 컨테이너는 Host OS의 커널은 그대로 사용하고 일부분만 패키징 되기 때문에 용량이 크게 줄어들 뿐만 아니라, 프로세스 영역도 기존의 OS와 공유해서 사용합니다. 정리하자면, <u>컨테이너는 하드웨어를 가상화하는 계층이 없기 때문에 메모리 접근, 파일시스템, 네트워크 속도가 가상 머신에 비해 월등히 빠릅니다</u>.</p>
+<p>git stash 명령어는 unstaged 상태인 변경사항을 일시적으로 백업하고 워킹디렉토리를 깨끗한 상태로 유지합니다.
+즉, 일종의 책갈피 역할을 한다고 보시면 됩니다.</p>
 
 <p>​   ​</p>
 
-<h4 id="boot2docker">Boot2Docker</h4>
+<h4 id="git-stash">1. git stash</h4>
 
-<p>앞서 말했던 것 처럼 Docker는 리눅스 커널의 컨테이너 기능을 기반으로 하기 때문에 Windows나 OS X 환경에서 실행할 수 없습니다. 그래서 이를 지원하기 위해 나온 것이 <strong>Boot2Docker</strong> 입니다. Boot2Docker는 가상머신 안에 리눅스를 설치하고 Docker를 실행하는 방식으로 이를 해결했습니다.</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash
+Saved working directory and index state <span class="se">\</span>
+  <span class="s2">"WIP on master: 049d078 added the index file"</span>
+HEAD is now at 049d078 added the index file
+<span class="o">(</span>To restore them <span class="nb">type</span> <span class="s2">"git stash apply"</span><span class="o">)</span></code></pre></figure>
 
-<p>하지만 15년 9월쯤 부터 <strong>boot2docker-cil이 deprecated</strong> 되었습니다. 이제 공식 레퍼런스를 보면 toolbox를 이용하여 설치하는 방법을 권장하고 있으며 기존의 boot2docker에서 이전하는 방법에 대해서도 설명하고 있습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="os-x-docker-">OS X에서 Docker 설치</h2>
-
-<p>Docker를 설치하는 방법으로는 크게 2가지가 있습니다. 첫번째는 Docker for Mac으로 설치하는 방법이고, 두번째는 Docker Toolbox로 설치하는 방법입니다.</p>
+<p>git stash 명령어를 실행하면 작업 중인 파일을 새로운 Stash에 저장합니다.</p>
 
 <p>​   ​</p>
 
-<h4 id="docker-for-mac-docker-toolbox-">Docker for Mac과 Docker Toolbox의 차이점은?</h4>
+<h4 id="git-stash-list">2. git stash list</h4>
 
-<p>가장 큰 차이점은 사용하는 가상머신이 다르다는 점입니다. Docker Toolbox 같은 경우에는 Boot2Docker에서 사용해왔던 VirtualBox를 그대로 사용합니다. 반면에 Docker for Mac은 <strong>HyperKit</strong> 이라는 macOS를 위한 경량화 가상머신을 사용합니다.</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash list
+stash@<span class="o">{</span>0<span class="o">}</span>: WIP on master: 049d078 added the index file
+stash@<span class="o">{</span>1<span class="o">}</span>: WIP on master: c264051 Revert <span class="s2">"added file_size"</span>
+stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 added number to log</code></pre></figure>
 
-<p><img src="/assets/images/docker-formac.png" alt="docker-formac" /></p>
-
-<p>Docker Toolbox를 사용하는 경우, 위와 같이 <code class="highlighter-rouge">/usr/local/bin</code> 폴더에 docker, docker-compose, docker-machine이 설치됩니다. 그리고 가상화는 VirtualBox를 통해 이루어지게 됩니다.</p>
-
-<p><img src="/assets/images/docker-toolbox.png" alt="docker-toolbox" /></p>
-
-<p>반면에 Docker for Mac은 <code class="highlighter-rouge">Applications</code> 폴더 내에 app으로 관리할 수 있게 됩니다. 그리고 가상화는 오라클의 <strong>VirtualBox</strong> 을 통해 이루어집니다. 따라서, 둘다 설치할 필요가 없습니다.</p>
-
-<p>만일 전부터 Docker를 써왔고, VirtualBox를 꼭 써야한다면, Docker Toolbox를 설치하시면 됩니다. 또는 “나는 App으로 관리하는게 편하다” 라고 한다면 Docker for Mac을 사용하시면 됩니다. 자세한 내용은 다음을 참고하시면 됩니다. <a href="https://docs.docker.com/docker-for-mac/docker-toolbox/">https://docs.docker.com/docker-for-mac/docker-toolbox/</a></p>
-
-<p>만일 둘 다 설치했고, Docker toolbox를 제거하고 싶다면 다음 링크를 참고하시면 됩니다.
-<a href="https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox">https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox</a></p>
+<p>git stash list 명령어를 통해 저장된 책갈피들의 리스트를 볼 수 있습니다.</p>
 
 <p>​   ​</p>
 
-<h2 id="docker-">Docker 실행</h2>
+<h4 id="git-stash-apply">3. git stash apply</h4>
 
-<p>저는 Docker for Mac을 사용하여 설치했습니다.</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash apply
+<span class="c"># On branch master</span>
+<span class="c"># Changes not staged for commit:</span>
+<span class="c">#   (use "git add &lt;file&gt;..." to update what will be committed)</span>
+<span class="c">#</span>
+<span class="c">#      modified:   index.html</span>
+<span class="c">#      modified:   lib/simplegit.rb</span>
+<span class="c">#</span></code></pre></figure>
 
-<p><img src="/assets/images/docker-run.png" alt="docker-run" /></p>
-
-<p>어플리케이션 데몬을 실행시키면 이제 docker 명령어를 사용할 수 있게 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker version
-docker info</code></pre></figure>
-
-<p>이제 한번 테스트 해볼 시간입니다.
-아래의 명령어를 통해 nginx 이미지를 만들고 80번 포트에 웹 서버를 띄워 보겠습니다.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker run -d -p 80:80 --name webserver nginx</code></pre></figure>
-
-<p><img src="/assets/images/docker-test.png" alt="docker-test" /></p>
-
-<p>실행되고 있는 웹 서버를 중지하고 컨테이너를 삭제해보겠습니다.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker ps
-docker stop webserver
-docker rm -f webserver</code></pre></figure>
-
-<p>아직 이미지는 남아있는 상태입니다. 이미지까지 삭제해줍니다.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker images
-docker rmi nginx</code></pre></figure>
-
-<p>자세한 Docker 사용법이나 명령어는 다음에 정리하도록 하겠습니다.</p>
+<p>git stash apply 명령어를 사용하면 저장된 stash를 적용할 수 있습니다.</p>
 
 <p>​   ​</p>
 
-	  ]]></description>
-	</item>
+<h4 id="git-stash-drop">4. git stash drop</h4>
 
-	<item>
-	  <title>자주 사용하는 리눅스 명령어 정리 (3) - Screen</title>
-	  <link>//linux3</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-02-18T19:18:00+09:00</pubDate>
-	  <guid>//linux3</guid>
-	  <description><![CDATA[
-	     <p>​   ​</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash drop stash@<span class="o">{</span>0<span class="o">}</span>
+Dropped stash@<span class="o">{</span>0<span class="o">}</span> <span class="o">(</span>364e91f3f268f0900bc3ee613f9f733e82aaed43<span class="o">)</span></code></pre></figure>
 
-<p>Screen은 여러 프로세스 간에 물리적 콘솔을 다중화하는데 사용할 수있는 전체 화면 소프트웨어 프로그램이다.
-하나의 단일 터미널 창 관리자에서 여러 개의 개별 터미널 인스턴스를 열 수 있는 사용자를 제공한다.</p>
-
-<p>사실 다중 터미널이 필요한거라면 tmux나 iTerm이 더 편하다고 생각한다.
-하지만, 스크린은 서버에서 백드라운드 데몬을 돌려야 할 때 아주 유용하다.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">screen -S pingsession -d -m -L ping localhost</code></pre></figure>
-
-<p>이 명령은 화면에 새로운 세션 (-m)을 만들고, 출력 (-L)을 기록하고, 즉시 분리 (-d) 명령이 실행되도록 지시한다.
-로그는 현재 디렉토리의 screenlog.n 에 기록된다.</p>
-
-<p>여기서 n은 화면 세션의 “창” 번호이다. 로깅은 정기적으로 버퍼링되고 플러시되며 로그 파일을 기록 할 수 있다.
-화면 세션은 프로세스 제어, 즉 실행중인 데몬 중지 등을 지원한다.
-이를 수행하기 위해 화면 세션은 세션 이름 (-S 세션 이름)으로 시작되어야하며 나중에 이름과 함께 종료 될 수 있다.</p>
+<p>apply 명령어로 stash를 적용한다고 해서 스택에서 사라지는게 아닙니다.
+git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
 
 <p>​   ​</p>
-
-<h2 id="screen--">Screen 명령어 정리</h2>
-
-<ul>
-  <li>ctrl + a / d : screen 나갈 때</li>
-  <li>ctrl + a / k : screen 죽일 때</li>
-  <li>screen -ls : screen 목록 확인</li>
-  <li>screen -r “name” : screen 재접속</li>
-  <li>screen -S “name” : screen 생성</li>
-  <li>~/.screenrc : 설정파일을 확인</li>
-</ul>
-
-<p>​   ​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>자주 사용하는 리눅스 명령어 정리 (2) - 쉘 스크립트</title>
-	  <link>//linux2</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-02-16T19:18:00+09:00</pubDate>
-	  <guid>//linux2</guid>
-	  <description><![CDATA[
-	     <p>​   ​</p>
-
-<p>맥북을 사용하면서 가장 좋았던 점은 기본 운영체제가 유닉스 계열이다보니,
-모든 것이 커멘드라인으로 해결된다는 점이었다. 특히 쉘 스크립트를 활용하면 간단한 자동화도 구현할 수 있다.
-따라서, 이번 포스팅에서는 자동화를 위한 쉘 스크립트 문법을 정리해보려 한다.</p>
-
-<p>​   ​</p>
-
-<h2 id="section">쉘 스크립트란?</h2>
-
-<p>문법에 대해 알기 이전에 쉘 스크립트가 어떤 역할을 하는지 알아야 한다.
-기본적으로 우리가 사용하는 운영체제는 하드웨어 제어, CPU 스케줄링 등 많은 역할을 수행한다.
-쉘은 운영체제 위에서 다양한 운영 체제 기능과 서비스를 구현하는 인터페이스를 제공하는 프로그램이다.
-즉, 사용자와 맞닿아 있기 때문에 우리는 쉘의 명령어를 통해 직접 조작할 수 있는 것이다.</p>
-
-<p>아래는 쉘 스크립트와 관련된 기본 명령어이다.</p>
-
-<ul>
-  <li>스크립트 실행 : sh {script.sh}</li>
-  <li>스크립트 실행가능 지정 : chmod +x {script.sh}</li>
-</ul>
-
-<p>​   ​</p>
-
-<h4 id="section-1">변수의 기본</h4>
-
-<ul>
-  <li>변수에 넣는 모든 값은 문자열로 취급한다.</li>
-  <li>변수이름은 대소문자 구분, ‘=’ 좌우에는 공백 유지</li>
-</ul>
-
-<p>​   ​</p>
-
-<h4 id="section-2">연산자</h4>
-
-<ul>
-  <li>OR : <code class="highlighter-rouge">||</code></li>
-  <li>AND : <code class="highlighter-rouge">&amp;&amp;</code></li>
-  <li>문자열 비교 : “string1”=”string2”</li>
-</ul>
-
-<p>​   ​</p>
-
-<h4 id="if-else-">if-else 문</h4>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">if</span> <span class="o">[</span> <span class="k">case</span> <span class="o">]</span>; <span class="k">then
-  </span><span class="nb">true
-</span><span class="k">else
-  </span><span class="nb">false
-</span><span class="k">fi</span></code></pre></figure>
-
-<p>​   ​</p>
-
-<h4 id="case-">case 문</h4>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">case</span> <span class="nv">$answer</span> <span class="k">in
-  </span>yes<span class="p">)</span>
-  	<span class="nb">echo</span> <span class="s2">"yes"</span>
-  no<span class="o">)</span>
-  	<span class="nb">echo</span> <span class="s2">"no"</span>
-<span class="k">esac</span></code></pre></figure>
-
-<p>​   ​</p>
-
-<h4 id="for-in-">for-in 문</h4>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">for </span>fname <span class="k">in</span> <span class="k">$(</span>ls .sh<span class="k">)</span>; <span class="k">do
-  </span><span class="nb">echo</span> <span class="s2">"fname"</span>
-<span class="k">done</span></code></pre></figure>
-
-<p>​   ​</p>
-
-<h4 id="while-">while 문</h4>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">while</span> <span class="o">[</span> 1 <span class="o">]</span>; <span class="k">do
-  </span><span class="nb">echo</span> <span class="s2">"fname"</span>
-<span class="k">done</span></code></pre></figure>
-
-<p>​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>자주 사용하는 리눅스 명령어 정리 (1) - 기본 명령어</title>
-	  <link>//linux1</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-02-15T19:18:00+09:00</pubDate>
-	  <guid>//linux1</guid>
-	  <description><![CDATA[
-	     <p>​   ​</p>
-
-<p>리눅스는 리누스 토발즈가 1991년 처음 개발을 시작한 오픈소스 소프트웨어이다.
-보통 윈도우를 오래 사용하다보면 터미널보다 GUI에 익숙해지기 마련이다.
-하지만 최근 맥북으로 갈아타면서 커멘드라인이 편하다는 걸 알게 되었고,
-앞으로 좀 더 생산성을 높이기 위해 몇 가지 유용한 명령어들을 정리해보려 한다.</p>
-
-<p>생활코딩에 리눅스에 대해 잘 정리한 강의가 있어 참고하면 좋다.
-<a href="https://opentutorials.org/course/2598">https://opentutorials.org/course/2598</a></p>
-
-<p>​   ​</p>
-
-<h2 id="section">패키지 매니저</h2>
-
-<p>리눅스는 패키지 매니저를 통해 설치되어 있지 않은 프로그램을 설치한다.
-맥에서 사용하는 Brew를 떠올리면 이해하기 쉽다.</p>
-
-<ul>
-  <li>Ubuntu : apt-get</li>
-  <li>CentOS : yum</li>
-  <li>OS X : brew</li>
-</ul>
-
-<p>위와 같이 리눅스 배포판에 따라 패키지 매니저가 조금씩 다르지만, 사용법은 대체로 비슷한 편이다.
-예를 들어 패키지를 설치할 때는 <code class="highlighter-rouge">apt-get install "package name"</code> 이런 식이다.
-모든 패키지 매니저가 설치/업데이트/삭제 명령어를 가지고 있으며,
-설치된 패키지를 관리하기 위한 명령어도 존재한다.</p>
-
-<p>​   ​</p>
-
-<h2 id="alias-">alias 명령어</h2>
-
-<p>한번 설정해놓으면 이것만큼 편한게 없다.
-바로 예시를 드는게 더 이해하기 편할거 같다.</p>
-
-<p>예를 들어, 서버의 원격주소로 매일 접속해야 하는 상황이라고 가정해보자.
-보통은 매번 <code class="highlighter-rouge">ssh username@address -p port</code> 이런식으로 입력해야 할 것이다.
-하지만, alias를 설정해놓으면 커스텀 명령어로 지정하여 간단히 접속할 수 있다.</p>
-
-<ol>
-  <li>먼저 ~/.bashrc로 들어간다. (zsh를 사용한다면, ~/.zshrc로 들어가자)</li>
-  <li><code class="highlighter-rouge">alias login = 'ssh username@address -p port'</code> 한 줄을 추가한다.</li>
-  <li>source ~/.bashrc로 업데이트 해준다.</li>
-</ol>
-
-<p>이후에는 접속할 때 <code class="highlighter-rouge">login</code> 이라는 명령어만 입력하면 된다.
-​</p>
-
-<p>​   ​</p>
-
-<h2 id="section-1">명령어 순차실행과 파이프라인</h2>
-
-<p>사용하다보면 여러 명령어를 연속적으로 실행해야하는 경우가 많다.</p>
-
-<p>이럴 때는 Sequence와 Pipeline 개념을 알아두면 편하다.
-예를 들어, commit과 push 명령어를 연속적으로 실행하고 싶다고 가정해보자.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">git add -A;git push</code></pre></figure>
-
-<p>위와 같이 중간에 세미콜론만 추가하면 된다.</p>
-
-<p>이번에는 실행중인 특정 프로세스 번호를 찾아야 한다고 가정해보자.
-처음이라면 <code class="highlighter-rouge">ps -ef</code> 로 프로세스를 직접 확인할 것이다.
-하지만 파이프라인과 grep 명령어를 사용한다면 다음과 같이 한줄로 끝난다.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">ps -ef | grep process_name</code></pre></figure>
-
-<p>​
-​   ​</p>
-
-<h2 id="nohup">백그라운드 실행 - nohup</h2>
-
-<p>어떤 작업을 백그라운드로 실행을 하면 별도의 창으로 켜놓지 않아도
-하나의 프로세스로 계속 돌아가는 것을 확인할 수 있다.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">nohup name &amp;</code></pre></figure>
-
-<p>리눅스에서는 <code class="highlighter-rouge">nohup</code> 이라는 명령어로 실행할 수 있다.
-실행하고 나면 <code class="highlighter-rouge">nohup.out</code> 이라는 파일이 생기는데
-cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
-실행중지 시킬 때는 <code class="highlighter-rouge">kill</code> 명령어로 프로세스를 죽이면 된다.</p>
-
-<p>​   ​</p>
-
-<h2 id="cron-crontab">스케줄링을 통한 주기적인 실행 - cron, crontab</h2>
-
-<p>crontab은 일종의 리눅스 작업 스케줄러이다.
-이 명령어를 사용하면 특정 시간에 내가 원하는 특정 명령어나 스크립트를 실행시킬 수 있다.
-보통 주기적인 크롤링에 사용하기도 한다.</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /root/script.sh</code></pre></figure>
-
-<p>이렇게 설정하면 1분마다 script.sh를 실행한다.
-앞의 별 다섯개는 순서대로 <code class="highlighter-rouge">"분,시,일,월,요일"</code>을 뜻한다.
-내가 실행중인 스케줄러를 관리하기 위한 명령어는 다음과 같다.</p>
-
-<ul>
-  <li>crontab -l : 실행중인 cron 확인</li>
-  <li>crontab -r : 사용자의 예약작업을 모두 삭제</li>
-</ul>
-
-<p>​   ​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>OS X에서 Jenkins 설치하기</title>
-	  <link>//jenkins-install</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-02-13T19:18:00+09:00</pubDate>
-	  <guid>//jenkins-install</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>이번 포스팅에서는 CI 도구인 Jenkins를 설치하고 실행하는 방법에 대해 정리해보겠습니다.</p>
-
-<p>​</p>
-
-<h2 id="jenkins-">Jenkins 설치하기</h2>
-
-<p>홈페이지에서 패키지 파일로 설치해도 되지만 관리를 편하게 하기 위해 brew로 설치하겠습니다.</p>
-
-<p><code class="highlighter-rouge">brew install jenkins</code> 설치가 되었다면, <code class="highlighter-rouge">brew services start jenkins</code> 명령어로 실행시킵니다.</p>
-
-<p><img src="https://t1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/wRr/image/7QdE6zFXW0HQurosFv56loRGGpY.JPG" alt="jenkins" /></p>
-
-<p>처음에 사용자 등록을 진행하고 필요한 플러그인을 설치하면 홈 화면으로 이동합니다.</p>
-
-<p>서버를 종료시킬때는 <code class="highlighter-rouge">brew services stop jenkins</code> 명령어를 실행시키면 됩니다.</p>
-
-<p>​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Jupyter Notebook 외부접속 설정하기</title>
-	  <link>//jupyter-config</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-02-12T19:18:00+09:00</pubDate>
-	  <guid>//jupyter-config</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>이번 포스팅에서는 Jupyter Notebook을 환경구축하고 난 이후에 외부접속을 설정하는 과정에 대해 알아보겠습니다. 환경구축하는 방법에 대해서는 이전의 포스팅 <a href="https://swalloow.github.io/jupyter-notebook-kernel">https://swalloow.github.io/jupyter-notebook-kernel</a> 을 참고해주시기 바랍니다.</p>
-
-<p>​</p>
-
-<h2 id="section">외부접속 허용하기</h2>
-
-<p>우선 <code class="highlighter-rouge">~/.jupyter/jupyter_notebook_config.py</code> 에 있는 Jupyter Notebook의 설정파일을 열어줍니다. 아마 모두 주석이 걸려있을텐데 필요한 부분만 수정해주시면 됩니다.</p>
-
-<ul>
-  <li>실행경로 변경 : <code class="highlighter-rouge">c.NotebookApp.default_url = '/tree'</code></li>
-  <li>외부접속 허용 : <code class="highlighter-rouge">c.NotebookApp.ip = '0.0.0.0'</code></li>
-  <li>
-    <p>포트변경: <code class="highlighter-rouge">c.NotebookApp.port = 8888</code></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="section-1">비밀번호 설정하기</h2>
-
-<p>비밀번호를 설정하면 url에 접속했을 때, 암호를 입력하는 화면이 나타나게 됩니다. Jupyter Notebook에서는 HASH 값을 통해 암호화된 비밀번호를 적용할 수 있습니다.</p>
-
-<p>먼저, 새로운 노트를 생성하고 다음의 스크립트를 작성합니다. 암호를 설정하는 칸이 나오고 결과 값이 주어지면 그대로 복사해서 <code class="highlighter-rouge">c.NotebookApp.password = u''</code> 여기에 붙여넣기 하시면 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">notebook.auth</span> <span class="kn">import</span> <span class="n">passwd</span><span class="p">;</span>
-<span class="n">passwd</span><span class="p">()</span></code></pre></figure>
-
-<p>​</p>
 
 	  ]]></description>
 	</item>
@@ -535,178 +195,6 @@ cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
   <li><a href="http://www.popit.kr/why-microservice/">Popit - 마이크로서비스 아키텍쳐의 장단점</a></li>
   <li>
     <p><a href="http://bcho.tistory.com/942">조대협 블로그 - OAuth 2.0 Architecture</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Jupyter Notebook 다중커널 설정하기</title>
-	  <link>//jupyter-notebook-kernel</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-28T19:18:00+09:00</pubDate>
-	  <guid>//jupyter-notebook-kernel</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>Jupyer Notebook은 웹 기반의 대화형 노트북 지원으로 수식, 표, 그림 등을 표현하기 쉬운 개발 환경입니다.
-코딩과 문서화(Markdown)까지 한 화면에서 가능하며 커널 확장을 통해 다양한 파이썬 버전 뿐만 아니라 여러 언어를 지원합니다.</p>
-
-<p>이제 파이썬을 처음 설치한다고 가정하고 맥 OS에서 간단하게 jupyter 환경설정하는 방법을 소개해드리고자 합니다.</p>
-
-<p>​</p>
-
-<h3 id="pyenv-">pyenv 설치하기</h3>
-
-<h5 id="homebrew--pyenv-">1. Homebrew를 통해 pyenv를 설치</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">pyenv</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="pyenv-init-bashrc--zsh---zshrc">2. pyenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">echo</span> <span class="s">'eval "$(pyenv init -)"'</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="pyenv--1">3. pyenv 사용해보기</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-<span class="n">system</span> <span class="p">(</span><span class="nb">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">USERNAME</span><span class="o">/.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="pyenv--">4. pyenv 명령어 정리</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">uninstall</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">install</span> <span class="o">-</span><span class="nb">list</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">activate</span> <span class="o">&lt;</span><span class="n">environment</span><span class="o">&gt;</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">deactivate</span> <span class="o">&lt;</span><span class="n">environment</span><span class="o">&gt;</span></code></pre></figure>
-
-<p>​</p>
-
-<h3 id="pyenv-virtualenv-">pyenv-virtualenv 설치하기</h3>
-
-<h5 id="homebrew--pyenv-virtualenv-">1. Homebrew를 통해 pyenv-virtualenv를 설치</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">pyenv</span><span class="o">-</span><span class="n">virtualenv</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="virtualenv-init-bashrc--zsh---zshrc">2. virtualenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">echo</span> <span class="s">'eval "$(pyenv virtualenv-init -)"'</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="pyenv-virtualenv--1">2. pyenv-virtualenv 사용해보기</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># pyenv virtualenv [python version] [myname]</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="mf">2.7</span><span class="o">.</span><span class="mi">11</span> <span class="n">python2</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="mf">3.5</span><span class="o">.</span><span class="mi">1</span> <span class="n">python3</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="virtualenv--">2. virtualenv 명령어 정리</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="n">versions</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="p">[</span><span class="n">python</span> <span class="n">version</span><span class="p">]</span> <span class="p">[</span><span class="n">myname</span><span class="p">]</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="p">[</span><span class="n">myname</span><span class="p">]</span></code></pre></figure>
-
-<p>​</p>
-
-<h3 id="jupyter-notebook-">Jupyter Notebook 설치</h3>
-
-<p>이제 방금 설치했던 파이썬 2와 3 버전의 환경에 python, notebook, jupyter를 설치할 차례입니다.
-따라서 방금 설치한 환경을 각각 activate한 다음에 아래와 같은 명령어를 실행시켜야 합니다.</p>
-
-<p>​</p>
-
-<h5 id="pip-install-python2-python3--">1. pip install (python2, python3 각각 실행)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">ipython</span>
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">notebook</span>
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="jupyter-configuration-----">2. 초기 Jupyter configuration 파일 생성 (마찬가지로 각각 실행)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">--</span><span class="n">generate</span><span class="o">-</span><span class="n">config</span>
-<span class="n">Installed</span> <span class="n">kernelspec</span> <span class="n">python3</span> <span class="ow">in</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">username</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python3</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="jupyternotebookconfigpy-----">3. 생성된 jupyter_notebook_config.py 설정 (원하는 경우에만 커스텀 설정)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">username</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python3</span><span class="o">/</span><span class="n">jupyter_notebook_config</span><span class="o">.</span><span class="n">py</span>
-
-<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="s">'127.0.0.1'</span>
-<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">open_browser</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">8888</span>
-<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="p">[</span><span class="n">SHA</span> <span class="n">password</span><span class="p">]</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="ipykernel----">4. ipykernel 설정 (마찬가지로 각각 실행)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="n">python2</span>
-<span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ipykernel</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span>
-<span class="n">Installed</span> <span class="n">kernelspec</span> <span class="n">python2</span> <span class="ow">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">seen</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python2</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="kerneljson-----">5. kernel.json 확인 (원하는 경우에만 커스텀 설정)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">seen</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python2</span><span class="o">/</span><span class="n">kernel</span><span class="o">.</span><span class="n">json</span>
-<span class="p">{</span>
-  <span class="s">"display_name"</span><span class="p">:</span> <span class="s">"Python 2"</span><span class="p">,</span>
-  <span class="s">"language"</span><span class="p">:</span> <span class="s">"python"</span><span class="p">,</span>
-  <span class="s">"argv"</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s">"/home/seen/.pyenv/versions/py27/bin/python"</span><span class="p">,</span>
-    <span class="s">"-m"</span><span class="p">,</span>
-    <span class="s">"ipykernel"</span><span class="p">,</span>
-    <span class="s">"-f"</span><span class="p">,</span>
-    <span class="s">"{connection_file}"</span>
-    <span class="p">]</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="jupyter-notebook--1">6. jupyter notebook을 실행</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">jupyter</span> <span class="n">notebook</span>
-
-<span class="c"># background running</span>
-<span class="err">$</span> <span class="n">nohup</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">&amp;</span>
-
-<span class="c"># kill process</span>
-<span class="err">$</span> <span class="n">ps</span> <span class="o">-</span><span class="n">a</span>
-<span class="mi">37788</span> <span class="n">ttys000</span> <span class="mi">0</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="o">...</span><span class="n">python</span> <span class="p">(</span><span class="err">노트북을</span> <span class="err">실행한</span> <span class="err">프로세스</span><span class="p">)</span>
-<span class="err">$</span> <span class="n">kill</span> <span class="mi">37788</span></code></pre></figure>
-
-<p>​</p>
-
-<h3 id="section">정리</h3>
-
-<p>윈도우10 에서 아주 고생했던 환경설정이 맥 OS에서는 아주 간편하게 됩니다…
-잘 안되거나 오류가 생기시면 댓글로 알려주시면 감사하겠습니다!</p>
-
-<p>​</p>
-
-<h3 id="section-1">참고링크</h3>
-
-<ul>
-  <li><a href="https://github.com/yyuu/pyenv">https://github.com/yyuu/pyenv</a></li>
-  <li>
-    <p><a href="https://github.com/yyuu/pyenv-virtualenv">https://github.com/yyuu/pyenv-virtualenv</a></p>
 
     <p>​</p>
   </li>
@@ -1099,6 +587,169 @@ cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
   <li>카카오 개발자센터 : <a href="https://developers.kakao.com">https://developers.kakao.com</a></li>
   <li>
     <p>네이버 개발자센터 : <a href="https://developers.naver.com">https://developers.naver.com</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</title>
+	  <link>//windows-bash-jekyll</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-03T19:18:00+09:00</pubDate>
+	  <guid>//windows-bash-jekyll</guid>
+	  <description><![CDATA[
+	     <p>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준)</p>
+
+<p>​</p>
+
+<h2 id="ruby-">윈도우 10에서 Ruby 설치</h2>
+
+<ol>
+  <li><code class="highlighter-rouge">프로그램 및 기능 &gt; Windows 기능 켜기/끄기 &gt; Linux용 Windows 하위 시스템</code> 체큰</li>
+  <li>cmd 창에서 <code class="highlighter-rouge">bash</code> 를 입력, Windows Subsystem for Linux 환경실행</li>
+</ol>
+
+<p>처음 실행한다면, 아무것도 설치되지 않은 상태이기 때문에 초기 설정을 해주시면 좋습니다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
+<span class="err">$</span> <span class="n">apt</span> <span class="n">update</span>
+<span class="err">$</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">make</span> <span class="n">gcc</span></code></pre></figure>
+
+<p>이제 루비를 설치해보겠습니다. 놀랍게도 윈도우 bash에서는 <code class="highlighter-rouge">apt install ruby</code> 를 통해 설치하려는 경우, 루비 1.9.3 버전만 설치됩니다 ! (rvm과 rbenv를 사용해봐도 동일) 하지만, Jekyll 에서 최소 2.0 이상의 버전을 요구하기 때문에 brightbox를 통해 최신 버전을 설치하였습니다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="p">:</span><span class="n">brightbox</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="n">ng</span>
+<span class="err">$</span> <span class="n">apt</span> <span class="n">update</span>
+<span class="err">$</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">ruby2</span><span class="o">.</span><span class="mi">3</span> <span class="n">ruby2</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">dev</span> <span class="n">ruby</span><span class="o">-</span><span class="n">switch</span></code></pre></figure>
+
+<p>여기까지 설치되고 나면 뭔가 안심이 됩니다. 하지만 이제 시작에 불과합니다.</p>
+
+<p>​</p>
+
+<h2 id="jekyll-">Jekyll 설치하기</h2>
+
+<p>이제 설치하려는 경로로 이동해서 jekyll을 설치할 차례입니다. 여기에서는 바탕화면에 설치해보도록 하겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span>
+<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">Users</span><span class="o">/&lt;</span><span class="n">your</span> <span class="n">username</span><span class="o">&gt;/</span><span class="n">Desktop</span>
+<span class="err">$</span> <span class="n">jekyll</span> <span class="n">new</span> <span class="n">myblog</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">myblog</span>
+<span class="err">$</span> <span class="n">jekyll</span> <span class="n">serve</span> <span class="o">-</span><span class="n">w</span></code></pre></figure>
+
+<p>속도를 측정해보면, Bash는 <code class="highlighter-rouge">0.329초</code>, PowerShell은 <code class="highlighter-rouge">0.364초</code> 로 Bash에서 실행시키는 것이 더 빠르다고 합니다.
+여기까지가 아주 기본적인 형태의 jekyll 블로그 설치 과정입니다.</p>
+
+<p>​</p>
+
+<h2 id="jekyll--1">테마까지 한번에 적용하여 Jekyll 설치하기</h2>
+
+<p>기본 설치를 끝내면 그냥 빈 화면만 나타나기 때문에 허전합니다. 그래서 이번에는 테마까지 한번에 적용하여 설치하는 방법을 알려드리겠습니다. (방금꺼는 <code class="highlighter-rouge">gem uninstall -all</code> 명령어를 통해 삭제하셔도 됩니다)</p>
+
+<ol>
+  <li>먼저, <code class="highlighter-rouge">&lt;사용자이름&gt;.github.io</code> 라는 이름의 Repository를 생성합니다.</li>
+  <li>생성한 저장소를 로컬에 clone 하고 cd 명령어를 통해 위치로 이동합니다.</li>
+  <li>
+    <p>마음에 드는 Jekyll 테마를 다운로드 받아 로컬에 압축해제 합니다. <a href="http://jekyllthemes.org/">http://jekyllthemes.org/</a></p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<p>구조를 처음 보시면 복잡한데, 우리가 건드릴 부분은 <code class="highlighter-rouge">_config.yml</code> 과 <code class="highlighter-rouge">Gemfile</code> 입니다. Gemfile은 GitHub Pages에 필요한 라이브러리를 설치하도록 정의한 파일이라고 보시면 됩니다.
+데스크탑과 노트북 또는 맥북을 사용해보신 분은 아시겠지만, GitHub Pages에서 의존성 문제가 아주 빈번하게 발생합니다.</p>
+
+<ul>
+  <li>
+    <p>의존성을 가지는 라이브러리 참고 (<a href="https://pages.github.com/versions/">https://pages.github.com/versions/</a>)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<p>위의 링크처럼 각 라이브러리마다 버전 정보를 따로 관리해도 되지만, <code class="highlighter-rouge">gem 'github-pages'</code> 를 통해 관리하는 방법이 가장 간편합니다.
+이를 통해 github-pages의 최신 의존성 정보를 간단하게 업데이트할 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="n">Gemfile</span>
+
+<span class="n">source</span> <span class="s">'https://rubygems.org'</span>
+<span class="n">gem</span> <span class="s">'github-pages'</span></code></pre></figure>
+
+<p>​</p>
+
+<p>이제 bundler를 설치할 차례입니다. bundler는 라이브러리 설치를 위한 패키지 매니저입니다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
+<span class="err">$</span> <span class="n">bundle</span> <span class="n">install</span>
+<span class="err">$</span> <span class="n">bundle</span> <span class="n">update</span></code></pre></figure>
+
+<p>이제 Gemfile에 있는 라이브러리를 설치하고 업데이트까지 완료했습니다.
+의존성 정보를 확인하시려면 <code class="highlighter-rouge">github-pages versions</code> 명령어를 입력하시면 됩니다.</p>
+
+<p>​</p>
+
+<h4 id="jeykll-331---">1. jeykll 3.3.1 버전에서 오류 발생</h4>
+
+<p>최근 <em>Windows+Bash Subsystem</em> 에서 powershell을 defalut cmd로 확장하는 과정에서 생겨난 버그</p>
+
+<ul>
+  <li>
+    <p>(https://github.com/jekyll/jekyll/issues/5462 참조)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<p>해결방법은 다음과 같습니다. 첫번째 방법은 번거롭기 때문에 두번째 방법을 추천합니다.</p>
+
+<ol>
+  <li>
+    <p>jeykll 3.3.1 버전을 삭제하고 3.2.1 버전으로 하향시키기</p>
+  </li>
+  <li>
+    <p>build.rb에서 코드 수정하기</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<p>build.rb의 위치를 찾는 방법</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">bundle</span> <span class="n">show</span> <span class="n">jekyll</span></code></pre></figure>
+
+<p>그리고 <code class="highlighter-rouge">lib/jekyll/commands/build.rb</code>로 이동해서 다음과 같이 수정합니다.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">if</span> <span class="no">Utils</span><span class="o">::</span><span class="no">Platforms</span><span class="p">.</span><span class="nf">windows?</span> <span class="o">-&gt;</span> <span class="k">unless</span> <span class="no">Utils</span><span class="o">::</span><span class="no">Platforms</span><span class="p">.</span><span class="nf">windows?</span></code></pre></figure>
+
+<p>​</p>
+
+<h4 id="jekyll-serve--">2. jekyll serve에서 오류 발생</h4>
+
+<p>실행 명령어 <code class="highlighter-rouge">jekyll serve</code> 하면 여기서 끝날줄 알았는데
+또 오류 발생 (https://github.com/jekyll/jekyll/issues/5233 참조)
+역시 마찬가지로 <em>Windows+Bash Subsystem</em> 버그라고 합니다..</p>
+
+<p><code class="highlighter-rouge">jekyll serve --force_polling</code>  옵션을 통해 해결하실 수 있습니다.</p>
+
+<p>​</p>
+
+<h2 id="section">결론</h2>
+
+<p>쓰다보니 간단하지 않은 것 같지만 제가 삽질했던 부분을 빠르게 건너뛴다면,
+윈도우 사용자도 금방 설치할 수 있습니다 (Bash on Windows 만세 !)
+다만, 정신건강을 위해 맥을 사용하는걸 추천합니다.</p>
+
+<p>​</p>
+
+<h4 id="section-1">참고하면 좋은 페이지</h4>
+
+<ul>
+  <li>GitHub Help : https://help.github.com/articles/configuring-jekyll/</li>
+  <li>https://nolboo.kim/blog/2013/10/15/free-blog-with-github-jekyll/#configyml</li>
+  <li>http://my2kong.net/2016/07/07/jekyll-blogging-theme/</li>
+  <li>
+    <p>Jekyll QuickStart : http://jekyllbootstrap.com/usage/jekyll-quick-start.html</p>
 
     <p>​</p>
   </li>
