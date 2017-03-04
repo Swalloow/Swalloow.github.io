@@ -112,7 +112,7 @@
             <h1 class="post-title">Docker, DockerHub 명령어 정리</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-02-21">21 Feb 2017</time>
+            <time class="post-date" datetime="2017-02-22">22 Feb 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -129,8 +129,17 @@
 
             <p>​   ​</p>
 
-<p><a href="https://swalloow.github.io/docker-install">지난 번 포스팅</a>에 이어 Docker 명령어를 정리하고,
-더 나아가 DockerHub에 이미지를 올리는 방법까지 알아보겠습니다.</p>
+<p><img src="/assets/images/docker-architect.png" alt="docker-architect" /></p>
+
+<p>명령어를 정리하기 전에 Docker 시스템 아키텍처를 보면 이해하기 쉽습니다.
+Docker는 크게 <strong>클라이언트-서버 아키텍처</strong> 로 구성되어 있습니다.
+그림처럼 우리가 명령어를 입력하면 클라이언트는 데몬과 통신하고 데몬이 컨테이너를 빌드, 실행합니다.</p>
+
+<p>DockerHub는 도커 컨테이너를 관리하고 공유하기 위한 SAAS로
+GitHub 처럼 이미지를 올려서 공유하거나 내려받을 수 있습니다.</p>
+
+<p><a href="https://swalloow.github.io/docker-install">지난 번 포스팅</a>에 이어서
+이제 Docker 명령어를 정리하고, 더 나아가 DockerHub에 이미지를 올리는 방법까지 알아보겠습니다.</p>
 
 <p>​</p>
 
