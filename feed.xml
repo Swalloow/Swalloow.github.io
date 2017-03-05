@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>JWT를 구현하면서 마주치게 되는 고민들</title>
+        
+          <description>&lt;p&gt;​   ​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Fri, 03 Mar 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//implement-jwt</link>
+        <guid isPermaLink="true">http://swalloow.github.io//implement-jwt</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘</title>
         
           <description>&lt;p&gt;​   ​&lt;/p&gt;
