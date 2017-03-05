@@ -12,6 +12,91 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘</title>
+	  <link>//https-ssl</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-03-01T19:18:00+09:00</pubDate>
+	  <guid>//https-ssl</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>크롬 업데이트 이후 몇몇 웹 페이지는 브라우저 주소 창에 <code class="highlighter-rouge">안전하지 않음</code>이 나타나고,
+아니면 자물쇠 모양에 <code class="highlighter-rouge">안전함</code>이 표시되는 것을 볼 수 있습니다.
+오늘은 그 두 가지 방식에 어떤 차이가 있는지, HTTPS와 SSL 인증서에 대해 알아보고
+최근 구글과 리누스 토발즈의 언급으로 이슈화 되고 있는 SHA1 암호화 알고리즘에 대해 정리해보려 합니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="http-https">HTTP와 HTTPS</h2>
+
+<p>우선 간단히 웹 통신규약에 대해 설명하자면, <em>HTTP는 Hypertext 인 HTML을 전송하기 위한 통신규약</em> 을 의미합니다.
+HTTP는 암호화되지 않은 방법으로 데이터를 전송하기 때문에 서버와 클라이언트가 주고 받는 메시지를 확인하는 것이 매우 쉽습니다.
+심각한 예를 들면, 로그인을 위해서 서버로 비밀번호를 전송하거나 중요한 기밀 문서를 열람하는 과정에서 악의적인 감청이나 데이터의 위변조 등이 일어날 수 있습니다.</p>
+
+<p>이를 보완하기 위해 나온 것이 보안이 강화된 <strong>HTTPS</strong> 입니다.
+HTTPS는 보안을 강화하기 위해 통신에서 일반 텍스트를 이용하지 않고 <strong>SSL이나 TLS 프로토콜</strong> 을 통해 세션 데이터를 암호화합니다.
+이를 통해 데이터의 보안을 더 강화할 수 있지만 전적으로 웹 브라우저에서의 구현 정확도와 서버 소프트웨어, 지원하는 암호화 알고리즘에 달려있습니다.</p>
+
+<p>결국 크롬에 <code class="highlighter-rouge">안전하지 않음</code>으로 표기되는 페이지는 보안 인증서가 없는 페이지입니다.
+반면에, <code class="highlighter-rouge">안전함</code>으로 표기되는 페이지는 기관으로부터 인증서를 받은 페이지입니다.
+실제로 인터넷 익스플로러의 인터넷 옵션을 확인해보면 CA 라는 탭에서 인증서를 확인하실 수 있습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="ssl--">SSL 통신 과정</h2>
+
+<p>그렇다면 HTTPS에 포함된 SSL 프로토콜이 어떤 과정을 통해 동작하는지 간단히 알아보겠습니다.
+다시 설명하자면, <em>SSL 인증서는 클라이언트와 서버간의 통신을 제3자가 보증해주는 전자화된 문서</em> 라고 보시면 됩니다.
+처음 클라이언트와 서버가 데이터를 주고 받기 위해서는 준비과정이 필요합니다. 이를 <strong>핸드쉐이크(HandShake)</strong> 라고 부릅니다.</p>
+
+<p><img src="/assets/images/ssl-process.jpg" alt="ssl-process" /></p>
+
+<ol>
+  <li>
+    <p>먼저, 클라이언트가 서버에 접속(Client Hello)한 직후에 서버는 클라이언트에게 인증서 정보를 전달(Server Hello)합니다.</p>
+  </li>
+  <li>
+    <p>클라이언트(브라우저)는 이미 모든 CA 인증기관들에 대한 정보를 가지고 있기 때문에 공개키를 통해
+전달받은 인증서를 복호화하고 신뢰할 수 있는 서버인지 확인합니다.</p>
+  </li>
+  <li>
+    <p>안전함이 확인되면 클라이언트는 대칭키 암호화 방식을 통해 비밀키를 생성하고 이를 공개키 방식으로 암호화해서 서버에게 전달합니다.</p>
+  </li>
+  <li>
+    <p>서버는 자신의 비공개 키로 복호화하여 서버와 클라이언트가 세션키를 공유하게 되면, 핸드쉐이크 과정의 종료를 서로에게 알립니다.</p>
+  </li>
+  <li>
+    <p>이제 세션을 통해 서버와 클라이언트가 데이터를 주고 받게 됩니다.
+여기서 세션키 값을 이용해서 대칭키 방식으로 암호화하기 때문에 HTTP 보다 안전합니다.</p>
+  </li>
+  <li>
+    <p>데이터의 전송이 끝나면 SSL 통신이 끝났음을 서로에게 알려줍니다. 그리고 통신에서 사용한 대칭키인 세션키를 폐기합니다.</p>
+  </li>
+</ol>
+
+<p>​   ​</p>
+
+<h2 id="sha1------">SHA1 암호화 알고리즘은 더 이상 안전하지 않다?</h2>
+
+<p>이 논란은 구글이 2월 중순쯤에 낡은 암호화 알고리즘 SHA1를 깨뜨리면서 시작되었습니다.
+구글은 SHA1 알고리즘 해시값의 고유성을 깨뜨릴 수 있는 <strong>‘섀터드(SHAttered)’</strong> 라는 방법을 선보이면서,
+SHA1에 의존하는 기술은 믿음직하지 않다는 점을 보여줬습니다.</p>
+
+<p>여기서 섀터드 기법을 소개한 연구자들은 <em>Git이 SHA1에 의존하기 때문에 안전하지 않다</em> 고 말했습니다.
+이에 리누스 토발즈는 <em>“깃은 데이터를 해시하기만 하는 게 아니라, 거기에 타입과 길이 필드를 측량한다”</em> 고 말하면서
+당장은 하늘이 무너지는게 아니니 상관없다고 답변했습니다.</p>
+
+<p>물론 당장은 아니지만 불안함에 많은 기관들이 SHA1 방식에서 <strong>SHA2 또는 SHA256</strong> 으로 옮겨가고 있습니다.
+대표적으로 크롬, 파이어폭스 등의 브라우저들이 SHA1 인증서 퇴출에 노력하고 있고, 인터넷뱅킹이나 비트코인 같은 경우 SHA256 방식을 사용합니다.</p>
+
+<p>리누스 토발즈의 글 : <a href="https://plus.google.com/+LinusTorvalds/posts/7tp2gYWQugL">https://plus.google.com/+LinusTorvalds/posts/7tp2gYWQugL</a></p>
+
+<p>​   ​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Swagger로 API 문서화하기</title>
 	  <link>//swagger</link>
 	  <author>Swalloow</author>
@@ -280,161 +365,6 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
 	</item>
 
 	<item>
-	  <title>OAuth2에 대해 알아보자</title>
-	  <link>//about-oauth2</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
-	  <guid>//about-oauth2</guid>
-	  <description><![CDATA[
-	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
-
-<p>​   ​</p>
-
-<h3 id="section">인증과 허가</h3>
-
-<ol>
-  <li>Authentication : 인증</li>
-  <li>
-    <p>Authorization : 허가</p>
-
-    <p>​   ​</p>
-  </li>
-</ol>
-
-<p>일반 로그인은 사원이 63빌딩에 출입하는 것이라면, (사원증이 있어야 출입가능)</p>
-
-<p>OAuth는 1층에서 방문증을 수령한 후 63빌딩에 출입하는 것이다. (방문증만 있어도 출입가능)</p>
-
-<p>​   ​</p>
-
-<h2 id="oauth-10-">OAuth 1.0의 특징</h2>
-
-<p>기존의 다른 인증방식(OpenID)과 구분되는 특징은 크게 두 가지이다.</p>
-
-<ol>
-  <li>API 인증 시, 써드파티 어플리케이션에게 사용자의 비번을 노출하지 않고 인증할 수 있다는 점</li>
-  <li>
-    <p>인증(Authentication)과 API 권한(Authorization) 부여를 동시에 할 수 있다는 점</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h2 id="oauth-10--1">OAuth 1.0의 동작방식</h2>
-
-<p>OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한다.</p>
-
-<p>OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.</p>
-
-<p><img src="assets/images/oauth1_triangle.png" alt="oauth1_triangle" /></p>
-
-<p>우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.</p>
-
-<p>​</p>
-
-<h3 id="outh-10-">Outh 1.0 프로세스</h3>
-
-<ol>
-  <li>사용자(User)가 트위터 로그인 요청</li>
-  <li>사용자를 트위터(Service Provider) 로그인 화면으로 리다이렉트</li>
-  <li>트위터 로그인 진행</li>
-  <li>
-    <p>서비스(Consumer)로 인증토큰(Access Token)이 전달</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h3 id="section-1">인증토큰의 장점</h3>
-
-<ul>
-  <li>사용자의 아이디 / 패스워드를 몰라도 토큰을 통해 허가 받은 API에 접근 가능</li>
-  <li>필요한 API에만 제한적으로 접근할 수 있도록 권한 제어 가능</li>
-  <li>저장되어 있는 인증토큰이 유출되더라도 트위터의 관리자 화면에서 인증토큰의 권한 취소 가능</li>
-  <li>
-    <p>사용자가 트위터(Service Provider)의 패스워드를 변경해도 인증토큰은 계속 유효</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="oauth-20-">OAuth 2.0의 개선사항</h2>
-
-<p>일단 OAuth 2.0은 1.0과 호환되지 않으며 용어부터 많은 것이 다르다. 모바일에서의 사용성 문제나 서명과 같은 개발이 복잡하고 기능과 규모의 확장성 등을 지원하기 위해 만들어진 표준이다. 표준이 매우 크고 복잡해서 이름도 “OAuth 인증 프레임워크(OAuth 2.0 Authorization Framework)” 이다. <a href="http://tools.ietf.org/wg/oauth/">http://tools.ietf.org/wg/oauth/</a> 에서 확인 가능</p>
-
-<p>​</p>
-
-<h3 id="oauth-10--">OAuth 1.0에서 개선된 사항</h3>
-
-<ol>
-  <li>용어 변경
-    <ul>
-      <li>Resource Owner : 사용자</li>
-      <li>Resource Server : REST API 서버</li>
-      <li>Authorization Server : 인증서버 (API 서버와 같을 수도 있음)</li>
-      <li>Client : 써드파티 어플리케이션 (서비스)</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>간단하고 직관적
-    <ul>
-      <li>OAuth 1.0에서는 HTTPS가 필수</li>
-      <li>Signature 없이 생성, 호출 가능</li>
-      <li>URL 인코딩이 필요없음</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>더 많은 인증 방법을 지원
-    <ul>
-      <li>이전에는 HMAC을 이용한 암호화 인증만 지원</li>
-      <li>OAuth 2.0은 여러 인증 방식을 통해 웹 / 모바일 등 다양한 시나리오에 대응 가능</li>
-      <li>Access Token의 Life-time을 지정하여 만료일 설정 가능</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>대형 서비스로의 확장성 지원
-    <ul>
-      <li>커다란 서비스는 인증 서버를 분리하거나 다중화 할 수 있어야 함</li>
-      <li>Authorization Server의 역할을 명확히 하여 이에 대한 고려가 되었음</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h2 id="oauth-20--">OAuth 2.0 사용 서비스</h2>
-
-<p>2013년까지만 해도 1.0만 지원하거나 2.0으로 개선하는 인터넷 서비스 기업이 많았지만,</p>
-
-<p>현재는 대부분 2.0만 지원한다고 봐도 무방하다. (1.0은 자체 로그인에만 사용하는 기업이 많음)</p>
-
-<ul>
-  <li>
-    <p>Facebook, Instagram, Google, LinkedIn, Twitter…</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="section-2">참고하면 좋은 자료</h2>
-
-<ul>
-  <li>Naver D2 : <a href="http://d2.naver.com/helloworld/24942">http://d2.naver.com/helloworld/24942</a></li>
-  <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
-  <li>
-    <p>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
 	  <title>Open API를 설계할 때 알아야 하는 것들</title>
 	  <link>//open-api-guide</link>
 	  <author>Swalloow</author>
@@ -663,6 +593,161 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
   <li>카카오 개발자센터 : <a href="https://developers.kakao.com">https://developers.kakao.com</a></li>
   <li>
     <p>네이버 개발자센터 : <a href="https://developers.naver.com">https://developers.naver.com</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>OAuth2에 대해 알아보자</title>
+	  <link>//about-oauth2</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
+	  <guid>//about-oauth2</guid>
+	  <description><![CDATA[
+	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
+
+<p>​   ​</p>
+
+<h3 id="section">인증과 허가</h3>
+
+<ol>
+  <li>Authentication : 인증</li>
+  <li>
+    <p>Authorization : 허가</p>
+
+    <p>​   ​</p>
+  </li>
+</ol>
+
+<p>일반 로그인은 사원이 63빌딩에 출입하는 것이라면, (사원증이 있어야 출입가능)</p>
+
+<p>OAuth는 1층에서 방문증을 수령한 후 63빌딩에 출입하는 것이다. (방문증만 있어도 출입가능)</p>
+
+<p>​   ​</p>
+
+<h2 id="oauth-10-">OAuth 1.0의 특징</h2>
+
+<p>기존의 다른 인증방식(OpenID)과 구분되는 특징은 크게 두 가지이다.</p>
+
+<ol>
+  <li>API 인증 시, 써드파티 어플리케이션에게 사용자의 비번을 노출하지 않고 인증할 수 있다는 점</li>
+  <li>
+    <p>인증(Authentication)과 API 권한(Authorization) 부여를 동시에 할 수 있다는 점</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h2 id="oauth-10--1">OAuth 1.0의 동작방식</h2>
+
+<p>OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한다.</p>
+
+<p>OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.</p>
+
+<p><img src="assets/images/oauth1_triangle.png" alt="oauth1_triangle" /></p>
+
+<p>우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.</p>
+
+<p>​</p>
+
+<h3 id="outh-10-">Outh 1.0 프로세스</h3>
+
+<ol>
+  <li>사용자(User)가 트위터 로그인 요청</li>
+  <li>사용자를 트위터(Service Provider) 로그인 화면으로 리다이렉트</li>
+  <li>트위터 로그인 진행</li>
+  <li>
+    <p>서비스(Consumer)로 인증토큰(Access Token)이 전달</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h3 id="section-1">인증토큰의 장점</h3>
+
+<ul>
+  <li>사용자의 아이디 / 패스워드를 몰라도 토큰을 통해 허가 받은 API에 접근 가능</li>
+  <li>필요한 API에만 제한적으로 접근할 수 있도록 권한 제어 가능</li>
+  <li>저장되어 있는 인증토큰이 유출되더라도 트위터의 관리자 화면에서 인증토큰의 권한 취소 가능</li>
+  <li>
+    <p>사용자가 트위터(Service Provider)의 패스워드를 변경해도 인증토큰은 계속 유효</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="oauth-20-">OAuth 2.0의 개선사항</h2>
+
+<p>일단 OAuth 2.0은 1.0과 호환되지 않으며 용어부터 많은 것이 다르다. 모바일에서의 사용성 문제나 서명과 같은 개발이 복잡하고 기능과 규모의 확장성 등을 지원하기 위해 만들어진 표준이다. 표준이 매우 크고 복잡해서 이름도 “OAuth 인증 프레임워크(OAuth 2.0 Authorization Framework)” 이다. <a href="http://tools.ietf.org/wg/oauth/">http://tools.ietf.org/wg/oauth/</a> 에서 확인 가능</p>
+
+<p>​</p>
+
+<h3 id="oauth-10--">OAuth 1.0에서 개선된 사항</h3>
+
+<ol>
+  <li>용어 변경
+    <ul>
+      <li>Resource Owner : 사용자</li>
+      <li>Resource Server : REST API 서버</li>
+      <li>Authorization Server : 인증서버 (API 서버와 같을 수도 있음)</li>
+      <li>Client : 써드파티 어플리케이션 (서비스)</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>간단하고 직관적
+    <ul>
+      <li>OAuth 1.0에서는 HTTPS가 필수</li>
+      <li>Signature 없이 생성, 호출 가능</li>
+      <li>URL 인코딩이 필요없음</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>더 많은 인증 방법을 지원
+    <ul>
+      <li>이전에는 HMAC을 이용한 암호화 인증만 지원</li>
+      <li>OAuth 2.0은 여러 인증 방식을 통해 웹 / 모바일 등 다양한 시나리오에 대응 가능</li>
+      <li>Access Token의 Life-time을 지정하여 만료일 설정 가능</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>대형 서비스로의 확장성 지원
+    <ul>
+      <li>커다란 서비스는 인증 서버를 분리하거나 다중화 할 수 있어야 함</li>
+      <li>Authorization Server의 역할을 명확히 하여 이에 대한 고려가 되었음</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h2 id="oauth-20--">OAuth 2.0 사용 서비스</h2>
+
+<p>2013년까지만 해도 1.0만 지원하거나 2.0으로 개선하는 인터넷 서비스 기업이 많았지만,</p>
+
+<p>현재는 대부분 2.0만 지원한다고 봐도 무방하다. (1.0은 자체 로그인에만 사용하는 기업이 많음)</p>
+
+<ul>
+  <li>
+    <p>Facebook, Instagram, Google, LinkedIn, Twitter…</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="section-2">참고하면 좋은 자료</h2>
+
+<ul>
+  <li>Naver D2 : <a href="http://d2.naver.com/helloworld/24942">http://d2.naver.com/helloworld/24942</a></li>
+  <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
+  <li>
+    <p>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></p>
 
     <p>​</p>
   </li>

@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘</title>
+        
+          <description>&lt;p&gt;​   ​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Wed, 01 Mar 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//https-ssl</link>
+        <guid isPermaLink="true">http://swalloow.github.io//https-ssl</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Pandas DataFrame을 병렬처리 하는 방법</title>
         
           <description>&lt;p&gt;​   ​&lt;/p&gt;

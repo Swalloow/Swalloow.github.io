@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>Pandas DataFrame을 병렬처리 하는 방법</title>
+    <title>HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘</title>
     <meta name="description" content="Swalloow Blog - About Data Science, Data Engineering" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -95,7 +95,7 @@
 <!-- Everything inside the #post tags pulls data from the post -->
 <!-- #post -->
 
-<header class="main-header post-head " style="background-image: url(/assets/images/cover_dataengineering.jpg) ">
+<header class="main-header post-head " style="background-image: url(/assets/images/cover_develop.jpg) ">
     <nav class="main-nav  overlay  clearfix">
         <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
@@ -106,19 +106,19 @@
 
 <main class="content" role="main">
 
-    <article class="post tag-DataEngineering">
+    <article class="post tag-Develop">
 
         <header class="post-header">
-            <h1 class="post-title">Pandas DataFrame을 병렬처리 하는 방법</h1>
+            <h1 class="post-title">HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-02-27">27 Feb 2017</time>
+            <time class="post-date" datetime="2017-03-01">01 Mar 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
                 
                     
-                       <a href='/tag/DataEngineering'>Dataengineering</a>
+                       <a href='/tag/Develop'>Develop</a>
                     
                 
                 
@@ -129,51 +129,76 @@
 
             <p>​   ​</p>
 
-<p>Scikit-learn의 모델들은 cython과 joblib으로 최적화 및 자동 병렬처리 되도록 설계되어 있지만,
-Pandas는 여전히 내부적으로 병렬처리 기능을 지원하지 않습니다.</p>
-
-<p>하지만, 큰 규모의 DataFrame을 돌리다보면 전처리에도 시간이 많이 걸리게 됩니다.
-그런 경우에 병렬처리를 통해 속도를 개선할 수 있습니다.</p>
-
-<p>이 포스팅에서는 가장 간단한 CPU 프로세스 병렬처리를 다루도록 하겠습니다. 방법은 간단합니다.
-거대한 DataFrame을 CPU 코어 수 만큼 분할하고, 전처리 기능을 수행한 다음 다시 합치면 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
-
-<span class="n">num_cores</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">'iris'</span><span class="p">))</span></code></pre></figure>
-
-<p>예시로 iris 데이터를 사용하겠습니다.
-cpu 코어의 수는 <code class="highlighter-rouge">multiprocessing.cpu_count()</code> 함수를 통해서 얻으실 수 있습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">parallelize_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
-    <span class="n">df_split</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">num_cores</span><span class="p">)</span>
-    <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">(</span><span class="n">num_cores</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">df_split</span><span class="p">))</span>
-    <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">df</span></code></pre></figure>
-
-<p>parallelize_dataframe은 어떤 전처리 함수가 들어왔을 때 CPU 병렬처리를 도와주는 함수입니다.
-multiprocessing.Pool을 이용하여 분할된 DataFrame에 함수를 적용시키고,
-pd.concat()으로 다시 합치는 과정입니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">multiply_columns</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">data</span><span class="p">[</span><span class="s">'length_of_word'</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'species'</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">data</span></code></pre></figure>
-
-<p>각 종 이름의 글자 수를 세는 전처리 함수를 예로 들어 속도차이를 확인해보겠습니다.
-결과는 아래와 같습니다.</p>
+<p>크롬 업데이트 이후 몇몇 웹 페이지는 브라우저 주소 창에 <code class="highlighter-rouge">안전하지 않음</code>이 나타나고,
+아니면 자물쇠 모양에 <code class="highlighter-rouge">안전함</code>이 표시되는 것을 볼 수 있습니다.
+오늘은 그 두 가지 방식에 어떤 차이가 있는지, HTTPS와 SSL 인증서에 대해 알아보고
+최근 구글과 리누스 토발즈의 언급으로 이슈화 되고 있는 SHA1 암호화 알고리즘에 대해 정리해보려 합니다.</p>
 
 <p>​   ​</p>
 
-<p><img src="/assets/images/pandas-parallel.png" alt="pandas-parrallel" /></p>
+<h2 id="http-https">HTTP와 HTTPS</h2>
 
-<p>다른 방법으로 Pandas의 engine에 Dask를 사용하는 방법도 있습니다.
-<a href="http://dask.readthedocs.io/en/latest/">http://dask.readthedocs.io/en/latest/</a></p>
+<p>우선 간단히 웹 통신규약에 대해 설명하자면, <em>HTTP는 Hypertext 인 HTML을 전송하기 위한 통신규약</em> 을 의미합니다.
+HTTP는 암호화되지 않은 방법으로 데이터를 전송하기 때문에 서버와 클라이언트가 주고 받는 메시지를 확인하는 것이 매우 쉽습니다.
+심각한 예를 들면, 로그인을 위해서 서버로 비밀번호를 전송하거나 중요한 기밀 문서를 열람하는 과정에서 악의적인 감청이나 데이터의 위변조 등이 일어날 수 있습니다.</p>
+
+<p>이를 보완하기 위해 나온 것이 보안이 강화된 <strong>HTTPS</strong> 입니다.
+HTTPS는 보안을 강화하기 위해 통신에서 일반 텍스트를 이용하지 않고 <strong>SSL이나 TLS 프로토콜</strong> 을 통해 세션 데이터를 암호화합니다.
+이를 통해 데이터의 보안을 더 강화할 수 있지만 전적으로 웹 브라우저에서의 구현 정확도와 서버 소프트웨어, 지원하는 암호화 알고리즘에 달려있습니다.</p>
+
+<p>결국 크롬에 <code class="highlighter-rouge">안전하지 않음</code>으로 표기되는 페이지는 보안 인증서가 없는 페이지입니다.
+반면에, <code class="highlighter-rouge">안전함</code>으로 표기되는 페이지는 기관으로부터 인증서를 받은 페이지입니다.
+실제로 인터넷 익스플로러의 인터넷 옵션을 확인해보면 CA 라는 탭에서 인증서를 확인하실 수 있습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="ssl--">SSL 통신 과정</h2>
+
+<p>그렇다면 HTTPS에 포함된 SSL 프로토콜이 어떤 과정을 통해 동작하는지 간단히 알아보겠습니다.
+다시 설명하자면, <em>SSL 인증서는 클라이언트와 서버간의 통신을 제3자가 보증해주는 전자화된 문서</em> 라고 보시면 됩니다.
+처음 클라이언트와 서버가 데이터를 주고 받기 위해서는 준비과정이 필요합니다. 이를 <strong>핸드쉐이크(HandShake)</strong> 라고 부릅니다.</p>
+
+<p><img src="/assets/images/ssl-process.jpg" alt="ssl-process" /></p>
+
+<ol>
+  <li>
+    <p>먼저, 클라이언트가 서버에 접속(Client Hello)한 직후에 서버는 클라이언트에게 인증서 정보를 전달(Server Hello)합니다.</p>
+  </li>
+  <li>
+    <p>클라이언트(브라우저)는 이미 모든 CA 인증기관들에 대한 정보를 가지고 있기 때문에 공개키를 통해
+전달받은 인증서를 복호화하고 신뢰할 수 있는 서버인지 확인합니다.</p>
+  </li>
+  <li>
+    <p>안전함이 확인되면 클라이언트는 대칭키 암호화 방식을 통해 비밀키를 생성하고 이를 공개키 방식으로 암호화해서 서버에게 전달합니다.</p>
+  </li>
+  <li>
+    <p>서버는 자신의 비공개 키로 복호화하여 서버와 클라이언트가 세션키를 공유하게 되면, 핸드쉐이크 과정의 종료를 서로에게 알립니다.</p>
+  </li>
+  <li>
+    <p>이제 세션을 통해 서버와 클라이언트가 데이터를 주고 받게 됩니다.
+여기서 세션키 값을 이용해서 대칭키 방식으로 암호화하기 때문에 HTTP 보다 안전합니다.</p>
+  </li>
+  <li>
+    <p>데이터의 전송이 끝나면 SSL 통신이 끝났음을 서로에게 알려줍니다. 그리고 통신에서 사용한 대칭키인 세션키를 폐기합니다.</p>
+  </li>
+</ol>
+
+<p>​   ​</p>
+
+<h2 id="sha1------">SHA1 암호화 알고리즘은 더 이상 안전하지 않다?</h2>
+
+<p>이 논란은 구글이 2월 중순쯤에 낡은 암호화 알고리즘 SHA1를 깨뜨리면서 시작되었습니다.
+구글은 SHA1 알고리즘 해시값의 고유성을 깨뜨릴 수 있는 <strong>‘섀터드(SHAttered)’</strong> 라는 방법을 선보이면서,
+SHA1에 의존하는 기술은 믿음직하지 않다는 점을 보여줬습니다.</p>
+
+<p>여기서 섀터드 기법을 소개한 연구자들은 <em>Git이 SHA1에 의존하기 때문에 안전하지 않다</em> 고 말했습니다.
+이에 리누스 토발즈는 <em>“깃은 데이터를 해시하기만 하는 게 아니라, 거기에 타입과 길이 필드를 측량한다”</em> 고 말하면서
+당장은 하늘이 무너지는게 아니니 상관없다고 답변했습니다.</p>
+
+<p>물론 당장은 아니지만 불안함에 많은 기관들이 SHA1 방식에서 <strong>SHA2 또는 SHA256</strong> 으로 옮겨가고 있습니다.
+대표적으로 크롬, 파이어폭스 등의 브라우저들이 SHA1 인증서 퇴출에 노력하고 있고, 인터넷뱅킹이나 비트코인 같은 경우 SHA256 방식을 사용합니다.</p>
+
+<p>리누스 토발즈의 글 : <a href="https://plus.google.com/+LinusTorvalds/posts/7tp2gYWQugL">https://plus.google.com/+LinusTorvalds/posts/7tp2gYWQugL</a></p>
 
 <p>​   ​</p>
 
@@ -207,15 +232,15 @@ pd.concat()으로 다시 합치는 과정입니다.</p>
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=Pandas DataFrame을 병렬처리 하는 방법&amp;url=http://swalloow.github.io/pandas-parallel"
+                <a class="icon-twitter" href="http://twitter.com/share?text=HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘&amp;url=http://swalloow.github.io/https-ssl"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/pandas-parallel"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/https-ssl"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/pandas-parallel"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/https-ssl"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -227,8 +252,8 @@ pd.concat()으로 다시 합치는 과정입니다.</p>
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/pandas-parallel';
-        var disqus_url = 'http://swalloow.github.io//pandas-parallel';
+        var disqus_identifier = '/https-ssl';
+        var disqus_url = 'http://swalloow.github.io//https-ssl';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -253,20 +278,13 @@ pd.concat()으로 다시 합치는 과정입니다.</p>
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/cover_develop.jpg)" href="/https-ssl">
-            <section class="post">
-                <h2>HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘</h2>
-                <p>​ ​ 크롬 업데이트 이후 몇몇 웹 페이지는 브라우저 주소 창에 `안전하지 않음`이 나타나고, 아니면...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev " style="background-image: url(/assets/images/cover_develop.jpg)" href="/swagger">
+        <a class="read-next-story prev " style="background-image: url(/assets/images/cover_dataengineering.jpg)" href="/pandas-parallel">
             <section class="post">
-                <h2>Swagger로 API 문서화하기</h2>
-                <p>​ ​ 개발에 있어서 API 문서화는 아주 중요하지만 번거로운 일 중에 하나입니다. 특히 pdf 또는...</p>
+                <h2>Pandas DataFrame을 병렬처리 하는 방법</h2>
+                <p>​ ​ Scikit-learn의 모델들은 cython과 joblib으로 최적화 및 자동 병렬처리 되도록 설계되어 있지만, Pandas는 여전히...</p>
             </section>
         </a>
     
