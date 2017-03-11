@@ -12,6 +12,114 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Flask 어플리케이션 보안 점검 가이드</title>
+	  <link>//flask-security</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-03-08T19:18:00+09:00</pubDate>
+	  <guid>//flask-security</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>플라스크에서 규모가 큰 REST API를 설계하기 위해 필요한 몇 가지 패턴들을 알아보겠습니다.
+레퍼런스는 <a href="http://flask.pocoo.org/docs/">http://flask.pocoo.org/docs/</a> 공식문서
+그리고, 매년 미국 파이콘에서 RESTful Flask에 대해 발표하는 <code class="highlighter-rouge">Miguel Grinberg</code> 의 GitHub을 참고했습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="section">관련 링크</h2>
+
+<ul>
+  <li><a href="http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements">http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements</a></li>
+  <li><a href="http://flask.pocoo.org/docs/blueprints/">http://flask.pocoo.org/docs/blueprints/</a></li>
+</ul>
+
+<p>​   ​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>Flask Best Practice - Error Handling</title>
+	  <link>//flask-error</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-03-07T19:18:00+09:00</pubDate>
+	  <guid>//flask-error</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>플라스크에서 규모가 큰 REST API를 설계하기 위해 필요한 몇 가지 패턴들을 알아보겠습니다.
+레퍼런스는 <a href="http://flask.pocoo.org/docs/">http://flask.pocoo.org/docs/</a> 공식문서
+그리고, 매년 미국 파이콘에서 RESTful Flask에 대해 발표하는 <code class="highlighter-rouge">Miguel Grinberg</code> 의 GitHub을 참고했습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="section">관련 링크</h2>
+
+<ul>
+  <li><a href="http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements">http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements</a></li>
+  <li><a href="http://flask.pocoo.org/docs/blueprints/">http://flask.pocoo.org/docs/blueprints/</a></li>
+</ul>
+
+<p>​   ​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>Flask Best Practice - Configuration</title>
+	  <link>//flask-configuration</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-03-06T19:18:00+09:00</pubDate>
+	  <guid>//flask-configuration</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>플라스크에서 규모가 큰 REST API를 설계하기 위해 필요한 몇 가지 패턴들을 알아보겠습니다.
+레퍼런스는 <a href="http://flask.pocoo.org/docs/">http://flask.pocoo.org/docs/</a> 공식문서
+그리고, 매년 미국 파이콘에서 RESTful Flask에 대해 발표하는 <code class="highlighter-rouge">Miguel Grinberg</code> 의 GitHub을 참고했습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="section">관련 링크</h2>
+
+<ul>
+  <li><a href="http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements">http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements</a></li>
+  <li><a href="http://flask.pocoo.org/docs/blueprints/">http://flask.pocoo.org/docs/blueprints/</a></li>
+</ul>
+
+<p>​   ​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>Flask Best Practice - Factory, Blueprint</title>
+	  <link>//flask-blueprint</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-03-05T19:18:00+09:00</pubDate>
+	  <guid>//flask-blueprint</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>플라스크에서 규모가 큰 REST API를 설계하기 위해 필요한 몇 가지 패턴들을 알아보겠습니다.
+레퍼런스는 <a href="http://flask.pocoo.org/docs/">http://flask.pocoo.org/docs/</a> 공식문서
+그리고, 매년 미국 파이콘에서 RESTful Flask에 대해 발표하는 <code class="highlighter-rouge">Miguel Grinberg</code> 의 GitHub을 참고했습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="section">관련 링크</h2>
+
+<ul>
+  <li><a href="http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements">http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements</a></li>
+  <li><a href="http://flask.pocoo.org/docs/blueprints/">http://flask.pocoo.org/docs/blueprints/</a></li>
+</ul>
+
+<p>​   ​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>JWT를 구현하면서 마주치게 되는 고민들</title>
 	  <link>//implement-jwt</link>
 	  <author>Swalloow</author>
@@ -507,243 +615,6 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
 	</item>
 
 	<item>
-	  <title>Open API를 설계할 때 알아야 하는 것들</title>
-	  <link>//open-api-guide</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
-	  <guid>//open-api-guide</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>오픈 API를 사용하다보면 공통의 패턴을 발견할 수 있을 것이다.
-이처럼, API를 설계할 때도 개발자들이 쉽게 사용할 수 있도록 만든 규칙이라는게 존재한다.
-오늘은 RESTful한 Open API를 설계하기 위해 알아야 하는 것들에 대해 정리해보았다.</p>
-
-<p>​</p>
-
-<h2 id="open-api-">Open API 디자인</h2>
-
-<p>​</p>
-
-<h3 id="api-">API 란?</h3>
-
-<blockquote>
-  <p>운영체제, 시스템, 애플리케이션, 라이브러리 등을 개발자들이 프로그래밍 작업을 통해 응용 프로그램을 작성할 수 있는 다양한 인터페이스들을 총칭한다. (예: Window API, Java API, HTML5 API, Android API…) - 네이버 개발자센터 인용</p>
-</blockquote>
-
-<p>​</p>
-
-<h3 id="api--1">오픈 API 란?</h3>
-
-<blockquote>
-  <p>API 중에서 플랫폼의 기능 또는 컨텐츠를 외부에서 쓸 수 있도록 웹 프로토콜(HTTP)로 호출할 수 있도록 개방(open)한 API를 의미한다. 네이버 개발자센터에서 제공하고 있는 지도, 검색을 비롯 기계번역, 캡차, 단축 URL 등 대부분 API 들은 HTTP로 호출할 수 있는 오픈 API에 해당한다. - 네이버 개발자센터 인용</p>
-</blockquote>
-
-<p>​</p>
-
-<p>이제 기업 또는 사용자에게 제공할 RESTful Open API를 어떻게 설계할지 고민해보자.
-기업에게 전문적으로 API를 공급하는 Apigee 사의 <strong>Web API Design</strong> 을 레퍼런스로 삼았다.</p>
-
-<p>​</p>
-
-<h2 id="best-web-api-design-rules">Best Web API Design Rules</h2>
-
-<p>​</p>
-
-<h5 id="url------2--url-">1. 기본 URL에는 동사가 아닌 명사를 사용, 리소스마다 2개의 기본 URL을 유지하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">/</span><span class="n">dogs</span> <span class="p">(</span><span class="n">Collection</span><span class="p">),</span> <span class="o">/</span><span class="n">dogs</span><span class="o">/</span><span class="mi">1234</span> <span class="p">(</span><span class="n">Element</span><span class="p">)</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="http-post-get-put-delete-">2. 올바른 HTTP 메서드(POST, GET, PUT, DELETE)를 사용하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">POST</span><span class="p">(</span><span class="n">create</span><span class="p">),</span> <span class="n">GET</span><span class="p">(</span><span class="n">read</span><span class="p">),</span> <span class="n">PUT</span><span class="p">(</span><span class="n">update</span><span class="p">),</span> <span class="n">DELETE</span><span class="p">(</span><span class="n">delete</span><span class="p">)</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="section">3. 복수형 명사와 구체적인 이름을 사용하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">/</span><span class="n">animals</span><span class="p">,</span> <span class="o">/</span><span class="n">dogs</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="url----">4. 자원 간의 관계를 간단히 하여 URL 계층이 깊어지는 것을 피하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">GET</span>	<span class="o">/</span><span class="n">owners</span><span class="o">/</span><span class="mi">5678</span><span class="o">/</span><span class="n">dogs</span><span class="err">?</span><span class="n">color</span><span class="o">=</span><span class="n">red</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="section-1">5. 오류 처리를 명확하게 하고 에러 스택은 절대 비공개 해야 한다.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="mi">200</span> <span class="o">-</span> <span class="n">OK</span>
-<span class="mi">400</span> <span class="o">-</span> <span class="n">Bad</span> <span class="n">Request</span>
-<span class="mi">500</span> <span class="o">-</span> <span class="n">Internal</span> <span class="n">Server</span> <span class="n">Error</span>
-<span class="mi">201</span> <span class="o">-</span> <span class="n">Created</span>
-<span class="mi">304</span> <span class="o">-</span> <span class="n">Not</span> <span class="n">Modified</span>
-<span class="mi">404</span> <span class="o">-</span> <span class="n">Not</span> <span class="n">Found</span>
-<span class="mi">401</span> <span class="o">-</span> <span class="n">Unauthorized</span>
-<span class="mi">403</span> <span class="o">-</span> <span class="n">Forbidden</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="v------">6. 접두사 “v”로 버전을 지정하고 지속적인 버전 관리를 하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">GET</span>	<span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">dogs</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="section-2">7. 데이터베이스에 없는 자원에 대한 응답일 경우 동사를 사용하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ex</span><span class="p">)</span> <span class="n">Caculate</span><span class="p">,</span> <span class="n">Translate</span><span class="p">,</span> <span class="n">Convert</span> <span class="o">...</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="javascript-----">8. 속성의 네이밍은 Javascript의 관습을 따르고 카멜 케이스를 사용하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">"createdAt"</span><span class="p">:</span> <span class="mi">123415125</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="api---">9. 하위 도메인의 독립적인 API 요청 처리는 통일하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">company</span><span class="o">.</span><span class="n">com</span>
-<span class="n">api</span><span class="o">.</span><span class="n">company</span><span class="o">.</span><span class="n">com</span>	<span class="p">(</span><span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">,</span> <span class="n">redirect</span><span class="p">)</span>
-<span class="n">developers</span><span class="o">.</span><span class="n">company</span><span class="o">.</span><span class="n">com</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="section-3">10. 기타</h5>
-
-<ul>
-  <li>권한 관리(OAuth)는 2.0을 사용하자.</li>
-  <li>필요한 경우, SDK로 API를 보완하자.</li>
-  <li>
-    <p>API Facade Pattern을 API 설계에 고려해라.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="naver-open-api">NAVER Open API</h3>
-
-<p>실제 네이버와 카카오의 오픈 API는 어떻게 디자인되어 있는지 간단히 살펴보자.
-<a href="https://developers.naver.com">https://developers.naver.com</a> 참조</p>
-
-<blockquote>
-  <p>이전(2015년 쯤)에는 네이버에서 제공하는 API를 사용하기 위해 ‘API 키’라는 유니크한 텍스트 문자열을 발급받고, 이를 API 호출시 같이 API 게이트웨이 서버로 전송함으로써 인증된 사용자임을 입증했다. 새로운 개발자센터에서는 API 키 방식은 더 이상 사용하지 않고 애플리케이션마다 일종의 유니크한 아이디와 비밀번호(클라이언트 아이디, 시크릿)값을 이용해서 인증하고 있다.</p>
-</blockquote>
-
-<p>​</p>
-
-<h4 id="api--url--">1. API 호출 URL과 요청 변수</h4>
-
-<ul>
-  <li>https://openapi.naver.com/버전/서비스구분/API 구분 형태</li>
-  <li>예시) 기계번역 API : https://openapi.naver.com/v1/language/translate</li>
-  <li>요청변수란, 오픈 API를 호출할 때 함께 서버로 전송해야 하는 값이다.</li>
-  <li>
-    <p>요청변수에 한글이나 특수문자가 요청 변수값에 포함되어 있을 경우, 서버 전송 시 값이 깨지기 때문에 인코딩/디코딩 과정이 필요하다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h4 id="http-status-code">2. 에러 코드 정의 - HTTP status code</h4>
-
-<ul>
-  <li>400 (요청변수) : 필수 요청 변수가 빠졌거나 요청변수 이름이 잘못되었을 경우나 요청 변수 값을 URL 인코딩하지 않고 전송하였을 경우</li>
-  <li>401 (인증실패) : 애플리케이션 클라이언트 아이디와 시크릿 값이 없거나 잘못되었을 경우</li>
-  <li>401 (인증실패) : 클라이언트 아이디와 시크릿 값을 HTTP 헤더에 정확히 설정하지 않고 호출했을 경우</li>
-  <li>401 (인증실패) : API 권한 설정이 안되어 있을 경우</li>
-  <li>401 (인증오류) : 로그인 오픈 API를 호출할 때 접근 토큰(access_token) 값이 빠졌거나 잘못된 값 (기간 만료)을 설정하였을 경우</li>
-  <li>403 (호출금지) : https가 아닌 http로 호출하였을 경우</li>
-  <li>403 (호출금지) : 약관 동의를 하지 않고 호출할 경우 또는 권한이 없거나 비공개인 경우</li>
-  <li>404 (API없음) : API 요청 URL이 잘못되었을 경우</li>
-  <li>405 (메서드오류) : HTTP 메서드를 잘못하여 호출하였을 경우 (POST인데 GET으로 호출)</li>
-  <li>429 (한도초과) : 오픈 API를 호출할 때 일 허용량을 초과하였을 경우</li>
-  <li>
-    <p>500 (서버오류) : API 호출은 정상적으로 했지만, API 서버 유지보수나 시스템 오류로 인한 에러가 발생하였을 경우</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="kakao-rest-api--">Kakao REST API (카카오톡, 카카오페이)</h3>
-
-<p>​</p>
-
-<h5 id="section-4">1. 먼저, 카카오 로그인 후에 사용자 토큰을 받아온다.</h5>
-
-<h5 id="get-">2. 사용자 토큰을 헤더에 담아 GET으로 요청한다.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">GET</span> <span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">talk</span><span class="o">/</span><span class="n">profile</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
-<span class="n">Host</span><span class="p">:</span> <span class="n">kapi</span><span class="o">.</span><span class="n">kakao</span><span class="o">.</span><span class="n">com</span>
-<span class="n">Authorization</span><span class="p">:</span> <span class="n">Bearer</span> <span class="p">{</span><span class="n">access_token</span><span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="json-----">3. 응답은 JSON 형태로 다음과 같은 정보를 포함한다.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span>
- <span class="s">"nickName"</span><span class="p">:</span><span class="s">"홍길동"</span><span class="p">,</span>
- <span class="s">"profileImageURL"</span><span class="p">:</span><span class="s">"http://xxx.kakao.co.kr/.../aaa.jpg"</span><span class="p">,</span>
- <span class="s">"thumbnailURL"</span><span class="p">:</span><span class="s">"http://xxx.kakao.co.kr/.../bbb.jpg"</span><span class="p">,</span>
- <span class="s">"countryISO"</span><span class="p">:</span><span class="s">"KR"</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="response-code-example">Response Code Example</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span>
-  <span class="s">"meta"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">"code"</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-    <span class="s">"response_time"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">"time"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="s">"measure"</span><span class="p">:</span> <span class="s">"seconds"</span>
-    <span class="p">}</span>
-  <span class="p">},</span>
-  <span class="s">"notifications"</span><span class="p">:</span> <span class="p">{},</span>
-  <span class="s">"response"</span><span class="p">:</span> <span class="p">{}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="error-code-example">Error Code Example</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span>
-  <span class="s">"meta"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">"code"</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
-    <span class="s">"error_detail"</span><span class="p">:</span> <span class="s">"The user has not authorized or the token is invalid."</span><span class="p">,</span>
-    <span class="s">"error_type"</span><span class="p">:</span> <span class="s">"invalid_auth"</span><span class="p">,</span>
-    <span class="s">"developer_friendly"</span><span class="p">:</span> <span class="s">"The user has not authorized or the token is invalid."</span><span class="p">,</span>
-    <span class="s">"response_time"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">"time"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="s">"measure"</span><span class="p">:</span> <span class="s">"seconds"</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h2 id="section-5">참고자료</h2>
-
-<ul>
-  <li>API Platform Design : <a href="http://bcho.tistory.com/808">http://bcho.tistory.com/808</a></li>
-  <li>Web API Design : <a href="https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf">https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf</a></li>
-  <li>카카오 개발자센터 : <a href="https://developers.kakao.com">https://developers.kakao.com</a></li>
-  <li>
-    <p>네이버 개발자센터 : <a href="https://developers.naver.com">https://developers.naver.com</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
 	  <title>OAuth2에 대해 알아보자</title>
 	  <link>//about-oauth2</link>
 	  <author>Swalloow</author>
@@ -890,169 +761,6 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
   <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
   <li>
     <p>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</title>
-	  <link>//windows-bash-jekyll</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-03T19:18:00+09:00</pubDate>
-	  <guid>//windows-bash-jekyll</guid>
-	  <description><![CDATA[
-	     <p>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준)</p>
-
-<p>​</p>
-
-<h2 id="ruby-">윈도우 10에서 Ruby 설치</h2>
-
-<ol>
-  <li><code class="highlighter-rouge">프로그램 및 기능 &gt; Windows 기능 켜기/끄기 &gt; Linux용 Windows 하위 시스템</code> 체큰</li>
-  <li>cmd 창에서 <code class="highlighter-rouge">bash</code> 를 입력, Windows Subsystem for Linux 환경실행</li>
-</ol>
-
-<p>처음 실행한다면, 아무것도 설치되지 않은 상태이기 때문에 초기 설정을 해주시면 좋습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">update</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">make</span> <span class="n">gcc</span></code></pre></figure>
-
-<p>이제 루비를 설치해보겠습니다. 놀랍게도 윈도우 bash에서는 <code class="highlighter-rouge">apt install ruby</code> 를 통해 설치하려는 경우, 루비 1.9.3 버전만 설치됩니다 ! (rvm과 rbenv를 사용해봐도 동일) 하지만, Jekyll 에서 최소 2.0 이상의 버전을 요구하기 때문에 brightbox를 통해 최신 버전을 설치하였습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="p">:</span><span class="n">brightbox</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="n">ng</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">update</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">ruby2</span><span class="o">.</span><span class="mi">3</span> <span class="n">ruby2</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">dev</span> <span class="n">ruby</span><span class="o">-</span><span class="n">switch</span></code></pre></figure>
-
-<p>여기까지 설치되고 나면 뭔가 안심이 됩니다. 하지만 이제 시작에 불과합니다.</p>
-
-<p>​</p>
-
-<h2 id="jekyll-">Jekyll 설치하기</h2>
-
-<p>이제 설치하려는 경로로 이동해서 jekyll을 설치할 차례입니다. 여기에서는 바탕화면에 설치해보도록 하겠습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span>
-<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">Users</span><span class="o">/&lt;</span><span class="n">your</span> <span class="n">username</span><span class="o">&gt;/</span><span class="n">Desktop</span>
-<span class="err">$</span> <span class="n">jekyll</span> <span class="n">new</span> <span class="n">myblog</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">myblog</span>
-<span class="err">$</span> <span class="n">jekyll</span> <span class="n">serve</span> <span class="o">-</span><span class="n">w</span></code></pre></figure>
-
-<p>속도를 측정해보면, Bash는 <code class="highlighter-rouge">0.329초</code>, PowerShell은 <code class="highlighter-rouge">0.364초</code> 로 Bash에서 실행시키는 것이 더 빠르다고 합니다.
-여기까지가 아주 기본적인 형태의 jekyll 블로그 설치 과정입니다.</p>
-
-<p>​</p>
-
-<h2 id="jekyll--1">테마까지 한번에 적용하여 Jekyll 설치하기</h2>
-
-<p>기본 설치를 끝내면 그냥 빈 화면만 나타나기 때문에 허전합니다. 그래서 이번에는 테마까지 한번에 적용하여 설치하는 방법을 알려드리겠습니다. (방금꺼는 <code class="highlighter-rouge">gem uninstall -all</code> 명령어를 통해 삭제하셔도 됩니다)</p>
-
-<ol>
-  <li>먼저, <code class="highlighter-rouge">&lt;사용자이름&gt;.github.io</code> 라는 이름의 Repository를 생성합니다.</li>
-  <li>생성한 저장소를 로컬에 clone 하고 cd 명령어를 통해 위치로 이동합니다.</li>
-  <li>
-    <p>마음에 드는 Jekyll 테마를 다운로드 받아 로컬에 압축해제 합니다. <a href="http://jekyllthemes.org/">http://jekyllthemes.org/</a></p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<p>구조를 처음 보시면 복잡한데, 우리가 건드릴 부분은 <code class="highlighter-rouge">_config.yml</code> 과 <code class="highlighter-rouge">Gemfile</code> 입니다. Gemfile은 GitHub Pages에 필요한 라이브러리를 설치하도록 정의한 파일이라고 보시면 됩니다.
-데스크탑과 노트북 또는 맥북을 사용해보신 분은 아시겠지만, GitHub Pages에서 의존성 문제가 아주 빈번하게 발생합니다.</p>
-
-<ul>
-  <li>
-    <p>의존성을 가지는 라이브러리 참고 (<a href="https://pages.github.com/versions/">https://pages.github.com/versions/</a>)</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<p>위의 링크처럼 각 라이브러리마다 버전 정보를 따로 관리해도 되지만, <code class="highlighter-rouge">gem 'github-pages'</code> 를 통해 관리하는 방법이 가장 간편합니다.
-이를 통해 github-pages의 최신 의존성 정보를 간단하게 업데이트할 수 있습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="n">Gemfile</span>
-
-<span class="n">source</span> <span class="s">'https://rubygems.org'</span>
-<span class="n">gem</span> <span class="s">'github-pages'</span></code></pre></figure>
-
-<p>​</p>
-
-<p>이제 bundler를 설치할 차례입니다. bundler는 라이브러리 설치를 위한 패키지 매니저입니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-<span class="err">$</span> <span class="n">bundle</span> <span class="n">install</span>
-<span class="err">$</span> <span class="n">bundle</span> <span class="n">update</span></code></pre></figure>
-
-<p>이제 Gemfile에 있는 라이브러리를 설치하고 업데이트까지 완료했습니다.
-의존성 정보를 확인하시려면 <code class="highlighter-rouge">github-pages versions</code> 명령어를 입력하시면 됩니다.</p>
-
-<p>​</p>
-
-<h4 id="jeykll-331---">1. jeykll 3.3.1 버전에서 오류 발생</h4>
-
-<p>최근 <em>Windows+Bash Subsystem</em> 에서 powershell을 defalut cmd로 확장하는 과정에서 생겨난 버그</p>
-
-<ul>
-  <li>
-    <p>(https://github.com/jekyll/jekyll/issues/5462 참조)</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<p>해결방법은 다음과 같습니다. 첫번째 방법은 번거롭기 때문에 두번째 방법을 추천합니다.</p>
-
-<ol>
-  <li>
-    <p>jeykll 3.3.1 버전을 삭제하고 3.2.1 버전으로 하향시키기</p>
-  </li>
-  <li>
-    <p>build.rb에서 코드 수정하기</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<p>build.rb의 위치를 찾는 방법</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">bundle</span> <span class="n">show</span> <span class="n">jekyll</span></code></pre></figure>
-
-<p>그리고 <code class="highlighter-rouge">lib/jekyll/commands/build.rb</code>로 이동해서 다음과 같이 수정합니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">if</span> <span class="no">Utils</span><span class="o">::</span><span class="no">Platforms</span><span class="p">.</span><span class="nf">windows?</span> <span class="o">-&gt;</span> <span class="k">unless</span> <span class="no">Utils</span><span class="o">::</span><span class="no">Platforms</span><span class="p">.</span><span class="nf">windows?</span></code></pre></figure>
-
-<p>​</p>
-
-<h4 id="jekyll-serve--">2. jekyll serve에서 오류 발생</h4>
-
-<p>실행 명령어 <code class="highlighter-rouge">jekyll serve</code> 하면 여기서 끝날줄 알았는데
-또 오류 발생 (https://github.com/jekyll/jekyll/issues/5233 참조)
-역시 마찬가지로 <em>Windows+Bash Subsystem</em> 버그라고 합니다..</p>
-
-<p><code class="highlighter-rouge">jekyll serve --force_polling</code>  옵션을 통해 해결하실 수 있습니다.</p>
-
-<p>​</p>
-
-<h2 id="section">결론</h2>
-
-<p>쓰다보니 간단하지 않은 것 같지만 제가 삽질했던 부분을 빠르게 건너뛴다면,
-윈도우 사용자도 금방 설치할 수 있습니다 (Bash on Windows 만세 !)
-다만, 정신건강을 위해 맥을 사용하는걸 추천합니다.</p>
-
-<p>​</p>
-
-<h4 id="section-1">참고하면 좋은 페이지</h4>
-
-<ul>
-  <li>GitHub Help : https://help.github.com/articles/configuring-jekyll/</li>
-  <li>https://nolboo.kim/blog/2013/10/15/free-blog-with-github-jekyll/#configyml</li>
-  <li>http://my2kong.net/2016/07/07/jekyll-blogging-theme/</li>
-  <li>
-    <p>Jekyll QuickStart : http://jekyllbootstrap.com/usage/jekyll-quick-start.html</p>
 
     <p>​</p>
   </li>
