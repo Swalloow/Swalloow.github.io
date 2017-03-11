@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>AWS EC2 인스턴스 SSH 접속을 위한 초기설정 그리고 주의사항</title>
+        
+          <description>&lt;p&gt;​   ​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Fri, 10 Mar 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//aws-config</link>
+        <guid isPermaLink="true">http://swalloow.github.io//aws-config</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Flask 어플리케이션 보안 점검 가이드</title>
         
           <description>&lt;p&gt;​   ​&lt;/p&gt;
