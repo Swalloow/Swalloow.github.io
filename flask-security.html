@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>Flask 어플리케이션 보안 점검 가이드</title>
+    <title>파이썬 웹 어플리케이션 보안 점검 가이드</title>
     <meta name="description" content="Swalloow Blog - About Data Science, Data Engineering" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -109,7 +109,7 @@
     <article class="post tag-Develop">
 
         <header class="post-header">
-            <h1 class="post-title">Flask 어플리케이션 보안 점검 가이드</h1>
+            <h1 class="post-title">파이썬 웹 어플리케이션 보안 점검 가이드</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
             <time class="post-date" datetime="2017-03-08">08 Mar 2017</time>
@@ -129,17 +129,188 @@
 
             <p>​   ​</p>
 
-<p>플라스크에서 규모가 큰 REST API를 설계하기 위해 필요한 몇 가지 패턴들을 알아보겠습니다.
-레퍼런스는 <a href="http://flask.pocoo.org/docs/">http://flask.pocoo.org/docs/</a> 공식문서
-그리고, 매년 미국 파이콘에서 RESTful Flask에 대해 발표하는 <code class="highlighter-rouge">Miguel Grinberg</code> 의 GitHub을 참고했습니다.</p>
+<p>이 포스팅은 Jacob Kaplan-Moss가 2013년 호주 pycon에서 발표한 자료를 바탕으로 하며, OYT님이 최신화하여 정리해주신 자료를 참고하였습니다.</p>
 
 <p>​   ​</p>
 
-<h2 id="section">관련 링크</h2>
+<h2 id="owasp-top-10">OWASP Top 10</h2>
+
+<p>먼저, OWASP(The Open Web Application Security Project)는 오픈소스 웹 애플리케이션 보안 프로젝트로, 주로 웹에 관한 정보노출, 악성 파일 및 스크립트, 보안 취약점 등을 연구하며,
+웹 애플리케이션의 취약점 중에서 빈도가 많이 발생하고, 보안상 영향을 크게 줄 수 있는 것들의 10대 취약점들을 발표합니다.
+보통 3년을 주기로 Top 10 리스트를 발표하는데 2017년에도 발표할 예정이라고 합니다.
+Top 10 항목들은 다음과 같습니다.</p>
+
+<ol>
+  <li>injection</li>
+  <li>Broken auth and session managment</li>
+  <li>XSS(cross site scripting)</li>
+  <li>Insecure direct object reference(bad url)</li>
+  <li>Security misconfiguration(read official secret guideline)</li>
+  <li>Sensitive data exposure</li>
+  <li>Missing function-level access control(decorator)</li>
+  <li>CSRF(Cross site request forgery)</li>
+  <li>Components with known vulnerabilities(version check!)</li>
+  <li>Unvalidated redirects
+​</li>
+</ol>
+
+<p>이제 파이썬 웹 어플리케이션에서 이를 어떻게 대응할 수 있는지 알아보겠습니다.</p>
+
+<p>​   ​</p>
+
+<h3 id="sql-injection">1. SQL injection</h3>
+
+<p>SQL 인젝션이란, 사용자가 입력한 값이 개발자가 의도치 않은 db query 결과를 초래하는 것, 또는 그것을 이용한 공격을 말합니다.
+예를 들면, 아래와 같이 user_id를 string format 쿼리로 넣으면 이러한 공격에 취약할 수 있습니다.</p>
+
+<script src="https://gist.github.com/Swalloow/9b0b074fa0939ee9a339a9da39d066ea.js"></script>
 
 <ul>
-  <li><a href="http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements">http://flask.pocoo.org/docs/patterns/appfactories/#factory-improvements</a></li>
-  <li><a href="http://flask.pocoo.org/docs/blueprints/">http://flask.pocoo.org/docs/blueprints/</a></li>
+  <li>단순 string formatted된 query가 있는지 확인</li>
+  <li>raw query 사용 시 bind parameter를 사용했는지 확인</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="session-management">2. Session Management</h3>
+
+<p>세션 데이터는 항상 안전하지 않다고 생각해야 합니다. db에 저장되더라도 안전하지 않은건 마찬가지입니다.
+특히 예기치 않은 공격에 대비하기 위해 <strong>서버 측에서 세션을 관리</strong> 하는 것이 필요합니다.</p>
+
+<p>Flask에서는 <code class="highlighter-rouge">Flask-Session</code>이라는 확장 패키지를 통해 이를 쉽게 구현할 수 있습니다.
+특히 <code class="highlighter-rouge">PERMANENT_SESSION_LIFETIME</code> 이라는 변수를 통해 일정 시간이 지나면 세션을 자동 파기할 수 있습니다.</p>
+
+<ul>
+  <li>코드 상에서 공격자가 직접 열람, 추가, 변경 할 수 없는 서버 단 세션 변수를 사용</li>
+  <li>일정 시간이 지나면 세션을 자동 파기</li>
+  <li>중복 로그인 방지</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="xss-cross-site-scripting">3. XSS (Cross-site-scripting)</h3>
+
+<p>XSS란, 웹페이지에 관리자가 의도하지 않는 스크립트(주로 javascript)를 사용자가 넣을 수 있는 상황을 말합니다.
+예를 들면 비정상적인 페이지가 보이게하여 타 사용자의 사용을 방해하거나 쿠키 및 기타 개인정보를 특정 사이트로 전송하는 등의 문제가 이에 해당합니다.</p>
+
+<script src="https://gist.github.com/Swalloow/6ddf641ae4cef63ac479c0865aecf23c.js"></script>
+
+<ul>
+  <li>유저 입력을 받는 html코드는 항상 escape 할 것</li>
+  <li>아무리 똑똑해도 escape 기능을 끄지 말 것</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="insecure-direct-object-references">4. Insecure Direct Object References</h3>
+
+<p>일명 직접 객체 참조, 또는 Bad url은 개발자가 파일, 디렉토리, DB 키와 같은 내부 구현 객체를 참조하는 것을 노출시킬 때 발생합니다.
+아래의 코드를 통해 예를 들어보겠습니다.</p>
+
+<script src="https://gist.github.com/Swalloow/507ef580b2c1acf26c341fc44dfd0d3d.js"></script>
+
+<ul>
+  <li>user_id 등 db와 직접 관계된 값을 GET parameter로 사용하고 있는지 확인</li>
+  <li>웹 방화벽에서 상위 혹은 하위 디렉토리로 이동하는 특수문자를 필터링할 것</li>
+  <li>파일을 다운로드하는 소스코드에서는 직접적으로 파일의 경로 및 파일명을 파라미터로 받는 것을 피할 것</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="security-misconfiguration">5. Security Misconfiguration</h3>
+
+<p>기본으로 제공되는 값은 종종 안전하지 않기 때문에 보안 설정은 정의, 구현 및 유지되어야 합니다.
+대표적으로 <strong>코드 난독화</strong> 가 이에 해당합니다.</p>
+
+<p>파이썬에서는 <code class="highlighter-rouge">Base64</code> 패키지를 통해 Encoding/Decoding 하는 방법이 있습니다.
+더 나아가 <code class="highlighter-rouge">pycrypto</code> 패키지를 사용하면 Crypto 모듈을 통해 AES 알고리즘으로 암호화할 수 있습니다.</p>
+
+<ul>
+  <li><a href="http://flask.pocoo.org/docs/security/">http://flask.pocoo.org/docs/security/</a> 를 정독해볼 것</li>
+  <li>debug 모드를 off 하였는지 확인</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="sensitive-data-exposure">6. Sensitive data exposure</h3>
+
+<p>많은 웹 애플리케이션들이 신용카드, 개인 식별 정보 및 인증 정보와 같은 중요한 데이터를 제대로 보호하지 않습니다.
+공격자는 신용카드 사기, 신분 도용 또는 다른 범죄를 수행하는 등 약하게 보호된 데이터를 훔치거나 변경할 수 있습니다.
+따라서, 중요 데이터가 저장 또는 전송 중이거나 브라우저와 교환하는 경우 특별히 주의하여야 하며, 암호화해야 합니다.</p>
+
+<p>REST API에서는 JSON으로 데이터를 통해 통신하기 때문에 <strong>JWE (JSON Web Encryption)</strong> 를 통해 JSON을 암호화해주는 방법이 있습니다.
+파이썬의 <code class="highlighter-rouge">python-jose</code> 또는 <code class="highlighter-rouge">PyJWE</code>를 참고하시면 쉽게 구현할 수 있습니다.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">JOSE(Javascript Object Signing and Encryption)</code> 규격을 통해 데이터 암호화</li>
+  <li>모든 암호를 bcrypt or PBKDF2로 해시 암호화 하였는지 확인</li>
+  <li>password 생성 rule을 정하였는지 확인</li>
+</ul>
+
+<p>​   ​
+​</p>
+
+<h3 id="missing-function-level-access-control">7. Missing function-level access control</h3>
+
+<p>요청에 대해 적절히 확인하지 않을 경우 공격자는 적절한 권한 없이 기능에 접근하기 위한 요청을 위조할 수 있게 됩니다.
+따라서, 관리자 페이지 등에 대하여 <strong>유저 권한을 클라이언트가 아닌 서버에서 판단</strong> 해야 하며
+역할에 기반한 별도의 인증절차를 요구하도록 만들어야 하고 권한이 없는 유저들은 접근 불가하게 코딩해야 합니다.</p>
+
+<script src="https://gist.github.com/Swalloow/3b727fdcf84c640077de8f414ad785dc.js"></script>
+
+<ul>
+  <li>로그인, 토큰 등 접근 관련 flow에서 hard-coding하지 않고 <code class="highlighter-rouge">decorator</code>등을 사용했는지 확인</li>
+  <li>OAuth와 같이 Token 기반의 인증시스템을 통해 접근 권한을 부여</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="csrfcross-site-request-forgery">8. CSRF(Cross site request forgery)</h3>
+
+<p>CSRF는 로그인 된 사용자의 웹 애플리케이션에 세션 쿠키와 기타 다른 인증정보를 자동으로 포함하여 위조된 HTTP 요청을 강제로 보내도록 하는 것입니다.
+공격자는 주로 상태(DB, 세션 등)를 변경하는 공격을 합니다. XSS를 방지하면 어느정도 커버되기도 합니다.</p>
+
+<script src="https://gist.github.com/Swalloow/983d1b2509a47c8267a69e1c37434244.js"></script>
+
+<ul>
+  <li>GET 요청으로 상태를 바꾸는 것이 없는지 확인</li>
+  <li>POST에 CSRF Token을 달아놓았는지 확인 (공격자가 주입해도 서버에서 거절)</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="components-with-known-vulnerabilities">9. Components with known vulnerabilities</h3>
+
+<p>컴포넌트, 라이브러리, 프레임워크 및 다른 소프트웨어 모듈은 대부분 항상 전체 권한으로 실행되어
+취약한 컴포넌트를 악용하여 공격하는 경우 심각한 데이터 손실이 발생하거나 서버가 장악될 수 있습니다.</p>
+
+<ul>
+  <li>outdated 된 라이브러리가 있는지, 지속적인 업데이트</li>
+  <li>사용되지 않는 기능들을 최대한 비활성화 할 것</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="unvalidated-redirects">10. Unvalidated redirects</h3>
+
+<p>웹에서 종종 사용자들을 다른 페이지로 리다이렉트 하거나 포워드하기 위해 신뢰할 수 없는 데이터를 사용하는 경우가 많습니다.
+적절한 검증 절차가 없으면 공격자는 피해자를 피싱 또는 악성코드 사이트로 리다이렉트 될 수 있기 때문에 주의해야 합니다.</p>
+
+<ul>
+  <li>CORS(cross origin resource sharing)시 host whitelist를 관리하고 있는지</li>
+  <li>flask-redirect는 언제나 안전하지 않음을 인지하고 사용하고 있는지</li>
+</ul>
+
+<p>​   ​</p>
+
+<h3 id="section">정리 및 관련 링크</h3>
+
+<p>저도 그렇고 학생 때는 대부분 보안을 고려하지 않은 웹 어플리케이션을 개발하는 경우가 많은데,
+이 자료가 많은 도움이 되었으면 좋겠습니다!</p>
+
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=sra9x44lXgU">Pycon youtube 자료</a></li>
+  <li><a href="https://www.owasp.org/images/5/57/OWASP_Proactive_Controls_2.pdf">OWASP Top 10 Proactive Controls 2016</a></li>
 </ul>
 
 <p>​   ​</p>
@@ -174,7 +345,7 @@
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=Flask 어플리케이션 보안 점검 가이드&amp;url=http://swalloow.github.io/flask-security"
+                <a class="icon-twitter" href="http://twitter.com/share?text=파이썬 웹 어플리케이션 보안 점검 가이드&amp;url=http://swalloow.github.io/flask-security"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
@@ -230,10 +401,10 @@
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/flask-error">
+        <a class="read-next-story prev no-cover" href="/implement-jwt">
             <section class="post">
-                <h2>Flask Best Practice - Error Handling</h2>
-                <p>​ ​ 플라스크에서 규모가 큰 REST API를 설계하기 위해 필요한 몇 가지 패턴들을 알아보겠습니다. 레퍼런스는...</p>
+                <h2>JWT를 구현하면서 마주치게 되는 고민들</h2>
+                <p>​ ​ 최근 모바일, 웹 등 다양한 환경에서 서버와 통신하면서 많은 사람들이 JWT 토큰 인증...</p>
             </section>
         </a>
     
