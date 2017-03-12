@@ -438,10 +438,10 @@ SHA1에 의존하는 기술은 믿음직하지 않다는 점을 보여줬습니�
 
 	<item>
 	  <title>Swagger로 API 문서화하기</title>
-	  <link>//swagger</link>
+	  <link>//swagger-api-doc</link>
 	  <author>Swalloow</author>
 	  <pubDate>2017-02-25T19:18:00+09:00</pubDate>
-	  <guid>//swagger</guid>
+	  <guid>//swagger-api-doc</guid>
 	  <description><![CDATA[
 	     <p>​   ​</p>
 
@@ -490,7 +490,7 @@ Swagger Validator와 Parser가 있습니다.</p>
 <p>그 다음 Docker를 실행하고 아래의 명령어를 통해 Dockerfile을 빌드합니다.
 localhost:80 에 접속하면 Swagger-UI가 실행된 것을 볼 수 있습니다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker build -t swagger-ui-builder .
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker build -t swagger-ui-builder .
 docker run -p 80:8080 swagger-ui-builder</code></pre></figure>
 
 <h5 id="section-2">3.</h5>
@@ -533,7 +533,7 @@ docker run -p 80:8080 swagger-ui-builder</code></pre></figure>
 
 <h4 id="git-stash">1. git stash</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash
 Saved working directory and index state <span class="se">\</span>
   <span class="s2">"WIP on master: 049d078 added the index file"</span>
 HEAD is now at 049d078 added the index file
@@ -545,7 +545,7 @@ HEAD is now at 049d078 added the index file
 
 <h4 id="git-stash-list">2. git stash list</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash list
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash list
 stash@<span class="o">{</span>0<span class="o">}</span>: WIP on master: 049d078 added the index file
 stash@<span class="o">{</span>1<span class="o">}</span>: WIP on master: c264051 Revert <span class="s2">"added file_size"</span>
 stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 added number to log</code></pre></figure>
@@ -556,7 +556,7 @@ stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 
 
 <h4 id="git-stash-apply">3. git stash apply</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash apply
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash apply
 <span class="c"># On branch master</span>
 <span class="c"># Changes not staged for commit:</span>
 <span class="c">#   (use "git add &lt;file&gt;..." to update what will be committed)</span>
@@ -571,7 +571,7 @@ stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 
 
 <h4 id="git-stash-drop">4. git stash drop</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash drop stash@<span class="o">{</span>0<span class="o">}</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash drop stash@<span class="o">{</span>0<span class="o">}</span>
 Dropped stash@<span class="o">{</span>0<span class="o">}</span> <span class="o">(</span>364e91f3f268f0900bc3ee613f9f733e82aaed43<span class="o">)</span></code></pre></figure>
 
 <p>apply 명령어로 stash를 적용한다고 해서 스택에서 사라지는게 아닙니다.

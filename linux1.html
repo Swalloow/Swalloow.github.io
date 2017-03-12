@@ -184,7 +184,7 @@
 <p>이럴 때는 Sequence와 Pipeline 개념을 알아두면 편하다.
 예를 들어, commit과 push 명령어를 연속적으로 실행하고 싶다고 가정해보자.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">git add -A;git push</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git add -A;git push</code></pre></figure>
 
 <p>위와 같이 중간에 세미콜론만 추가하면 된다.</p>
 
@@ -192,7 +192,7 @@
 처음이라면 <code class="highlighter-rouge">ps -ef</code> 로 프로세스를 직접 확인할 것이다.
 하지만 파이프라인과 grep 명령어를 사용한다면 다음과 같이 한줄로 끝난다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">ps -ef | grep process_name</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ps -ef | grep process_name</code></pre></figure>
 
 <p>​
 ​   ​</p>
@@ -202,7 +202,7 @@
 <p>어떤 작업을 백그라운드로 실행을 하면 별도의 창으로 켜놓지 않아도
 하나의 프로세스로 계속 돌아가는 것을 확인할 수 있다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">nohup name &amp;</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">nohup name &amp;</code></pre></figure>
 
 <p>리눅스에서는 <code class="highlighter-rouge">nohup</code> 이라는 명령어로 실행할 수 있다.
 실행하고 나면 <code class="highlighter-rouge">nohup.out</code> 이라는 파일이 생기는데
@@ -217,7 +217,7 @@ cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
 이 명령어를 사용하면 특정 시간에 내가 원하는 특정 명령어나 스크립트를 실행시킬 수 있다.
 보통 주기적인 크롤링에 사용하기도 한다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /root/script.sh</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /root/script.sh</code></pre></figure>
 
 <p>이렇게 설정하면 1분마다 script.sh를 실행한다.
 앞의 별 다섯개는 순서대로 <code class="highlighter-rouge">"분,시,일,월,요일"</code>을 뜻한다.

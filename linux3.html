@@ -135,7 +135,7 @@
 <p>사실 다중 터미널이 필요한거라면 tmux나 iTerm이 더 편하다고 생각한다.
 하지만, 스크린은 서버에서 백드라운드 데몬을 돌려야 할 때 아주 유용하다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">screen -S pingsession -d -m -L ping localhost</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">screen -S pingsession -d -m -L ping localhost</code></pre></figure>
 
 <p>이 명령은 화면에 새로운 세션 (-m)을 만들고, 출력 (-L)을 기록하고, 즉시 분리 (-d) 명령이 실행되도록 지시한다.
 로그는 현재 디렉토리의 screenlog.n 에 기록된다.</p>

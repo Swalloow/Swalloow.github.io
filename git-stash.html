@@ -141,7 +141,7 @@
 
 <h4 id="git-stash">1. git stash</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash
 Saved working directory and index state <span class="se">\</span>
   <span class="s2">"WIP on master: 049d078 added the index file"</span>
 HEAD is now at 049d078 added the index file
@@ -153,7 +153,7 @@ HEAD is now at 049d078 added the index file
 
 <h4 id="git-stash-list">2. git stash list</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash list
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash list
 stash@<span class="o">{</span>0<span class="o">}</span>: WIP on master: 049d078 added the index file
 stash@<span class="o">{</span>1<span class="o">}</span>: WIP on master: c264051 Revert <span class="s2">"added file_size"</span>
 stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 added number to log</code></pre></figure>
@@ -164,7 +164,7 @@ stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 
 
 <h4 id="git-stash-apply">3. git stash apply</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash apply
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash apply
 <span class="c"># On branch master</span>
 <span class="c"># Changes not staged for commit:</span>
 <span class="c">#   (use "git add &lt;file&gt;..." to update what will be committed)</span>
@@ -179,7 +179,7 @@ stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 
 
 <h4 id="git-stash-drop">4. git stash drop</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>git stash drop stash@<span class="o">{</span>0<span class="o">}</span>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash drop stash@<span class="o">{</span>0<span class="o">}</span>
 Dropped stash@<span class="o">{</span>0<span class="o">}</span> <span class="o">(</span>364e91f3f268f0900bc3ee613f9f733e82aaed43<span class="o">)</span></code></pre></figure>
 
 <p>apply 명령어로 stash를 적용한다고 해서 스택에서 사라지는게 아닙니다.
@@ -263,7 +263,7 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/cover_develop.jpg)" href="/swagger">
+        <a class="read-next-story " style="background-image: url(/assets/images/cover_develop.jpg)" href="/swagger-api-doc">
             <section class="post">
                 <h2>Swagger로 API 문서화하기</h2>
                 <p>​ ​ 개발에 있어서 API 문서화는 아주 중요하지만 번거로운 일 중에 하나입니다. 특히 pdf 또는...</p>

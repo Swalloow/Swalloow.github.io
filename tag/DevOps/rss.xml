@@ -30,12 +30,12 @@
 <p>AWS CLI는 여러 AWS 서비스를 명령줄에서 제어하고 스크립트를 통해 자동화할 수 있는 커멘드라인 인터페이스입니다.
 이를 사용하기 전에 먼저, brew를 통해 <code class="highlighter-rouge">awscli</code>를 설치해야 합니다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>brew install awscli</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>brew install awscli</code></pre></figure>
 
 <p>설치하고 나면 이제 aws 명령어를 사용할 수 있습니다.
 가장 먼저 configure 명령어를 통해 Access key를 입력해야합니다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>aws configure
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>aws configure
 AWS Access Key ID <span class="o">[</span>None]: AKIAIOSFODNN7EXAMPLE
 AWS Secret Access Key <span class="o">[</span>None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 Default region name <span class="o">[</span>None]: us-west-2
@@ -51,7 +51,7 @@ Default output format <span class="o">[</span>None]: ENTER</code></pre></figure>
 이 파일은 절대 외부로 유출되면 안되기 때문에 조심해야합니다.
 .pem 파일이 있는 경로로 이동한 다음 아래의 명령어를 통해 접속하면 됩니다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>chmod 400 /path/my-key-pair.pem
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>chmod 400 /path/my-key-pair.pem
 <span class="gp">$ </span>ssh -i /path/my-key-pair.pem ec2-user@ec2-198-51-100-1.compute-1.amazonaws.com</code></pre></figure>
 
 <p>“Permission denied” 에러가 발생하면 <code class="highlighter-rouge">-vvv</code> 옵션을 통해 디버깅 할 수 있습니다.
@@ -117,7 +117,7 @@ GitHub 처럼 이미지를 올려서 공유하거나 내려받을 수 있습니�
 
 <h4 id="section">상태 확인하기</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker ps
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker ps
 docker images</code></pre></figure>
 
 <p><code class="highlighter-rouge">docker ps</code>는 실행 중인 컨테이너 목록을 확인할 때 사용합니다.
@@ -128,7 +128,7 @@ docker images</code></pre></figure>
 
 <h4 id="section-1">이미지 받아오기</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker search nginx
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker search nginx
 docker pull nginx</code></pre></figure>
 
 <p>다음은 Dockerhub로 부터 이미지를 받아오기 위한 명령어입니다.
@@ -139,7 +139,7 @@ docker pull nginx</code></pre></figure>
 
 <h4 id="section-2">컨테이너 실행하기</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker run -d -p 80:80 --name webserver nginx</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker run -d -p 80:80 --name webserver nginx</code></pre></figure>
 
 <p><code class="highlighter-rouge">docker run [image]</code> 명령어를 통해 컨테이너를 실행할 수 있습니다.
 <code class="highlighter-rouge">-p</code> 옵션을 통해 포트를 지정할 수 있고, <code class="highlighter-rouge">-d</code> 옵션을 통해 백그라운드로 실행시킬 수 있습니다.
@@ -149,7 +149,7 @@ docker pull nginx</code></pre></figure>
 
 <h4 id="section-3">컨테이너 중지/재시작하기</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker stop webserver
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker stop webserver
 docker restart webserver
 docker start webserver</code></pre></figure>
 
@@ -159,7 +159,7 @@ docker start webserver</code></pre></figure>
 
 <h4 id="section-4">컨테이너/이미지 삭제하기</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker rm -f webserver
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker rm -f webserver
 docker rmi webserver</code></pre></figure>
 
 <p><code class="highlighter-rouge">docker rm -f [container]</code> 명령어를 통해 컨테이너를 삭제할 수 있습니다.
@@ -169,7 +169,7 @@ docker rmi webserver</code></pre></figure>
 
 <h4 id="dockerhub--">DockerHub 관련 명령어</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker build <span class="o">[</span>PATH]
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker build <span class="o">[</span>PATH]
 docker commit
 docker push</code></pre></figure>
 
@@ -185,7 +185,7 @@ docker push</code></pre></figure>
 
 <h4 id="section-5">이외에도 자주 사용하는 명령어</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker <span class="nb">history
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker <span class="nb">history
 </span>docker inspect
 docker cp <span class="o">[</span>PATH]</code></pre></figure>
 
@@ -264,25 +264,25 @@ docker cp <span class="o">[</span>PATH]</code></pre></figure>
 
 <p>어플리케이션 데몬을 실행시키면 이제 docker 명령어를 사용할 수 있게 됩니다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker version
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker version
 docker info</code></pre></figure>
 
 <p>이제 한번 테스트 해볼 시간입니다.
 아래의 명령어를 통해 nginx 이미지를 만들고 80번 포트에 웹 서버를 띄워 보겠습니다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker run -d -p 80:80 --name webserver nginx</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker run -d -p 80:80 --name webserver nginx</code></pre></figure>
 
 <p><img src="/assets/images/docker-test.png" alt="docker-test" /></p>
 
 <p>실행되고 있는 웹 서버를 중지하고 컨테이너를 삭제해보겠습니다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker ps
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker ps
 docker stop webserver
 docker rm -f webserver</code></pre></figure>
 
 <p>아직 이미지는 남아있는 상태입니다. 이미지까지 삭제해줍니다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">docker images
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker images
 docker rmi nginx</code></pre></figure>
 
 <p>자세한 Docker 사용법이나 명령어는 다음에 정리하도록 하겠습니다.</p>
@@ -307,7 +307,7 @@ docker rmi nginx</code></pre></figure>
 <p>사실 다중 터미널이 필요한거라면 tmux나 iTerm이 더 편하다고 생각한다.
 하지만, 스크린은 서버에서 백드라운드 데몬을 돌려야 할 때 아주 유용하다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">screen -S pingsession -d -m -L ping localhost</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">screen -S pingsession -d -m -L ping localhost</code></pre></figure>
 
 <p>이 명령은 화면에 새로운 세션 (-m)을 만들고, 출력 (-L)을 기록하고, 즉시 분리 (-d) 명령이 실행되도록 지시한다.
 로그는 현재 디렉토리의 screenlog.n 에 기록된다.</p>
@@ -386,7 +386,7 @@ docker rmi nginx</code></pre></figure>
 
 <h4 id="if-else-">if-else 문</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">if</span> <span class="o">[</span> <span class="k">case</span> <span class="o">]</span>; <span class="k">then
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">if</span> <span class="o">[</span> <span class="k">case</span> <span class="o">]</span>; <span class="k">then
   </span><span class="nb">true
 </span><span class="k">else
   </span><span class="nb">false
@@ -396,7 +396,7 @@ docker rmi nginx</code></pre></figure>
 
 <h4 id="case-">case 문</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">case</span> <span class="nv">$answer</span> <span class="k">in
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">case</span> <span class="nv">$answer</span> <span class="k">in
   </span>yes<span class="p">)</span>
   	<span class="nb">echo</span> <span class="s2">"yes"</span>
   no<span class="o">)</span>
@@ -407,7 +407,7 @@ docker rmi nginx</code></pre></figure>
 
 <h4 id="for-in-">for-in 문</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">for </span>fname <span class="k">in</span> <span class="k">$(</span>ls .sh<span class="k">)</span>; <span class="k">do
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">for </span>fname <span class="k">in</span> <span class="k">$(</span>ls .sh<span class="k">)</span>; <span class="k">do
   </span><span class="nb">echo</span> <span class="s2">"fname"</span>
 <span class="k">done</span></code></pre></figure>
 
@@ -415,7 +415,7 @@ docker rmi nginx</code></pre></figure>
 
 <h4 id="while-">while 문</h4>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">while</span> <span class="o">[</span> 1 <span class="o">]</span>; <span class="k">do
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">while</span> <span class="o">[</span> 1 <span class="o">]</span>; <span class="k">do
   </span><span class="nb">echo</span> <span class="s2">"fname"</span>
 <span class="k">done</span></code></pre></figure>
 
@@ -488,7 +488,7 @@ docker rmi nginx</code></pre></figure>
 <p>이럴 때는 Sequence와 Pipeline 개념을 알아두면 편하다.
 예를 들어, commit과 push 명령어를 연속적으로 실행하고 싶다고 가정해보자.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">git add -A;git push</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git add -A;git push</code></pre></figure>
 
 <p>위와 같이 중간에 세미콜론만 추가하면 된다.</p>
 
@@ -496,7 +496,7 @@ docker rmi nginx</code></pre></figure>
 처음이라면 <code class="highlighter-rouge">ps -ef</code> 로 프로세스를 직접 확인할 것이다.
 하지만 파이프라인과 grep 명령어를 사용한다면 다음과 같이 한줄로 끝난다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">ps -ef | grep process_name</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ps -ef | grep process_name</code></pre></figure>
 
 <p>​
 ​   ​</p>
@@ -506,7 +506,7 @@ docker rmi nginx</code></pre></figure>
 <p>어떤 작업을 백그라운드로 실행을 하면 별도의 창으로 켜놓지 않아도
 하나의 프로세스로 계속 돌아가는 것을 확인할 수 있다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">nohup name &amp;</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">nohup name &amp;</code></pre></figure>
 
 <p>리눅스에서는 <code class="highlighter-rouge">nohup</code> 이라는 명령어로 실행할 수 있다.
 실행하고 나면 <code class="highlighter-rouge">nohup.out</code> 이라는 파일이 생기는데
@@ -521,7 +521,7 @@ cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
 이 명령어를 사용하면 특정 시간에 내가 원하는 특정 명령어나 스크립트를 실행시킬 수 있다.
 보통 주기적인 크롤링에 사용하기도 한다.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /root/script.sh</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /root/script.sh</code></pre></figure>
 
 <p>이렇게 설정하면 1분마다 script.sh를 실행한다.
 앞의 별 다섯개는 순서대로 <code class="highlighter-rouge">"분,시,일,월,요일"</code>을 뜻한다.
