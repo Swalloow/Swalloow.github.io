@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://swalloow.github.io///map-reduce</loc>
+<lastmod>2017-03-14T19:18:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://swalloow.github.io///spark-zeppelin-install</loc>
 <lastmod>2017-03-13T19:18:00+09:00</lastmod>
 </url>
@@ -145,6 +149,9 @@
 <loc>http://swalloow.github.io///tag/DataEngineering/</loc>
 </url>
 <url>
+<loc>http://swalloow.github.io///tag/DataEngineering/page2/</loc>
+</url>
+<url>
 <loc>http://swalloow.github.io///tag/DevOps/</loc>
 </url>
 <url>
@@ -161,6 +168,9 @@
 </url>
 <url>
 <loc>http://swalloow.github.io///page5/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page6/</loc>
 </url>
 <url>
 <loc>http://swalloow.github.io///google0db23fb3261b8e88.html</loc>

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>OS X에서 Homebrew로 Spark, Zeppelin 설치하기</title>
+    <title>GFS, HDFS 그리고 MapReduce</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,7 +36,7 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="OS X에서 Homebrew로 Spark, Zeppelin 설치하기" />
+        <meta property="og:title" content="GFS, HDFS 그리고 MapReduce" />
         <meta property="og:description" content="About Data Science, Data Engineering" />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
@@ -96,8 +96,8 @@
 <!-- Everything inside the #post tags pulls data from the post -->
 <!-- #post -->
 
-<header class="main-header post-head " style="background-image: url(/assets/images/cover_dataengineering.jpg) ">
-    <nav class="main-nav  overlay  clearfix">
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
         <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
             <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
@@ -110,10 +110,10 @@
     <article class="post tag-DataEngineering">
 
         <header class="post-header">
-            <h1 class="post-title">OS X에서 Homebrew로 Spark, Zeppelin 설치하기</h1>
+            <h1 class="post-title">GFS, HDFS 그리고 MapReduce</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-03-13">13 Mar 2017</time>
+            <time class="post-date" datetime="2017-03-14">14 Mar 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -130,68 +130,105 @@
 
             <p>​   ​</p>
 
-<blockquote>
-  <p><strong>Apache Spark</strong> is a fast and general engine for large-scale data processing.
-<strong>Zeppelin</strong>, a web-based notebook that enables interactive data analytics.
-You can make beautiful data-driven, interactive and collaborative documents with SQL, Scala and more.</p>
-</blockquote>
-
-<p>공식 문서에 나와있는 소개 글처럼 Spark는 대용량 데이터 처리를 위한 범용 엔진입니다.
-얼마 전까지는 <strong>범용적 목적의 분산 고성능 클러스터링 플랫폼</strong> 이라고 설명했는데 최근에 쉽게 다가가기 위해 바꾼듯 합니다.</p>
-
-<p>그리고 Zeppelin은 데이터 분석을 위한 웹 기반의 노트북입니다.
-Zeppelin은 작년 말부터 Apache-Top Level project로 승격하면서 인기가 높아지고 있습니다.
-Zeppelin이 Jupyter Notebook과 다른 점은 빅데이터 처리를 위해 Spark 등 다양한 아파치 프로젝트를 지원하고,
-Javascript 기반의 데이터 시각화가 내장되어 있어 편리합니다.</p>
+<p>데이터가 급속히 늘어나면서 기존의 방법으로 처리가 힘들어지자,
+빅데이터를 위한 대용량 분산 파일 시스템이 나타나기 시작했습니다.
+여기에서는 GFS, HDFS 그리고 Map Reduce 개념에 대해 정리해보려고 합니다.</p>
 
 <p>​   ​</p>
 
-<h2 id="spark-install">Spark Install</h2>
+<h2 id="gfs-google-file-system">GFS (Google File System)</h2>
 
-<p>Spark는 Scala로 구현되어 있지만 SDK를 통해 Java, Python API 또한 지원합니다.
-그리고 빅데이터 플랫폼으로 Hadoop, AWS S3, Cassandra 등 다양한 저장소를 지원합니다.
-만약 Hadoop이 필요없다면 홈페이지에서 Hadoop이 제외된 바이너리 파일로 설치하시면 됩니다.
-여기에서는 간단하게 OS X의 Homebrew를 통해 설치하도록 하겠습니다.</p>
+<p>Google File System은 2003년 논문을 통해 소개되었습니다.
+이전에 구글에서 사용하던 파일 시스템은 Big File 이었는데,
+구글의 데이터가 급격히 늘어남에 따라 핵심 데이터 스토리지와 구글 검색 엔진을 위해
+최적화 된 파일 시스템이 필요하게 된 것 입니다.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>brew install scala
-<span class="gp">$ </span><span class="nb">export </span><span class="nv">SCALA_HOME</span><span class="o">=</span>/usr/local/bin/scala
-<span class="gp">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SCALA_HOME</span>/bin</code></pre></figure>
+<p><img src="/assets/images/GFS.png" alt="Google File System" /></p>
 
-<p>먼저 스칼라를 설치하고 환경변수를 저장합니다.</p>
+<p>GFS는 크게 하나의 master node와 여러 개의 slave node로 구성되어 있습니다.
+기능으로 보면 Master, Chunk Server, Client로 이루어져 있습니다.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>brew install apache-spark
-<span class="gp">$ </span>spark-shell</code></pre></figure>
+<ul>
+  <li><strong>Master</strong>: GFS 전체를 관리하고 통제하는 중앙 서버의 역할</li>
+  <li><strong>Chunk Server</strong>: 물리적인 서버, 실제 입출력을 처리</li>
+  <li><strong>Client</strong>: 파일 입출력을 요청하는 클라이언트 어플리케이션</li>
+</ul>
 
-<p>그리고 Spark을 설치한 다음, <code class="highlighter-rouge">spark-shell</code> 명령을 통해 실행시키면 됩니다.</p>
+<p>수행과정은 다음과 같습니다.
+먼저 Client가 Master에게 파일의 읽기, 쓰기를 요청하게 되면,
+Master는 Client와 가까운 Chunk Server의 정보를 Client에게 전달합니다.
+Client는 전달받은 Chunk Server와 직접 통신하며 IO 작업을 수행하게 됩니다.</p>
 
-<p><img src="/assets/images/spark-shell.png" alt="spark-shell" /></p>
-
-<p><a href="http://172.30.105.117:4040">http://172.30.105.117:4040</a> 주소로 접속하면 Spark UI를 확인할 수 있습니다.</p>
-
-<p><img src="/assets/images/spark-ui.png" alt="spark-ui" /></p>
+<p>GFS의 엄청난 강점은 <strong>Failuer Tolerance</strong> 입니다.
+다시 말해서, 물리적으로 서버 중 하나가 고장이 나도 정지하지 않고 잘 돌아가도록 설계되었습니다.
+예를 들어, Chunk Server 중 하나가 고장이 나면 Master는 고장나지 않은 Chunk Server의 정보를 전달하고
+Master Server가 고장이 나면 다른 서버가 Master를 대체하게 됩니다.
+이러한 이유로 Chunk Server는 가격이 저렴한 범용 컴퓨터들로 구성할 수 있게 되었고, 클러스터 환경에서 잘 동작할 수 있게 되었습니다.</p>
 
 <p>​   ​</p>
 
-<h2 id="zeppelin-install">Zeppelin Install</h2>
+<h2 id="mapreduce">MapReduce</h2>
 
-<p>Zeppelin은 GitHub 저장소를 clone하여 설치하는 방법과 홈페이지에서 다운받는 방법이 있습니다.
-여기에서는 위와 마찬가지로 Homebrew를 통해 설치해보려 합니다.</p>
+<p>Map Reduce는 마찬가지로 2004년 구글의 논문(저자: 구글의 전설 제프 딘)을 통해 소개되었습니다.
+논문의 제목은 <strong>MapReduce: Simplified Data Processing on Large Clusters</strong> 입니다.
+즉, MapReduce는 말 그대로 대용량 분산 클러스터에서 데이터를 간단히 처리하는 방법입니다.</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>brew install apache-zeppelin
-<span class="gp">$ </span>/usr/local/Cellar/apache-zeppelin/0.7.0/bin/zeppelin-daemon.sh start
-<span class="gp">$ </span>/usr/local/Cellar/apache-zeppelin/0.7.0/bin/zeppelin-daemon.sh stop</code></pre></figure>
+<p>그는 논문을 통해 2가지 Function을 제시하는데 바로 Map과 Reduce 입니다.
+논문에서 제시한 MapReduce의 예시 수도코드는 다음과 같습니다.</p>
 
-<p>brew 명령어로 apache-zeppelin을 설치하고
-스크립트를 실행하면 <a href="localhost:8080">localhost:8080</a> 포트에서 Zeppelin을 사용할 수 있게 됩니다.
-명령어가 너무 길다보니 <code class="highlighter-rouge">~/.zshrc</code>에 등록해서 사용하면 좀 편리합니다.</p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">map</span><span class="p">(</span><span class="n">String</span> <span class="n">key</span><span class="p">,</span> <span class="n">String</span> <span class="n">value</span><span class="p">):</span>
+    <span class="o">//</span> <span class="n">key</span><span class="p">:</span> <span class="n">document</span> <span class="n">name</span>
+    <span class="o">//</span> <span class="n">value</span><span class="p">:</span> <span class="n">document</span> <span class="n">contents</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">word</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+        <span class="n">EmitIntermediate</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>vi ~/.zshrc
-<span class="gp">$ </span><span class="nb">alias </span>zeppelin-start <span class="o">=</span> <span class="s2">"/usr/.../bin/zeppelin-daemon.sh start"</span>
-<span class="gp">$ </span><span class="nb">alias </span>zeppelin-stop <span class="o">=</span> <span class="s2">"/usr/.../bin/zeppelin-daemon.sh stop"</span>
-<span class="gp">$ </span><span class="nb">source</span> ~/.zshrc</code></pre></figure>
+<span class="nb">reduce</span><span class="p">(</span><span class="n">String</span> <span class="n">key</span><span class="p">,</span> <span class="n">Iterator</span> <span class="n">values</span><span class="p">):</span>
+    <span class="o">//</span> <span class="n">key</span><span class="p">:</span> <span class="n">a</span> <span class="n">word</span>
+    <span class="o">//</span> <span class="n">values</span><span class="p">:</span> <span class="n">a</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">counts</span>
+    <span class="nb">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="n">each</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">ParseInt</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="n">Emit</span><span class="p">(</span><span class="n">AsString</span><span class="p">(</span><span class="n">result</span><span class="p">))</span></code></pre></figure>
 
-<p>위와 같이 alias로 등록해주면 앞으로 <code class="highlighter-rouge">zeppelin-start</code> 명령어를 통해 실행할 수 있게 됩니다.
-자세한 환경설정은 <a href="https://zeppelin.apache.org/">Zeppelin 홈페이지</a>에서 확인하실 수 있습니다.</p>
+<p>먼저 <strong>Map</strong> 함수는 어떤 key-value를 input으로 받아서 각 단어와 관련 발생 횟수를 출력합니다.
+그리고 <strong>Reduce</strong> 함수는 특정 단어에 대해 생성된 모든 카운트를 합산합니다.</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">map(k1, v1) -&gt; list(k2, v2)
+reduce(k2, list(v2)) -&gt; list(v2)</code></pre></figure>
+
+<p><strong>Map</strong> 함수는 key-vale를 읽어서 필터링하거나 다른 값으로 변환시켜주며,
+<strong>Reduce</strong> 함수는 Map을 통해 출력된 리스트에
+새로운 key를 기준으로 Groupping하고 이를 Aggregation한 결과를 출력합니다.</p>
+
+<p><img src="/assets/images/mapreduce.png" alt="MapReduce" /></p>
+
+<p>MapReduce는 여러 대의 컴퓨터에서 데이터를 처리하는 경우, 병렬처리를 하기 때문에 확장이 쉽습니다.
+스케줄러가 데이터를 분산 배치하면 worker에서 작업을 수행하고 각 중간 결과는 로컬 디스크에 저장되며,
+나중에 Reduce 연산을 할당받으면 중간 결과를 읽어와서 작업을 수행하고 마찬가지로 파일 시스템에 저장합니다.
+위의 그림과 같이 Master 노드에 모든 데이터를 받아서 처리하던 옛날 방식과 통신 처리면에서 확실히 줄어든 것을 알 수 있습니다.</p>
+
+<p>구글은 MapReduce를 URL 접근빈도, Web-Link Graph를 계산하는데 사용하였고,
+이를 통해 인덱싱, 정렬 등에서 엄청난 성능향상을 보여주었습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="hdfs-hadoop-distributed-file-system">HDFS (Hadoop Distributed File System)</h2>
+
+<p>Hadoop은 2006년 Doug Cutting과 Mike Cafarella가 개발한 분산처리 프레임워크입니다.
+이들은 구글의 GFS를 대체하기 위해 <strong>HDFS</strong> 와 <strong>MapReduce</strong> 를 구현하였습니다.</p>
+
+<p>GFS가 C++로 구현되었다면, Hadoop은 자바로 개발된 데다가 아파치 재단의 오픈소스로 넘어가면서 인기가 많아졌습니다.
+GFS를 구현한 결과물이기 때문에 크게 달라진 것은 없으나
+<strong>YARN, Hadoop Ecosystem</strong> 등 다른 장점으로 인해 많이 사용됩니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="http://xpgc.vicp.net/course/svt/TechDoc/storagepaper/gfs-sosp2003.pdf">논문: The Google File System</a></li>
+  <li><a href="https://static.googleusercontent.com/media/research.google.com/ko//archive/mapreduce-osdi04.pdf">논문: MapReduce - Simplified Data Processing on Large Clusters</a></li>
+</ul>
 
 <p>​   ​</p>
 
@@ -225,15 +262,15 @@ Javascript 기반의 데이터 시각화가 내장되어 있어 편리합니다.
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=OS X에서 Homebrew로 Spark, Zeppelin 설치하기&amp;url=http://swalloow.github.io/spark-zeppelin-install"
+                <a class="icon-twitter" href="http://twitter.com/share?text=GFS, HDFS 그리고 MapReduce&amp;url=http://swalloow.github.io/map-reduce"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/spark-zeppelin-install"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/map-reduce"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/spark-zeppelin-install"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/map-reduce"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -245,8 +282,8 @@ Javascript 기반의 데이터 시각화가 내장되어 있어 편리합니다.
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/spark-zeppelin-install';
-        var disqus_url = 'http://swalloow.github.io//spark-zeppelin-install';
+        var disqus_identifier = '/map-reduce';
+        var disqus_url = 'http://swalloow.github.io//map-reduce';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -271,20 +308,13 @@ Javascript 기반의 데이터 시각화가 내장되어 있어 편리합니다.
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story no-cover" href="/map-reduce">
-            <section class="post">
-                <h2>GFS, HDFS 그리고 MapReduce</h2>
-                <p>​ ​ 데이터가 급속히 늘어나면서 기존의 방법으로 처리가 힘들어지자, 빅데이터를 위한 대용량 분산 파일 시스템이...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev " style="background-image: url(/assets/images/aws-logo.png)" href="/aws-config">
+        <a class="read-next-story prev " style="background-image: url(/assets/images/cover_dataengineering.jpg)" href="/spark-zeppelin-install">
             <section class="post">
-                <h2>AWS EC2 인스턴스 SSH 접속을 위한 초기설정 그리고 주의사항</h2>
-                <p>​ ​ 이 포스팅의 모든 내용은 OS X에 최적화되어 있습니다. 그리고, 정리한 내용은 AWS 공식문서에...</p>
+                <h2>OS X에서 Homebrew로 Spark, Zeppelin 설치하기</h2>
+                <p>​ ​ Apache Spark is a fast and general engine for large-scale data processing. Zeppelin,...</p>
             </section>
         </a>
     
