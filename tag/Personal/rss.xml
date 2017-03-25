@@ -12,6 +12,28 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Awesome Developer Roadmap</title>
+	  <link>//developer-roadmap</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-03-18T19:18:00+09:00</pubDate>
+	  <guid>//developer-roadmap</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p><a href="https://github.com/kamranahmedse/developer-roadmap">https://github.com/kamranahmedse/developer-roadmap</a></p>
+
+<p>오직 Awesome만으로 별 1만개를 넘게 달았다.
+저분 GitHub에 들어가보니 완전 Awesome 전문가이시다.</p>
+
+<p>그래도 공부해야 할 내용이 잘 정리되어 있어 참고할만 하다.
+앞으로 시간 날 때 기본 상식이라고 되어 있는 노란부분을 정리해봐야겠다.</p>
+
+<p>​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>맥북프로 터치바를 커스터마이징 해보자</title>
 	  <link>//macbook-touchbar-customizing</link>
 	  <author>Swalloow</author>

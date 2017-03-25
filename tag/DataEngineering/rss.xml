@@ -12,6 +12,118 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>빅데이터 처리에 Scala가 필요한 이유</title>
+	  <link>//scala-for-bigdata</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-03-17T19:18:00+09:00</pubDate>
+	  <guid>//scala-for-bigdata</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>StackOverFlow나 Quora를 보면 <strong>Scala has taken over the Big Data world.</strong> 라는 글을 많이 볼 수 있습니다.
+게다가 Spark의 엔진은 Scala로 구현되어 있습니다. 이 포스팅에서는 데이터를 다루는데에 스칼라가 가지는 강점이 무엇인지 알아보고자 합니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="scala--">Scala가 가지는 강점</h2>
+
+<p>​   ​</p>
+
+<h4 id="static-typing-type-inference">Static Typing, Type Inference</h4>
+
+<p>스칼라의 <code class="highlighter-rouge">val</code> 변수는 한번 지정된 값을 바꾸지 않습니다.
+이러한 변수를 <code class="highlighter-rouge">Immutable variable</code> 이라고 부릅니다. 예를 들면 아래와 같습니다.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">msg</span> <span class="k">=</span> <span class="s">"Hello Scala"</span>
+<span class="nc">String</span> <span class="k">=</span> <span class="nc">Hello</span> <span class="nc">Scala</span>
+
+<span class="k">val</span> <span class="n">msg</span> <span class="k">=</span> <span class="s">"Reassign to val"</span>
+<span class="n">error</span><span class="k">:</span> <span class="kt">reassignment</span> <span class="kt">to</span> <span class="kt">val</span></code></pre></figure>
+
+<p>위의 예제를 보면, msg 변수에 문자열을 할당했지만 어디에도 String 이라는 단어는 없습니다.
+스칼라는 알아서 타입을 추론하여 지정해주기 때문입니다.
+따라서, <code class="highlighter-rouge">val</code> 변수에 재할당을 시도하면 <code class="highlighter-rouge">reassignment to val</code> 이라는 오류가 발생하게 됩니다.</p>
+
+<p>이처럼 스칼라는 input 타입을 보고 함수나 출력 값의 타입을 추론해주며 이를 통해 코드를 깔끔하게 유지할 수 있습니다.
+또한, 다양하고 많은 데이터가 사용되는 경우 정적변수가 문제를 단순화 해주는 효과가 있습니다.</p>
+
+<p>​   ​</p>
+
+<h4 id="scalable-language">Scalable Language</h4>
+
+<p>기존의 Hadoop 기반의 데이터 인프라는 자바 언어를 통해 MapReduce 연산 그리고 알고리즘을 구현해야했습니다.
+하지만 자바는 코드가 너무 길어 생산성 그리고 가독성이 매우 떨어집니다.</p>
+
+<p>스칼라는 모든 것들이 일관성있게 그리고 간결하게 구현되도록 설계되었습니다.
+이를 통해 얻을 수 있는 장점은 <strong>“적은 양의 코드로 방대한 규모의 시스템을 작성할 수 있다”</strong> 는 것입니다.</p>
+
+<p>연산자를 예로 들어보겠습니다.
+자바에서는 ‘==’ 와 같은 비교연산자를 제공합니다.
+하지만 비교연산자는 주소값을 비교하기 때문에
+String과 같은 객체를 비교할 때는 <code class="highlighter-rouge">equal()</code> 메서드를 사용해서 비교해야 했습니다.
+이 또한 스칼라의 Scalable과 거리가 멉니다.
+스칼라에서는 모든 것이 Object이기 때문에 <code class="highlighter-rouge">==</code> 로 모든 비교가 가능합니다.</p>
+
+<p>​   ​</p>
+
+<h4 id="object-oriented-functional-language">Object Oriented, Functional Language</h4>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">y1 = 2x + 5
+y2 = 4(y1) = 4(2x + 5)</code></pre></figure>
+
+<p>함수형 언어를 이해하기 전에 어렸을 때 배웠던 함수식을 떠올려보겠습니다.
+위의 식에서 x는 input, y는 output이 됩니다.
+우리는 어떤 함수에 input을 넣으면 output이 나온다고 이해하고 있습니다.
+그리고 아래의 식처럼 함수를 인자로 넣을 수도 있습니다 (합성함수).
+함수형 언어도 이와 비슷합니다.</p>
+
+<p>스칼라는 객체지향 프로그래밍과 함수형 프로그래밍을 모두 완벽하게 지원하는 언어입니다.
+스칼라에서는 모든 것이 객체이며 함수가 <code class="highlighter-rouge">first object</code> 입니다.
+함수를 마치 하나의 값으로 취급하며 이를 변수 또는 파라미터로 넘길 수 있습니다.</p>
+
+<p>모든 것을 함수로 해결하면 의도하지 않은 동작(Side Effect)이 발생할 일이 없고,
+한번 검증된 함수는 신뢰할 수 있기 때문에 버그가 줄어드는 효과가 있습니다.
+또한, Immutable 변수는 문제를 단순화시켜주기 때문에 데이터 공유, 병렬처리에 강합니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="java-scala-">Java와 Scala를 비교해보자</h2>
+
+<p>Scala는 Interactive한 Shell을 제공합니다.
+이렇게 바로 확인할 수 있는 Shell을 통해 데이터의 탐색적 분석이 가능합니다.
+IntelliJ IDEA에서도 <code class="highlighter-rouge">Worksheet</code>이라는 기능을 통해 사용할 수 있습니다.
+스칼라 개발환경은 <strong>Scala 2.12.1</strong> 이며, IDE는 <strong>IntelliJ IDEA</strong> 를 사용하였습니다.</p>
+
+<p><img src="/assets/images/intellij.png" alt="IntelliJ" /></p>
+
+<p>간단한 WordCount 예제를 통해 코드를 비교해보곘습니다.</p>
+
+<h4 id="java-hadoop-word-count">JAVA Hadoop Word Count</h4>
+<script src="https://gist.github.com/Swalloow/25a96ff50fdb60a9859972fa0e4bb92b.js"></script>
+
+<p>​   ​</p>
+
+<h4 id="scala-spark-word-count">Scala Spark Word Count</h4>
+<script src="https://gist.github.com/Swalloow/ddc125f58b2b2ca4815444557d769bdb.js"></script>
+
+<p>​   ​</p>
+
+<h2 id="section">정리하자면,</h2>
+
+<ul>
+  <li>파이썬과 같이 아주 간결한 문법</li>
+  <li>객체지향과 함수형 프로그래밍 모두 가능</li>
+  <li>자바와 호환되며 JVM 위에서 실행되기 때문에 좋은 성능</li>
+  <li>정적 타입을 지향</li>
+  <li>REPL Shell을 활용하여 Scripting</li>
+</ul>
+
+<p>​   ​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>GFS, HDFS 그리고 MapReduce</title>
 	  <link>//map-reduce</link>
 	  <author>Swalloow</author>
