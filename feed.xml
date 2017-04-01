@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>올바른 Dockerfile 작성을 위한 가이드라인</title>
+        
+          <description>&lt;p&gt;​   ​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 28 Mar 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//dockerfile-ignore</link>
+        <guid isPermaLink="true">http://swalloow.github.io//dockerfile-ignore</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>파이썬을 위한 Dockerfile 작성하기</title>
         
           <description>&lt;p&gt;​   ​&lt;/p&gt;
