@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Docker와 Gitlab CI를 활용한 빌드, 테스트 자동화</title>
+        
+          <description>&lt;p&gt;​   ​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Fri, 31 Mar 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//gitlabci-docker</link>
+        <guid isPermaLink="true">http://swalloow.github.io//gitlabci-docker</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>올바른 Dockerfile 작성을 위한 가이드라인</title>
         
           <description>&lt;p&gt;​   ​&lt;/p&gt;

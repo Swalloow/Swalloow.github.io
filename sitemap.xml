@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://swalloow.github.io///gitlabci-docker</loc>
+<lastmod>2017-03-31T19:18:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://swalloow.github.io///dockerfile-ignore</loc>
 <lastmod>2017-03-28T19:18:00+09:00</lastmod>
 </url>
