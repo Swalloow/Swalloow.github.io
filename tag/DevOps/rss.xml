@@ -199,9 +199,9 @@ Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이�
 
 <h4 id="section-4">줄바꿈을 사용하여 정렬하자</h4>
 
-<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">RUN apt-get update &amp;&amp; apt-get install -y <span class="err">\</span>
-  bzr <span class="err">\</span>
-  cvs <span class="err">\</span>
+<figure class="highlight"><pre><code class="language-dockerfile" data-lang="dockerfile">RUN apt-get update &amp;&amp; apt-get install -y \
+  bzr \
+  cvs \
   git</code></pre></figure>
 
 <p>위와 같이 줄바꿈을 사용하면, 패키지의 중복을 피하고 목록을 훨씬 쉽게 업데이트 할 수 있습니다.
