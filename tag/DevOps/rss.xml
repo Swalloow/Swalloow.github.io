@@ -62,27 +62,27 @@ Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이�
 
 <p>gitlab-ci 설정파일은 대략 다음과 같습니다.</p>
 
-<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">image: gitlab-registry
-stages:
-<span class="p">  -</span> build
-<span class="p">  -</span> test
-<span class="p">  -</span> deploy
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">image</span><span class="pi">:</span> <span class="s">gitlab-registry</span>
+<span class="s">stages</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">build</span>
+  <span class="pi">-</span> <span class="s">test</span>
+  <span class="pi">-</span> <span class="s">deploy</span>
 
-job-build:
-  stage: build
-  script:
-<span class="p">  -</span> pip install -r requirements.txt
-<span class="p">  -</span> python -m py_compile run.py
+<span class="s">job-build</span><span class="pi">:</span>
+  <span class="s">stage</span><span class="pi">:</span> <span class="s">build</span>
+  <span class="s">script</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">pip install -r requirements.txt</span>
+  <span class="pi">-</span> <span class="s">python -m py_compile run.py</span>
 
-job-test:
-  stage: test
-  script:
-<span class="p">  -</span> pytest --pep8 -m pep8 backend/
+<span class="s">job-test</span><span class="pi">:</span>
+  <span class="s">stage</span><span class="pi">:</span> <span class="s">test</span>
+  <span class="s">script</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">pytest --pep8 -m pep8 backend/</span>
 
-job-deploy:
-  stage: deploy
-  script:
-<span class="p">  -</span> deployment</code></pre></figure>
+<span class="s">job-deploy</span><span class="pi">:</span>
+  <span class="s">stage</span><span class="pi">:</span> <span class="s">deploy</span>
+  <span class="s">script</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">deployment</span></code></pre></figure>
 
 <p>Gitlab CI와 Docker를 활용한 빌드 테스트 자동화는 위의 그림과 같이 이루어집니다.</p>
 
@@ -94,7 +94,11 @@ job-deploy:
   <li>Docker 컨테이너가 실행되면 첫번째 job에 정의된 대로 필요한 패키지를 설치하고 빌드를 수행합니다.</li>
   <li>빌드가 통과되면 두번째 job에 정의된 대로 테스트를 수행합니다.</li>
   <li>테스트가 통과되면 세번째 job에 정의된 대로 배포 과정을 수행합니다.</li>
-  <li>각 과정은 모두 Slack 알림으로 확인할 수 있습니다.</li>
+  <li>
+    <p>각 과정은 모두 Slack 알림으로 확인할 수 있습니다.</p>
+
+    <p>​</p>
+  </li>
 </ol>
 
 <p><img src="/assets/images/gitlab-pipeline.png" alt="Gitlab" /></p>
