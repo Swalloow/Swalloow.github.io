@@ -8,6 +8,36 @@
     
       
       <item>
+        <title>influxDB와 Grafana로 실시간 서버 모니터링 구축하기(2)</title>
+        
+          <description>&lt;p&gt;​   ​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Wed, 05 Apr 2017 21:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//influx-grafana2</link>
+        <guid isPermaLink="true">http://swalloow.github.io//influx-grafana2</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>influxDB와 Grafana로 실시간 서버 모니터링 구축하기(1)</title>
+        
+          <description>&lt;p&gt;​   ​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Wed, 05 Apr 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//influx-grafana1</link>
+        <guid isPermaLink="true">http://swalloow.github.io//influx-grafana1</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Docker와 Gitlab CI를 활용한 빌드, 테스트 자동화</title>
         
           <description>&lt;p&gt;​   ​&lt;/p&gt;

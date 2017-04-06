@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>Docker와 Gitlab CI를 활용한 빌드, 테스트 자동화</title>
+    <title>influxDB와 Grafana로 실시간 서버 모니터링 구축하기(2)</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,7 +33,7 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Docker와 Gitlab CI를 활용한 빌드, 테스트 자동화" />
+        <meta property="og:title" content="influxDB와 Grafana로 실시간 서버 모니터링 구축하기(2)" />
         <meta property="og:description" content="About Data Science, Data Engineering" />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
@@ -106,10 +106,10 @@
     <article class="post tag-DevOps">
 
         <header class="post-header">
-            <h1 class="post-title">Docker와 Gitlab CI를 활용한 빌드, 테스트 자동화</h1>
+            <h1 class="post-title">influxDB와 Grafana로 실시간 서버 모니터링 구축하기(2)</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-03-31">31 Mar 2017</time>
+            <time class="post-date" datetime="2017-04-05">05 Apr 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -126,94 +126,28 @@
 
             <p>​   ​</p>
 
-<p>Gitlab은 설치형 GitHub이라고 이해하시면 편합니다.
-무료로 private repository와 CI 서버를 제공해줍니다.
-심지어 Docker Registry도 무료로 제공하고 있습니다.
-아직 많은 분들이 Gitlab CI의 여러 장점들을 잘 모르시는 것 같아 정리해보았습니다.</p>
+<p><a href="https://swalloow.github.io/influx-grafana1">지난 포스팅</a>에 이어서 Grafana를 연동해보도록 하겠습니다.</p>
 
 <p>​</p>
 
-<h3 id="gitlab-ci">Gitlab CI</h3>
+<h3 id="grafana">Grafana</h3>
 
-<p>Gitlab CI는 Gitlab에서 무료로 제공하는 CI 툴 입니다.
-Gitlab과 완벽하게 연동되며 CI를 위해 <strong>CI linter, pipeline, cycle analytics</strong> 등 다양한 서비스를 제공합니다.</p>
+<p><img src="/assets/images/grafana.png" alt="Grafana" /></p>
 
-<p><img src="/assets/images/gitlab-ci.png" alt="Gitlab-CI" /></p>
+<p>지난 번에 설치했던 Grafana 도커 이미지를 컨테이너로 실행하면 위와 같이 로그인 화면이 나타납니다.
+아이디는 admin, 비밀번호는 admin으로 접속하시면 됩니다.
+이제 아까 만들었던 database를 Grafana의 data source에 등록할 차례입니다.</p>
 
-<p>travis, circle CI와 마찬가지로 Gitlab CI는 <code class="highlighter-rouge">gitlab-ci.yml</code> 파일로 설정할 수 있습니다.
-Gitlab은 DigitalOcean과 제휴하여 CI 서버(Runner)를 따로 제공합니다.
-따라서 <code class="highlighter-rouge">Runner</code>에 job을 할당하여 돌아가도록 설정할 수 있습니다.</p>
+<p><img src="/assets/images/grafana-ds.png" alt="Grafana-ds" /></p>
 
-<p><img src="/assets/images/gitlab-pipe.png" alt="Gitlab-Pipe" /></p>
+<p>Type을 InfluxDB로 맞추고, Url과 Database만 잘 설정해주시면 됩니다.
+이제 새로운 대시보드를 생성하고 <code class="highlighter-rouge">Add Graph</code>로 그래프를 추가합니다.</p>
 
-<p>그리고 Runner는 <strong>Docker 컨테이너</strong> 를 기반으로 돌아갑니다.
-Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이너를 실행시키는 것을 볼 수 있습니다.
-따라서, <strong>Base Image를 내 어플리케이션 이미지로 바꾸면 빌드 및 테스트 속도가 빠르게 향상됩니다</strong>.</p>
+<p>​<img src="/assets/images/grafana-graph.png" alt="Grafana-graph" /></p>
 
-<p>​</p>
+<p>위와 같이 cpu, memory 지표 외에도 다양한 지표를 쉽게 추가할 수 있습니다.</p>
 
-<h3 id="gitlab-registry">Gitlab Registry</h3>
-
-<p><img src="/assets/images/gitlab-registry.png" alt="Gitlab-Registry" /></p>
-
-<p>Docker 친화적인 Gitlab은 Docker Registry도 무료로 제공해줍니다.
-<code class="highlighter-rouge">Gitlab Registry</code> 탭에 들어가면 Docker Registry의 주소가 적혀있고 친절하게 명령어까지 써있습니다.</p>
-
-<p>아마 많은 분들이 DockerHub를 결제하거나, AWS S3를 이용하여 Docker Registry를 구축하셨을 겁니다.
-하지만 Gitlab에서는 그럴 필요가 없습니다.</p>
-
-<p>​</p>
-
-<h3 id="docker-with-gitlab-ci">Docker with Gitlab CI</h3>
-
-<p>gitlab-ci 설정파일은 대략 다음과 같습니다.</p>
-
-<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">image</span><span class="pi">:</span> <span class="s">gitlab-registry</span>
-<span class="s">stages</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">build</span>
-  <span class="pi">-</span> <span class="s">test</span>
-  <span class="pi">-</span> <span class="s">deploy</span>
-
-<span class="s">job-build</span><span class="pi">:</span>
-  <span class="s">stage</span><span class="pi">:</span> <span class="s">build</span>
-  <span class="s">script</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">pip install -r requirements.txt</span>
-  <span class="pi">-</span> <span class="s">python -m py_compile run.py</span>
-
-<span class="s">job-test</span><span class="pi">:</span>
-  <span class="s">stage</span><span class="pi">:</span> <span class="s">test</span>
-  <span class="s">script</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">pytest --pep8 -m pep8 backend/</span>
-
-<span class="s">job-deploy</span><span class="pi">:</span>
-  <span class="s">stage</span><span class="pi">:</span> <span class="s">deploy</span>
-  <span class="s">script</span><span class="pi">:</span>
-  <span class="pi">-</span> <span class="s">deployment</span></code></pre></figure>
-
-<p>Gitlab CI와 Docker를 활용한 빌드 테스트 자동화는 위의 그림과 같이 이루어집니다.</p>
-
-<p><img src="/assets/images/ci-process.png" alt="CI" /></p>
-
-<ol>
-  <li>사용자가 Gitlab 저장소에 push를 하면, Gitlab CI Runner로 전달됩니다.</li>
-  <li>Gitlab CI는 Gitlab Registry로부터 Docker 이미지를 받아옵니다. Docker 이미지에는 어플리케이션 환경이 설정되어 있습니다.</li>
-  <li>Docker 컨테이너가 실행되면 첫번째 job에 정의된 대로 필요한 패키지를 설치하고 빌드를 수행합니다.</li>
-  <li>빌드가 통과되면 두번째 job에 정의된 대로 테스트를 수행합니다.</li>
-  <li>테스트가 통과되면 세번째 job에 정의된 대로 배포 과정을 수행합니다.</li>
-  <li>
-    <p>각 과정은 모두 Slack 알림으로 확인할 수 있습니다.</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<p><img src="/assets/images/gitlab-pipeline.png" alt="Gitlab" /></p>
-
-<p>위와 같이 모든 과정을 <code class="highlighter-rouge">Gitlab Pipeline</code>을 통해 확인하실 수 있습니다.</p>
-
-<p>Gitlab의 단점이라면 Community 버전의 서버가 조금 불안정하다는 점입니다.
-물론 설치형 Gitlab을 사용하신다면 이런 단점마저 존재하지 않습니다.
-소규모의 팀이라면 충분히 도입을 검토해볼만 하다고 생각합니다.</p>
+<p><img src="/assets/images/grafana-result.png" alt="Mac" /></p>
 
 <p>​   ​</p>
 
@@ -247,15 +181,15 @@ Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이�
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=Docker와 Gitlab CI를 활용한 빌드, 테스트 자동화&amp;url=http://swalloow.github.io/gitlabci-docker"
+                <a class="icon-twitter" href="http://twitter.com/share?text=influxDB와 Grafana로 실시간 서버 모니터링 구축하기(2)&amp;url=http://swalloow.github.io/influx-grafana2"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/gitlabci-docker"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/influx-grafana2"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/gitlabci-docker"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/influx-grafana2"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -267,8 +201,8 @@ Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이�
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/gitlabci-docker';
-        var disqus_url = 'http://swalloow.github.io//gitlabci-docker';
+        var disqus_identifier = '/influx-grafana2';
+        var disqus_url = 'http://swalloow.github.io//influx-grafana2';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -293,20 +227,13 @@ Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이�
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story no-cover" href="/influx-grafana1">
-            <section class="post">
-                <h2>influxDB와 Grafana로 실시간 서버 모니터링 구축하기(1)</h2>
-                <p>​ ​ 요즘 실시간 로그 수집 및 분석 도구로 **ELK (Elastic Search)** 를 많이 사용하지만,...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev " style="background-image: url(/assets/images/docker-logo.png)" href="/dockerfile-ignore">
+        <a class="read-next-story prev no-cover" href="/influx-grafana1">
             <section class="post">
-                <h2>올바른 Dockerfile 작성을 위한 가이드라인</h2>
-                <p>​ ​ Docker가 처음이라면, 이전 포스팅을 참고하시기 바랍니다. Docker 간편한 설치부터 실행까지 Docker, DockerHub 명령어...</p>
+                <h2>influxDB와 Grafana로 실시간 서버 모니터링 구축하기(1)</h2>
+                <p>​ ​ 요즘 실시간 로그 수집 및 분석 도구로 ELK (Elastic Search) 를 많이 사용하지만,...</p>
             </section>
         </a>
     
