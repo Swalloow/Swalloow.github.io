@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>넷플릭스 본사 방문 후기</title>
+    <title>Spark의 Temporary View에 대하여</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,7 +33,7 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="넷플릭스 본사 방문 후기" />
+        <meta property="og:title" content="Spark의 Temporary View에 대하여" />
         <meta property="og:description" content="About Data Science, Data Engineering" />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
@@ -103,19 +103,19 @@
 
 <main class="content" role="main">
 
-    <article class="post tag-personal">
+    <article class="post tag-DataEngineering">
 
         <header class="post-header">
-            <h1 class="post-title">넷플릭스 본사 방문 후기</h1>
+            <h1 class="post-title">Spark의 Temporary View에 대하여</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-06-05">05 Jun 2017</time>
+            <time class="post-date" datetime="2017-06-16">16 Jun 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
                 
                     
-                       <a href='/tag/Personal'>Personal</a>
+                       <a href='/tag/DataEngineering'>Dataengineering</a>
                     
                 
                 
@@ -126,61 +126,76 @@
 
             <p>​</p>
 
-<p><img src="/assets/images/travel/netflix.jpg" alt="netflix" /></p>
-
-<p>미국 여행하면서 다양한 경험을 했지만, 넷플릭스는 그 중 가장 기억에 남았던 장소다.
-우연히 넷플릭스의 추천 팀 데이터 엔지니어로 근무하시는 선배님과 연락이 되었고,
-덕분에 많은 이야기를 들을 수 있었다.</p>
-
-<p><img src="/assets/images/travel/netflix3.jpg" alt="netflix" /></p>
-
-<p>넷플릭스의 연봉은 실리콘밸리에서도 많이 주는 편이다.
-자세한 금액은 <a href="https://www.glassdoor.com/">https://www.glassdoor.com/</a> 에서 확인해보자.</p>
-
-<p>넷플릭스의 기반인 마이크로 아키텍쳐로 인해 팀 구성원도 그에 맞게 쪼개어져 있다.
-적은 팀은 3명까지도 있고, 그 중에서 추천 팀은 10명 정도로 구성되어 있다고 한다.</p>
-
-<p><img src="/assets/images/travel/prize.jpg" alt="netflix" /></p>
-
-<p>회사 내부는 마치 영화관처럼 꾸며져 있었다.
-실제로 넷플릭스 내에는 영화를 볼 수 있는 영화관도 있다.
-계단에는 카페트가 깔려있고 벽면에는 영화 포스터들이 붙어있었다.
-각 층마다 회의실, 세미나실이 정말 많았는데, 모두 영화 이름이 붙어 있었다.
-예를 들면, 회의실의 이름이 닥터 지바고, 어벤져스 이런 식이다.</p>
-
-<p><img src="/assets/images/travel/food.jpg" alt="netflix" /></p>
-
-<p>그리고 층마다, 건물마다 전혀 다른 분위기다.
-엔지니어링 팀이 있는 곳은 모니터가 여러 개에 집중하는 분위기였고,
-UI/UX 팀이 위치한 곳은 전부 오픈된 공간에 자유로운 분위기였다.
-벽면에는 목업디자인 샘플이 많이 붙어있었고 포스트잇을 통해 누구나 피드백을 주는 듯 했다.
-밖에 나가면 산책로와 함께 거대한 공원이 있다.</p>
-
-<p><img src="/assets/images/travel/park.jpg" alt="netflix" /></p>
-
-<p>넷플릭스의 추천 시스템은 실시간, 전 세계 사용자를 대상으로 돌아간다.
-셀제로 각 국가 별 실시간 인기 영화 순위를 보여주는 대시보드를 볼 수 있었다.
-넷플릭스의 추천 시스템은 정말 유명하지만 여전히 고민하는 부분이 많다고 한다.
-(비인기지역의 데이터를 어떻게 처리할 것인지, Cold start problem을 어떻게 해결할 것인지 등)
-최근에는 딥러닝을 이용한 추천 시스템도 개발 중이라고 한다.</p>
-
-<p>데이터 관련 팀은 데이터 분석 팀과 데이터 엔지니어링 팀이 나뉘어 있고 추천 팀은 그 사이에 존재한다.
-데이터 분석 팀은 주로 머신러닝 쪽 일을 한다. (Model training, Parameter tuning)
-중요한 것은 연구를 한다기보다 기존에 나온 여러 연구들 중에
-넷플릭스에 어울리는 것을 찾아 빠르게 적용해보고 성능 테스트를 하는 것이다.</p>
-
-<p>그리고 데이터 엔지니어링 팀은 사용자들의 다양한 로그 데이터를 수집하고 이를 빠르게 프로세싱한다.
-흔히 말하는 데이터 파이프라인에 관련된 일을 한다.
-그리고 또 한 가지 일은 실제 어플리케이션에 모델이 잘 동작하도록 만드는 일이다.
-데이터 엔지니어링 팀에서 주로 사용하는 것은 Apache Spark 그리고 Scala 언어다.
-미국에서도 Spark의 인기는 엄청나다고 한다.
-년, 월, 일, 시간, 분 단위로 데이터를 나누어 저장하고 이를 불러와서 사용한다.</p>
-
-<p>추천이 중요한 이유는 명확하다.
-넷플릭스의 유저가 전 세계 몇 억명인데 이 중에 0.5% 리텐션이 늘게 되었을 때,
-얻을 수 있는 매출 효과가 어마어마하기 때문이다.</p>
+<p>SQL의 View 처럼 Spark에서도 View를 지원합니다.
+이 포스팅에서는 Spark 2.1.0 부터 생긴 <code class="highlighter-rouge">Spark Global Temporary View</code>와
+기존의 <code class="highlighter-rouge">TempView</code>가 어떤 차이가 있는지 그리고 어떻게 사용해야하는지 알아보곘습니다.</p>
 
 <p>​</p>
+
+<h3 id="spark-temporary-view">Spark Temporary View</h3>
+
+<p>공식문서를 보면 Spark의 Temporary View는 Session-Scope 입니다.
+무슨 말이냐 하면, View의 생명주기가 세션에 달려있다는 뜻 입니다.
+(여기에서 말하는 세션은 SparkSession 입니다)
+그리고, 세션이 종료되면 자동으로 View 테이블이 Drop 됩니다.</p>
+
+<p>​</p>
+
+<h3 id="createorreplacetempview">CreateOrReplaceTempView</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">df</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">CreateOrReplaceTempView</span><span class="p">(</span><span class="s">"TempView"</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropTempView</span><span class="p">(</span><span class="s">"TempView"</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">unpersist</span><span class="p">()</span></code></pre></figure>
+
+<p>먼저 기존에 사용하던 TempView를 보겠습니다.
+위의 예시는 PySpark 코드입니다.
+세 번째 줄의 <code class="highlighter-rouge">createOrReplaceTempView</code>가 View를 생성하는 함수인데,
+Spark은 Lazy evaluation이기 때문에 아직 실행 되기 이전 입니다.
+이후 두 번째 줄에서 count() 함수를 실행하면 생성되며,
+TempView라는 이름으로 메모리에 두고 사용할 수 있게 됩니다.
+다 사용한 다음에는 꼭 <code class="highlighter-rouge">unpersist</code> 함수로 할당된 메모리를 해제시켜줘야 합니다.</p>
+
+<p>위와 다르게 Temp View에 대한 명령만 내리고 마지막에 한번에 처리해도 되지만,
+여러 개로 쪼개서 명령을 내리는 것이 상대적으로 빠르다고 합니다.</p>
+
+<p>​</p>
+
+<h3 id="global-temporary-view">Global Temporary View</h3>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">GLOBAL</span> <span class="k">TEMPORARY</span> <span class="k">VIEW</span> <span class="n">temp_view</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="k">FROM</span> <span class="n">tbl</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">global_temp</span><span class="p">.</span><span class="n">temp_view</span>
+<span class="k">DROP</span> <span class="k">VIEW</span> <span class="n">global_temp</span><span class="p">.</span><span class="n">temp_view</span></code></pre></figure>
+
+<p>위의 예시는 Spark SQL 코드입니다.
+Global Temporary View는 Spark 2.1.0에서 처음 소개되었으며, <code class="highlighter-rouge">GLOBAL TEMPORARY VIEW</code> 라는 키워드로 생성합니다.
+그렇게 선언하고 나면 일종의 임시 테이블로 접근할 수 있습니다.
+삭제할 때는 <code class="highlighter-rouge">DROP VIEW</code> 라는 키워드로 삭제합니다.</p>
+
+<p>하지만 Global Temporary View는 조금 위험합니다.
+이 View는 말 그대로 전역적인 상태로 남기 위해 시스템의 임시 데이터베이스로 연결됩니다.
+그래서 접근할 때, <code class="highlighter-rouge">global_temp</code>로 접근하게 됩니다.</p>
+
+<p>결론부터 말하자면 Global Temporary View는 모든 세션에서 공유 가능하며,
+Spark 어플리케이션이 종료되기 전까지 살아있게 됩니다.
+제 경우 Master 노드의 하드디스크에 저장되어 있었습니다.
+이렇게 되면 일단 IO로 인해 로딩속도가 상당히 느려지고,
+만일 View의 크기가 메모리 용량을 넘어갔더라면 Master가 내려갈 수도 있는 상황입니다.
+이와 같은 이유로 Global Temporary View는 신중히 사용하는 것이 좋습니다.</p>
+
+<p>​</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://spark.apache.org/docs/2.1.1/api/java/org/apache/spark/sql/catalog/Catalog.html">https://spark.apache.org/docs/2.1.1/api/java/org/apache/spark/sql/catalog/Catalog.html</a></li>
+  <li>
+    <p><a href="https://spark.apache.org/docs/latest/sql-programming-guide.html#global-temporary-view">https://spark.apache.org/docs/latest/sql-programming-guide.html#global-temporary-view</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
 
 
         </section>
@@ -212,15 +227,15 @@ UI/UX 팀이 위치한 곳은 전부 오픈된 공간에 자유로운 분위기�
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=넷플릭스 본사 방문 후기&amp;url=http://swalloow.github.io/netflix"
+                <a class="icon-twitter" href="http://twitter.com/share?text=Spark의 Temporary View에 대하여&amp;url=http://swalloow.github.io/spark-temp-view"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/netflix"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/spark-temp-view"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/netflix"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/spark-temp-view"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -232,8 +247,8 @@ UI/UX 팀이 위치한 곳은 전부 오픈된 공간에 자유로운 분위기�
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/netflix';
-        var disqus_url = 'http://swalloow.github.io//netflix';
+        var disqus_identifier = '/spark-temp-view';
+        var disqus_url = 'http://swalloow.github.io//spark-temp-view';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -258,20 +273,13 @@ UI/UX 팀이 위치한 곳은 전부 오픈된 공간에 자유로운 분위기�
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story no-cover" href="/spark-temp-view">
-            <section class="post">
-                <h2>Spark의 Temporary View에 대하여</h2>
-                <p>​ SQL의 View 처럼 Spark에서도 View를 지원합니다. 이 포스팅에서는 Spark 2.1.0 부터 생긴 `Spark Global...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/sanfran-travel">
+        <a class="read-next-story prev no-cover" href="/netflix">
             <section class="post">
-                <h2>실리콘밸리 여행 후기</h2>
-                <p>​ 실리콘밸리는 미국 캘리포니아 주 샌프란시스코 만 지역 남부에 위치한다. 우연히 좋은 기회를 얻게 되어...</p>
+                <h2>넷플릭스 본사 방문 후기</h2>
+                <p>​ 미국 여행하면서 다양한 경험을 했지만, 넷플릭스는 그 중 가장 기억에 남았던 장소다. 우연히 넷플릭스의...</p>
             </section>
         </a>
     
