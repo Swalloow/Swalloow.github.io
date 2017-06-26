@@ -93,6 +93,66 @@ Cloudera Manager는 기본으로 7180 포트를 사용하기 때문에 Inbound�
 	</item>
 
 	<item>
+	  <title>Spark의 Random Sampling에 대하여</title>
+	  <link>//spark-sampling</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-06-20T19:18:00+09:00</pubDate>
+	  <guid>//spark-sampling</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>데이터를 분석하다보면 임의의 샘플을 추출해야 하는 상황이 생깁니다.
+그래서 이번에는 Spark에서 랜덤 샘플링을 하는 방법에 대해 정리해보았습니다.</p>
+
+<p>​</p>
+
+<h3 id="sample">Sample()</h3>
+
+<p>Spark RDD API 에는 다양한 sampling 메서드가 존재합니다.
+그 중에서 가장 기본이 되는 <code class="highlighter-rouge">sample()</code>에 대해 먼저 알아보겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># sample(boolean withReplacement, double fraction, long seed)</span>
+<span class="n">val</span> <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">rdd</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">false</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">count</span></code></pre></figure>
+
+<p>첫 번째 인자는 추출 방식을 결정합니다. <strong>True면 복원추출, False면 비복원추출</strong> 을 실행합니다.
+여기에서 말하는 복원추출이란, 한 번 뽑은 것을 다시 뽑을 수 있게 하는 방법을 말합니다.
+세 번째 인자로 시드 변수를 지정할 수 있습니다.
+시드란, 컴퓨터가 난수를 일정하게 생성하지 않도록 변화를 주는 값을 말합니다.</p>
+
+<p>​</p>
+
+<h3 id="takesample">takeSample()</h3>
+
+<p>takeSample()도 랜덤 샘플링을 지원하는 메서드지만, 위와 조금 다른 점이 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># takeSample(boolean withReplacement, int num, long seed)</span>
+<span class="n">val</span> <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">rdd</span><span class="o">.</span><span class="n">takeSample</span><span class="p">(</span><span class="n">false</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">takeSample()</code>은 두 번째 인자를 지정하여 몇 개를 추출할 것인지 정할 수 있습니다.
+하지만, 결과 값이 RDD가 아닌 리스트나 배열이기 때문에 <strong>메모리에 주의</strong> 해야 합니다.
+정리하자면, 크기를 정해놓고 샘플을 추출하고자 한다면 takeSample() 메서드가 적합하고
+메모리를 생각해서 작은 값을 추출할 때 사용하는 것이 좋습니다.</p>
+
+<p>이외에도 <code class="highlighter-rouge">sampleByKey, sampleByKeyExtract</code> 메서드가 존재합니다.</p>
+
+<p>​</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li>
+    <p><a href="https://spark.apache.org/docs/1.6.2/api/java/org/apache/spark/rdd/RDD.html">https://spark.apache.org/docs/1.6.2/api/java/org/apache/spark/rdd/RDD.html</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Spark의 Temporary View에 대하여</title>
 	  <link>//spark-temp-view</link>
 	  <author>Swalloow</author>
@@ -710,178 +770,6 @@ pd.concat()으로 다시 합치는 과정입니다.</p>
 <span class="n">passwd</span><span class="p">()</span></code></pre></figure>
 
 <p>​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Jupyter Notebook 다중커널 설정하기</title>
-	  <link>//jupyter-notebook-kernel</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-28T19:18:00+09:00</pubDate>
-	  <guid>//jupyter-notebook-kernel</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>Jupyer Notebook은 웹 기반의 대화형 노트북 지원으로 수식, 표, 그림 등을 표현하기 쉬운 개발 환경입니다.
-코딩과 문서화(Markdown)까지 한 화면에서 가능하며 커널 확장을 통해 다양한 파이썬 버전 뿐만 아니라 여러 언어를 지원합니다.</p>
-
-<p>이제 파이썬을 처음 설치한다고 가정하고 맥 OS에서 간단하게 jupyter 환경설정하는 방법을 소개해드리고자 합니다.</p>
-
-<p>​</p>
-
-<h3 id="pyenv-">pyenv 설치하기</h3>
-
-<h5 id="homebrew--pyenv-">1. Homebrew를 통해 pyenv를 설치</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">pyenv</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="pyenv-init-bashrc--zsh---zshrc">2. pyenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">echo</span> <span class="s">'eval "$(pyenv init -)"'</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="pyenv--1">3. pyenv 사용해보기</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">versions</span>
-<span class="n">system</span> <span class="p">(</span><span class="nb">set</span> <span class="n">by</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">USERNAME</span><span class="o">/.</span><span class="n">pyenv</span><span class="o">/</span><span class="n">version</span><span class="p">)</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="pyenv--">4. pyenv 명령어 정리</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">install</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">uninstall</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">install</span> <span class="o">-</span><span class="nb">list</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">activate</span> <span class="o">&lt;</span><span class="n">environment</span><span class="o">&gt;</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">deactivate</span> <span class="o">&lt;</span><span class="n">environment</span><span class="o">&gt;</span></code></pre></figure>
-
-<p>​</p>
-
-<h3 id="pyenv-virtualenv-">pyenv-virtualenv 설치하기</h3>
-
-<h5 id="homebrew--pyenv-virtualenv-">1. Homebrew를 통해 pyenv-virtualenv를 설치</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">pyenv</span><span class="o">-</span><span class="n">virtualenv</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="virtualenv-init-bashrc--zsh---zshrc">2. virtualenv init을 ~/.bashrc에 추가 (zsh를 사용하는 경우 ~/.zshrc)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">echo</span> <span class="s">'eval "$(pyenv virtualenv-init -)"'</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="pyenv-virtualenv--1">2. pyenv-virtualenv 사용해보기</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># pyenv virtualenv [python version] [myname]</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="mf">2.7</span><span class="o">.</span><span class="mi">11</span> <span class="n">python2</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="mf">3.5</span><span class="o">.</span><span class="mi">1</span> <span class="n">python3</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="virtualenv--">2. virtualenv 명령어 정리</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="n">versions</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">virtualenv</span> <span class="p">[</span><span class="n">python</span> <span class="n">version</span><span class="p">]</span> <span class="p">[</span><span class="n">myname</span><span class="p">]</span>
-<span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="p">[</span><span class="n">myname</span><span class="p">]</span></code></pre></figure>
-
-<p>​</p>
-
-<h3 id="jupyter-notebook-">Jupyter Notebook 설치</h3>
-
-<p>이제 방금 설치했던 파이썬 2와 3 버전의 환경에 python, notebook, jupyter를 설치할 차례입니다.
-따라서 방금 설치한 환경을 각각 activate한 다음에 아래와 같은 명령어를 실행시켜야 합니다.</p>
-
-<p>​</p>
-
-<h5 id="pip-install-python2-python3--">1. pip install (python2, python3 각각 실행)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">ipython</span>
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">notebook</span>
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="jupyter-configuration-----">2. 초기 Jupyter configuration 파일 생성 (마찬가지로 각각 실행)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">--</span><span class="n">generate</span><span class="o">-</span><span class="n">config</span>
-<span class="n">Installed</span> <span class="n">kernelspec</span> <span class="n">python3</span> <span class="ow">in</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">username</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python3</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="jupyternotebookconfigpy-----">3. 생성된 jupyter_notebook_config.py 설정 (원하는 경우에만 커스텀 설정)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">username</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python3</span><span class="o">/</span><span class="n">jupyter_notebook_config</span><span class="o">.</span><span class="n">py</span>
-
-<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="s">'127.0.0.1'</span>
-<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">open_browser</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">8888</span>
-<span class="err">$</span> <span class="n">c</span><span class="o">.</span><span class="n">NotebookApp</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="p">[</span><span class="n">SHA</span> <span class="n">password</span><span class="p">]</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="ipykernel----">4. ipykernel 설정 (마찬가지로 각각 실행)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">pyenv</span> <span class="n">shell</span> <span class="n">python2</span>
-<span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">ipykernel</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span>
-<span class="n">Installed</span> <span class="n">kernelspec</span> <span class="n">python2</span> <span class="ow">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">seen</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python2</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="kerneljson-----">5. kernel.json 확인 (원하는 경우에만 커스텀 설정)</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">seen</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">jupyter</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="n">python2</span><span class="o">/</span><span class="n">kernel</span><span class="o">.</span><span class="n">json</span>
-<span class="p">{</span>
-  <span class="s">"display_name"</span><span class="p">:</span> <span class="s">"Python 2"</span><span class="p">,</span>
-  <span class="s">"language"</span><span class="p">:</span> <span class="s">"python"</span><span class="p">,</span>
-  <span class="s">"argv"</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s">"/home/seen/.pyenv/versions/py27/bin/python"</span><span class="p">,</span>
-    <span class="s">"-m"</span><span class="p">,</span>
-    <span class="s">"ipykernel"</span><span class="p">,</span>
-    <span class="s">"-f"</span><span class="p">,</span>
-    <span class="s">"{connection_file}"</span>
-    <span class="p">]</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="jupyter-notebook--1">6. jupyter notebook을 실행</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">jupyter</span> <span class="n">notebook</span>
-
-<span class="c"># background running</span>
-<span class="err">$</span> <span class="n">nohup</span> <span class="n">jupyter</span> <span class="n">notebook</span> <span class="o">&amp;</span>
-
-<span class="c"># kill process</span>
-<span class="err">$</span> <span class="n">ps</span> <span class="o">-</span><span class="n">a</span>
-<span class="mi">37788</span> <span class="n">ttys000</span> <span class="mi">0</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="o">...</span><span class="n">python</span> <span class="p">(</span><span class="err">노트북을</span> <span class="err">실행한</span> <span class="err">프로세스</span><span class="p">)</span>
-<span class="err">$</span> <span class="n">kill</span> <span class="mi">37788</span></code></pre></figure>
-
-<p>​</p>
-
-<h3 id="section">정리</h3>
-
-<p>윈도우10 에서 아주 고생했던 환경설정이 맥 OS에서는 아주 간편하게 됩니다…
-잘 안되거나 오류가 생기시면 댓글로 알려주시면 감사하겠습니다!</p>
-
-<p>​</p>
-
-<h3 id="section-1">참고링크</h3>
-
-<ul>
-  <li><a href="https://github.com/yyuu/pyenv">https://github.com/yyuu/pyenv</a></li>
-  <li>
-    <p><a href="https://github.com/yyuu/pyenv-virtualenv">https://github.com/yyuu/pyenv-virtualenv</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
 
 	  ]]></description>
 	</item>
