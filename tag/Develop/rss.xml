@@ -12,6 +12,57 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Scala의 빌드 도구 SBT</title>
+	  <link>//scala-sbt</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-07-08T21:18:00+09:00</pubDate>
+	  <guid>//scala-sbt</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>Scala에는 SBT라는 빌드 도구가 있습니다.
+SBT는 의존성 관리에 Apache ivy를 사용합니다.
+앞으로 계속 내용을 추가할 예정입니다.</p>
+
+<p>​</p>
+
+<h3 id="sbt">SBT</h3>
+
+<p>SBT로 생성한 프로젝트의 기본 디렉토리를 보면 <code class="highlighter-rouge">build.sbt</code>가 있습니다.
+<code class="highlighter-rouge">sbt</code>라는 명령어를 통해 <code class="highlighter-rouge">sbt-shell</code>로 이동할 수 있습니다.</p>
+
+<p>​</p>
+
+<h3 id="sbt-">자주 사용하는 SBT 명령어</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">actions</code> : 사용 가능한 명령 확인</li>
+  <li><code class="highlighter-rouge">clean</code> : target 디렉토리의 생성된 모든 파일을 삭제</li>
+  <li><code class="highlighter-rouge">update</code> : 프로젝트가 사용하는 라이브러리 다운로드</li>
+  <li><code class="highlighter-rouge">compile</code> : 소스코드 컴파일</li>
+  <li><code class="highlighter-rouge">test</code> : 테스트 실행</li>
+  <li><code class="highlighter-rouge">run</code> : 메인 함수를 통해 코드를 실행</li>
+  <li><code class="highlighter-rouge">reload</code> : 빌드 정의 변경 후 재실행</li>
+  <li><code class="highlighter-rouge">console</code> : 스칼라 인터프리터를 실행</li>
+  <li><code class="highlighter-rouge">package</code> : 배포 가능한 jar파일 생성</li>
+  <li><code class="highlighter-rouge">publish-local</code> : 만들어진 jar를 로컬 ivy 캐시에 설치</li>
+  <li>
+    <p><code class="highlighter-rouge">publish</code> : jar를 원격 저장소에 배포 (원격 저장소 설정 필요)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<p><a href="http://www.scala-sbt.org/0.13/docs/index.html">http://www.scala-sbt.org/0.13/docs/index.html</a></p>
+
+<p>​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Spring JPA, MyBatis</title>
 	  <link>//spring-boot-jpa</link>
 	  <author>Swalloow</author>
@@ -777,6 +828,161 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
 	</item>
 
 	<item>
+	  <title>OAuth2에 대해 알아보자</title>
+	  <link>//about-oauth2</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
+	  <guid>//about-oauth2</guid>
+	  <description><![CDATA[
+	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
+
+<p>​   ​</p>
+
+<h3 id="section">인증과 허가</h3>
+
+<ol>
+  <li>Authentication : 인증</li>
+  <li>
+    <p>Authorization : 허가</p>
+
+    <p>​   ​</p>
+  </li>
+</ol>
+
+<p>일반 로그인은 사원이 63빌딩에 출입하는 것이라면, (사원증이 있어야 출입가능)</p>
+
+<p>OAuth는 1층에서 방문증을 수령한 후 63빌딩에 출입하는 것이다. (방문증만 있어도 출입가능)</p>
+
+<p>​   ​</p>
+
+<h2 id="oauth-10-">OAuth 1.0의 특징</h2>
+
+<p>기존의 다른 인증방식(OpenID)과 구분되는 특징은 크게 두 가지이다.</p>
+
+<ol>
+  <li>API 인증 시, 써드파티 어플리케이션에게 사용자의 비번을 노출하지 않고 인증할 수 있다는 점</li>
+  <li>
+    <p>인증(Authentication)과 API 권한(Authorization) 부여를 동시에 할 수 있다는 점</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h2 id="oauth-10--1">OAuth 1.0의 동작방식</h2>
+
+<p>OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한다.</p>
+
+<p>OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.</p>
+
+<p><img src="assets/images/oauth1_triangle.png" alt="oauth1_triangle" /></p>
+
+<p>우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.</p>
+
+<p>​</p>
+
+<h3 id="outh-10-">Outh 1.0 프로세스</h3>
+
+<ol>
+  <li>사용자(User)가 트위터 로그인 요청</li>
+  <li>사용자를 트위터(Service Provider) 로그인 화면으로 리다이렉트</li>
+  <li>트위터 로그인 진행</li>
+  <li>
+    <p>서비스(Consumer)로 인증토큰(Access Token)이 전달</p>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h3 id="section-1">인증토큰의 장점</h3>
+
+<ul>
+  <li>사용자의 아이디 / 패스워드를 몰라도 토큰을 통해 허가 받은 API에 접근 가능</li>
+  <li>필요한 API에만 제한적으로 접근할 수 있도록 권한 제어 가능</li>
+  <li>저장되어 있는 인증토큰이 유출되더라도 트위터의 관리자 화면에서 인증토큰의 권한 취소 가능</li>
+  <li>
+    <p>사용자가 트위터(Service Provider)의 패스워드를 변경해도 인증토큰은 계속 유효</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="oauth-20-">OAuth 2.0의 개선사항</h2>
+
+<p>일단 OAuth 2.0은 1.0과 호환되지 않으며 용어부터 많은 것이 다르다. 모바일에서의 사용성 문제나 서명과 같은 개발이 복잡하고 기능과 규모의 확장성 등을 지원하기 위해 만들어진 표준이다. 표준이 매우 크고 복잡해서 이름도 “OAuth 인증 프레임워크(OAuth 2.0 Authorization Framework)” 이다. <a href="http://tools.ietf.org/wg/oauth/">http://tools.ietf.org/wg/oauth/</a> 에서 확인 가능</p>
+
+<p>​</p>
+
+<h3 id="oauth-10--">OAuth 1.0에서 개선된 사항</h3>
+
+<ol>
+  <li>용어 변경
+    <ul>
+      <li>Resource Owner : 사용자</li>
+      <li>Resource Server : REST API 서버</li>
+      <li>Authorization Server : 인증서버 (API 서버와 같을 수도 있음)</li>
+      <li>Client : 써드파티 어플리케이션 (서비스)</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>간단하고 직관적
+    <ul>
+      <li>OAuth 1.0에서는 HTTPS가 필수</li>
+      <li>Signature 없이 생성, 호출 가능</li>
+      <li>URL 인코딩이 필요없음</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>더 많은 인증 방법을 지원
+    <ul>
+      <li>이전에는 HMAC을 이용한 암호화 인증만 지원</li>
+      <li>OAuth 2.0은 여러 인증 방식을 통해 웹 / 모바일 등 다양한 시나리오에 대응 가능</li>
+      <li>Access Token의 Life-time을 지정하여 만료일 설정 가능</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+  <li>대형 서비스로의 확장성 지원
+    <ul>
+      <li>커다란 서비스는 인증 서버를 분리하거나 다중화 할 수 있어야 함</li>
+      <li>Authorization Server의 역할을 명확히 하여 이에 대한 고려가 되었음</li>
+    </ul>
+
+    <p>​</p>
+  </li>
+</ol>
+
+<h2 id="oauth-20--">OAuth 2.0 사용 서비스</h2>
+
+<p>2013년까지만 해도 1.0만 지원하거나 2.0으로 개선하는 인터넷 서비스 기업이 많았지만,</p>
+
+<p>현재는 대부분 2.0만 지원한다고 봐도 무방하다. (1.0은 자체 로그인에만 사용하는 기업이 많음)</p>
+
+<ul>
+  <li>
+    <p>Facebook, Instagram, Google, LinkedIn, Twitter…</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="section-2">참고하면 좋은 자료</h2>
+
+<ul>
+  <li>Naver D2 : <a href="http://d2.naver.com/helloworld/24942">http://d2.naver.com/helloworld/24942</a></li>
+  <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
+  <li>
+    <p>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Open API를 설계할 때 알아야 하는 것들</title>
 	  <link>//open-api-guide</link>
 	  <author>Swalloow</author>
@@ -1005,324 +1211,6 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
   <li>카카오 개발자센터 : <a href="https://developers.kakao.com">https://developers.kakao.com</a></li>
   <li>
     <p>네이버 개발자센터 : <a href="https://developers.naver.com">https://developers.naver.com</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>OAuth2에 대해 알아보자</title>
-	  <link>//about-oauth2</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
-	  <guid>//about-oauth2</guid>
-	  <description><![CDATA[
-	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
-
-<p>​   ​</p>
-
-<h3 id="section">인증과 허가</h3>
-
-<ol>
-  <li>Authentication : 인증</li>
-  <li>
-    <p>Authorization : 허가</p>
-
-    <p>​   ​</p>
-  </li>
-</ol>
-
-<p>일반 로그인은 사원이 63빌딩에 출입하는 것이라면, (사원증이 있어야 출입가능)</p>
-
-<p>OAuth는 1층에서 방문증을 수령한 후 63빌딩에 출입하는 것이다. (방문증만 있어도 출입가능)</p>
-
-<p>​   ​</p>
-
-<h2 id="oauth-10-">OAuth 1.0의 특징</h2>
-
-<p>기존의 다른 인증방식(OpenID)과 구분되는 특징은 크게 두 가지이다.</p>
-
-<ol>
-  <li>API 인증 시, 써드파티 어플리케이션에게 사용자의 비번을 노출하지 않고 인증할 수 있다는 점</li>
-  <li>
-    <p>인증(Authentication)과 API 권한(Authorization) 부여를 동시에 할 수 있다는 점</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h2 id="oauth-10--1">OAuth 1.0의 동작방식</h2>
-
-<p>OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한다.</p>
-
-<p>OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.</p>
-
-<p><img src="assets/images/oauth1_triangle.png" alt="oauth1_triangle" /></p>
-
-<p>우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.</p>
-
-<p>​</p>
-
-<h3 id="outh-10-">Outh 1.0 프로세스</h3>
-
-<ol>
-  <li>사용자(User)가 트위터 로그인 요청</li>
-  <li>사용자를 트위터(Service Provider) 로그인 화면으로 리다이렉트</li>
-  <li>트위터 로그인 진행</li>
-  <li>
-    <p>서비스(Consumer)로 인증토큰(Access Token)이 전달</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h3 id="section-1">인증토큰의 장점</h3>
-
-<ul>
-  <li>사용자의 아이디 / 패스워드를 몰라도 토큰을 통해 허가 받은 API에 접근 가능</li>
-  <li>필요한 API에만 제한적으로 접근할 수 있도록 권한 제어 가능</li>
-  <li>저장되어 있는 인증토큰이 유출되더라도 트위터의 관리자 화면에서 인증토큰의 권한 취소 가능</li>
-  <li>
-    <p>사용자가 트위터(Service Provider)의 패스워드를 변경해도 인증토큰은 계속 유효</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="oauth-20-">OAuth 2.0의 개선사항</h2>
-
-<p>일단 OAuth 2.0은 1.0과 호환되지 않으며 용어부터 많은 것이 다르다. 모바일에서의 사용성 문제나 서명과 같은 개발이 복잡하고 기능과 규모의 확장성 등을 지원하기 위해 만들어진 표준이다. 표준이 매우 크고 복잡해서 이름도 “OAuth 인증 프레임워크(OAuth 2.0 Authorization Framework)” 이다. <a href="http://tools.ietf.org/wg/oauth/">http://tools.ietf.org/wg/oauth/</a> 에서 확인 가능</p>
-
-<p>​</p>
-
-<h3 id="oauth-10--">OAuth 1.0에서 개선된 사항</h3>
-
-<ol>
-  <li>용어 변경
-    <ul>
-      <li>Resource Owner : 사용자</li>
-      <li>Resource Server : REST API 서버</li>
-      <li>Authorization Server : 인증서버 (API 서버와 같을 수도 있음)</li>
-      <li>Client : 써드파티 어플리케이션 (서비스)</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>간단하고 직관적
-    <ul>
-      <li>OAuth 1.0에서는 HTTPS가 필수</li>
-      <li>Signature 없이 생성, 호출 가능</li>
-      <li>URL 인코딩이 필요없음</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>더 많은 인증 방법을 지원
-    <ul>
-      <li>이전에는 HMAC을 이용한 암호화 인증만 지원</li>
-      <li>OAuth 2.0은 여러 인증 방식을 통해 웹 / 모바일 등 다양한 시나리오에 대응 가능</li>
-      <li>Access Token의 Life-time을 지정하여 만료일 설정 가능</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>대형 서비스로의 확장성 지원
-    <ul>
-      <li>커다란 서비스는 인증 서버를 분리하거나 다중화 할 수 있어야 함</li>
-      <li>Authorization Server의 역할을 명확히 하여 이에 대한 고려가 되었음</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h2 id="oauth-20--">OAuth 2.0 사용 서비스</h2>
-
-<p>2013년까지만 해도 1.0만 지원하거나 2.0으로 개선하는 인터넷 서비스 기업이 많았지만,</p>
-
-<p>현재는 대부분 2.0만 지원한다고 봐도 무방하다. (1.0은 자체 로그인에만 사용하는 기업이 많음)</p>
-
-<ul>
-  <li>
-    <p>Facebook, Instagram, Google, LinkedIn, Twitter…</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="section-2">참고하면 좋은 자료</h2>
-
-<ul>
-  <li>Naver D2 : <a href="http://d2.naver.com/helloworld/24942">http://d2.naver.com/helloworld/24942</a></li>
-  <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
-  <li>
-    <p>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</title>
-	  <link>//windows-bash-jekyll</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-03T19:18:00+09:00</pubDate>
-	  <guid>//windows-bash-jekyll</guid>
-	  <description><![CDATA[
-	     <p>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준)</p>
-
-<p>​</p>
-
-<h2 id="ruby-">윈도우 10에서 Ruby 설치</h2>
-
-<ol>
-  <li><code class="highlighter-rouge">프로그램 및 기능 &gt; Windows 기능 켜기/끄기 &gt; Linux용 Windows 하위 시스템</code> 체큰</li>
-  <li>cmd 창에서 <code class="highlighter-rouge">bash</code> 를 입력, Windows Subsystem for Linux 환경실행</li>
-</ol>
-
-<p>처음 실행한다면, 아무것도 설치되지 않은 상태이기 때문에 초기 설정을 해주시면 좋습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">sudo</span> <span class="o">-</span><span class="n">s</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">update</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">make</span> <span class="n">gcc</span></code></pre></figure>
-
-<p>이제 루비를 설치해보겠습니다. 놀랍게도 윈도우 bash에서는 <code class="highlighter-rouge">apt install ruby</code> 를 통해 설치하려는 경우, 루비 1.9.3 버전만 설치됩니다 ! (rvm과 rbenv를 사용해봐도 동일) 하지만, Jekyll 에서 최소 2.0 이상의 버전을 요구하기 때문에 brightbox를 통해 최신 버전을 설치하였습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">add</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="p">:</span><span class="n">brightbox</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="n">ng</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">update</span>
-<span class="err">$</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">ruby2</span><span class="o">.</span><span class="mi">3</span> <span class="n">ruby2</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">dev</span> <span class="n">ruby</span><span class="o">-</span><span class="n">switch</span></code></pre></figure>
-
-<p>여기까지 설치되고 나면 뭔가 안심이 됩니다. 하지만 이제 시작에 불과합니다.</p>
-
-<p>​</p>
-
-<h2 id="jekyll-">Jekyll 설치하기</h2>
-
-<p>이제 설치하려는 경로로 이동해서 jekyll을 설치할 차례입니다. 여기에서는 바탕화면에 설치해보도록 하겠습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span>
-<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="n">Users</span><span class="o">/&lt;</span><span class="n">your</span> <span class="n">username</span><span class="o">&gt;/</span><span class="n">Desktop</span>
-<span class="err">$</span> <span class="n">jekyll</span> <span class="n">new</span> <span class="n">myblog</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">myblog</span>
-<span class="err">$</span> <span class="n">jekyll</span> <span class="n">serve</span> <span class="o">-</span><span class="n">w</span></code></pre></figure>
-
-<p>속도를 측정해보면, Bash는 <code class="highlighter-rouge">0.329초</code>, PowerShell은 <code class="highlighter-rouge">0.364초</code> 로 Bash에서 실행시키는 것이 더 빠르다고 합니다.
-여기까지가 아주 기본적인 형태의 jekyll 블로그 설치 과정입니다.</p>
-
-<p>​</p>
-
-<h2 id="jekyll--1">테마까지 한번에 적용하여 Jekyll 설치하기</h2>
-
-<p>기본 설치를 끝내면 그냥 빈 화면만 나타나기 때문에 허전합니다. 그래서 이번에는 테마까지 한번에 적용하여 설치하는 방법을 알려드리겠습니다. (방금꺼는 <code class="highlighter-rouge">gem uninstall -all</code> 명령어를 통해 삭제하셔도 됩니다)</p>
-
-<ol>
-  <li>먼저, <code class="highlighter-rouge">&lt;사용자이름&gt;.github.io</code> 라는 이름의 Repository를 생성합니다.</li>
-  <li>생성한 저장소를 로컬에 clone 하고 cd 명령어를 통해 위치로 이동합니다.</li>
-  <li>
-    <p>마음에 드는 Jekyll 테마를 다운로드 받아 로컬에 압축해제 합니다. <a href="http://jekyllthemes.org/">http://jekyllthemes.org/</a></p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<p>구조를 처음 보시면 복잡한데, 우리가 건드릴 부분은 <code class="highlighter-rouge">_config.yml</code> 과 <code class="highlighter-rouge">Gemfile</code> 입니다. Gemfile은 GitHub Pages에 필요한 라이브러리를 설치하도록 정의한 파일이라고 보시면 됩니다.
-데스크탑과 노트북 또는 맥북을 사용해보신 분은 아시겠지만, GitHub Pages에서 의존성 문제가 아주 빈번하게 발생합니다.</p>
-
-<ul>
-  <li>
-    <p>의존성을 가지는 라이브러리 참고 (<a href="https://pages.github.com/versions/">https://pages.github.com/versions/</a>)</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<p>위의 링크처럼 각 라이브러리마다 버전 정보를 따로 관리해도 되지만, <code class="highlighter-rouge">gem 'github-pages'</code> 를 통해 관리하는 방법이 가장 간편합니다.
-이를 통해 github-pages의 최신 의존성 정보를 간단하게 업데이트할 수 있습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">vi</span> <span class="n">Gemfile</span>
-
-<span class="n">source</span> <span class="s">'https://rubygems.org'</span>
-<span class="n">gem</span> <span class="s">'github-pages'</span></code></pre></figure>
-
-<p>​</p>
-
-<p>이제 bundler를 설치할 차례입니다. bundler는 라이브러리 설치를 위한 패키지 매니저입니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="err">$</span> <span class="n">gem</span> <span class="n">install</span> <span class="n">bundler</span>
-<span class="err">$</span> <span class="n">bundle</span> <span class="n">install</span>
-<span class="err">$</span> <span class="n">bundle</span> <span class="n">update</span></code></pre></figure>
-
-<p>이제 Gemfile에 있는 라이브러리를 설치하고 업데이트까지 완료했습니다.
-의존성 정보를 확인하시려면 <code class="highlighter-rouge">github-pages versions</code> 명령어를 입력하시면 됩니다.</p>
-
-<p>​</p>
-
-<h4 id="jeykll-331---">1. jeykll 3.3.1 버전에서 오류 발생</h4>
-
-<p>최근 <em>Windows+Bash Subsystem</em> 에서 powershell을 defalut cmd로 확장하는 과정에서 생겨난 버그</p>
-
-<ul>
-  <li>
-    <p>(https://github.com/jekyll/jekyll/issues/5462 참조)</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<p>해결방법은 다음과 같습니다. 첫번째 방법은 번거롭기 때문에 두번째 방법을 추천합니다.</p>
-
-<ol>
-  <li>
-    <p>jeykll 3.3.1 버전을 삭제하고 3.2.1 버전으로 하향시키기</p>
-  </li>
-  <li>
-    <p>build.rb에서 코드 수정하기</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<p>build.rb의 위치를 찾는 방법</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">bundle</span> <span class="n">show</span> <span class="n">jekyll</span></code></pre></figure>
-
-<p>그리고 <code class="highlighter-rouge">lib/jekyll/commands/build.rb</code>로 이동해서 다음과 같이 수정합니다.</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">if</span> <span class="no">Utils</span><span class="o">::</span><span class="no">Platforms</span><span class="p">.</span><span class="nf">windows?</span> <span class="o">-&gt;</span> <span class="k">unless</span> <span class="no">Utils</span><span class="o">::</span><span class="no">Platforms</span><span class="p">.</span><span class="nf">windows?</span></code></pre></figure>
-
-<p>​</p>
-
-<h4 id="jekyll-serve--">2. jekyll serve에서 오류 발생</h4>
-
-<p>실행 명령어 <code class="highlighter-rouge">jekyll serve</code> 하면 여기서 끝날줄 알았는데
-또 오류 발생 (https://github.com/jekyll/jekyll/issues/5233 참조)
-역시 마찬가지로 <em>Windows+Bash Subsystem</em> 버그라고 합니다..</p>
-
-<p><code class="highlighter-rouge">jekyll serve --force_polling</code>  옵션을 통해 해결하실 수 있습니다.</p>
-
-<p>​</p>
-
-<h2 id="section">결론</h2>
-
-<p>쓰다보니 간단하지 않은 것 같지만 제가 삽질했던 부분을 빠르게 건너뛴다면,
-윈도우 사용자도 금방 설치할 수 있습니다 (Bash on Windows 만세 !)
-다만, 정신건강을 위해 맥을 사용하는걸 추천합니다.</p>
-
-<p>​</p>
-
-<h4 id="section-1">참고하면 좋은 페이지</h4>
-
-<ul>
-  <li>GitHub Help : https://help.github.com/articles/configuring-jekyll/</li>
-  <li>https://nolboo.kim/blog/2013/10/15/free-blog-with-github-jekyll/#configyml</li>
-  <li>http://my2kong.net/2016/07/07/jekyll-blogging-theme/</li>
-  <li>
-    <p>Jekyll QuickStart : http://jekyllbootstrap.com/usage/jekyll-quick-start.html</p>
 
     <p>​</p>
   </li>

@@ -68,10 +68,10 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-        <li class="nav-home " role="presentation"><a href="/">Home</a></li>
+        <li class="nav-home  nav-current" role="presentation"><a href="/">Home</a></li>
         <li class="nav-about " role="presentation"><a href="/about">About</a></li>
         <li class="nav-personal " role="presentation"><a href="/tag/Personal">Personal</a></li>
-        <li class="nav-develop  nav-current" role="presentation"><a href="/tag/Develop">Develop</a></li>
+        <li class="nav-develop " role="presentation"><a href="/tag/Develop">Develop</a></li>
         <li class="nav-devops " role="presentation"><a href="/tag/DevOps">DevOps</a></li>
         <li class="nav-datascience " role="presentation"><a href="/tag/DataScience">DataScience</a></li>
         <li class="nav-dataengineering " role="presentation"><a href="/tag/DataEngineering">DataEngineering</a></li>
@@ -84,14 +84,12 @@
     <div class="site-wrapper">
 
         <!-- [[! Everything else gets inserted here ]] -->
-        <!-- < dynamically overriding backgrounds for tags as well as descriptions -->
-
-
-<!-- < default}} -->
+        <!-- < default -->
 <!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
 
-<!-- If we have a tag cover, display that - else blog cover - else nothing -->
-<header class="main-header tag-head " style="background-image: url(/assets/images/cover_develop.jpg) ">
+<!-- The big featured header  -->
+<header class="main-header "
+        style="background-image: url(/assets/images/cover_main.jpg) ">
     <nav class="main-nav overlay clearfix">
         <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
@@ -100,14 +98,11 @@
     </nav>
     <div class="vertical">
         <div class="main-header-content inner">
-            <h1 class="page-title">Develop</h1>
-            <h2 class="page-description">
-            
-                A series of short stories about develop.
-            
-            </h2>
+            <h1 class="page-title">Swalloow Blog</h1>
+            <h2 class="page-description">About Data Science, Data Engineering</h2>
         </div>
     </div>
+    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
 </header>
 
 <!-- The main content area on the homepage -->
@@ -120,88 +115,16 @@
             <nav class="pagination" role="pagination">
     
         
-            <a class="newer-posts" href="/tag/Develop" title="Previous Page">&laquo; Newer Posts</a>
-        
+            <a class="newer-posts" href="/page7/" title="Previous Page">&laquo; Newer Posts</a>
+      
     
-    <span class="page-number"> Page 2 of 2 </span>
+    <span class="page-number"> Page 8 of 8 </span>
      
 </nav>
         
     </div>
 
     <!-- This is the post loop - each post will be output using this markup -->
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/social-api-cognito">다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>​ 최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다. 만약 우리가 만들어야 할 어플리케이션이 다양한 소셜 로그인 API와 연동하여 사용자를... <a class="read-more" href="/social-api-cognito">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/Develop'>Develop</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-01-28">28 Jan 2017</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/about-oauth2">OAuth2에 대해 알아보자</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려... <a class="read-more" href="/about-oauth2">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/Develop'>Develop</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-01-05">05 Jan 2017</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/open-api-guide">Open API를 설계할 때 알아야 하는 것들</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>​ 오픈 API를 사용하다보면 공통의 패턴을 발견할 수 있을 것이다. 이처럼, API를 설계할 때도 개발자들이 쉽게 사용할 수 있도록 만든 규칙이라는게 존재한다. 오늘은 RESTful한 Open API를... <a class="read-more" href="/open-api-guide">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/Develop'>Develop</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-01-05">05 Jan 2017</time>
-        </footer>
-    </article>
     
     <article class="post">
         <header class="post-header">
@@ -233,10 +156,10 @@
         <nav class="pagination" role="pagination">
     
         
-            <a class="newer-posts" href="/tag/Develop" title="Previous Page">&laquo; Newer Posts</a>
-        
+            <a class="newer-posts" href="/page7/" title="Previous Page">&laquo; Newer Posts</a>
+      
     
-    <span class="page-number"> Page 2 of 2 </span>
+    <span class="page-number"> Page 8 of 8 </span>
      
 </nav>
     
