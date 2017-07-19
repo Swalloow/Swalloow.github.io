@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>Spark 2.2.0 릴리즈 업데이트 정리</title>
+    <title>Spark DataFrame을 MySQL에 저장하는 방법</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,7 +33,7 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Spark 2.2.0 릴리즈 업데이트 정리" />
+        <meta property="og:title" content="Spark DataFrame을 MySQL에 저장하는 방법" />
         <meta property="og:description" content="About Data Science, Data Engineering" />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
@@ -106,10 +106,10 @@
     <article class="post tag-DataEngineering">
 
         <header class="post-header">
-            <h1 class="post-title">Spark 2.2.0 릴리즈 업데이트 정리</h1>
+            <h1 class="post-title">Spark DataFrame을 MySQL에 저장하는 방법</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-07-14">14 Jul 2017</time>
+            <time class="post-date" datetime="2017-07-17">17 Jul 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -126,118 +126,49 @@
 
             <p>​</p>
 
-<p>7월 11일 약 2개월 만에 Spark 2.2.0이 릴리즈 되었습니다.
-어떤 변경 사항들이 있었는지 릴리즈 노트를 통해 간략하게 정리해보았습니다.</p>
+<p>Spark에서 MySQL에 접근하고 DataFrame을 read, write 하는 방법에 대해 정리해보았습니다.
+참고로 저는 Spark 2.1.0 버전을 사용 중 입니다.</p>
 
 <p>​</p>
 
-<h3 id="pypi---pyspark-">pypi 를 통한 PySpark 설치</h3>
+<h3 id="mysql-jdbc-driver">MySQL JDBC Driver</h3>
 
-<p>드디어 PySpark이 <code class="highlighter-rouge">pip</code>을 지원하게 되었습니다.
-<code class="highlighter-rouge">pip install pyspark</code> 명령어를 통해 쉽게 설치 가능합니다.
-설치된 버전은 Spark 2.2.0 버전 입니다.</p>
+<p>JDBC를 통해 접근하기 때문에 드라이버가 필요합니다.
+만일 SBT를 사용하신다면, build.sbt에 maven의 <code class="highlighter-rouge">mysql-connector-java</code> 를 추가하시면 됩니다.</p>
 
-<p><img src="/assets/images/pyspark-install.png" alt="" /></p>
+<p>직접 jar 파일을 사용해야하는 상황이라면, 다음 링크를 통해 다운받으시면 됩니다.
+<a href="https://dev.mysql.com/downloads/connector/j/">https://dev.mysql.com/downloads/connector/j/</a></p>
 
-<p><code class="highlighter-rouge">numpy, pandas</code> 파이썬 패키지에 dependency가 있으며,
-자세한 사항은 <a href="https://pypi.python.org/pypi/pyspark">pypi 패키지 링크</a>를 통해 확인하실 수 있습니다.
-이번 업데이트를 통해 standalone cluster에서 누구나 쉽게 사용해 볼 수 있을 듯 합니다.</p>
+<p>그리고 받으신 jar 파일을 -jars 옵션으로 추가해주셔야 합니다.</p>
 
-<p>​</p>
+<p><code class="highlighter-rouge">–jars /home/example/jars/mysql-connector-java-5.1.26.jar</code></p>
 
-<h3 id="structured-streaming">Structured Streaming</h3>
-
-<p>이번 버전부터 Structured Streaming이 새로 추가 되었습니다.
-Structured Streaming은 스트리밍 어플리케이션을 더 빠르고 쉽게 개발하기 위해 만들어진 패키지입니다.</p>
-
-<p>Spark Streaming이 내부적으로 RDD API를 지원하는 반면, Structured Streaming은 DataFrame, Dataset API를 지원합니다.
-언어는 Scala, Java, Python 모두 지원하며, <code class="highlighter-rouge">readStream</code> 이라는 메서드를 통해 다양한 저장소로부터 데이터를 읽을 수 있습니다.
-특히 이번 업데이트를 통해 Apache Kafka 스트리밍 지원이 추가되었습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Subscribe to 1 topic</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span> \
-  <span class="o">.</span><span class="n">readStream</span> \
-  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">"kafka"</span><span class="p">)</span> \
-  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s">"kafka.bootstrap.servers"</span><span class="p">,</span> <span class="s">"host1:port1,host2:port2"</span><span class="p">)</span> \
-  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s">"subscribe"</span><span class="p">,</span> <span class="s">"topic1"</span><span class="p">)</span> \
-  <span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="n">df</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s">"CAST(key AS STRING)"</span><span class="p">,</span> <span class="s">"CAST(value AS STRING)"</span><span class="p">)</span></code></pre></figure>
-
-<p>Structured Streaming에 대한 자세한 내용은 <a href="http://spark.apache.org/docs/2.2.0/structured-streaming-programming-guide.html">http://spark.apache.org/docs/2.2.0/structured-streaming-programming-guide.html</a> 에서 확인하실 수 있습니다.</p>
+<p>마지막으로 spark-submit 을 사용하신다면, –packages 옵션을 추가해주시면 됩니다.
+<code class="highlighter-rouge">--packages mysql:mysql-connector-java:5.1.39</code></p>
 
 <p>​</p>
 
-<h3 id="mllib">MLlib</h3>
+<h3 id="spark-dataframe-mysql">Spark DataFrame MySQL</h3>
 
-<p>예상했던 대로 MLlib에도 많은 변화가 생겼습니다.
-RDD-based MLlib이 아니라 DataFrame-based MLlib을 확인하시면 됩니다.</p>
+<p>Spark의 DataFrame은 read, write 함수를 통해 쉽게 데이터를 가져오거나 저장할 수 있습니다.
+아래 예시는 Scala 언어로 작성했습니다.</p>
 
-<ul>
-  <li>기존에 scala API만 지원하던 모델들에 <code class="highlighter-rouge">python, R API</code>가 추가되었습니다.</li>
-  <li>지원이 추가된 모델은 <strong>Gradient Boosted Trees, Bisecting K-Means, LSH, Distributed PCA, SVD</strong> 입니다.</li>
-  <li>DataFreame-based MLlib에 새로운 모델이 추가되었습니다.</li>
-  <li>
-    <p>추가된 모델은 <strong>LinearSVC (Linear SVM Classifier), ChiSquare test, Correlation,
-Imputer feature transformer, Tweedie distribution, FPGrowth frequent pattern mining, AssociationRules</strong> 입니다.</p>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.apache.spark.sql.SaveMode</span>
+<span class="k">import</span> <span class="nn">java.util.Properties</span>
 
-    <p>​</p>
-  </li>
-</ul>
+<span class="k">val</span> <span class="n">tempDF</span> <span class="k">=</span> <span class="nc">List</span><span class="o">((</span><span class="s">"1"</span><span class="o">,</span> <span class="s">"2017-06-01"</span><span class="o">,</span> <span class="s">"2017-06-03"</span><span class="o">)).</span><span class="n">toDF</span><span class="o">(</span><span class="s">"id"</span><span class="o">,</span> <span class="s">"start"</span><span class="o">,</span> <span class="s">"end"</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">properties</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Properties</span><span class="o">()</span>
+<span class="n">properties</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">"user"</span><span class="o">,</span> <span class="s">"userId"</span><span class="o">)</span>
+<span class="n">properties</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">"password"</span><span class="o">,</span> <span class="s">"password"</span><span class="o">)</span>
+<span class="n">tempDF</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="o">(</span><span class="nc">SaveMode</span><span class="o">.</span><span class="nc">Append</span><span class="o">).</span><span class="n">jdbc</span><span class="o">(</span><span class="s">"jdbc:mysql://url/database"</span><span class="o">,</span> <span class="s">"table"</span><span class="o">,</span> <span class="n">properties</span><span class="o">)</span></code></pre></figure>
 
-<h3 id="sparkr">SparkR</h3>
+<p>위 예제에서는 Properties를 통해 설정값을 넣어주었습니다.
+유저 정보나 주소는 맞게 변경해주시면 됩니다.</p>
 
-<p>이번 업데이트를 통해 SparkR에서 Spark SQL API가 확대되었습니다.</p>
+<p>mode 라는 것이 있는데 <code class="highlighter-rouge">SaveMode.Append</code>는 기존의 테이블에 추가하는 방식이고
+<code class="highlighter-rouge">SaveMode.Overwrite</code>의 경우 기존의 테이블을 새로운 데이터로 대체하는 방식입니다.</p>
 
-<ul>
-  <li>R API에 Structured Streaming, Catalog가 추가되었습니다.</li>
-  <li>to_json, from_json 메서드가 추가되었습니다.</li>
-  <li>
-    <p>Coalesce, DataFrame checkpointing, Multi-column approxQuantile 기능이 추가되었습니다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="graphx">GraphX</h3>
-
-<p>GraphX는 버그 수정, 최적화 업데이트가 추가되었습니다.
-이번 Structured Steaming이 메인에 추가된 것으로 보아,
-추후에 DataFrame, DataSet API 기반의 GraphFrame이 추가될 수도 있다고 예상합니다.</p>
-
-<ul>
-  <li>PageRank, vertexRDD/EdgeRDD checkpoint 버그를 수정했습니다.</li>
-  <li>
-    <p>PageRank, Pregel API가 개선되었습니다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="core-and-sparksql-deprecations">Core and SparkSQL, Deprecations</h3>
-
-<p>마지막으로 Core, SparkSQL 그리고 Deprecation 업데이트 입니다.
-전체 업데이트 및 기타 자세한 내용은 맨 아래의 링크를 참고하시면 됩니다.</p>
-
-<ul>
-  <li>Python 2.6, Java 7, Hadoop 2.5 지원이 종료되었습니다.</li>
-  <li><code class="highlighter-rouge">ALTER TABLE table_name ADD COLUMNS</code> 구문이 추가되었습니다.</li>
-  <li>Cost-Based Optimizer 성능이 개선되었습니다.</li>
-  <li>
-    <p>CSV, JSON 포멧의 File listing/IO 성능이 개선되었습니다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li>
-    <p><a href="http://spark.apache.org/releases/spark-release-2-2-0.html">http://spark.apache.org/releases/spark-release-2-2-0.html</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
+<p>​</p>
 
 
         </section>
@@ -269,15 +200,15 @@ Imputer feature transformer, Tweedie distribution, FPGrowth frequent pattern min
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=Spark 2.2.0 릴리즈 업데이트 정리&amp;url=http://swalloow.github.io/spark22"
+                <a class="icon-twitter" href="http://twitter.com/share?text=Spark DataFrame을 MySQL에 저장하는 방법&amp;url=http://swalloow.github.io/spark-df-mysql"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/spark22"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/spark-df-mysql"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/spark22"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/spark-df-mysql"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -289,8 +220,8 @@ Imputer feature transformer, Tweedie distribution, FPGrowth frequent pattern min
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/spark22';
-        var disqus_url = 'http://swalloow.github.io//spark22';
+        var disqus_identifier = '/spark-df-mysql';
+        var disqus_url = 'http://swalloow.github.io//spark-df-mysql';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -315,20 +246,13 @@ Imputer feature transformer, Tweedie distribution, FPGrowth frequent pattern min
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story no-cover" href="/spark-df-mysql">
-            <section class="post">
-                <h2>Spark DataFrame을 MySQL에 저장하는 방법</h2>
-                <p>​ Spark에서 MySQL에 접근하고 DataFrame을 read, write 하는 방법에 대해 정리해보았습니다. 참고로 저는 Spark 2.1.0...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/scala-sbt">
+        <a class="read-next-story prev no-cover" href="/spark22">
             <section class="post">
-                <h2>Scala의 빌드 도구 SBT</h2>
-                <p>​ Scala에는 SBT라는 빌드 도구가 있습니다. SBT는 의존성 관리에 Apache ivy를 사용합니다. 심플함을 주장하지만 별로...</p>
+                <h2>Spark 2.2.0 릴리즈 업데이트 정리</h2>
+                <p>​ 7월 11일 약 2개월 만에 Spark 2.2.0이 릴리즈 되었습니다. 어떤 변경 사항들이 있었는지 릴리즈...</p>
             </section>
         </a>
     
