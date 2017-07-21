@@ -37,8 +37,9 @@
 
 <p><code class="highlighter-rouge">–jars /home/example/jars/mysql-connector-java-5.1.26.jar</code></p>
 
-<p>마지막으로 spark-submit 을 사용하신다면, –packages 옵션을 추가해주시면 됩니다.
-<code class="highlighter-rouge">--packages mysql:mysql-connector-java:5.1.39</code></p>
+<p>마지막으로 spark-submit 을 사용하신다면, –packages 옵션을 추가해주시면 됩니다.</p>
+
+<p><code class="highlighter-rouge">--packages mysql:mysql-connector-java:5.1.39</code></p>
 
 <p>​</p>
 
