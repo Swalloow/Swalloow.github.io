@@ -34,37 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Swalloow Blog" />
-        <meta property="og:description" content="<!-- < default -->
-<!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
-
-<!-- The big featured header  -->
-<header class="main-header {% if page.cover %}"
-        style="background-image: url({{ site.baseurl }}{{ page.cover }}) {% else %}no-cover{% endif %}">
-    <nav class="main-nav overlay clearfix">
-        {% if page.logo %}<a class="blog-logo" href="{{ site.baseurl }}"><img src="{{ site.baseurl }}{{ page.logo }}" alt="Blog Logo" /></a>{% endif %}
-        {% if page.navigation %}
-            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
-        {% endif %}
-    </nav>
-    <div class="vertical">
-        <div class="main-header-content inner">
-            <h1 class="page-title">{{ site.name }}</h1>
-            <h2 class="page-description">{{ site.description }}</h2>
-        </div>
-    </div>
-    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
-</header>
-
-<!-- The main content area on the homepage -->
-<main id="content" class="content" role="main">
-
-    <!-- The tag below includes the post loop - partials/loop.hbs -->
-    {% include loop.html %}
-
-</main>
-" />
+        <meta property="og:description" content="{% if page.logo %}{% endif %} {% if page.navigation %} Menu {% endif %} {{ site.name }} {{ site.description }}..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -158,30 +130,6 @@
         </header>
         <section class="post-excerpt">
             <p>​ Spark Application 성능 개선을 위해 groupByKey, reduceBykey에 대해 알아보겠습니다. ​ groupByKey vs reduceBykey # reduceByKey spark.textFile("hdfs://...") .flatMap(lambda line: line.split()) .map(lambda word: (word, 1)) .reduceByKey(lambda a,... <a class="read-more" href="/spark-reduceByKey-groupByKey">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/DataEngineering'>Dataengineering</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-08-22">22 Aug 2017</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/spark-shuffle">Spark의 Shuffling 이해하기</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>​ 효율적인 Spark Application을 개발하기 위해 Shuffling은 상당히 중요한 개념입니다. 이에 대해 간단히 정리해보았습니다. ​ Spark Architecture: Shuffle Shuffle을 설명하기 전에 한 가지 예시를 들어보겠습니다. 테이블에... <a class="read-more" href="/spark-shuffle">&raquo;</a></p>
         </section>
         <footer class="post-meta">
             <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
@@ -317,6 +265,30 @@
                 
             
             <time class="post-date" datetime="2017-07-08">08 Jul 2017</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/emr-step">AWS EMR step을 이용한 Spark Batch 작업 등록하기</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>​ AWS EMR은 특정 작업을 등록할 수 있는 step 이라는 기능을 제공합니다. 예를 들어 매일 새벽에 클러스터에서 돌려야하는 Batch 작업이 있다면 step과 스케줄러를 통해 쉽게 해결할... <a class="read-more" href="/emr-step">&raquo;</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
+            <!-- author -->
+            <a href='/author/Swalloow'>Swalloow</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href='/tag/DataEngineering'>Dataengineering</a>
+                       
+                
+            
+            <time class="post-date" datetime="2017-07-02">02 Jul 2017</time>
         </footer>
     </article>
     

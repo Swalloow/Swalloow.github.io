@@ -34,55 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Spark DataFrame을 MySQL에 저장하는 방법" />
-        <meta property="og:description" content="<p>​</p>
-
-<p>Spark에서 MySQL에 접근하고 DataFrame을 read, write 하는 방법에 대해 정리해보았습니다.
-참고로 저는 Spark 2.1.0 버전을 사용 중 입니다.</p>
-
-<p>​</p>
-
-<h3 id="mysql-jdbc-driver">MySQL JDBC Driver</h3>
-
-<p>JDBC를 통해 접근하기 때문에 드라이버가 필요합니다.
-만일 SBT를 사용하신다면, build.sbt에 maven의 <code class="highlighter-rouge">mysql-connector-java</code> 를 추가하시면 됩니다.</p>
-
-<p>직접 jar 파일을 사용해야하는 상황이라면, 다음 링크를 통해 다운받으시면 됩니다.
-<a href="https://dev.mysql.com/downloads/connector/j/">https://dev.mysql.com/downloads/connector/j/</a></p>
-
-<p>그리고 받으신 jar 파일을 -jars 옵션으로 추가해주셔야 합니다.</p>
-
-<p><code class="highlighter-rouge">–jars /home/example/jars/mysql-connector-java-5.1.26.jar</code></p>
-
-<p>마지막으로 spark-submit 을 사용하신다면, –packages 옵션을 추가해주시면 됩니다.</p>
-
-<p><code class="highlighter-rouge">--packages mysql:mysql-connector-java:5.1.39</code></p>
-
-<p>​</p>
-
-<h3 id="spark-dataframe-mysql">Spark DataFrame MySQL</h3>
-
-<p>Spark의 DataFrame은 read, write 함수를 통해 쉽게 데이터를 가져오거나 저장할 수 있습니다.
-아래 예시는 Scala 언어로 작성했습니다.</p>
-
-<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.apache.spark.sql.SaveMode</span>
-<span class="k">import</span> <span class="nn">java.util.Properties</span>
-
-<span class="k">val</span> <span class="n">tempDF</span> <span class="k">=</span> <span class="nc">List</span><span class="o">((</span><span class="s">"1"</span><span class="o">,</span> <span class="s">"2017-06-01"</span><span class="o">,</span> <span class="s">"2017-06-03"</span><span class="o">)).</span><span class="n">toDF</span><span class="o">(</span><span class="s">"id"</span><span class="o">,</span> <span class="s">"start"</span><span class="o">,</span> <span class="s">"end"</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">properties</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Properties</span><span class="o">()</span>
-<span class="n">properties</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">"user"</span><span class="o">,</span> <span class="s">"userId"</span><span class="o">)</span>
-<span class="n">properties</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="s">"password"</span><span class="o">,</span> <span class="s">"password"</span><span class="o">)</span>
-<span class="n">tempDF</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="o">(</span><span class="nc">SaveMode</span><span class="o">.</span><span class="nc">Append</span><span class="o">).</span><span class="n">jdbc</span><span class="o">(</span><span class="s">"jdbc:mysql://url/database"</span><span class="o">,</span> <span class="s">"table"</span><span class="o">,</span> <span class="n">properties</span><span class="o">)</span></code></pre></figure>
-
-<p>위 예제에서는 Properties를 통해 설정값을 넣어주었습니다.
-유저 정보나 주소는 맞게 변경해주시면 됩니다.</p>
-
-<p>mode 라는 것이 있는데 <code class="highlighter-rouge">SaveMode.Append</code>는 기존의 테이블에 추가하는 방식이고
-<code class="highlighter-rouge">SaveMode.Overwrite</code>의 경우 기존의 테이블을 새로운 데이터로 대체하는 방식입니다.</p>
-
-<p>​</p>
-" />
+        <meta property="og:description" content="​ Spark에서 MySQL에 접근하고 DataFrame을 read, write 하는 방법에 대해 정리해보았습니다. 참고로 저는 Spark 2.1.0 버전을 사용 중 입니다. ​..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

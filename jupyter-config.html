@@ -34,39 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Jupyter Notebook 외부접속 설정하기" />
-        <meta property="og:description" content="<p>​</p>
-
-<p>이번 포스팅에서는 Jupyter Notebook을 환경구축하고 난 이후에 외부접속을 설정하는 과정에 대해 알아보겠습니다. 환경구축하는 방법에 대해서는 이전의 포스팅 <a href="https://swalloow.github.io/jupyter-notebook-kernel">https://swalloow.github.io/jupyter-notebook-kernel</a> 을 참고해주시기 바랍니다.</p>
-
-<p>​</p>
-
-<h2 id="section">외부접속 허용하기</h2>
-
-<p>우선 <code class="highlighter-rouge">~/.jupyter/jupyter_notebook_config.py</code> 에 있는 Jupyter Notebook의 설정파일을 열어줍니다. 아마 모두 주석이 걸려있을텐데 필요한 부분만 수정해주시면 됩니다.</p>
-
-<ul>
-  <li>실행경로 변경 : <code class="highlighter-rouge">c.NotebookApp.default_url = '/tree'</code></li>
-  <li>외부접속 허용 : <code class="highlighter-rouge">c.NotebookApp.ip = '0.0.0.0'</code></li>
-  <li>
-    <p>포트변경: <code class="highlighter-rouge">c.NotebookApp.port = 8888</code></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="section-1">비밀번호 설정하기</h2>
-
-<p>비밀번호를 설정하면 url에 접속했을 때, 암호를 입력하는 화면이 나타나게 됩니다. Jupyter Notebook에서는 HASH 값을 통해 암호화된 비밀번호를 적용할 수 있습니다.</p>
-
-<p>먼저, 새로운 노트를 생성하고 다음의 스크립트를 작성합니다. 암호를 설정하는 칸이 나오고 결과 값이 주어지면 그대로 복사해서 <code class="highlighter-rouge">c.NotebookApp.password = u''</code> 여기에 붙여넣기 하시면 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">notebook.auth</span> <span class="kn">import</span> <span class="n">passwd</span><span class="p">;</span>
-<span class="n">passwd</span><span class="p">()</span></code></pre></figure>
-
-<p>​</p>
-" />
+        <meta property="og:description" content="​ 이번 포스팅에서는 Jupyter Notebook을 환경구축하고 난 이후에 외부접속을 설정하는 과정에 대해 알아보겠습니다. 환경구축하는 방법에 대해서는 이전의 포스팅 https://swalloow.github.io/jupyter-notebook-kernel 을..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

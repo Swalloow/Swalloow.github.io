@@ -74,101 +74,6 @@ groupByKey는 reduceByKey로 대체될 수 있기 때문에 많은 문서에서 
 	</item>
 
 	<item>
-	  <title>Spark의 Shuffling 이해하기</title>
-	  <link>//spark-shuffle</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-08-22T19:18:00+09:00</pubDate>
-	  <guid>//spark-shuffle</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>효율적인 Spark Application을 개발하기 위해 Shuffling은 상당히 중요한 개념입니다.
-이에 대해 간단히 정리해보았습니다.</p>
-
-<p>​</p>
-
-<h3 id="spark-architecture-shuffle">Spark Architecture: Shuffle</h3>
-
-<p><img src="/assets/images/shuffle.png" alt="" /></p>
-
-<p>Shuffle을 설명하기 전에 한 가지 예시를 들어보겠습니다.
-테이블에 전화 통화 기록 목록이 있고 매일 발생한 통화량을 계산한다고 가정 해보겠습니다.
-“날짜”를 키로 설정하고 각 레코드에 대해 값으로 “1”을 지정한 다음, 각 키의 값을 합산하여 결과 값을 계산할 수 있습니다.</p>
-
-<p>만일 데이터가 여러 클러스터에 저장되어 있다면 어떻게 해야 동일한 키의 값을 합산할 수 있을까요?
-이를 위한 유일한 방법은 같은 키의 모든 값을 동일한 시스템에 두는 것입니다. 그런 다음 이 값들을 합치면 됩니다.</p>
-
-<p>​</p>
-
-<p><img src="/assets/images/narrow_and_wide.png" alt="" /></p>
-
-<p>몇 가지 사례를 통해 더 자세히 알아보겠습니다.
-만일 데이터가 이미 키 값으로 파티셔닝 되어 있고 키 값에 대해 변화를 주고 싶다면, 좌측의 그림처럼 수행하게 됩니다.
-<code class="highlighter-rouge">filter(), sample(), map(), flatMap()</code> 등의 transformation이 이에 해당하며, Shuffle이 필요 없습니다.
-이를 <strong>Narrow Transformation</strong> 이라고 합니다.</p>
-
-<p>반면, 서로 다른 파티션으로부터 특정한 값을 기준으로 추출하고 싶은 경우, 그 값을 기준으로 Shuffle이 발생하게 됩니다.
-<code class="highlighter-rouge">groupByKey(), reduceByKey()</code> 등이 이에 해당하며, 이를 <strong>Wide Transformation</strong> 이라고 합니다.</p>
-
-<p>​</p>
-
-<h3 id="shuffled-hashjoin">Shuffled HashJoin</h3>
-
-<p><img src="/assets/images/shuffle_join.png" alt="" /></p>
-
-<p>두 개의 테이블을 <code class="highlighter-rouge">Join</code> 할 때에도 Shuffle이 발생할 수 있습니다.
-위의 예시 처럼 두 테이블에서 키 값을 기준으로 Join 하게 되면, 동일한 키를 가진 데이터가 동일한 파티션으로 이동합니다.
-하지만 이 때, 셔플되는 데이터의 양이 성능에 영향을 미칠 수 있습니다.
-만일 C의 데이터의 크기가 A보다 훨씬 크다면, C에 대한 작업으로 인해 전체의 수행시간이 오래 걸리게 될 것 입니다.</p>
-
-<p>​</p>
-
-<h3 id="broadcast-hashjoin">Broadcast HashJoin</h3>
-<p><img src="/assets/images/broadcast_join.png" alt="" /></p>
-
-<p>이를 개선하기 위해 Spark에서는 <strong>Broadcast Join</strong> 을 제공합니다.
-이 경우 RDD 중 하나가 모든 파티션으로 브로드 캐스팅되며 복사됩니다.
-만일 RDD 중 하나가 다른 것에 비해 상당히 작다면 큰 RDD가 전혀 셔플 할 필요가 없습니다.
-작은 RDD 만 모든 작업자 서버에 복사해야 하므로 Broadcast Join은 전체적으로 네트워크 트래픽을 줄여주는 효과가 있습니다.</p>
-
-<p>Spark 1.2에서는 <code class="highlighter-rouge">spark.sql.autoBroadcastJoinThreshold</code> 값을 설정해주어야 했지만,
-2.0 이후 버전의 경우 Spark SQL이 알아서 최적화 잘 해줍니다.</p>
-
-<p>​</p>
-
-<h3 id="spark-shuffle-properties">Spark Shuffle Properties</h3>
-
-<p>Shuffle에는 일반적으로 두 가지 중요한 Spark Property 가 있습니다.</p>
-
-<ul>
-  <li><code class="highlighter-rouge">spark.shuffle.compress</code>는 엔진이 shuffle 출력을 압축할지 여부를 지정</li>
-  <li><code class="highlighter-rouge">spark.shuffle.spill.compress</code>는 중간 shuffle spill 파일을 압축할지 여부를 지정</li>
-</ul>
-
-<p>둘 다 기본적으로 값이 “true”이며, <code class="highlighter-rouge">spark.io.compression.codec</code> 압축 코덱을 기본으로합니다.
-그리고 위에서 설명한 것처럼 Spark에는 여러 가지 셔플 구현이 있습니다. 특정 구현에서 사용되는 Shuffle은 <code class="highlighter-rouge">spark.shuffle.manager</code> 값에 의해 결정됩니다.
-가능한 옵션은 <strong>hash, sort, tungsten-sort</strong> 이며, “sort” 옵션은 기본적으로 Spark 1.2.0부터 시작합니다.</p>
-
-<p>이외에도 Spark Shuffle 관련된 Property는 아래의 공식문서에서 확인하실 수 있습니다.
-<a href="https://spark.apache.org/docs/latest/configuration.html#shuffle-behavior">https://spark.apache.org/docs/latest/configuration.html#shuffle-behavior</a></p>
-
-<p>​</p>
-
-<h3 id="reference">Reference</h3>
-
-<ul>
-  <li><a href="https://0x0fff.com/spark-architecture-shuffle/">https://0x0fff.com/spark-architecture-shuffle/</a></li>
-  <li>
-    <p><a href="https://www.slideshare.net/databricks/strata-sj-everyday-im-shuffling-tips-for-writing-better-spark-programs">https://www.slideshare.net/databricks/strata-sj-everyday-im-shuffling-tips-for-writing-better-spark-programs</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
 	  <title>Hive Metastore 구축 관련 문제와 해결과정</title>
 	  <link>//hive-metastore-issue</link>
 	  <author>Swalloow</author>
@@ -767,6 +672,118 @@ Spark만 쓰고 싶었는데 기타 등등이 많이 설치되어 있어서 컨�
 <span class="gp">$ </span>docker run -it --rm -p 8888:8888 jupyter/all-spark-notebook</code></pre></figure>
 
 <p>이렇게 실행하고 8888번 포트로 접속하면 노트북을 실행할 수 있습니다.</p>
+
+<p>​   ​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>빅데이터 처리에 Scala가 필요한 이유</title>
+	  <link>//scala-for-bigdata</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-03-17T19:18:00+09:00</pubDate>
+	  <guid>//scala-for-bigdata</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>StackOverFlow나 Quora를 보면 <strong>Scala has taken over the Big Data world.</strong> 라는 글을 많이 볼 수 있습니다.
+게다가 Spark의 엔진은 Scala로 구현되어 있습니다. 이 포스팅에서는 데이터를 다루는데에 스칼라가 가지는 강점이 무엇인지 알아보고자 합니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="scala--">Scala가 가지는 강점</h2>
+
+<p>​   ​</p>
+
+<h4 id="static-typing-type-inference">Static Typing, Type Inference</h4>
+
+<p>스칼라의 <code class="highlighter-rouge">val</code> 변수는 한번 지정된 값을 바꾸지 않습니다.
+이러한 변수를 <code class="highlighter-rouge">Immutable variable</code> 이라고 부릅니다. 예를 들면 아래와 같습니다.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">msg</span> <span class="k">=</span> <span class="s">"Hello Scala"</span>
+<span class="nc">String</span> <span class="k">=</span> <span class="nc">Hello</span> <span class="nc">Scala</span>
+
+<span class="k">val</span> <span class="n">msg</span> <span class="k">=</span> <span class="s">"Reassign to val"</span>
+<span class="n">error</span><span class="k">:</span> <span class="kt">reassignment</span> <span class="kt">to</span> <span class="kt">val</span></code></pre></figure>
+
+<p>위의 예제를 보면, msg 변수에 문자열을 할당했지만 어디에도 String 이라는 단어는 없습니다.
+스칼라는 알아서 타입을 추론하여 지정해주기 때문입니다.
+따라서, <code class="highlighter-rouge">val</code> 변수에 재할당을 시도하면 <code class="highlighter-rouge">reassignment to val</code> 이라는 오류가 발생하게 됩니다.</p>
+
+<p>이처럼 스칼라는 input 타입을 보고 함수나 출력 값의 타입을 추론해주며 이를 통해 코드를 깔끔하게 유지할 수 있습니다.
+또한, 다양하고 많은 데이터가 사용되는 경우 정적변수가 문제를 단순화 해주는 효과가 있습니다.</p>
+
+<p>​   ​</p>
+
+<h4 id="scalable-language">Scalable Language</h4>
+
+<p>기존의 Hadoop 기반의 데이터 인프라는 자바 언어를 통해 MapReduce 연산 그리고 알고리즘을 구현해야했습니다.
+하지만 자바는 코드가 너무 길어 생산성 그리고 가독성이 매우 떨어집니다.</p>
+
+<p>스칼라는 모든 것들이 일관성있게 그리고 간결하게 구현되도록 설계되었습니다.
+이를 통해 얻을 수 있는 장점은 <strong>“적은 양의 코드로 방대한 규모의 시스템을 작성할 수 있다”</strong> 는 것입니다.</p>
+
+<p>연산자를 예로 들어보겠습니다.
+자바에서는 ‘==’ 와 같은 비교연산자를 제공합니다.
+하지만 비교연산자는 주소값을 비교하기 때문에
+String과 같은 객체를 비교할 때는 <code class="highlighter-rouge">equal()</code> 메서드를 사용해서 비교해야 했습니다.
+이 또한 스칼라의 Scalable과 거리가 멉니다.
+스칼라에서는 모든 것이 Object이기 때문에 <code class="highlighter-rouge">==</code> 로 모든 비교가 가능합니다.</p>
+
+<p>​   ​</p>
+
+<h4 id="object-oriented-functional-language">Object Oriented, Functional Language</h4>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">y1 = 2x + 5
+y2 = 4(y1) = 4(2x + 5)</code></pre></figure>
+
+<p>함수형 언어를 이해하기 전에 어렸을 때 배웠던 함수식을 떠올려보겠습니다.
+위의 식에서 x는 input, y는 output이 됩니다.
+우리는 어떤 함수에 input을 넣으면 output이 나온다고 이해하고 있습니다.
+그리고 아래의 식처럼 함수를 인자로 넣을 수도 있습니다 (합성함수).
+함수형 언어도 이와 비슷합니다.</p>
+
+<p>스칼라는 객체지향 프로그래밍과 함수형 프로그래밍을 모두 완벽하게 지원하는 언어입니다.
+스칼라에서는 모든 것이 객체이며 함수가 <code class="highlighter-rouge">first object</code> 입니다.
+함수를 마치 하나의 값으로 취급하며 이를 변수 또는 파라미터로 넘길 수 있습니다.</p>
+
+<p>모든 것을 함수로 해결하면 의도하지 않은 동작(Side Effect)이 발생할 일이 없고,
+한번 검증된 함수는 신뢰할 수 있기 때문에 버그가 줄어드는 효과가 있습니다.
+또한, Immutable 변수는 문제를 단순화시켜주기 때문에 데이터 공유, 병렬처리에 강합니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="java-scala-">Java와 Scala를 비교해보자</h2>
+
+<p>Scala는 Interactive한 Shell을 제공합니다.
+이렇게 바로 확인할 수 있는 Shell을 통해 데이터의 탐색적 분석이 가능합니다.
+IntelliJ IDEA에서도 <code class="highlighter-rouge">Worksheet</code>이라는 기능을 통해 사용할 수 있습니다.
+스칼라 개발환경은 <strong>Scala 2.12.1</strong> 이며, IDE는 <strong>IntelliJ IDEA</strong> 를 사용하였습니다.</p>
+
+<p><img src="/assets/images/intellij.png" alt="IntelliJ" /></p>
+
+<p>간단한 WordCount 예제를 통해 코드를 비교해보곘습니다.</p>
+
+<h4 id="java-hadoop-word-count">JAVA Hadoop Word Count</h4>
+<script src="https://gist.github.com/Swalloow/25a96ff50fdb60a9859972fa0e4bb92b.js"></script>
+
+<p>​   ​</p>
+
+<h4 id="scala-spark-word-count">Scala Spark Word Count</h4>
+<script src="https://gist.github.com/Swalloow/ddc125f58b2b2ca4815444557d769bdb.js"></script>
+
+<p>​   ​</p>
+
+<h2 id="section">정리하자면,</h2>
+
+<ul>
+  <li>파이썬과 같이 아주 간결한 문법</li>
+  <li>객체지향과 함수형 프로그래밍 모두 가능</li>
+  <li>자바와 호환되며 JVM 위에서 실행되기 때문에 좋은 성능</li>
+  <li>정적 타입을 지향</li>
+  <li>REPL Shell을 활용하여 Scripting</li>
+</ul>
 
 <p>​   ​</p>
 

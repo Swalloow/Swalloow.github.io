@@ -34,68 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="충돌을 해결하기 위한 git stash 명령어" />
-        <meta property="og:description" content="<p>​   ​</p>
-
-<p>git을 사용하다보면 여러 변경내역이 생기게 됩니다.
-예를 들면 내 로컬에서 변경된 내역을 아직 commit을 하지 않은 상태로 pull을 하게 되면,
-충돌이 발생하게 되어 초보자에게는 난감한 상황이 됩니다.
-이런 경우에 git stash 명령어를 사용하시면 편리합니다.</p>
-
-<p>git stash 명령어는 unstaged 상태인 변경사항을 일시적으로 백업하고 워킹디렉토리를 깨끗한 상태로 유지합니다.
-즉, 일종의 책갈피 역할을 한다고 보시면 됩니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="git-stash">1. git stash</h4>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash
-Saved working directory and index state <span class="se">\</span>
-  <span class="s2">"WIP on master: 049d078 added the index file"</span>
-HEAD is now at 049d078 added the index file
-<span class="o">(</span>To restore them <span class="nb">type</span> <span class="s2">"git stash apply"</span><span class="o">)</span></code></pre></figure>
-
-<p>git stash 명령어를 실행하면 작업 중인 파일을 새로운 Stash에 저장합니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="git-stash-list">2. git stash list</h4>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash list
-stash@<span class="o">{</span>0<span class="o">}</span>: WIP on master: 049d078 added the index file
-stash@<span class="o">{</span>1<span class="o">}</span>: WIP on master: c264051 Revert <span class="s2">"added file_size"</span>
-stash@<span class="o">{</span>2<span class="o">}</span>: WIP on master: 21d80a5 added number to log</code></pre></figure>
-
-<p>git stash list 명령어를 통해 저장된 책갈피들의 리스트를 볼 수 있습니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="git-stash-apply">3. git stash apply</h4>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash apply
-<span class="c"># On branch master</span>
-<span class="c"># Changes not staged for commit:</span>
-<span class="c">#   (use "git add &lt;file&gt;..." to update what will be committed)</span>
-<span class="c">#</span>
-<span class="c">#      modified:   index.html</span>
-<span class="c">#      modified:   lib/simplegit.rb</span>
-<span class="c">#</span></code></pre></figure>
-
-<p>git stash apply 명령어를 사용하면 저장된 stash를 적용할 수 있습니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="git-stash-drop">4. git stash drop</h4>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>git stash drop stash@<span class="o">{</span>0<span class="o">}</span>
-Dropped stash@<span class="o">{</span>0<span class="o">}</span> <span class="o">(</span>364e91f3f268f0900bc3ee613f9f733e82aaed43<span class="o">)</span></code></pre></figure>
-
-<p>apply 명령어로 stash를 적용한다고 해서 스택에서 사라지는게 아닙니다.
-git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
-
-<p>​   ​</p>
-" />
+        <meta property="og:description" content="​ ​ git을 사용하다보면 여러 변경내역이 생기게 됩니다. 예를 들면 내 로컬에서 변경된 내역을 아직 commit을 하지 않은 상태로 pull을..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

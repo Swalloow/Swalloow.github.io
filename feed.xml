@@ -10,9 +10,7 @@
       <item>
         <title>Spark groupByKey vs reduceByKey 성능 비교</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ Spark Application 성능 개선을 위해 groupByKey, reduceBykey에 대해 알아보겠습니다. ​ groupByKey vs reduceBykey # reduceByKey spark.textFile(&quot;hdfs://...&quot;) .flatMap(lambda line: line.split())...</description>
         
         <pubDate>Tue, 22 Aug 2017 19:18:00 +0900</pubDate>
         <link>
@@ -23,26 +21,9 @@
     
       
       <item>
-        <title>Spark의 Shuffling 이해하기</title>
-        
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
-        
-        <pubDate>Tue, 22 Aug 2017 19:18:00 +0900</pubDate>
-        <link>
-        http://swalloow.github.io//spark-shuffle</link>
-        <guid isPermaLink="true">http://swalloow.github.io//spark-shuffle</guid>
-      </item>
-      
-    
-      
-      <item>
         <title>Hive Metastore 구축 관련 문제와 해결과정</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 최근 Hive Metastore를 구축하면서 겪은 이슈와 해결과정을 기록해두려고 합니다. 사용 환경은 Spark 2.1.1 입니다. ​ Hive Metastore, Parquet 먼저...</description>
         
         <pubDate>Fri, 11 Aug 2017 19:18:00 +0900</pubDate>
         <link>
@@ -55,9 +36,7 @@
       <item>
         <title>Bagging과 Boosting 그리고 Stacking</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 오늘은 머신러닝 성능을 최대로 끌어올릴 수 있는 앙상블 기법에 대해 정리해보았습니다. ​ Ensemble, Hybrid Method 앙상블 기법은 동일한 학습...</description>
         
         <pubDate>Wed, 19 Jul 2017 19:18:00 +0900</pubDate>
         <link>
@@ -70,9 +49,7 @@
       <item>
         <title>Spark DataFrame을 MySQL에 저장하는 방법</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ Spark에서 MySQL에 접근하고 DataFrame을 read, write 하는 방법에 대해 정리해보았습니다. 참고로 저는 Spark 2.1.0 버전을 사용 중 입니다. ​...</description>
         
         <pubDate>Mon, 17 Jul 2017 19:18:00 +0900</pubDate>
         <link>
@@ -85,9 +62,7 @@
       <item>
         <title>Spark 2.2.0 릴리즈 업데이트 정리</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 7월 11일 약 2개월 만에 Spark 2.2.0이 릴리즈 되었습니다. 어떤 변경 사항들이 있었는지 릴리즈 노트를 통해 간략하게 정리해보았습니다. ​...</description>
         
         <pubDate>Fri, 14 Jul 2017 19:18:00 +0900</pubDate>
         <link>
@@ -100,9 +75,7 @@
       <item>
         <title>Scala의 빌드 도구 SBT</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ Scala에는 SBT라는 빌드 도구가 있습니다. SBT는 의존성 관리에 Apache ivy를 사용합니다. 앞으로 계속 내용을 추가할 예정입니다. ​ SBT SBT로...</description>
         
         <pubDate>Sat, 08 Jul 2017 21:18:00 +0900</pubDate>
         <link>
@@ -115,9 +88,7 @@
       <item>
         <title>AWS EMR step을 이용한 Spark Batch 작업 등록하기</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ AWS EMR은 특정 작업을 등록할 수 있는 step 이라는 기능을 제공합니다. 예를 들어 매일 새벽에 클러스터에서 돌려야하는 Batch 작업이...</description>
         
         <pubDate>Sun, 02 Jul 2017 19:18:00 +0900</pubDate>
         <link>
@@ -130,9 +101,7 @@
       <item>
         <title>AWS 환경에서 Cloudera Manager 설치하기</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 클라우데라 매니저는 하둡 에코시스템을 쉽게 설치하고 관리할 수 있도록 도와주는 도구입니다. 이를 이용하여 AWS EC2 인스턴스에 하둡 클러스터를 설치하고...</description>
         
         <pubDate>Fri, 23 Jun 2017 19:18:00 +0900</pubDate>
         <link>
@@ -145,9 +114,7 @@
       <item>
         <title>Spark의 Random Sampling에 대하여</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 데이터를 분석하다보면 임의의 샘플을 추출해야 하는 상황이 생깁니다. 그래서 이번에는 Spark에서 랜덤 샘플링을 하는 방법에 대해 정리해보았습니다. ​ Sample()...</description>
         
         <pubDate>Tue, 20 Jun 2017 19:18:00 +0900</pubDate>
         <link>
@@ -160,9 +127,7 @@
       <item>
         <title>Spark의 Temporary View에 대하여</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ SQL의 View 처럼 Spark에서도 View를 지원합니다. 이 포스팅에서는 Spark 2.1.0 부터 생긴 Spark Global Temporary View와 기존의 TempView가 어떤...</description>
         
         <pubDate>Fri, 16 Jun 2017 19:18:00 +0900</pubDate>
         <link>
@@ -175,9 +140,7 @@
       <item>
         <title>넷플릭스 본사 방문 후기</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 미국 여행하면서 다양한 경험을 했지만, 넷플릭스는 그 중 가장 기억에 남았던 장소다. 우연히 넷플릭스의 추천 팀 데이터 엔지니어로 근무하시는...</description>
         
         <pubDate>Mon, 05 Jun 2017 21:18:00 +0900</pubDate>
         <link>
@@ -190,9 +153,7 @@
       <item>
         <title>실리콘밸리 여행 후기</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 실리콘밸리는 미국 캘리포니아 주 샌프란시스코 만 지역 남부에 위치한다. 우연히 좋은 기회를 얻게 되어 여러 회사에 들어가볼 수 있었다....</description>
         
         <pubDate>Mon, 05 Jun 2017 19:18:00 +0900</pubDate>
         <link>
@@ -205,9 +166,7 @@
       <item>
         <title>Spring JPA, MyBatis</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 최근 스프링 부트를 공부하면서 이것저것 정리하는 중 입니다. ​ JPA, Hibernate 스프링 JPA와 MyBatis 모두 Persistance API 입니다. JPA는...</description>
         
         <pubDate>Wed, 05 Apr 2017 21:18:00 +0900</pubDate>
         <link>
@@ -220,9 +179,7 @@
       <item>
         <title>influxDB와 Grafana로 실시간 서버 모니터링 구축하기(2)</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 지난 포스팅에 이어서 Grafana를 연동해보도록 하겠습니다. ​ Grafana 지난 번에 설치했던 Grafana 도커 이미지를 컨테이너로 실행하면 위와 같이...</description>
         
         <pubDate>Wed, 05 Apr 2017 21:18:00 +0900</pubDate>
         <link>
@@ -235,9 +192,7 @@
       <item>
         <title>influxDB와 Grafana로 실시간 서버 모니터링 구축하기(1)</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 요즘 실시간 로그 수집 및 분석 도구로 ELK (Elastic Search) 를 많이 사용하지만, 간단한 서버 모니터링이나 시계열 데이터...</description>
         
         <pubDate>Wed, 05 Apr 2017 19:18:00 +0900</pubDate>
         <link>
@@ -250,9 +205,7 @@
       <item>
         <title>Docker와 Gitlab CI를 활용한 빌드, 테스트 자동화</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ Gitlab은 설치형 GitHub이라고 이해하시면 편합니다. 무료로 private repository와 CI 서버를 제공해줍니다. 심지어 Docker Registry도 무료로 제공하고 있습니다. 아직...</description>
         
         <pubDate>Fri, 31 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -265,9 +218,7 @@
       <item>
         <title>올바른 Dockerfile 작성을 위한 가이드라인</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ Docker가 처음이라면, 이전 포스팅을 참고하시기 바랍니다. Docker 간편한 설치부터 실행까지 Docker, DockerHub 명령어 정리 파이썬을 위한 Dockerfile 작성하기...</description>
         
         <pubDate>Tue, 28 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -280,9 +231,7 @@
       <item>
         <title>파이썬을 위한 Dockerfile 작성하기</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ Docker가 처음이라면, 이전 포스팅을 참고하시기 바랍니다. Docker 간편한 설치부터 실행까지 Docker, DockerHub 명령어 정리 파이썬을 위한 Dockerfile 작성하기...</description>
         
         <pubDate>Mon, 27 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -295,9 +244,7 @@
       <item>
         <title>폴리글랏 프로그래밍 후기</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 임백준 작가님의 폴리글랏 프로그래밍 을 읽고 핵심내용만 간략하게 정리해보려고 한다. 시대의 흐름에 따라 재미있게 설명해주기 때문에, 킬링타임 용으로 가볍게...</description>
         
         <pubDate>Sat, 25 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -310,9 +257,7 @@
       <item>
         <title>리눅스 시스템 모니터링 명령어 정리</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 리눅스 시스템 모니터링을 위한 명령어에 대해 정리해보았습니다. ​ ​ 프로세스 모니터링 명령어 - top top 명령어는 커널을 통하여...</description>
         
         <pubDate>Fri, 24 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -325,9 +270,7 @@
       <item>
         <title>Jupyter에서 Scala로 Spark 사용하는 방법</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 이 글은 평소에 Jupyter Notebook 에 익숙해져있는 분들께 유용할 듯 합니다. Zeppelin Notebook을 설정하는 방법은 이전 포스팅을 참고하시면...</description>
         
         <pubDate>Wed, 22 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -340,9 +283,7 @@
       <item>
         <title>SSH 프로토콜과 Tunneling 이해하기</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 지금까지 아무 생각없이 SSH를 사용하다가 한번 정리해보았습니다. ​ ​ SSH Protocol SSH는 Secure Shell의 약자입니다. SSH는 한마디로 정의하면,...</description>
         
         <pubDate>Mon, 20 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -355,9 +296,7 @@
       <item>
         <title>Awesome Developer Roadmap</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ https://github.com/kamranahmedse/developer-roadmap 오직 Awesome만으로 별 1만개를 넘게 달았다. 저분 GitHub에 들어가보니 완전 Awesome 전문가이시다. 그래도 공부해야 할 내용이 잘 정리되어...</description>
         
         <pubDate>Sat, 18 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -370,9 +309,7 @@
       <item>
         <title>빅데이터 처리에 Scala가 필요한 이유</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ StackOverFlow나 Quora를 보면 Scala has taken over the Big Data world. 라는 글을 많이 볼 수 있습니다. 게다가...</description>
         
         <pubDate>Fri, 17 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -385,9 +322,7 @@
       <item>
         <title>GFS, HDFS 그리고 MapReduce</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 데이터가 급속히 늘어나면서 기존의 방법으로 처리가 힘들어지자, 빅데이터를 위한 대용량 분산 파일 시스템이 나타나기 시작했습니다. 여기에서는 GFS, HDFS...</description>
         
         <pubDate>Tue, 14 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -400,9 +335,7 @@
       <item>
         <title>OS X에서 Homebrew로 Spark, Zeppelin 설치하기</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ Apache Spark is a fast and general engine for large-scale data processing. Zeppelin, a web-based notebook that enables...</description>
         
         <pubDate>Mon, 13 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -415,9 +348,7 @@
       <item>
         <title>AWS EC2 인스턴스 SSH 접속을 위한 초기설정 그리고 주의사항</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 이 포스팅의 모든 내용은 OS X에 최적화되어 있습니다. 그리고, 정리한 내용은 AWS 공식문서에 아주 잘 소개되어 있습니다. ​...</description>
         
         <pubDate>Fri, 10 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -430,9 +361,7 @@
       <item>
         <title>파이썬 웹 어플리케이션 보안 점검 가이드</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 이 포스팅은 Jacob Kaplan-Moss가 2013년 호주 pycon에서 발표한 자료를 바탕으로 하며, OYT님이 최신화하여 정리해주신 자료를 참고하였습니다. ​ ​...</description>
         
         <pubDate>Wed, 08 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -445,9 +374,7 @@
       <item>
         <title>JWT를 구현하면서 마주치게 되는 고민들</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 최근 모바일, 웹 등 다양한 환경에서 서버와 통신하면서 많은 사람들이 JWT 토큰 인증 방식을 추천합니다. 이 포스팅에서는 JWT를...</description>
         
         <pubDate>Fri, 03 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -460,9 +387,7 @@
       <item>
         <title>HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 크롬 업데이트 이후 몇몇 웹 페이지는 브라우저 주소 창에 안전하지 않음이 나타나고, 아니면 자물쇠 모양에 안전함이 표시되는 것을...</description>
         
         <pubDate>Wed, 01 Mar 2017 19:18:00 +0900</pubDate>
         <link>
@@ -475,9 +400,7 @@
       <item>
         <title>Pandas DataFrame을 병렬처리 하는 방법</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ Scikit-learn의 모델들은 cython과 joblib으로 최적화 및 자동 병렬처리 되도록 설계되어 있지만, Pandas는 여전히 내부적으로 병렬처리 기능을 지원하지 않습니다....</description>
         
         <pubDate>Mon, 27 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -490,9 +413,7 @@
       <item>
         <title>DataFrame을 MySQL에 저장하는 방법</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ DataFrame을 MySQL에 저장하기 위해 먼저 커넥터가 필요합니다. 파이썬3에서는 MySQLdb를 지원하지 않기 때문에, pymysql로 불러와야 합니다. 꼭 pymysql이 아니어도 상관없지만,...</description>
         
         <pubDate>Sun, 26 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -505,9 +426,7 @@
       <item>
         <title>Swagger로 API 문서화하기</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 개발에 있어서 API 문서화는 아주 중요하지만 번거로운 일 중에 하나입니다. 특히 pdf 또는 한글 파일로 관리하고 있다면 갱신할때마다...</description>
         
         <pubDate>Sat, 25 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -520,9 +439,7 @@
       <item>
         <title>충돌을 해결하기 위한 git stash 명령어</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ git을 사용하다보면 여러 변경내역이 생기게 됩니다. 예를 들면 내 로컬에서 변경된 내역을 아직 commit을 하지 않은 상태로 pull을...</description>
         
         <pubDate>Thu, 23 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -535,9 +452,7 @@
       <item>
         <title>Docker, DockerHub 명령어 정리</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 명령어를 정리하기 전에 Docker 시스템 아키텍처를 보면 이해하기 쉽습니다. Docker는 크게 클라이언트-서버 아키텍처 로 구성되어 있습니다. 그림처럼 우리가...</description>
         
         <pubDate>Wed, 22 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -550,9 +465,7 @@
       <item>
         <title>Docker 간편한 설치부터 실행까지</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ Docker는 오픈소스 컨테이너입니다. 기존의 가상머신과 비슷하면서도 훨씬 가벼운 형태라고 볼 수 있습니다. 그렇다면 VMWare, VirtualBox와 같은 기존의 가상머신과...</description>
         
         <pubDate>Tue, 21 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -565,9 +478,7 @@
       <item>
         <title>자주 사용하는 리눅스 명령어 정리 (3) - Screen</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ Screen은 여러 프로세스 간에 물리적 콘솔을 다중화하는데 사용할 수있는 전체 화면 소프트웨어 프로그램이다. 하나의 단일 터미널 창 관리자에서...</description>
         
         <pubDate>Sat, 18 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -580,9 +491,7 @@
       <item>
         <title>자주 사용하는 리눅스 명령어 정리 (2) - 쉘 스크립트</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 맥북을 사용하면서 가장 좋았던 점은 기본 운영체제가 유닉스 계열이다보니, 모든 것이 커멘드라인으로 해결된다는 점이었다. 특히 쉘 스크립트를 활용하면...</description>
         
         <pubDate>Thu, 16 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -595,9 +504,7 @@
       <item>
         <title>자주 사용하는 리눅스 명령어 정리 (1) - 기본 명령어</title>
         
-          <description>&lt;p&gt;​   ​&lt;/p&gt;
-
-</description>
+          <description>​ ​ 리눅스는 리누스 토발즈가 1991년 처음 개발을 시작한 오픈소스 소프트웨어이다. 보통 윈도우를 오래 사용하다보면 터미널보다 GUI에 익숙해지기 마련이다. 하지만...</description>
         
         <pubDate>Wed, 15 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -610,9 +517,7 @@
       <item>
         <title>OS X에서 Jenkins 설치하기</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 이번 포스팅에서는 CI 도구인 Jenkins를 설치하고 실행하는 방법에 대해 정리해보겠습니다. ​ Jenkins 설치하기 홈페이지에서 패키지 파일로 설치해도 되지만 관리를...</description>
         
         <pubDate>Mon, 13 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -625,9 +530,7 @@
       <item>
         <title>Jupyter Notebook 외부접속 설정하기</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 이번 포스팅에서는 Jupyter Notebook을 환경구축하고 난 이후에 외부접속을 설정하는 과정에 대해 알아보겠습니다. 환경구축하는 방법에 대해서는 이전의 포스팅 https://swalloow.github.io/jupyter-notebook-kernel 을...</description>
         
         <pubDate>Sun, 12 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -640,9 +543,7 @@
       <item>
         <title>DecisionTree와 RandomForest에 대하여</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 의사결정트리 (DecisionTree) 의사결정나무는 다양한 의사결정 경로와 결과를 나타내는데 트리 구조를 사용합니다. 보통 어렸을 때의 스무고개 놀이를 예로 드는 경우가 많습니다....</description>
         
         <pubDate>Fri, 10 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -655,9 +556,7 @@
       <item>
         <title>머신러닝을 시작하기 위한 기초 지식 (2)</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 이번 포스팅에서는 데이터를 분석하기 위한 과정에 대해 하나하나 간단히 알아보겠습니다. 일반적으로 어떠한 데이터로부터 어떠한 가치를 창출하고자 할 때, 다음과...</description>
         
         <pubDate>Wed, 08 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -670,9 +569,7 @@
       <item>
         <title>머신러닝을 시작하기 위한 기초 지식 (1)</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 이 글의 목차나 그림은 Sebastian Rashka - Python Machine Learning 을 참고하였습니다. 사실 기계학습, 인공지능에 대한 연구는 예전부터 존재했지만 발전이...</description>
         
         <pubDate>Sun, 05 Feb 2017 19:18:00 +0900</pubDate>
         <link>
@@ -685,9 +582,7 @@
       <item>
         <title>맥북프로 터치바를 커스터마이징 해보자</title>
         
-          <description>&lt;p&gt;터치바를 쓰다보면 지문과 시스템 환경설정 말고 딱히 건드릴 일이 없다는 생각이 든다.&lt;/p&gt;
-
-</description>
+          <description>터치바를 쓰다보면 지문과 시스템 환경설정 말고 딱히 건드릴 일이 없다는 생각이 든다. 터치바를 아직 지원하지 않는 앱들이 많고, 익숙하지 않기...</description>
         
         <pubDate>Mon, 30 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -700,9 +595,7 @@
       <item>
         <title>다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다. 만약 우리가 만들어야 할 어플리케이션이...</description>
         
         <pubDate>Sat, 28 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -715,9 +608,7 @@
       <item>
         <title>Jupyter Notebook 다중커널 설정하기</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ Jupyer Notebook은 웹 기반의 대화형 노트북 지원으로 수식, 표, 그림 등을 표현하기 쉬운 개발 환경입니다. 코딩과 문서화(Markdown)까지 한 화면에서...</description>
         
         <pubDate>Sat, 28 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -730,9 +621,7 @@
       <item>
         <title>[CS224d] Lecture2. Word Vectors</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ How do we represent the meaning of a word? “단어의 의미를 어떻게 표현해야 할까?”에 대한 고민은 예전부터 지속되어 왔다....</description>
         
         <pubDate>Sat, 21 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -745,9 +634,7 @@
       <item>
         <title>DB 테이블을 DataFrame으로 읽어오는 방법</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 본 포스팅에서는 예시를 MySQL로 들지만 sqlalchemy의 커넥터만 변경해주면, MySQL 뿐만 아니라 모든 데이터베이스에 적용가능합니다. 먼저 sqlalchemy가 설치되어 있지 않다면...</description>
         
         <pubDate>Sat, 14 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -760,9 +647,7 @@
       <item>
         <title>[CS224d] Lecture1. Intro to NLP and Deep Learning</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ Pre-requisites 파이썬을 능숙하게 사용할 줄 알아야 한다. 미적분학, 선형대수학 지식 기본적인 확률과 통계 이론 머신러닝에 대한 지식 Cost functions...</description>
         
         <pubDate>Sat, 14 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -775,9 +660,7 @@
       <item>
         <title>맥북프로 터치바 모델 초기설정</title>
         
-          <description>&lt;p&gt;&lt;img src=&quot;assets/images/mac.png&quot; alt=&quot;macbook&quot; /&gt;&lt;/p&gt;
-
-</description>
+          <description>1년을 기다린 결과 드디어 맥북프로 터치바 모델을 질렀다! 맥을 처음 사용하는 입장에서 초기에 어떤 것들을 설정해야 하는지 정리해보았다. ​ 프로그램...</description>
         
         <pubDate>Sun, 08 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -790,9 +673,7 @@
       <item>
         <title>[CS224d] 자연어처리 강의 소개</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ CS224d 강의는 스탠포드 대학의 대표적인 자연어처리 강의입니다. 이미지 프로세싱은 CS231n, 자연어처리는 CS224d 로 배우라는 말이 있을 정도로 인기 강좌이며,...</description>
         
         <pubDate>Sat, 07 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -805,9 +686,7 @@
       <item>
         <title>Open API를 설계할 때 알아야 하는 것들</title>
         
-          <description>&lt;p&gt;​&lt;/p&gt;
-
-</description>
+          <description>​ 오픈 API를 사용하다보면 공통의 패턴을 발견할 수 있을 것이다. 이처럼, API를 설계할 때도 개발자들이 쉽게 사용할 수 있도록 만든...</description>
         
         <pubDate>Thu, 05 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -820,9 +699,7 @@
       <item>
         <title>OAuth2에 대해 알아보자</title>
         
-          <description>&lt;p&gt;먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.&lt;/p&gt;
-
-</description>
+          <description>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가...</description>
         
         <pubDate>Thu, 05 Jan 2017 19:18:00 +0900</pubDate>
         <link>
@@ -835,9 +712,7 @@
       <item>
         <title>윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</title>
         
-          <description>&lt;p&gt;기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준)&lt;/p&gt;
-
-</description>
+          <description>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일...</description>
         
         <pubDate>Tue, 03 Jan 2017 19:18:00 +0900</pubDate>
         <link>

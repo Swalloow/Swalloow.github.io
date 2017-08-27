@@ -34,40 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="자주 사용하는 리눅스 명령어 정리 (3) - Screen" />
-        <meta property="og:description" content="<p>​   ​</p>
-
-<p>Screen은 여러 프로세스 간에 물리적 콘솔을 다중화하는데 사용할 수있는 전체 화면 소프트웨어 프로그램이다.
-하나의 단일 터미널 창 관리자에서 여러 개의 개별 터미널 인스턴스를 열 수 있는 사용자를 제공한다.</p>
-
-<p>사실 다중 터미널이 필요한거라면 tmux나 iTerm이 더 편하다고 생각한다.
-하지만, 스크린은 서버에서 백드라운드 데몬을 돌려야 할 때 아주 유용하다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">screen -S pingsession -d -m -L ping localhost</code></pre></figure>
-
-<p>이 명령은 화면에 새로운 세션 (-m)을 만들고, 출력 (-L)을 기록하고, 즉시 분리 (-d) 명령이 실행되도록 지시한다.
-로그는 현재 디렉토리의 screenlog.n 에 기록된다.</p>
-
-<p>여기서 n은 화면 세션의 “창” 번호이다. 로깅은 정기적으로 버퍼링되고 플러시되며 로그 파일을 기록 할 수 있다.
-화면 세션은 프로세스 제어, 즉 실행중인 데몬 중지 등을 지원한다.
-이를 수행하기 위해 화면 세션은 세션 이름 (-S 세션 이름)으로 시작되어야하며 나중에 이름과 함께 종료 될 수 있다.</p>
-
-<p>​   ​</p>
-
-<h2 id="screen--">Screen 명령어 정리</h2>
-
-<ul>
-  <li>ctrl + a / d : screen 나갈 때</li>
-  <li>ctrl + a / k : screen 죽일 때</li>
-  <li>screen -ls : screen 목록 확인</li>
-  <li>screen -r “name” : screen 재접속</li>
-  <li>screen -S “name” : screen 생성</li>
-  <li>~/.screenrc : 설정파일을 확인</li>
-</ul>
-
-<p>​   ​</p>
-" />
+        <meta property="og:description" content="​ ​ Screen은 여러 프로세스 간에 물리적 콘솔을 다중화하는데 사용할 수있는 전체 화면 소프트웨어 프로그램이다. 하나의 단일 터미널 창 관리자에서..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

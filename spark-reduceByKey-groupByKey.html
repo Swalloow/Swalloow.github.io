@@ -34,60 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Spark groupByKey vs reduceByKey 성능 비교" />
-        <meta property="og:description" content="<p>​</p>
-
-<p>Spark Application 성능 개선을 위해 <code class="highlighter-rouge">groupByKey, reduceBykey</code>에 대해 알아보겠습니다.</p>
-
-<p>​</p>
-
-<h2 id="groupbykey-vs-reducebykey">groupByKey vs reduceBykey</h2>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># reduceByKey</span>
-<span class="n">spark</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s">"hdfs://..."</span><span class="p">)</span>
- <span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
- <span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word</span><span class="p">:</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
- <span class="o">.</span><span class="n">reduceByKey</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
-
-<span class="c"># groupByKey</span>
-<span class="n">spark</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s">"hdfs://..."</span><span class="p">)</span>
- <span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
- <span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word</span><span class="p">:</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
- <span class="o">.</span><span class="n">groupByKey</span><span class="p">()</span>
- <span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">counts</span><span class="p">)))</span></code></pre></figure>
-
-<p>가장 흔히 알고 있는 word count 예제를 예로 들어보겠습니다.
-위의 예시는 reduceByKey를 사용했으며, 아래의 예시는 groupByKey를 사용했습니다.
-둘의 결과는 같지만 성능은 확인히 차이가 납니다.</p>
-
-<p>먼저 위의 코드에서 <code class="highlighter-rouge">flatMap, map</code> 까지는 동일한 노드에서 실행이 됩니다.
-하지만 reducer 부분에서는 모든 동일한 단어 쌍을 같은 노드로 이동시켜야 하기 때문에 <strong>Shuffle</strong> 이 발생합니다.</p>
-
-<p><img src="/assets/images/reduceByKey.png" alt="" /></p>
-
-<p>우선 reduceByKey의 경우, 먼저 각 노드에서 중간 집계를 진행하고 이에 대한 결과를 동일한 키 값으로 전송합니다.</p>
-
-<p><img src="/assets/images/groupByKey.png" alt="" /></p>
-
-<p>반면, groupByKey는 각 노드에 있는 데이터에 대해 바로 Shuffle 과정을 거치게 되고 결과를 내보냅니다.
-따라서 groupByKey는 네트워크를 통해 전송되는 데이터의 양이 많아질 뿐만 아니라, <strong>Out of disk</strong> 문제가 발생할 수도 있습니다.</p>
-
-<p>Shuffle은 기본적으로 비용이 큰 연산입니다.
-groupByKey는 reduceByKey로 대체될 수 있기 때문에 많은 문서에서 이를 권장하고 있습니다.</p>
-
-<p>​</p>
-
-<h3 id="reference">Reference</h3>
-
-<ul>
-  <li>
-    <p><a href="https://www.slideshare.net/databricks/strata-sj-everyday-im-shuffling-tips-for-writing-better-spark-programs">https://www.slideshare.net/databricks/strata-sj-everyday-im-shuffling-tips-for-writing-better-spark-programs</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-" />
+        <meta property="og:description" content="​ Spark Application 성능 개선을 위해 groupByKey, reduceBykey에 대해 알아보겠습니다. ​ groupByKey vs reduceBykey # reduceByKey spark.textFile("hdfs://...") .flatMap(lambda line: line.split())..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -306,10 +255,10 @@ groupByKey는 reduceByKey로 대체될 수 있기 때문에 많은 문서에서 
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/spark-shuffle">
+        <a class="read-next-story prev no-cover" href="/hive-metastore-issue">
             <section class="post">
-                <h2>Spark의 Shuffling 이해하기</h2>
-                <p>​ 효율적인 Spark Application을 개발하기 위해 Shuffling은 상당히 중요한 개념입니다. 이에 대해 간단히 정리해보았습니다. ​...</p>
+                <h2>Hive Metastore 구축 관련 문제와 해결과정</h2>
+                <p>​ 최근 Hive Metastore를 구축하면서 겪은 이슈와 해결과정을 기록해두려고 합니다. 사용 환경은 Spark 2.1.1 입니다....</p>
             </section>
         </a>
     

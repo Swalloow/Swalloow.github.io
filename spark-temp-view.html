@@ -34,81 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Spark의 Temporary View에 대하여" />
-        <meta property="og:description" content="<p>​</p>
-
-<p>SQL의 View 처럼 Spark에서도 View를 지원합니다.
-이 포스팅에서는 Spark 2.1.0 부터 생긴 <code class="highlighter-rouge">Spark Global Temporary View</code>와
-기존의 <code class="highlighter-rouge">TempView</code>가 어떤 차이가 있는지 그리고 어떻게 사용해야하는지 알아보곘습니다.</p>
-
-<p>​</p>
-
-<h3 id="spark-temporary-view">Spark Temporary View</h3>
-
-<p>공식문서를 보면 Spark의 Temporary View는 Session-Scope 입니다.
-무슨 말이냐 하면, View의 생명주기가 세션에 달려있다는 뜻 입니다.
-(여기에서 말하는 세션은 SparkSession 입니다)
-그리고, 세션이 종료되면 자동으로 View 테이블이 Drop 됩니다.</p>
-
-<p>​</p>
-
-<h3 id="createorreplacetempview">CreateOrReplaceTempView</h3>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
-<span class="k">print</span> <span class="n">df</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-<span class="n">df</span><span class="o">.</span><span class="n">CreateOrReplaceTempView</span><span class="p">(</span><span class="s">"TempView"</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">dropTempView</span><span class="p">(</span><span class="s">"TempView"</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">unpersist</span><span class="p">()</span></code></pre></figure>
-
-<p>먼저 기존에 사용하던 TempView를 보겠습니다.
-위의 예시는 PySpark 코드입니다.
-세 번째 줄의 <code class="highlighter-rouge">createOrReplaceTempView</code>가 View를 생성하는 함수인데,
-Spark은 Lazy evaluation이기 때문에 아직 실행 되기 이전 입니다.
-이후 두 번째 줄에서 count() 함수를 실행하면 생성되며,
-TempView라는 이름으로 메모리에 두고 사용할 수 있게 됩니다.
-다 사용한 다음에는 꼭 <code class="highlighter-rouge">unpersist</code> 함수로 할당된 메모리를 해제시켜줘야 합니다.</p>
-
-<p>위와 다르게 Temp View에 대한 명령만 내리고 마지막에 한번에 처리해도 되지만,
-여러 개로 쪼개서 명령을 내리는 것이 상대적으로 빠르다고 합니다.</p>
-
-<p>​</p>
-
-<h3 id="global-temporary-view">Global Temporary View</h3>
-
-<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">GLOBAL</span> <span class="k">TEMPORARY</span> <span class="k">VIEW</span> <span class="n">temp_view</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="k">FROM</span> <span class="n">tbl</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">global_temp</span><span class="p">.</span><span class="n">temp_view</span>
-<span class="k">DROP</span> <span class="k">VIEW</span> <span class="n">global_temp</span><span class="p">.</span><span class="n">temp_view</span></code></pre></figure>
-
-<p>위의 예시는 Spark SQL 코드입니다.
-Global Temporary View는 Spark 2.1.0에서 처음 소개되었으며, <code class="highlighter-rouge">GLOBAL TEMPORARY VIEW</code> 라는 키워드로 생성합니다.
-그렇게 선언하고 나면 일종의 임시 테이블로 접근할 수 있습니다.
-삭제할 때는 <code class="highlighter-rouge">DROP VIEW</code> 라는 키워드로 삭제합니다.</p>
-
-<p>하지만 Global Temporary View는 조금 위험합니다.
-이 View는 말 그대로 전역적인 상태로 남기 위해 시스템의 임시 데이터베이스로 연결됩니다.
-그래서 접근할 때, <code class="highlighter-rouge">global_temp</code>로 접근하게 됩니다.</p>
-
-<p>결론부터 말하자면 Global Temporary View는 모든 세션에서 공유 가능하며,
-Spark 어플리케이션이 종료되기 전까지 살아있게 됩니다.
-제 경우 Master 노드의 하드디스크에 저장되어 있었습니다.
-이렇게 되면 일단 IO로 인해 로딩속도가 상당히 느려지고,
-만일 View의 크기가 메모리 용량을 넘어갔더라면 Master가 내려갈 수도 있는 상황입니다.
-이와 같은 이유로 Global Temporary View는 신중히 사용하는 것이 좋습니다.</p>
-
-<p>​</p>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li><a href="https://spark.apache.org/docs/2.1.1/api/java/org/apache/spark/sql/catalog/Catalog.html">https://spark.apache.org/docs/2.1.1/api/java/org/apache/spark/sql/catalog/Catalog.html</a></li>
-  <li>
-    <p><a href="https://spark.apache.org/docs/latest/sql-programming-guide.html#global-temporary-view">https://spark.apache.org/docs/latest/sql-programming-guide.html#global-temporary-view</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-" />
+        <meta property="og:description" content="​ SQL의 View 처럼 Spark에서도 View를 지원합니다. 이 포스팅에서는 Spark 2.1.0 부터 생긴 Spark Global Temporary View와 기존의 TempView가 어떤..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

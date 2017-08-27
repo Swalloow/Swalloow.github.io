@@ -34,37 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Swalloow Blog" />
-        <meta property="og:description" content="<!-- < default -->
-<!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
-
-<!-- The big featured header  -->
-<header class="main-header {% if page.cover %}"
-        style="background-image: url({{ site.baseurl }}{{ page.cover }}) {% else %}no-cover{% endif %}">
-    <nav class="main-nav overlay clearfix">
-        {% if page.logo %}<a class="blog-logo" href="{{ site.baseurl }}"><img src="{{ site.baseurl }}{{ page.logo }}" alt="Blog Logo" /></a>{% endif %}
-        {% if page.navigation %}
-            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
-        {% endif %}
-    </nav>
-    <div class="vertical">
-        <div class="main-header-content inner">
-            <h1 class="page-title">{{ site.name }}</h1>
-            <h2 class="page-description">{{ site.description }}</h2>
-        </div>
-    </div>
-    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
-</header>
-
-<!-- The main content area on the homepage -->
-<main id="content" class="content" role="main">
-
-    <!-- The tag below includes the post loop - partials/loop.hbs -->
-    {% include loop.html %}
-
-</main>
-" />
+        <meta property="og:description" content="{% if page.logo %}{% endif %} {% if page.navigation %} Menu {% endif %} {{ site.name }} {{ site.description }}..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -155,30 +127,6 @@
     </div>
 
     <!-- This is the post loop - each post will be output using this markup -->
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/docker-command">Docker, DockerHub 명령어 정리</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>​ ​ 명령어를 정리하기 전에 Docker 시스템 아키텍처를 보면 이해하기 쉽습니다. Docker는 크게 클라이언트-서버 아키텍처 로 구성되어 있습니다. 그림처럼 우리가 명령어를 입력하면 클라이언트는 데몬과 통신하고 데몬이... <a class="read-more" href="/docker-command">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/DevOps'>Devops</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-02-22">22 Feb 2017</time>
-        </footer>
-    </article>
     
     <article class="post">
         <header class="post-header">
@@ -321,6 +269,30 @@
                 
             
             <time class="post-date" datetime="2017-02-12">12 Feb 2017</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/decison-randomforest">DecisionTree와 RandomForest에 대하여</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>​ 의사결정트리 (DecisionTree) 의사결정나무는 다양한 의사결정 경로와 결과를 나타내는데 트리 구조를 사용합니다. 보통 어렸을 때의 스무고개 놀이를 예로 드는 경우가 많습니다. ​ 위의 그림은 타이타닉 생존자를 찾는... <a class="read-more" href="/decison-randomforest">&raquo;</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
+            <!-- author -->
+            <a href='/author/Swalloow'>Swalloow</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href='/tag/DataScience'>Datascience</a>
+                       
+                
+            
+            <time class="post-date" datetime="2017-02-10">10 Feb 2017</time>
         </footer>
     </article>
     

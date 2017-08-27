@@ -34,52 +34,9 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="DataFrame을 MySQL에 저장하는 방법" />
-        <meta property="og:description" content="<p>​</p>
-
-<p>DataFrame을 MySQL에 저장하기 위해 먼저 커넥터가 필요합니다.
-파이썬3에서는 <code class="highlighter-rouge">MySQLdb</code>를 지원하지 않기 때문에, <code class="highlighter-rouge">pymysql</code>로 불러와야 합니다.
-꼭 pymysql이 아니어도 상관없지만, 사용해보면 <code class="highlighter-rouge">mysql-connector</code> 보다 빠르다는걸 체감할 수 있습니다.
-먼저, 필요한 패키지를 설치해줍니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># python3</span>
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">pymysql</span>
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">sqlalchemy</span></code></pre></figure>
-
-<p>​</p>
-
-<h2 id="sqlalchemy-pymysql-mysqldb">SQLAlchemy, pymysql, MySQLdb</h2>
-
-<p><code class="highlighter-rouge">install_as_MySQLdb()</code> 함수를 통해 MySQLdb와 호환 가능합니다.
-이제 sqlalchemy를 통해 DB에 연결할 수 있습니다.
-주소에서 root, password, table은 DB에 맞게 변경해야 합니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
-
-<span class="c"># MySQL Connector using pymysql</span>
-<span class="n">pymysql</span><span class="o">.</span><span class="n">install_as_MySQLdb</span><span class="p">()</span>
-<span class="kn">import</span> <span class="nn">MySQLdb</span>
-
-<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">"mysql+mysqldb://root:"</span><span class="o">+</span><span class="s">"password"</span><span class="o">+</span><span class="s">"@localhost/table_name"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span>
-<span class="n">conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span></code></pre></figure>
-
-<p>​</p>
-
-<h2 id="mysql-">MySQL에 저장하기</h2>
-
-<p>이제 DataFrame을 MySQL에 테이블 형태로 저장할 차례입니다.
-아래와 같이 pandas의 <code class="highlighter-rouge">to_sql()</code> 함수를 사용하여 저장하면 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s">'append'</span><span class="p">)</span></code></pre></figure>
-
-<p>자주 사용할 수 있으니 함수로 따로 설정해주면 편합니다.</p>
-
-<script src="https://gist.github.com/Swalloow/9dbbba9579b87548c71af68337f95299.js"></script>
-
-<p>​</p>
-" />
+        <meta property="og:description" content="​ DataFrame을 MySQL에 저장하기 위해 먼저 커넥터가 필요합니다. 파이썬3에서는 MySQLdb를 지원하지 않기 때문에, pymysql로 불러와야 합니다. 꼭 pymysql이 아니어도 상관없지만,..." />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
 
     <meta name="twitter:card" content="summary_large_image" />
