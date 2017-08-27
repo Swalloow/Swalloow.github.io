@@ -8,6 +8,36 @@
     
       
       <item>
+        <title>Spark groupByKey vs reduceByKey 성능 비교</title>
+        
+          <description>&lt;p&gt;​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 22 Aug 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//spark-reduceByKey-groupByKey</link>
+        <guid isPermaLink="true">http://swalloow.github.io//spark-reduceByKey-groupByKey</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Spark의 Shuffling 이해하기</title>
+        
+          <description>&lt;p&gt;​&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 22 Aug 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//spark-shuffle</link>
+        <guid isPermaLink="true">http://swalloow.github.io//spark-shuffle</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Hive Metastore 구축 관련 문제와 해결과정</title>
         
           <description>&lt;p&gt;​&lt;/p&gt;
