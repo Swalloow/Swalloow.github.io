@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Swalloow Blog - Articles</title>
+    <title>Swalloow Blog</title>
     <description>About Data Science, Data Engineering</description>
     <link>
     http://swalloow.github.io/</link>
+    
+      
+      <item>
+        <title>Spark의 Shuffling 이해하기</title>
+        
+          <description>​ 효율적인 Spark Application을 개발하기 위해 Shuffling 은 상당히 중요한 개념입니다. 이에 대해 간단히 정리해보았습니다. ​ Spark Architecture: Shuffle Shuffle을...</description>
+        
+        <pubDate>Fri, 25 Aug 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//spark-shuffling</link>
+        <guid isPermaLink="true">http://swalloow.github.io//spark-shuffling</guid>
+      </item>
+      
     
       
       <item>
