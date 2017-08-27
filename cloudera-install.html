@@ -34,9 +34,79 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="AWS 환경에서 Cloudera Manager 설치하기" />
-        <meta property="og:description" content="About Data Science, Data Engineering" />
+        <meta property="og:description" content="<p>​</p>
+
+<p>클라우데라 매니저는 하둡 에코시스템을 쉽게 설치하고 관리할 수 있도록 도와주는 도구입니다.
+이를 이용하여 AWS EC2 인스턴스에 하둡 클러스터를 설치하고 실행시키는 방법에 대해 정리해보았습니다.
+내 노트북에 가상머신 여러 개를 띄우기 힘든 경우에 좋은 대안이 될 수 있습니다.</p>
+
+<p>​</p>
+
+<h3 id="cloudera-manager">Cloudera Manager</h3>
+
+<p>클라우데라는 데이터 인프라 관련 솔루션과 컨설팅을 하는 하둡 전문 기업입니다.
+하둡의 창시자 “더그 커팅”도 클라우데라의 수석 아키텍트로 일하고 있습니다.
+Impala, Hue 등 여러 오픈소스도 개발하고 있으며,
+오픈소스 하둡 프로젝트로부터 사람들이 쉽게 설치할 수 있도록 배포판(CDH)을 만들어서 제공해줍니다.
+Cloudera Manager에는 유료, 무료버전이 있는데 여기에서는 무료버전(Express)을 설치하겠습니다.</p>
+
+<p>​</p>
+
+<h3 id="install">Install</h3>
+
+<p><img src="https://hadoopabcd.files.wordpress.com/2015/01/2.png?w=1378&amp;h=510" alt="" /></p>
+
+<p>설치는 AWS EC2 m4.large / CentOS / 8GiB 에서 진행하였습니다.
+프리티어인 t2.micro 의 경우 내려가거나 설치가 안될 수 있기 때문에 제외하고 아무거나 쓰셔도 상관없습니다.</p>
+
+<p><img src="https://hadoopabcd.files.wordpress.com/2015/01/3.png" alt="" /></p>
+
+<p>클러스터의 수에 따라 인스턴스를 생성해줍니다. 그리고 Elastic IP로 public IP를 할당시켜줍니다.
+Cloudera Manager는 기본으로 7180 포트를 사용하기 때문에 Inbound에서 열어주어야 합니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>yum install wget
+<span class="gp">$ </span>wget http://archive.cloudera.com/cm4/installer/latest/cloudera-manager-installer.bin
+<span class="gp">$ </span>chmod +x cloudera-manager-installer.bin
+<span class="gp">$ </span>./cloudera-manager-installer.bin</code></pre></figure>
+
+<p>먼저 JDK를 설치한 다음, 위의 명령어를 통해 cloudera-manager-installer를 설치하고 실행시켜줍니다.</p>
+
+<p><img src="/assets/images/cloudera-login.png" alt="" /></p>
+
+<p>설치가 완료되고 나서, <code class="highlighter-rouge">localhost:7180</code>으로 접속하면 다음과 같은 로그인 화면이 나타납니다.
+초기 유저 아이디와 패스워드는 admin 입니다. 이후에는 본인이 원하는 환경에 맞추어 설치를 진행하면 됩니다.</p>
+
+<p>​</p>
+
+<h3 id="trouble-shooting">Trouble Shooting</h3>
+
+<p><img src="/assets/images/error.png" alt="Error1" /></p>
+
+<p><code class="highlighter-rouge">Fatal Error: SELinux is enabled. It must be disabled to install and use this product.</code>
+보안 관련된 문제인데 <code class="highlighter-rouge">vi /etc/selinux/config</code>로 들어가서 SELinux를 해제시켜주면 해결 됩니다.</p>
+
+<p>​</p>
+
+<p><img src="/assets/images/fail.png" alt="Error2" /></p>
+
+<p>CDH를 설치하기 위해 <code class="highlighter-rouge">sudo vi /etc/ssh/sshd_config</code>에 들어가
+임시로 루트 계정의 SSH 접속을 허용해주어야 합니다.
+설치후에는 다시 잠금 설정해주셔도 됩니다.</p>
+
+<p>​</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li>
+    <p><a href="http://www.cloudera.com/documentation/manager/5-1-x/Cloudera-Manager-Installation-Guide/cm5ig_install_on_ec2.html">http://www.cloudera.com/documentation/manager/5-1-x/Cloudera-Manager-Installation-Guide/cm5ig_install_on_ec2.html</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+" />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="/assets/images/cover_main.jpg" />
+        <meta property="og:image" content="" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

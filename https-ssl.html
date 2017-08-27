@@ -34,9 +34,83 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="HTTPS와 SSL 인증서, 그리고 SHA1 알고리즘" />
-        <meta property="og:description" content="About Data Science, Data Engineering" />
+        <meta property="og:description" content="<p>​   ​</p>
+
+<p>크롬 업데이트 이후 몇몇 웹 페이지는 브라우저 주소 창에 <code class="highlighter-rouge">안전하지 않음</code>이 나타나고,
+아니면 자물쇠 모양에 <code class="highlighter-rouge">안전함</code>이 표시되는 것을 볼 수 있습니다.
+오늘은 그 두 가지 방식에 어떤 차이가 있는지, HTTPS와 SSL 인증서에 대해 알아보고
+최근 구글과 리누스 토발즈의 언급으로 이슈화 되고 있는 SHA1 암호화 알고리즘에 대해 정리해보려 합니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="http-https">HTTP와 HTTPS</h2>
+
+<p>우선 간단히 웹 통신규약에 대해 설명하자면, <em>HTTP는 Hypertext 인 HTML을 전송하기 위한 통신규약</em> 을 의미합니다.
+HTTP는 암호화되지 않은 방법으로 데이터를 전송하기 때문에 서버와 클라이언트가 주고 받는 메시지를 확인하는 것이 매우 쉽습니다.
+심각한 예를 들면, 로그인을 위해서 서버로 비밀번호를 전송하거나 중요한 기밀 문서를 열람하는 과정에서 악의적인 감청이나 데이터의 위변조 등이 일어날 수 있습니다.</p>
+
+<p>이를 보완하기 위해 나온 것이 보안이 강화된 <strong>HTTPS</strong> 입니다.
+HTTPS는 보안을 강화하기 위해 통신에서 일반 텍스트를 이용하지 않고 <strong>SSL이나 TLS 프로토콜</strong> 을 통해 세션 데이터를 암호화합니다.
+이를 통해 데이터의 보안을 더 강화할 수 있지만 전적으로 웹 브라우저에서의 구현 정확도와 서버 소프트웨어, 지원하는 암호화 알고리즘에 달려있습니다.</p>
+
+<p>결국 크롬에 <code class="highlighter-rouge">안전하지 않음</code>으로 표기되는 페이지는 보안 인증서가 없는 페이지입니다.
+반면에, <code class="highlighter-rouge">안전함</code>으로 표기되는 페이지는 기관으로부터 인증서를 받은 페이지입니다.
+실제로 인터넷 익스플로러의 인터넷 옵션을 확인해보면 CA 라는 탭에서 인증서를 확인하실 수 있습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="ssl--">SSL 통신 과정</h2>
+
+<p>그렇다면 HTTPS에 포함된 SSL 프로토콜이 어떤 과정을 통해 동작하는지 간단히 알아보겠습니다.
+다시 설명하자면, <em>SSL 인증서는 클라이언트와 서버간의 통신을 제3자가 보증해주는 전자화된 문서</em> 라고 보시면 됩니다.
+처음 클라이언트와 서버가 데이터를 주고 받기 위해서는 준비과정이 필요합니다. 이를 <strong>핸드쉐이크(HandShake)</strong> 라고 부릅니다.</p>
+
+<p><img src="/assets/images/ssl-process.jpg" alt="ssl-process" /></p>
+
+<ol>
+  <li>
+    <p>먼저, 클라이언트가 서버에 접속(Client Hello)한 직후에 서버는 클라이언트에게 인증서 정보를 전달(Server Hello)합니다.</p>
+  </li>
+  <li>
+    <p>클라이언트(브라우저)는 이미 모든 CA 인증기관들에 대한 정보를 가지고 있기 때문에 공개키를 통해
+전달받은 인증서를 복호화하고 신뢰할 수 있는 서버인지 확인합니다.</p>
+  </li>
+  <li>
+    <p>안전함이 확인되면 클라이언트는 대칭키 암호화 방식을 통해 비밀키를 생성하고 이를 공개키 방식으로 암호화해서 서버에게 전달합니다.</p>
+  </li>
+  <li>
+    <p>서버는 자신의 비공개 키로 복호화하여 서버와 클라이언트가 세션키를 공유하게 되면, 핸드쉐이크 과정의 종료를 서로에게 알립니다.</p>
+  </li>
+  <li>
+    <p>이제 세션을 통해 서버와 클라이언트가 데이터를 주고 받게 됩니다.
+여기서 세션키 값을 이용해서 대칭키 방식으로 암호화하기 때문에 HTTP 보다 안전합니다.</p>
+  </li>
+  <li>
+    <p>데이터의 전송이 끝나면 SSL 통신이 끝났음을 서로에게 알려줍니다. 그리고 통신에서 사용한 대칭키인 세션키를 폐기합니다.</p>
+  </li>
+</ol>
+
+<p>​   ​</p>
+
+<h2 id="sha1------">SHA1 암호화 알고리즘은 더 이상 안전하지 않다?</h2>
+
+<p>이 논란은 구글이 2월 중순쯤에 낡은 암호화 알고리즘 SHA1를 깨뜨리면서 시작되었습니다.
+구글은 SHA1 알고리즘 해시값의 고유성을 깨뜨릴 수 있는 <strong>‘섀터드(SHAttered)’</strong> 라는 방법을 선보이면서,
+SHA1에 의존하는 기술은 믿음직하지 않다는 점을 보여줬습니다.</p>
+
+<p>여기서 섀터드 기법을 소개한 연구자들은 <em>Git이 SHA1에 의존하기 때문에 안전하지 않다</em> 고 말했습니다.
+이에 리누스 토발즈는 <em>“깃은 데이터를 해시하기만 하는 게 아니라, 거기에 타입과 길이 필드를 측량한다”</em> 고 말하면서
+당장은 하늘이 무너지는게 아니니 상관없다고 답변했습니다.</p>
+
+<p>물론 당장은 아니지만 불안함에 많은 기관들이 SHA1 방식에서 <strong>SHA2 또는 SHA256</strong> 으로 옮겨가고 있습니다.
+대표적으로 크롬, 파이어폭스 등의 브라우저들이 SHA1 인증서 퇴출에 노력하고 있고, 인터넷뱅킹이나 비트코인 같은 경우 SHA256 방식을 사용합니다.</p>
+
+<p>리누스 토발즈의 글 : <a href="https://plus.google.com/+LinusTorvalds/posts/7tp2gYWQugL">https://plus.google.com/+LinusTorvalds/posts/7tp2gYWQugL</a></p>
+
+<p>​   ​</p>
+" />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="/assets/images/cover_main.jpg" />
+        <meta property="og:image" content="" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

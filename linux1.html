@@ -34,9 +34,111 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="자주 사용하는 리눅스 명령어 정리 (1) - 기본 명령어" />
-        <meta property="og:description" content="About Data Science, Data Engineering" />
+        <meta property="og:description" content="<p>​   ​</p>
+
+<p>리눅스는 리누스 토발즈가 1991년 처음 개발을 시작한 오픈소스 소프트웨어이다.
+보통 윈도우를 오래 사용하다보면 터미널보다 GUI에 익숙해지기 마련이다.
+하지만 최근 맥북으로 갈아타면서 커멘드라인이 편하다는 걸 알게 되었고,
+앞으로 좀 더 생산성을 높이기 위해 몇 가지 유용한 명령어들을 정리해보려 한다.</p>
+
+<p>생활코딩에 리눅스에 대해 잘 정리한 강의가 있어 참고하면 좋다.
+<a href="https://opentutorials.org/course/2598">https://opentutorials.org/course/2598</a></p>
+
+<p>​   ​</p>
+
+<h2 id="section">패키지 매니저</h2>
+
+<p>리눅스는 패키지 매니저를 통해 설치되어 있지 않은 프로그램을 설치한다.
+맥에서 사용하는 Brew를 떠올리면 이해하기 쉽다.</p>
+
+<ul>
+  <li>Ubuntu : apt-get</li>
+  <li>CentOS : yum</li>
+  <li>OS X : brew</li>
+</ul>
+
+<p>위와 같이 리눅스 배포판에 따라 패키지 매니저가 조금씩 다르지만, 사용법은 대체로 비슷한 편이다.
+예를 들어 패키지를 설치할 때는 <code class="highlighter-rouge">apt-get install "package name"</code> 이런 식이다.
+모든 패키지 매니저가 설치/업데이트/삭제 명령어를 가지고 있으며,
+설치된 패키지를 관리하기 위한 명령어도 존재한다.</p>
+
+<p>​   ​</p>
+
+<h2 id="alias-">alias 명령어</h2>
+
+<p>한번 설정해놓으면 이것만큼 편한게 없다.
+바로 예시를 드는게 더 이해하기 편할거 같다.</p>
+
+<p>예를 들어, 서버의 원격주소로 매일 접속해야 하는 상황이라고 가정해보자.
+보통은 매번 <code class="highlighter-rouge">ssh username@address -p port</code> 이런식으로 입력해야 할 것이다.
+하지만, alias를 설정해놓으면 커스텀 명령어로 지정하여 간단히 접속할 수 있다.</p>
+
+<ol>
+  <li>먼저 ~/.bashrc로 들어간다. (zsh를 사용한다면, ~/.zshrc로 들어가자)</li>
+  <li><code class="highlighter-rouge">alias login = 'ssh username@address -p port'</code> 한 줄을 추가한다.</li>
+  <li>source ~/.bashrc로 업데이트 해준다.</li>
+</ol>
+
+<p>이후에는 접속할 때 <code class="highlighter-rouge">login</code> 이라는 명령어만 입력하면 된다.
+​</p>
+
+<p>​   ​</p>
+
+<h2 id="section-1">명령어 순차실행과 파이프라인</h2>
+
+<p>사용하다보면 여러 명령어를 연속적으로 실행해야하는 경우가 많다.</p>
+
+<p>이럴 때는 Sequence와 Pipeline 개념을 알아두면 편하다.
+예를 들어, commit과 push 명령어를 연속적으로 실행하고 싶다고 가정해보자.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git add -A;git push</code></pre></figure>
+
+<p>위와 같이 중간에 세미콜론만 추가하면 된다.</p>
+
+<p>이번에는 실행중인 특정 프로세스 번호를 찾아야 한다고 가정해보자.
+처음이라면 <code class="highlighter-rouge">ps -ef</code> 로 프로세스를 직접 확인할 것이다.
+하지만 파이프라인과 grep 명령어를 사용한다면 다음과 같이 한줄로 끝난다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ps -ef | grep process_name</code></pre></figure>
+
+<p>​
+​   ​</p>
+
+<h2 id="nohup">백그라운드 실행 - nohup</h2>
+
+<p>어떤 작업을 백그라운드로 실행을 하면 별도의 창으로 켜놓지 않아도
+하나의 프로세스로 계속 돌아가는 것을 확인할 수 있다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">nohup name &amp;</code></pre></figure>
+
+<p>리눅스에서는 <code class="highlighter-rouge">nohup</code> 이라는 명령어로 실행할 수 있다.
+실행하고 나면 <code class="highlighter-rouge">nohup.out</code> 이라는 파일이 생기는데
+cat 명령어로 확인해보면 로그가 찍혀있는 것을 볼 수 있다.
+실행중지 시킬 때는 <code class="highlighter-rouge">kill</code> 명령어로 프로세스를 죽이면 된다.</p>
+
+<p>​   ​</p>
+
+<h2 id="cron-crontab">스케줄링을 통한 주기적인 실행 - cron, crontab</h2>
+
+<p>crontab은 일종의 리눅스 작업 스케줄러이다.
+이 명령어를 사용하면 특정 시간에 내가 원하는 특정 명령어나 스크립트를 실행시킬 수 있다.
+보통 주기적인 크롤링에 사용하기도 한다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /root/script.sh</code></pre></figure>
+
+<p>이렇게 설정하면 1분마다 script.sh를 실행한다.
+앞의 별 다섯개는 순서대로 <code class="highlighter-rouge">"분,시,일,월,요일"</code>을 뜻한다.
+내가 실행중인 스케줄러를 관리하기 위한 명령어는 다음과 같다.</p>
+
+<ul>
+  <li>crontab -l : 실행중인 cron 확인</li>
+  <li>crontab -r : 사용자의 예약작업을 모두 삭제</li>
+</ul>
+
+<p>​   ​</p>
+" />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="/assets/images/cover_main.jpg" />
+        <meta property="og:image" content="" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

@@ -34,9 +34,67 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="파이썬을 위한 Dockerfile 작성하기" />
-        <meta property="og:description" content="About Data Science, Data Engineering" />
+        <meta property="og:description" content="<p>​   ​</p>
+
+<p>Docker가 처음이라면, 이전 포스팅을 참고하시기 바랍니다.</p>
+
+<ul>
+  <li><a href="https://swalloow.github.io/docker-install">Docker 간편한 설치부터 실행까지</a></li>
+  <li><a href="https://swalloow.github.io/docker-command">Docker, DockerHub 명령어 정리</a></li>
+  <li>
+    <p><a href="https://swalloow.github.io/dockerfile">파이썬을 위한 Dockerfile 작성하기</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="flask-application">Flask Application</h3>
+
+<p>Dockerfile은 일종의 이미지 설정파일입니다. <code class="highlighter-rouge">build</code> 명령어를 통해 이미지를 생성할 수 있습니다.
+파이썬 웹 어플리케이션을 Docker로 실행시키는 예제를 통해 천천히 정리해보겠습니다.</p>
+
+<script src="https://gist.github.com/Swalloow/deef1f6d161198ad65d74db54466b921.js"></script>
+
+<p>먼저 위와 같이 간단한 플라스크 웹 어플리케이션을 작성합니다.
+필요한 패키지는 requirements.txt로 관리합니다.
+<code class="highlighter-rouge">pip freeze &gt; requirements.txt</code> 명령어를 통해 파일을 생성할 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">Flask==0.12</code></pre></figure>
+
+<p>​   ​</p>
+
+<h3 id="dockerfile-">Dockerfile 작성하기</h3>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">FROM ubuntu:latest
+MAINTAINER your_name "email@gmail.com"
+RUN apt-get update -y
+RUN apt-get install -y python-pip python-dev build-essential
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+ENTRYPOINT <span class="p">[</span><span class="nv">"python"</span><span class="p">]</span>
+CMD <span class="p">[</span><span class="nv">"app.py"</span><span class="p">]</span></code></pre></figure>
+
+<p>위와 같이 Dockerfile을 작성하시면 됩니다.
+간단히 설명하자면, ubuntu 이미지를 받아와서 파이썬 환경설정을 하고
+현재 경로에 있는 폴더를 복사해서 파이썬 패키지를 설치하고 앱을 실행시키는 이미지입니다.</p>
+
+<p>​   ​</p>
+
+<h3 id="dockerfile---">Dockerfile 빌드 및 실행하기</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>docker build -t flask-application:latest .
+<span class="gp">$ </span>docker run -d -p 5000:5000 flask-application</code></pre></figure>
+
+<p><code class="highlighter-rouge">docker build [name]</code> 명령어를 통해 이미지를 빌드합니다.
+그리고 <code class="highlighter-rouge">docker run [image]</code> 명령어를 통해 컨테이너를 실행시킵니다.
+<code class="highlighter-rouge">-p</code> 옵션은 포트를 지정하며, <code class="highlighter-rouge">-d</code> 옵션은 백그라운드로 실행시키는 옵션입니다.
+5000번 포트를 확인해보면 플라스크 어플리케이션이 실행된 것을 확인할 수 있습니다.</p>
+
+<p>​   ​</p>
+" />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="/assets/images/cover_main.jpg" />
+        <meta property="og:image" content="" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

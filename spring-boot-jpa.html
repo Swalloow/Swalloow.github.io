@@ -34,9 +34,70 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Spring JPA, MyBatis" />
-        <meta property="og:description" content="About Data Science, Data Engineering" />
+        <meta property="og:description" content="<p>​</p>
+
+<p>최근 스프링 부트를 공부하면서 이것저것 정리하는 중 입니다.</p>
+
+<p>​</p>
+
+<h3 id="jpa-hibernate">JPA, Hibernate</h3>
+
+<p>스프링 JPA와 MyBatis 모두 <strong>Persistance API</strong> 입니다.
+JPA는 기존의 EJB와 다른 POJO 기반의 ORM 모델을 제공하며,
+대표적으로 <strong>Hibernate</strong> 프레임워크 구현체가 있습니다.</p>
+
+<p>먼저, ORM이라는 개념에 대해 알아야 합니다.
+<strong>ORM(Object Relational Mapper)</strong> 는 말 그대로 자바 객체와
+데이터베이스의 Entity를 그대로 연결하는 것을 말합니다.
+따라서, 모든 SQL문은 Hibernate의 HSQL을 통해 이루어집니다.</p>
+
+<p>이런 개념이 생겨나게 된 이유를 생각해보면
+객체지향적으로 데이터를 관리할 수 있기 때문에 비즈니스 로직에 집중 할 수 있으며,
+객체지향 개발이 가능하다. 또한, 로직을 쿼리보다 객체에 집중할 수 있다.
+따라서, 더 빠른 개발이 가능합니다.</p>
+
+<p>​</p>
+
+<h2 id="mybatis">MyBatis</h2>
+
+<p>MyBatis는 <strong>SQL Mapper</strong> 입니다.
+기존에 JDBC를 사용할 때는 DB와 관련된 여러 복잡한 설정(Connection) 들을 다루어야 했습니다.
+SQL Mapper는 자바 객체를 실제 SQL문에 연결함으로써,
+빠른 개발과 편리한 테스트 환경을 제공해주었습니다.</p>
+
+<p>MyBatis 프로젝트는 원래 Apache Foundation의 iBatis 였으나,
+생산성, 개발 프로세스, 커뮤니티 등의 이유로 Google Code로 이전되면서 이름이 바뀌었습니다.
+마이그레이션이 되면서 바뀐 차이점은 아래와 같습니다.</p>
+
+<ul>
+  <li>JDK 1.5, Annotation</li>
+  <li>
+    <p>Dynatic SQL, XML Element</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="reference">Reference</h2>
+
+<p>전 세계적으로 다양한 언어와 프레임워크가 ORM을 지원하는 방향으로
+움직이고 있으며, 많은 회사에서 생산성이 높다는 사실을 입증했습니다.</p>
+
+<p>하지만, MyBatis를 쓰더라도 본인이 쿼리 작성 능력이 뛰어나고,
+쿼리 최적화에 자신이 있다면, 더 생산성이 높을 수 있습니다.</p>
+
+<p>반대로, 데이터베이스 모델링에 대한 개념이 없다면,
+Hibernate를 쓰더라도 성능 문제와 데이터 손실이 생길 수 있습니다.
+ORM도 결국 SQL을 사용한 기술입니다.
+따라서 ORM을 사용하더라도 어떤 SQL이 실행될 지 알아야 할 필요가 있습니다.
+결국 상황을 잘 고려해서 본인에게 생산성이 더 높은 프레임워크를 선택하는 것이 옳은 것 같습니다.</p>
+
+<p>OKKY 논쟁 글 : <a href="https://okky.kr/article/286812">https://okky.kr/article/286812</a></p>
+
+<p>​</p>
+" />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="/assets/images/cover_main.jpg" />
+        <meta property="og:image" content="" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

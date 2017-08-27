@@ -34,9 +34,79 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Jupyter에서 Scala로 Spark 사용하는 방법" />
-        <meta property="og:description" content="About Data Science, Data Engineering" />
+        <meta property="og:description" content="<p>​   ​</p>
+
+<p>이 글은 평소에 <strong>Jupyter Notebook</strong> 에 익숙해져있는 분들께 유용할 듯 합니다.
+Zeppelin Notebook을 설정하는 방법은 <a href="http://swalloow.github.io/spark-zeppelin-install">이전 포스팅</a>을 참고하시면 됩니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="apache-toree">Apache Toree</h2>
+
+<p><img src="/assets/images/jupyter-toree.png" alt="Jupyter-Toree" /></p>
+
+<p><strong>Apache Toree</strong> 는 Jupyter 커널을 통해 Spark에 접속하도록 해주는 아파치 오픈소스 프로젝트입니다.
+기존의 IPython Notebook은 파이썬에 제한되어 있었지만
+Jupyter Kernel을 통해 다른 언어까지 확장 가능하도록 바뀌었습니다 (왼쪽 그림 참조).</p>
+
+<p>여기에서 더 나아가 Apache Toree는 <strong>Toree Kernel</strong> 을 통해 바로 Spark Driver에 연결함으로써,
+Jupyter에서 Scala 언어로 Spark Driver/Context를 사용할 수 있게 만들었습니다.</p>
+
+<p>Toree가 Zeppelin과 다른 점은 <strong>Jupyter protocol</strong> 을 사용할 수 있다는 점 입니다.
+이미 수많은 생태계가 구축되어 있는 Jupyter에서 Spark가 잘 돌아간다면 굳이 Zeppelin을 쓸 필요가 있을까요 (<em>시각화가 어마어마한 강점이긴 합니다</em>).
+Zeppelin도 결국 Jupyter와 같은 플랫폼이 되기를 희망할거라 생각합니다.</p>
+
+<p>GitHub : <a href="https://github.com/apache/incubator-toree">https://github.com/apache/incubator-toree</a></p>
+
+<p>​   ​</p>
+
+<h2 id="jupyter-notebook-toree-">Jupyter Notebook에 Toree 설치하기</h2>
+
+<p>Jupyter 노트북 커널 설정하는 방법은 <a href="http://swalloow.github.io/jupyter-notebook-kernel">Jupyter Notebook 다중커널 설정하기</a>을,
+Scala와 Spark을 설치하는 방법은 <a href="http://swalloow.github.io/spark-zeppelin-install">OS X에서 Homebrew로 Spark, Zeppelin 설치하기</a>를 참고하시기 바랍니다.</p>
+
+<p>Toree는 아직 pre 버전만 존재하기 때문에 <code class="highlighter-rouge">--pre</code> 옵션을 붙여주시거나 파이썬 패키지를 통해 설치해주시면 됩니다.
+설치가 완료되면 jupyter kernel에 toree kernel을 설치해주는 과정이 필요한데 명령어를 통해 이 과정을 자동으로 진행합니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>pip install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz
+<span class="gp">$ </span>jupyter toree install</code></pre></figure>
+
+<p>혹시 <code class="highlighter-rouge">FileNotFoundError: [Errno 2] No such file or directory: '/usr/local/spark/python/lib'</code>
+이런 오류가 난다면, Spark 경로 환경변수를 읽지 못하는 문제입니다. <strong>Homebrew</strong> 를 통해 설치하셨다면 다음과 같이 환경변수를 등록해주시면 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span><span class="nb">export </span><span class="nv">SPARK_HOME</span><span class="o">=</span>/usr/local/Cellar/apache-spark/2.1.0/libexec</code></pre></figure>
+
+<p>​   ​</p>
+
+<h2 id="section">잘 동작하는지 테스트를 해보자</h2>
+
+<p><img src="/assets/images/toree-kernel.png" alt="Toree-Kernel" /></p>
+
+<p>잘 설치되었다면 <code class="highlighter-rouge">new</code> 했을 때 <code class="highlighter-rouge">Apache-Toree Scala</code>가 보이실 겁니다.
+잘 동작하는지 간단한 WordCounter 예제를 실행시켜 보시면 잘 동작하는 것을 확인할 수 있습니다.</p>
+
+<p><img src="/assets/images/toree-tuto.png" alt="Toree-Tuto" /></p>
+
+<p>​   ​</p>
+
+<h2 id="docker--jupyter--">Docker를 통해 Jupyter 설정하는 방법</h2>
+
+<p>나는 이 모든 것이 귀찮다! 라면 Docker를 통해 노트북을 실행시키면 됩니다.
+제가 Docker를 통해 Notebook을 사용하지 않는 이유는 딱 한 가지 입니다.
+Spark만 쓰고 싶었는데 기타 등등이 많이 설치되어 있어서 컨테이너 메모리가 무려 <strong>4기가</strong> 나 됩니다…
+그래도 쓰겠다 싶으신 분들은 아래 링크를 참고하시면 됩니다.</p>
+
+<p><a href="https://hub.docker.com/r/jupyter/all-spark-notebook/">https://hub.docker.com/r/jupyter/all-spark-notebook/</a></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>docker pull jupyter/all-spark-notebook
+<span class="gp">$ </span>docker run -it --rm -p 8888:8888 jupyter/all-spark-notebook</code></pre></figure>
+
+<p>이렇게 실행하고 8888번 포트로 접속하면 노트북을 실행할 수 있습니다.</p>
+
+<p>​   ​</p>
+" />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="/assets/images/cover_main.jpg" />
+        <meta property="og:image" content="" />
     
 
     <meta name="twitter:card" content="summary_large_image" />

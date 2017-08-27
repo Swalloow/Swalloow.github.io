@@ -34,9 +34,59 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="리눅스 시스템 모니터링 명령어 정리" />
-        <meta property="og:description" content="About Data Science, Data Engineering" />
+        <meta property="og:description" content="<p>​   ​</p>
+
+<p>리눅스 시스템 모니터링을 위한 명령어에 대해 정리해보았습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="top">프로세스 모니터링 명령어 - top</h2>
+
+<p><img src="/assets/images/linux_top.png" alt="top" /></p>
+
+<p><strong>top</strong> 명령어는 커널을 통하여 관리되는 프로세스들의 정보(메모리 사용률, CPU 사용률, 상태정보 등)를 확인할 수 있는 명령어입니다.
+응용프로그램을 강제로 종료시키고 싶을 때, 실행중인 프로세스를 찾아 <code class="highlighter-rouge">kill</code> 명령어를 통해 강제종료시킬 수도 있습니다.</p>
+
+<p>OS X에서는 <code class="highlighter-rouge">-o</code> 옵션을 통해, 리눅스에서는 <code class="highlighter-rouge">shift + f</code> 명령어를 통해 프로세스를 key에 따라 정렬할 수 있습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="vmstat-iostat-sar">시스템 리소스 정보 - vmstat, iostat, sar</h2>
+
+<p><img src="/assets/images/linux_vmstat.png" alt="vmstat" /></p>
+
+<p><strong>vmstat</strong> 명령어는 <em>virtual memory statistics</em> 의 줄임말로 가상메모리 등 다양한 리소스 정보를 제공합니다.
+OS X에서는 <code class="highlighter-rouge">vm_stat</code> 명령어로, 리눅스에서는 <code class="highlighter-rouge">vmstat</code> 명령어로 확인하실 수 있습니다.</p>
+
+<p><img src="/assets/images/linux_iostat.png" alt="iostat" /></p>
+
+<p><strong>iostat</strong> 명령어는 sysstat에서 가장 기본적인 명령어로 CPU 및 디스크 입출력에 대한 기본정보를 제공합니다.</p>
+
+<p><img src="/assets/images/linux_sar.png" alt="sar" /></p>
+
+<p><strong>sar</strong> 명령어는 시스템 활동 모니터링에 유용합니다.
+특히 <code class="highlighter-rouge">-r, -f</code> 옵션을 통해 CPU, 메모리 사용률을 날짜, 시간 대 별로 확인할 수 있습니다.</p>
+
+<p>​   ​</p>
+
+<h2 id="linux-sysstat--">Linux sysstat 패키지 설치</h2>
+
+<p>CentOS, Ubuntu에서는 앞서 말씀드린 <code class="highlighter-rouge">sar, vmstat</code> 등의 명령어를 사용하기 위해서 <code class="highlighter-rouge">sysstat</code> 패키지를 설치해야 합니다.
+아래의 명령어를 통해 설치할 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">// CentOS, Ubuntu
+<span class="gp">$ </span>yum install sysstat -y
+<span class="gp">$ </span>apt install sysstat -y</code></pre></figure>
+
+<p>만일 권한 오류나 명령어를 찾을 수 없다는 오류가 나타난다면 아래의 설정을 통해 해결할 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>sudo vi /etc/default/sysstat
+<span class="gp">$ </span><span class="nv">ENABLED</span><span class="o">=</span>”true”</code></pre></figure>
+
+<p>​   ​</p>
+" />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content="/assets/images/cover_main.jpg" />
+        <meta property="og:image" content="" />
     
 
     <meta name="twitter:card" content="summary_large_image" />
