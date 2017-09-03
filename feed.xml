@@ -21,9 +21,9 @@
     
       
       <item>
-        <title>Spark groupByKey vs reduceByKey 성능 비교</title>
+        <title>Spark groupByKey vs reduceByKey</title>
         
-          <description>​ Spark Application 성능 개선을 위해 groupByKey, reduceBykey에 대해 알아보겠습니다. ​ groupByKey vs reduceBykey # reduceByKey spark.textFile(&quot;hdfs://...&quot;) .flatMap(lambda line: line.split())...</description>
+          <description>​ Spark Application 성능 개선을 위한 groupByKey, reduceBykey에 대해 알아보겠습니다. ​ groupByKey vs reduceBykey # reduceByKey spark.textFile(&quot;hdfs://...&quot;) .flatMap(lambda line: line.split())...</description>
         
         <pubDate>Tue, 22 Aug 2017 19:18:00 +0900</pubDate>
         <link>
@@ -36,7 +36,7 @@
       <item>
         <title>Hive Metastore 구축 관련 문제와 해결과정</title>
         
-          <description>​ 최근 Hive Metastore를 구축하면서 겪은 이슈와 해결과정을 기록해두려고 합니다. 사용 환경은 Spark 2.1.1 입니다. ​ Hive Metastore, Parquet 먼저...</description>
+          <description>​ 최근 Hive Metastore를 구축하면서 겪은 이슈와 해결과정을 기록해두려고 합니다. 사용 환경은 Spark 2.1.1, Hive 2.1.1 입니다. ​ Hive Partition...</description>
         
         <pubDate>Fri, 11 Aug 2017 19:18:00 +0900</pubDate>
         <link>

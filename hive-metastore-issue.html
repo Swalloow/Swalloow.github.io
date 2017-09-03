@@ -34,7 +34,7 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Hive Metastore 구축 관련 문제와 해결과정" />
-        <meta property="og:description" content="​ 최근 Hive Metastore를 구축하면서 겪은 이슈와 해결과정을 기록해두려고 합니다. 사용 환경은 Spark 2.1.1 입니다. ​ Hive Metastore, Parquet 먼저..." />
+        <meta property="og:description" content="​ 최근 Hive Metastore를 구축하면서 겪은 이슈와 해결과정을 기록해두려고 합니다. 사용 환경은 Spark 2.1.1, Hive 2.1.1 입니다. ​ Hive Partition..." />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
@@ -127,7 +127,32 @@
             <p>​</p>
 
 <p>최근 Hive Metastore를 구축하면서 겪은 이슈와 해결과정을 기록해두려고 합니다.
-사용 환경은 Spark 2.1.1 입니다.</p>
+사용 환경은 Spark 2.1.1, Hive 2.1.1 입니다.</p>
+
+<p>​</p>
+
+<h3 id="hive-partition">Hive Partition</h3>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="p">(</span>
+<span class="n">col1</span> <span class="n">STRING</span><span class="p">,</span>
+<span class="n">col2</span> <span class="n">STRING</span>
+<span class="p">)</span>
+<span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="k">key</span> <span class="n">STRING</span><span class="p">)</span>
+<span class="n">STORED</span> <span class="k">AS</span> <span class="n">PARQUET</span>
+<span class="k">LOCATION</span> <span class="s1">'location'</span><span class="p">;</span></code></pre></figure>
+
+<p>Hive에서 보통 위와 같은 쿼리로 테이블을 생성합니다.
+Metastore는 말 그대로 외부에 있는 테이블의 정보(스키마, 파티션 등)를 저장하는 개념입니다.
+따라서 <strong>EXTERNAL TABLE</strong> 로 생성하지 않은 상태에서 테이블을 DROP 시키면 다 날아가게 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">table_name</span>
+<span class="k">ADD</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="k">key</span><span class="o">=</span><span class="s1">'2017-08-11'</span><span class="p">);</span></code></pre></figure>
+
+<p>도중에 Partition key를 추가하고 싶을 때는 위와 같은 쿼리를 통해 추가할 수 있습니다.
+그러나, 추가한 정보가 바로 반영이 안될 때가 있습니다.</p>
+
+<p>이 경우에는 <code class="highlighter-rouge">MSCK REPAIR TABLE table_name;</code> 쿼리로 해결할 수 있습니다.
+MSCK는 Metastore Check의 약자라고 합니다.</p>
 
 <p>​</p>
 
@@ -151,6 +176,18 @@ Spark 공식문서에 이와 관련된 내용이 잘 나와있습니다.</p>
 
 <p>따라서, Zeppelin interpreter에 아래의 설정 값을 추가해주시면 해결됩니다.
 <code class="highlighter-rouge">spark.sql.hive.caseSensitiveInferenceMode = INFER_AND_SAVE</code></p>
+
+<p>​</p>
+
+<h3 id="hive-tblproperties">Hive TBLPROPERTIES</h3>
+
+<p>위에서 말한대로 Spark Properties를 추가하면,
+Hive metastore의 parameter에 <code class="highlighter-rouge">spark.sql.sources.schema.part</code>가 생기게 됩니다.</p>
+
+<p>여기에서 “field: name”에 대소문자가 잘 구분되는 경우, 문제가 없지만 간혹 소문자로 들어오는 경우가 있습니다.
+이 경우에는 아래의 쿼리를 통해 Hive parameter를 수정해주시면 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">table_name</span> <span class="k">SET</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="nv">"spark.sql.sources.schema.part.0"</span> <span class="o">=</span> <span class="nv">"fix this line"</span><span class="p">);</span></code></pre></figure>
 
 <p>​</p>
 
@@ -243,8 +280,8 @@ Spark 공식문서에 이와 관련된 내용이 잘 나와있습니다.</p>
     
         <a class="read-next-story no-cover" href="/spark-reduceByKey-groupByKey">
             <section class="post">
-                <h2>Spark groupByKey vs reduceByKey 성능 비교</h2>
-                <p>​ Spark Application 성능 개선을 위해 `groupByKey, reduceBykey`에 대해 알아보겠습니다. ​ ## groupByKey vs reduceBykey...</p>
+                <h2>Spark groupByKey vs reduceByKey</h2>
+                <p>​ Spark Application 성능 개선을 위한 `groupByKey, reduceBykey`에 대해 알아보겠습니다. ​ ## groupByKey vs reduceBykey...</p>
             </section>
         </a>
     
