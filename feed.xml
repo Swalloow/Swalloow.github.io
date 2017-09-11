@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>AWS EMR, S3에서 Spark 사용 시 주의사항</title>
+        
+          <description>​ 아직 작성 중 입니다. AWS EMR에서 Spark을 사용하는 경우, S3를 저장소로 사용하는 경우가 많습니다. 이때 주의해야 할 사항들을 정리해보았습니다....</description>
+        
+        <pubDate>Sat, 09 Sep 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//aws-emr-s3-spark</link>
+        <guid isPermaLink="true">http://swalloow.github.io//aws-emr-s3-spark</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Spark의 Shuffling 이해하기</title>
         
           <description>​ 효율적인 Spark Application을 개발하기 위해 Shuffling 은 상당히 중요한 개념입니다. 이에 대해 간단히 정리해보았습니다. ​ Spark Architecture: Shuffle Shuffle을...</description>
@@ -99,7 +112,7 @@
     
       
       <item>
-        <title>AWS EMR step을 이용한 Spark Batch 작업 등록하기</title>
+        <title>AWS EMR step을 이용한 Spark Batch 작업</title>
         
           <description>​ AWS EMR은 특정 작업을 등록할 수 있는 step 이라는 기능을 제공합니다. 예를 들어 매일 새벽에 클러스터에서 돌려야하는 Batch 작업이...</description>
         

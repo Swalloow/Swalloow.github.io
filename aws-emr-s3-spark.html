@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>Spark의 Shuffling 이해하기</title>
+    <title>AWS EMR, S3에서 Spark 사용 시 주의사항</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,8 +33,8 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Spark의 Shuffling 이해하기" />
-        <meta property="og:description" content="​ 효율적인 Spark Application을 개발하기 위해 Shuffling 은 상당히 중요한 개념입니다. 이에 대해 간단히 정리해보았습니다. ​ Spark Architecture: Shuffle Shuffle을..." />
+        <meta property="og:title" content="AWS EMR, S3에서 Spark 사용 시 주의사항" />
+        <meta property="og:description" content="​ 아직 작성 중 입니다. AWS EMR에서 Spark을 사용하는 경우, S3를 저장소로 사용하는 경우가 많습니다. 이때 주의해야 할 사항들을 정리해보았습니다...." />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
@@ -106,10 +106,10 @@
     <article class="post tag-DataEngineering">
 
         <header class="post-header">
-            <h1 class="post-title">Spark의 Shuffling 이해하기</h1>
+            <h1 class="post-title">AWS EMR, S3에서 Spark 사용 시 주의사항</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-08-25">25 Aug 2017</time>
+            <time class="post-date" datetime="2017-09-09">09 Sep 2017</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -126,89 +126,28 @@
 
             <p>​</p>
 
-<p>효율적인 Spark Application을 개발하기 위해 <strong>Shuffling</strong> 은 상당히 중요한 개념입니다.
-이에 대해 간단히 정리해보았습니다.</p>
+<p>아직 작성 중 입니다.</p>
+
+<p>AWS EMR에서 Spark을 사용하는 경우, S3를 저장소로 사용하는 경우가 많습니다.
+이때 주의해야 할 사항들을 정리해보았습니다.</p>
 
 <p>​</p>
 
-<h2 id="spark-architecture-shuffle">Spark Architecture: Shuffle</h2>
+<h2 id="aws-emr-spark--s3">AWS EMR, Spark 그리고 S3</h2>
 
-<p><img src="/assets/images/shuffle.png" alt="" /></p>
+<p><img src="/assets/images/aws_etl.png" alt="" /></p>
 
-<p>Shuffle을 설명하기 전에 한 가지 예시를 들어보겠습니다.
-테이블에 전화 통화 기록 목록이 있고 매일 발생한 통화량을 계산한다고 가정 해보겠습니다.
-“날짜”를 키로 설정하고 각 레코드에 대해 값으로 “1”을 지정한 다음, 각 키의 값을 합산하여 결과 값을 계산할 수 있을 것 입니다.</p>
-
-<p>만일 데이터가 여러 클러스터에 저장되어 있다면 어떻게 해야 동일한 키의 값을 합산할 수 있을까요?
-이를 위한 유일한 방법은 같은 키의 모든 값을 동일한 시스템에 두는 것입니다. 그런 다음 이 값들을 합치면 됩니다.</p>
-
-<p>​</p>
-
-<h3 id="narrow-and-wide-transformation">Narrow and Wide Transformation</h3>
-
-<p><img src="/assets/images/narrow_and_wide.png" alt="" /></p>
-
-<p>몇 가지 사례를 통해 더 자세히 알아보겠습니다.
-만일 데이터가 이미 키 값으로 파티셔닝 되어 있고 키 값에 대해 변화를 주고 싶다면, 좌측의 그림처럼 수행하게 됩니다.
-<code class="highlighter-rouge">filter(), sample(), map(), flatMap()</code> 등의 transformation이 이에 해당하며, 이 경우 Shuffle이 필요 없습니다.
-이를 <strong>Narrow Transformation</strong> 이라고 합니다.</p>
-
-<p>반면, 서로 다른 파티션으로부터 특정한 값을 기준으로 추출하고 싶은 경우, 그 값을 기준으로 Shuffle이 발생하게 됩니다.
-<code class="highlighter-rouge">groupByKey(), reduceByKey()</code> 등이 이에 해당하며, 이를 <strong>Wide Transformation</strong> 이라고 합니다.</p>
-
-<p>​</p>
-
-<h3 id="shuffled-hashjoin">Shuffled HashJoin</h3>
-
-<p><img src="/assets/images/shuffle_join.png" alt="" /></p>
-
-<p>두 개의 테이블을 <code class="highlighter-rouge">Join</code> 할 때에도 Shuffle 이 발생할 수 있습니다.
-위의 예시 처럼 두 테이블에서 키 값을 기준으로 Join 하게 되면, 동일한 키를 가진 데이터가 동일한 파티션으로 이동합니다.</p>
-
-<p>하지만 이 때, 셔플 되는 데이터의 양이 성능에 영향을 미칠 수 있습니다.
-만일 C의 데이터의 크기가 A보다 훨씬 크다면, C에 대한 작업으로 인해 전체의 수행시간이 오래 걸리게 될 것 입니다.</p>
-
-<p>​</p>
-
-<h3 id="broadcast-hashjoin">Broadcast HashJoin</h3>
-
-<p><img src="/assets/images/broadcast_join.png" alt="" /></p>
-
-<p>이를 개선하기 위해 Spark에서는 <strong>Broadcast Join</strong> 을 제공합니다.
-이 경우 RDD 중 하나가 모든 파티션으로 브로드 캐스팅되며 복사됩니다.
-만일 RDD 중 하나가 다른 것에 비해 상당히 작다면 큰 RDD가 전혀 셔플 할 필요가 없습니다.
-작은 RDD 만 모든 작업자 서버에 복사해야 하므로 Broadcast Join은 전체적으로 네트워크 트래픽을 줄여주는 효과가 있습니다.</p>
-
-<p>Spark 1.2에서는 <code class="highlighter-rouge">spark.sql.autoBroadcastJoinThreshold</code> 값을 설정해주어야 했지만,
-2.0 이후 버전의 경우 Spark SQL이 알아서 최적화 잘 해줍니다.</p>
-
-<p>​</p>
-
-<h3 id="spark-shuffle-properties">Spark Shuffle Properties</h3>
-
-<ul>
-  <li><code class="highlighter-rouge">spark.shuffle.compress</code>: 엔진이 shuffle 출력을 압축할지 여부를 지정</li>
-  <li><code class="highlighter-rouge">spark.shuffle.spill.compress</code>: 중간 shuffle spill 파일을 압축할지 여부를 지정</li>
-</ul>
-
-<p>Shuffle에는 위의 두 가지 중요한 Spark Property 가 있습니다.</p>
-
-<p>둘 다 기본적으로 값이 “true”이며, <code class="highlighter-rouge">spark.io.compression.codec</code> 압축 코덱을 기본으로합니다.
-그리고 위에서 설명한 것처럼 Spark에는 여러 가지 셔플 구현이 있습니다.
-특정 구현에서 사용되는 Shuffle은 <code class="highlighter-rouge">spark.shuffle.manager</code> 값에 의해 결정됩니다.
-가능한 옵션은 <strong>hash, sort, tungsten-sort</strong> 이며, “sort” 옵션은 기본적으로 Spark 1.2.0부터 시작합니다.</p>
-
-<p>이외에도 Spark Shuffle 관련된 Property는 아래의 공식문서에서 확인하실 수 있습니다.
-<a href="https://spark.apache.org/docs/latest/configuration.html#shuffle-behavior">https://spark.apache.org/docs/latest/configuration.html#shuffle-behavior</a></p>
+<p>Daily로 돌려야 하는 ETL 작업의 경우 위와 같이 간단한 아키텍쳐로 구성하는 경우가 많습니다.
+대부분의 경우 저장소로 S3를 적극 활용하게 됩니다.
+최초 입수되는 로그를 저장하기도 하고, Transformation 작업 이후 중간 또는 최종 데이터로 저장하기도 합니다.</p>
 
 <p>​</p>
 
 <h3 id="reference">Reference</h3>
 
 <ul>
-  <li><a href="https://0x0fff.com/spark-architecture-shuffle">https://0x0fff.com/spark-architecture-shuffle</a></li>
   <li>
-    <p><a href="https://www.slideshare.net/databricks/strata-sj-everyday-im-shuffling-tips-for-writing-better-spark-programs">https://www.slideshare.net/databricks/strata-sj-everyday-im-shuffling-tips-for-writing-better-spark-programs</a></p>
+    <p><a href="https://aws.amazon.com/ko/premiumsupport/knowledge-center/emr-file-system-s3/">https://aws.amazon.com/ko/premiumsupport/knowledge-center/emr-file-system-s3/</a></p>
 
     <p>​</p>
   </li>
@@ -244,15 +183,15 @@
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=Spark의 Shuffling 이해하기&amp;url=http://swalloow.github.io/spark-shuffling"
+                <a class="icon-twitter" href="http://twitter.com/share?text=AWS EMR, S3에서 Spark 사용 시 주의사항&amp;url=http://swalloow.github.io/aws-emr-s3-spark"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/spark-shuffling"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/aws-emr-s3-spark"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/spark-shuffling"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/aws-emr-s3-spark"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -264,8 +203,8 @@
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/spark-shuffling';
-        var disqus_url = 'http://swalloow.github.io//spark-shuffling';
+        var disqus_identifier = '/aws-emr-s3-spark';
+        var disqus_url = 'http://swalloow.github.io//aws-emr-s3-spark';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -290,20 +229,13 @@
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story no-cover" href="/aws-emr-s3-spark">
-            <section class="post">
-                <h2>AWS EMR, S3에서 Spark 사용 시 주의사항</h2>
-                <p>​ 아직 작성 중 입니다. AWS EMR에서 Spark을 사용하는 경우, S3를 저장소로 사용하는 경우가 많습니다....</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/spark-reduceByKey-groupByKey">
+        <a class="read-next-story prev no-cover" href="/spark-shuffling">
             <section class="post">
-                <h2>Spark groupByKey vs reduceByKey</h2>
-                <p>​ Spark Application 성능 개선을 위한 groupByKey, reduceBykey에 대해 알아보겠습니다. ​ groupByKey vs reduceBykey #...</p>
+                <h2>Spark의 Shuffling 이해하기</h2>
+                <p>​ 효율적인 Spark Application을 개발하기 위해 Shuffling 은 상당히 중요한 개념입니다. 이에 대해 간단히 정리해보았습니다....</p>
             </section>
         </a>
     
