@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>제플린 노트북 자동 실행 스크립트 만들기</title>
+        
+          <description>​ 제플린 노트북을 사용하다보면 가끔 제플린 어플리케이션을 재시작해야 하는 경우가 있습니다. 이 때, view 또는 udf 등록을 위해 처음 실행시켜야...</description>
+        
+        <pubDate>Wed, 13 Sep 2017 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//zeppelin-bootstrap</link>
+        <guid isPermaLink="true">http://swalloow.github.io//zeppelin-bootstrap</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>AWS EMR에서 S3 사용 시 주의사항</title>
         
           <description>​ AWS EMR에서 Spark을 사용하는 경우, S3를 저장소로 사용하는 경우가 많습니다. 이때 주의해야 할 사항들을 정리해보았습니다. ​ AWS EMR, Spark...</description>
