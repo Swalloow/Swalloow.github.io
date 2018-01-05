@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>Deep Learning Programming Style: Symbolic, Imperative</title>
+        
+          <description>​ TensorFlow 1.5 버전부터 Eager Execution 이라는 기능이 추가되었습니다. 다시 말해서 imperative programming style을 지원한다고 적혀있는데, 기존의 방식과 어떤 차이가...</description>
+        
+        <pubDate>Fri, 05 Jan 2018 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//deep-learning-style</link>
+        <guid isPermaLink="true">http://swalloow.github.io//deep-learning-style</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>제플린 노트북 자동 실행 스크립트 만들기</title>
         
           <description>​ 제플린 노트북을 사용하다보면 가끔 제플린 어플리케이션을 재시작해야 하는 경우가 있습니다. 이 때, view 또는 udf 등록을 위해 처음 실행시켜야...</description>

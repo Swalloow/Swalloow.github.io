@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://swalloow.github.io///deep-learning-style</loc>
+<lastmod>2018-01-05T19:18:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://swalloow.github.io///zeppelin-bootstrap</loc>
 <lastmod>2017-09-13T19:18:00+09:00</lastmod>
 </url>
@@ -251,6 +255,9 @@
 <loc>http://swalloow.github.io///tag/DataScience/</loc>
 </url>
 <url>
+<loc>http://swalloow.github.io///tag/DataScience/page2/</loc>
+</url>
+<url>
 <loc>http://swalloow.github.io///tag/Personal/</loc>
 </url>
 <url>
@@ -267,6 +274,30 @@
 </url>
 <url>
 <loc>http://swalloow.github.io///tag/DevOps/page2/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page2/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page3/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page4/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page5/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page6/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page7/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page8/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///page9/</loc>
 </url>
 <url>
 <loc>http://swalloow.github.io///google0db23fb3261b8e88.html</loc>
