@@ -222,9 +222,37 @@ Imperative style program들은 바로 연산을 수행합니다. 대부분의 �
 
 <hr />
 
-<p>아직 작성중…</p>
+<h2 id="model-checkpoints">Model Checkpoints</h2>
 
-<p style="text-align: center;"><img src="http://drive.google.com/uc?export=view&amp;id=1vWch5svr0gtoL1l36xsM_qBJi2U9AAAA" alt="comp_graph_backward" /></p>
+<p>모델을 저장하고 다시 불러오는 일 또한 중요합니다. 보통 Neural Network 모델을 저장한다는 것은 네트워크의 구조, 설정 값 그리고 weight 값의 저장을 의미합니다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">A</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">'A'</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s">'B'</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">B</span> <span class="o">*</span> <span class="n">A</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">C</span> <span class="o">+</span> <span class="n">Constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">D</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">'mygraph'</span><span class="p">)</span>
+<span class="n">D2</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">'mygraph'</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">([</span><span class="n">D2</span><span class="p">])</span>
+<span class="c"># more operations</span>
+<span class="o">...</span></code></pre></figure>
+
+<p>설정 값을 체크하는 일은 symbolic program이 더 유리 합니다. symbolic 구조에서는 실제 연산을 수행할 필요가 없기 때문에 computation graph를 그대로 serialize 하면 됩니다.
+반면에 Imperative program은 연산 할 때 실행되기 때문에 코드 자체를 설정 파일로 저장하거나 그 위에 또 다른 레이어를 구성해야합니다.</p>
+
+<hr />
+
+<h2 id="parameter-updates">Parameter Updates</h2>
+
+<p>computation graph의 경우 연산과정은 쉽게 설명할 수 있지만 parameter 업데이트에 대해서는 명확하지 못합니다. parameter update는 기본적으로 값의 변경(mutation)을 요구하기 때문에 computation graph의 개념과 맞지 않습니다. 따라서 대부분의 symbolic program들은 persistent state를 갱신하기 위해 special update 구문을 사용하고 있습니다.</p>
+
+<p>반면에 imperative style에서는 parameter 업데이트를 작성하는 것이 쉽습니다. 특히 서로 연관된 여러 업데이트가 필요할 때 더욱 그렇습니다. Symbolic program의 경우 업데이트 문은 사용자가 호출 할 때 실행됩니다. 이런 점에서 대부분의 symbolic deep learning 라이브러리는 parameter 업데이트에 대해 gradient 연산을 수행하면서 업데이트를 수행하는 imperative style로 다시 돌아갑니다.</p>
+
+<hr />
+
+<h2 id="there-is-no-strict-boundary">There Is No Strict Boundary</h2>
+
+<p>두 가지 프로그래밍 스타일을 비교해서, 하나만 사용하라는 말이 아닙니다. 명령형 프로그램을 상징형 프로그램처럼 만들거나 그 반대도 가능합니다. 예를 들면, Python으로 JIT (just-in-time) 컴파일러를 작성하여 명령형 Python 프로그램을 컴파일 할 수 있습니다. 하지만 두 가지 아키텍쳐를 이해하는 것은 수 많은 딥러닝 라이브러리의 추상화와 그 차이를 이해하는데 도움이 됩니다. <strong>결국, 우리는 프로그래밍 스타일 간에 명확한 경계선이 없다고 결론을 내릴 수 있습니다.</strong></p>
 
 <p>​</p>
 
