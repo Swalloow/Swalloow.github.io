@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>Data Science inconvenient truth</title>
+        
+          <description>​ 데이터과학의 불편한 진실 Data is never clean (데이터는 절대 깨끗하지 않다) You will spend most of your time cleaning...</description>
+        
+        <pubDate>Sun, 01 Apr 2018 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//ds-truth</link>
+        <guid isPermaLink="true">http://swalloow.github.io//ds-truth</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Deep Learning Programming Style: Symbolic, Imperative</title>
         
           <description>​ TensorFlow 1.5 버전부터 Eager Execution 이라는 기능이 추가되었습니다. 다시 말해서 imperative programming style을 지원한다고 적혀있는데, 기존의 방식과 어떤 차이가...</description>

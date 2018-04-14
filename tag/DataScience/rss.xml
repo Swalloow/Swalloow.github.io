@@ -12,6 +12,40 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Data Science inconvenient truth</title>
+	  <link>//ds-truth</link>
+	  <author>Swalloow</author>
+	  <pubDate>2018-04-01T19:18:00+09:00</pubDate>
+	  <guid>//ds-truth</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<h2 id="section">데이터과학의 불편한 진실</h2>
+
+<ul>
+  <li>Data is never clean (데이터는 절대 깨끗하지 않다)</li>
+  <li>You will spend most of your time cleaning and preparing data (당신은 분석의 대부분의 시간을 전처리 단계에서 보내게 될 것이다)</li>
+  <li>95% of tasks do not require deep learning (95% 일은 Deep Learning을 필요로 하지 않는다)</li>
+  <li>In 90% of cases generalized linear regression will do the trick (실제 분석의 90%는 GLM으로 해결된다 )</li>
+  <li>Big Data is just a tool (빅 데이터는 단지 도구일 뿐이다)</li>
+  <li>You should embrace the Bayesian approach (당신은 베이지안 접근을 포용해야 한다)</li>
+  <li>No one cares how you did it (사용자 입장에서는 네가 어떤 방법을 사용했는가는 중요하지 않다)</li>
+  <li>Academia and business are two different worlds (학계와 산업계는 서로 다른 세계이다)</li>
+  <li>Presentation is key - be a master of Power Point (프리젠테이션이 핵심이다: PowerPoint의 마스터가 되라)</li>
+  <li>All models are false, but some are useful (모든 모델은 틀렸다, 하지만 몇몇은 유용하다)</li>
+  <li>
+    <p>There is no fully automated Data Science. You need to get your hands dirty (완전 자동화된 데이터 과학같은 것은 없다. 인간이 개입되어야 할 부분이 있다)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<p>Ref: <a href="https://www.kdnuggets.com/2015/05/data-science-inconvenient-truth.html">https://www.kdnuggets.com/2015/05/data-science-inconvenient-truth.html</a></p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Deep Learning Programming Style: Symbolic, Imperative</title>
 	  <link>//deep-learning-style</link>
 	  <author>Swalloow</author>
