@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>Structuring Your TensorFlow Models</title>
+        
+          <description>​ 이 글은 저자의 허락을 받아 번역한 글 입니다. 원문 링크 TensorFlow에서 모델을 정의하다보면 어느새 많은 양의 코드가 생성된 경험이...</description>
+        
+        <pubDate>Fri, 20 Apr 2018 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//structuring-tf</link>
+        <guid isPermaLink="true">http://swalloow.github.io//structuring-tf</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Data Science inconvenient truth</title>
         
           <description>​ 데이터과학의 불편한 진실 Data is never clean (데이터는 절대 깨끗하지 않다) You will spend most of your time cleaning...</description>
