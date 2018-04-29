@@ -26,7 +26,8 @@
     <script>hljs.initHighlightingOnLoad();</script>
 
     <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
-        <link rel="canonical" href="/" />
+        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <link rel="canonical" href="/" />
     <meta name="referrer" content="origin" />
     <link rel="next" href="/page2/" />
 
@@ -75,6 +76,7 @@
         <li class="nav-devops " role="presentation"><a href="/tag/DevOps">DevOps</a></li>
         <li class="nav-datascience " role="presentation"><a href="/tag/DataScience">DataScience</a></li>
         <li class="nav-dataengineering " role="presentation"><a href="/tag/DataEngineering">DataEngineering</a></li>
+        <li class="nav-financial " role="presentation"><a href="/tag/Financial">Financial</a></li>
     </ul>
     <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
 </div>
@@ -127,6 +129,30 @@
     </div>
 
     <!-- This is the post loop - each post will be output using this markup -->
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/spark-reduceByKey-groupByKey">Spark groupByKey vs reduceByKey</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>​ Spark Application 성능 개선을 위한 groupByKey, reduceBykey에 대해 알아보겠습니다. ​ groupByKey vs reduceBykey # reduceByKey spark.textFile("hdfs://...") .flatMap(lambda line: line.split()) .map(lambda word: (word, 1)) .reduceByKey(lambda a,... <a class="read-more" href="/spark-reduceByKey-groupByKey">&raquo;</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
+            <!-- author -->
+            <a href='/author/Swalloow'>Swalloow</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href='/tag/DataEngineering'>Dataengineering</a>
+                       
+                
+            
+            <time class="post-date" datetime="2017-08-22">22 Aug 2017</time>
+        </footer>
+    </article>
     
     <article class="post">
         <header class="post-header">
@@ -269,30 +295,6 @@
                 
             
             <time class="post-date" datetime="2017-07-02">02 Jul 2017</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/cloudera-install">AWS 환경에서 Cloudera Manager 설치하기</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>​ 클라우데라 매니저는 하둡 에코시스템을 쉽게 설치하고 관리할 수 있도록 도와주는 도구입니다. 이를 이용하여 AWS EC2 인스턴스에 하둡 클러스터를 설치하고 실행시키는 방법에 대해 정리해보았습니다. 내 노트북에... <a class="read-more" href="/cloudera-install">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/DataEngineering'>Dataengineering</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-06-23">23 Jun 2017</time>
         </footer>
     </article>
     

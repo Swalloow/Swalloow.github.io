@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>포트폴리오의 기대수익률과 변동성 계산</title>
+        
+          <description>​ 흔히 투자자들 사이에 내려오는 격언 중에 “계란을 한 바구니에 담지 말라”라는 말이 있습니다. 하나의 자산에 올인하는 것보다 다양한 자산에...</description>
+        
+        <pubDate>Wed, 25 Apr 2018 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//portfolio-basic</link>
+        <guid isPermaLink="true">http://swalloow.github.io//portfolio-basic</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Structuring Your TensorFlow Models</title>
         
           <description>​ 이 글은 저자의 허락을 받아 번역한 글 입니다. 원문 링크 TensorFlow에서 모델을 정의하다보면 어느새 많은 양의 코드가 생성된 경험이...</description>

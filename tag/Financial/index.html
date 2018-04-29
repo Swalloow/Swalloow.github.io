@@ -61,7 +61,7 @@
     <link rel="alternate" type="application/rss+xml" title="Swalloow Blog" href="/feed.xml" />
 
 </head>
-<body class="paged archive-template nav-closed">
+<body class="tag-template nav-closed">
 
     <div class="nav">
     <h3 class="nav-title">Menu</h3>
@@ -72,11 +72,11 @@
         <li class="nav-home " role="presentation"><a href="/">Home</a></li>
         <li class="nav-about " role="presentation"><a href="/about">About</a></li>
         <li class="nav-personal " role="presentation"><a href="/tag/Personal">Personal</a></li>
-        <li class="nav-develop  nav-current" role="presentation"><a href="/tag/Develop">Develop</a></li>
+        <li class="nav-develop " role="presentation"><a href="/tag/Develop">Develop</a></li>
         <li class="nav-devops " role="presentation"><a href="/tag/DevOps">DevOps</a></li>
         <li class="nav-datascience " role="presentation"><a href="/tag/DataScience">DataScience</a></li>
         <li class="nav-dataengineering " role="presentation"><a href="/tag/DataEngineering">DataEngineering</a></li>
-        <li class="nav-financial " role="presentation"><a href="/tag/Financial">Financial</a></li>
+        <li class="nav-financial  nav-current" role="presentation"><a href="/tag/Financial">Financial</a></li>
     </ul>
     <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
 </div>
@@ -93,7 +93,7 @@
 <!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
 
 <!-- If we have a tag cover, display that - else blog cover - else nothing -->
-<header class="main-header tag-head " style="background-image: url(/assets/images/cover_develop.jpg) ">
+<header class="main-header tag-head " style="background-image: url(/assets/images/cover_financial.jpg) ">
     <nav class="main-nav overlay clearfix">
         <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
@@ -102,10 +102,10 @@
     </nav>
     <div class="vertical">
         <div class="main-header-content inner">
-            <h1 class="page-title">Develop</h1>
+            <h1 class="page-title">Financial</h1>
             <h2 class="page-description">
             
-                A series of short stories about develop.
+                A series of short stories about financial.
             
             </h2>
         </div>
@@ -121,11 +121,7 @@
         
             <nav class="pagination" role="pagination">
     
-        
-            <a class="newer-posts" href="/tag/Develop" title="Previous Page">&laquo; Newer Posts</a>
-        
-    
-    <span class="page-number"> Page 2 of 2 </span>
+    <span class="page-number"> Page 1 of 1 </span>
      
 </nav>
         
@@ -135,10 +131,10 @@
     
     <article class="post">
         <header class="post-header">
-            <h2 class="post-title"><a href="/social-api-cognito">다양한 소셜 API를 연동하기 전에 고려할 것들 (AWS Cognito)</a></h2>
+            <h2 class="post-title"><a href="/portfolio-basic">포트폴리오의 기대수익률과 변동성 계산</a></h2>
         </header>
         <section class="post-excerpt">
-            <p>​ 최근에 대부분의 웹, 모바일 어플리케이션에서 카카오, 네이버 등 다양한 소셜 로그인 기능을 제공하고 있다. 만약 우리가 만들어야 할 어플리케이션이 다양한 소셜 로그인 API와 연동하여 사용자를... <a class="read-more" href="/social-api-cognito">&raquo;</a></p>
+            <p>​ 흔히 투자자들 사이에 내려오는 격언 중에 “계란을 한 바구니에 담지 말라”라는 말이 있습니다. 하나의 자산에 올인하는 것보다 다양한 자산에 분산 투자하여 리스크를 최소화하라는 말입니다. 그렇다면... <a class="read-more" href="/portfolio-basic">&raquo;</a></p>
         </section>
         <footer class="post-meta">
             <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
@@ -149,83 +145,11 @@
                 on 
                 
                     
-                       <a href='/tag/Develop'>Develop</a>
+                       <a href='/tag/Financial'>Financial</a>
                        
                 
             
-            <time class="post-date" datetime="2017-01-28">28 Jan 2017</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/open-api-guide">Open API를 설계할 때 알아야 하는 것들</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>​ 오픈 API를 사용하다보면 공통의 패턴을 발견할 수 있을 것이다. 이처럼, API를 설계할 때도 개발자들이 쉽게 사용할 수 있도록 만든 규칙이라는게 존재한다. 오늘은 RESTful한 Open API를... <a class="read-more" href="/open-api-guide">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/Develop'>Develop</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-01-05">05 Jan 2017</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/about-oauth2">OAuth2에 대해 알아보자</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려... <a class="read-more" href="/about-oauth2">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/Develop'>Develop</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-01-05">05 Jan 2017</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/windows-bash-jekyll">윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준) ​ 윈도우 10에서 Ruby 설치... <a class="read-more" href="/windows-bash-jekyll">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/Develop'>Develop</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-01-03">03 Jan 2017</time>
+            <time class="post-date" datetime="2018-04-25">25 Apr 2018</time>
         </footer>
     </article>
     
@@ -234,11 +158,7 @@
     
         <nav class="pagination" role="pagination">
     
-        
-            <a class="newer-posts" href="/tag/Develop" title="Previous Page">&laquo; Newer Posts</a>
-        
-    
-    <span class="page-number"> Page 2 of 2 </span>
+    <span class="page-number"> Page 1 of 1 </span>
      
 </nav>
     

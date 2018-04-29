@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>맥북프로 터치바 모델 초기설정</title>
+    <title>포트폴리오의 기대수익률과 변동성 계산</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,8 +34,8 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="맥북프로 터치바 모델 초기설정" />
-        <meta property="og:description" content="1년을 기다린 결과 드디어 맥북프로 터치바 모델을 질렀다! 맥을 처음 사용하는 입장에서 초기에 어떤 것들을 설정해야 하는지 정리해보았다. ​ 프로그램..." />
+        <meta property="og:title" content="포트폴리오의 기대수익률과 변동성 계산" />
+        <meta property="og:description" content="​ 흔히 투자자들 사이에 내려오는 격언 중에 “계란을 한 바구니에 담지 말라”라는 말이 있습니다. 하나의 자산에 올인하는 것보다 다양한 자산에..." />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
@@ -94,8 +94,8 @@
 <!-- Everything inside the #post tags pulls data from the post -->
 <!-- #post -->
 
-<header class="main-header post-head " style="background-image: url(/assets/images/cover_personal.jpg) ">
-    <nav class="main-nav  overlay  clearfix">
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
         <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
             <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
@@ -105,19 +105,19 @@
 
 <main class="content" role="main">
 
-    <article class="post tag-personal">
+    <article class="post tag-Financial">
 
         <header class="post-header">
-            <h1 class="post-title">맥북프로 터치바 모델 초기설정</h1>
+            <h1 class="post-title">포트폴리오의 기대수익률과 변동성 계산</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-01-08">08 Jan 2017</time>
+            <time class="post-date" datetime="2018-04-25">25 Apr 2018</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
                 
                     
-                       <a href='/tag/Personal'>Personal</a>
+                       <a href='/tag/Financial'>Financial</a>
                     
                 
                 
@@ -126,75 +126,118 @@
 
         <section class="post-content">
 
-            <p><img src="assets/images/mac.png" alt="macbook" /></p>
+            <p>​</p>
 
-<p>1년을 기다린 결과 드디어 맥북프로 터치바 모델을 질렀다!</p>
+<p>흔히 투자자들 사이에 내려오는 격언 중에 <strong>“계란을 한 바구니에 담지 말라”</strong>라는 말이 있습니다.
+하나의 자산에 올인하는 것보다 다양한 자산에 분산 투자하여 리스크를 최소화하라는 말입니다.</p>
 
-<p>맥을 처음 사용하는 입장에서 초기에 어떤 것들을 설정해야 하는지 정리해보았다.</p>
+<p>그렇다면 내가 가진 돈을 어디에 얼마나 배분해야 위험을 낮추고 수익을 최대화 시킬 수 있을까요?
+이러한 문제를 <strong>자산 배분(Asset Allocation)</strong> 문제라고 합니다.
+앞으로 자산 배분 전략 중 위험 대비 수익을 장기적으로 최대화하는 방법에 대해 정리해보려 합니다.</p>
 
 <p>​</p>
 
-<h3 id="section">프로그램 관련</h3>
+<h2 id="section">단일 자산의 수익률과 변동성 계산</h2>
 
-<ul>
-  <li>창닫기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">W</code></li>
-  <li>실행중인 프로그램 종료 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Q</code></li>
-  <li>열려있는 모든 창 닫기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">W</code></li>
-  <li>창 전환 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">TAB</code></li>
-  <li>복사 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">C</code></li>
-  <li>붙여넣기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">V</code></li>
-  <li>잘라내기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">X</code></li>
-  <li>실행취소 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Z</code></li>
-  <li>모두선택 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">A</code></li>
-  <li>찾기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">F</code></li>
-  <li>파일삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Del</code></li>
-  <li>영구삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">Del</code></li>
-  <li>강제종료 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">esc</code></li>
-  <li>새로고침 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">R</code></li>
-  <li>스크린샷 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">3</code></li>
-  <li>드래그 스크린샷 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">4</code></li>
-  <li>Dock 보이기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">D</code></li>
-  <li>
-    <p>Finder 검색 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">space</code></p>
+<p>먼저 단일 자산에 대한 수익률과 위험을 정의해야 합니다.
+아래의 그래프는 17/09/10 부터 18/03/30 기간의 넷마블, 카카오 종가 그래프입니다.</p>
 
-    <p>​</p>
-  </li>
-</ul>
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1rC63FHXf192O6Cb-dbgzn6ln_SUHtcH5" alt="" /></p>
 
-<h3 id="section-1">문서작성</h3>
+<p>넷마블의 기간 수익률은 2%, 카카오는 1%로 비슷하지만 변동성은 눈으로만 봐도 넷마블이 높아보입니다.
+포트폴리오 이론에서 <strong>위험하다는 것은 변동성이 큰 주식을 의미하며, 같은 수익률을 준다면 변동성이 더 낮은 주식을 선호</strong>합니다.</p>
 
-<ul>
-  <li>특수문자 선택화면 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Ctrl</code> + <code class="highlighter-rouge">Space</code></li>
-  <li>한문입력 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">enter</code></li>
-  <li>단어이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">←</code></li>
-  <li>문장이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">←</code></li>
-  <li>문단이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">↓</code></li>
-  <li>단어삭제 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">Del</code></li>
-  <li>
-    <p>문장삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Del</code></p>
+<p>​</p>
 
-    <p>​</p>
-  </li>
-</ul>
+<h4 id="section-1">평균 수익률 계산</h4>
+<p>매수, 매도한 시점을 기준으로 계산하는 기간 수익률은 다들 쉽게 계산합니다.
+그렇다면 월 평균 수익률은 어떻게 계산할 수 있을까요? (수수료는 없다고 가정)</p>
 
-<h3 id="section-2">커멘드 및 기타 설정</h3>
+<p>아마 대부분 매월 발생하는 수익률의 평균을 떠올릴 것 입니다.
+하지만 잘 생각해보면 이 방법은 실제 평균 수익률과 큰 차이가 존재합니다.</p>
 
-<ul>
-  <li>iTerm2 : 기본 커멘드보다 빠르고 편하게 사용할 수 있는 오픈소스 커멘드 도구</li>
-  <li>Homebrew : OS X에서 설치 및 관리를 도와주는 패키지</li>
-  <li>Oh-my-zsh : 커멘드를 편리하고 아름답게 바꿔주는 패키지</li>
-  <li>
-    <p>Theme : zsh-syntax-highlighting, powerlevel9k</p>
+<p>예를 들어 1억의 시드를 가지고 1월에 50% 수익, 2월에 30% 손실이 발생했다고 가정해보겠습니다.
+최종 금액은 1억 500만원이 되며 위의 방법을 이용한 평균 수익률은 (50 + -30) / 2 = 10%가 됩니다.
+하지만 이를 실제로 나누어 계산해보면 실제 수익률과 큰 차이가 존재합니다.</p>
 
-    <p>​</p>
-  </li>
-</ul>
+<p>1월에 10% 수익을 얻었다면 1억 1000만원, 2월에는 1억 2100만원이 됩니다.
+무려 12100 - 10500 = 1600만원이나 차이가 존재합니다.
+이를 제대로 계산하기 위해서는 산술평균이 아닌 <strong>기하평균</strong>을 사용해야합니다.</p>
 
-<h2 id="section-3">후기</h2>
+<script type="math/tex; mode=display">E(R) = \frac{1}{N}\sum_{i=1}^{N}R_i</script>
 
-<p>윈도우에서는 초기에 환경구축하려면 온갖 삽질을 해야 했는데,
-맥은 금방 설치되는 점이 가장 좋았다.
-터치바를 커스터마이징 하는 것은 나중에 따로 정리해봐야겠다.</p>
+<script type="math/tex; mode=display">E(R) = \sqrt[N]{R_1 \times R_2... \times R_i}</script>
+
+<p>첫 번째 수식이 산술평균이고 두 번째 수식이 기하평균입니다. 여기에서 n은 기간이 됩니다.
+앞의 예시에 기하평균을 이용해서 평균 수익률을 계산해보면 대략 2.49%가 나옵니다.
+이를 이용하여 다시 계산해보면 1월에 1억 249만원, 2월에 1억 504만원이 나옵니다.
+오차는 10504 - 10500 = 4만원으로 훨씬 정확하게 나오는 것을 볼 수 있습니다.</p>
+
+<p>​</p>
+
+<h4 id="section-2">변동성 계산</h4>
+
+<script type="math/tex; mode=display">\sigma^2 = Var(R) = \frac{1}{N-1}\sum_{i=1}^{N}(R_i-\bar{R})</script>
+
+<p>변동성(=위험)은 기댓값으로 부터 얼마나 떨어져있는지를 나타내는 <strong>분산</strong>과 동일한 의미를 가집니다.
+간단하게 보면 아래의 카카오 종가 그래프에서 평균선과 차이를 모두 더한 값이라고 볼 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1w1Neybj-RXbaFYaeRMf6NZi2DUkpn5uN" alt="" /></p>
+
+<p>​</p>
+
+<h2 id="section-3">포트폴리오의 기대수익률과 변동성 계산</h2>
+<p>처음 설명한 자산 배분 문제는 결국 아래와 같은 과정을 거치게 됩니다.</p>
+
+<ol>
+  <li>투자할 자산군을 결정</li>
+  <li>결정한 자산 별 수익률, 변동성 및 상관관계를 계산</li>
+  <li>변동성 대비 수익률이 가장 높은 포트폴리오를 구성</li>
+</ol>
+
+<script type="math/tex; mode=display">w = portfolio = [w_1, w_2, ... , w_N]^T, where \sum_{i=1}^{N}w_i = 1</script>
+
+<p>포트폴리오의 경우 앞서 설명한 단일 자산과는 달리 여러 자산으로 구성됩니다.
+따라서, 포트폴리오의 기대수익률과 변동성을 계산하려면 주어진 예산에서의 자산 별 투자 비중이 정해져야 합니다.</p>
+
+<script type="math/tex; mode=display">\mu_p = portfolio \times expectation = [w_1, w_2, ... , w_N][R_1, R_2, ... , R_N]^T</script>
+
+<p><strong>포트폴리오의 기대수익률</strong>은 개별 자산의 기대수익률과 포트폴리오의 비중을 곱해서 합산하는 방법으로 계산합니다.</p>
+
+<p>​</p>
+
+<script type="math/tex; mode=display">Cov(R^1, R^2) = E[(R^1-\bar{R^1})(R^2-\bar{R^2})] = \frac{1}{N-1}\sum_{i=1}^{N}(R^1-\bar{R^1})(R^2-\bar{R^2})</script>
+
+<p><strong>포트폴리오의 변동성</strong>은 <strong>공분산(Covarience)</strong>을 이용해서 계산할 수 있습니다.
+공분산은 확률변수가 2개 이상일 때 각 확률변수들이 얼마나 퍼져있는지를 나타내는 값을 알려주는 지표입니다.</p>
+
+<script type="math/tex; mode=display">\rho = \cfrac{Cov(X,Y)}{Std(X)Std(Y)}, (-1\leq\rho\leq1)</script>
+
+<p><strong>상관관계(Correlation Coefficient)</strong>는 확률변수의 절대적 크기에 영향을 받지 않도록 0과 1사이로 단위화시킨 값이라고 보시면 됩니다.
+100만원 대의 주식 2개와 10만원 대의 주식 2개의 각 공분산을 계산해보면 100만원 대 주식의 공분산에서 더 큰 값이 나오게 됩니다.
+이러한 크기차이에 영향을 받지 않도록 분산의 크기만큼 나눈 것 입니다.</p>
+
+<p>​</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\sigma_p^2 = [w_1, w_2, ... , w_N]
+ \begin{bmatrix}
+  \sigma_{11} & \sigma_{12} & \cdots & \sigma_{1n} \\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  \sigma_{n1} & \sigma_{n2} & \cdots & \sigma_{n^2} 
+ \end{bmatrix}
+ \begin{bmatrix}
+  w_{1} \\
+  w_{2} \\
+  \vdots \\
+  w_{N} \\
+\end{bmatrix} %]]></script>
+
+<p>결국 포트폴리오의 변동성은 포트폴리오의 비중, 투자 자산들 간의 공분산 행렬, 다시 포트폴리오 비중을 곱해 계산할 수 있습니다.
+아래는 파이썬의 <code class="highlighter-rouge">numpy, pandas, matplotlib</code>을 이용해서 계산하는 노트북 링크입니다.
+다음에는 포트폴리오 이론의 시초이자 최적의 <strong>mean-varience를 계산하는 markowitz</strong> 모델에 대해 정리해보겠습니다.</p>
+
+<p><a href="http://nbviewer.jupyter.org/github/Swalloow/Rogers/blob/master/notebook/portfolio-optimization.ipynb">http://nbviewer.jupyter.org/github/Swalloow/Rogers/blob/master/notebook/portfolio-optimization.ipynb</a></p>
 
 <p>​</p>
 
@@ -228,15 +271,15 @@
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=맥북프로 터치바 모델 초기설정&amp;url=http://swalloow.github.io/macbook-setting"
+                <a class="icon-twitter" href="http://twitter.com/share?text=포트폴리오의 기대수익률과 변동성 계산&amp;url=http://swalloow.github.io/portfolio-basic"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/macbook-setting"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/portfolio-basic"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/macbook-setting"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/portfolio-basic"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -248,8 +291,8 @@
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/macbook-setting';
-        var disqus_url = 'http://swalloow.github.io//macbook-setting';
+        var disqus_identifier = '/portfolio-basic';
+        var disqus_url = 'http://swalloow.github.io//portfolio-basic';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -274,20 +317,13 @@
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/cover_datascience.jpg)" href="/cs224d-lecture1">
-            <section class="post">
-                <h2>[CS224d] Lecture1. Intro to NLP and Deep Learning</h2>
-                <p>​ ### Pre-requisites - 파이썬을 능숙하게 사용할 줄 알아야 한다. - 미적분학, 선형대수학 지식 -...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev " style="background-image: url(/assets/images/cover_datascience.jpg)" href="/cs224d-intro">
+        <a class="read-next-story prev no-cover" href="/structuring-tf">
             <section class="post">
-                <h2>[CS224d] 자연어처리 강의 소개</h2>
-                <p>​ CS224d 강의는 스탠포드 대학의 대표적인 자연어처리 강의입니다. 이미지 프로세싱은 CS231n, 자연어처리는 CS224d 로 배우라는...</p>
+                <h2>Structuring Your TensorFlow Models</h2>
+                <p>​ 이 글은 저자의 허락을 받아 번역한 글 입니다. 원문 링크 TensorFlow에서 모델을 정의하다보면 어느새...</p>
             </section>
         </a>
     
