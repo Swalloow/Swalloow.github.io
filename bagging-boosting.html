@@ -151,7 +151,7 @@ Weak learner를 결합한다면, Single learner보다 더 나은 성능을 얻�
 
 <p><img src="/assets/images/boosting.png" alt="" /></p>
 
-<p>먼저 대상 데이터로부터 비복원 랜덤 샘플링을 합니다.
+<p>먼저 대상 데이터로부터 복원 랜덤 샘플링을 합니다.
 이렇게 추출한 데이터가 일종의 표본 집단이 됩니다.
 이제 여기에 동일한 모델을 학습시킵니다.
 그리고 학습된 모델의 예측변수들을 집계하여 그 결과로 모델을 생성해냅니다.</p>
@@ -194,7 +194,7 @@ Boosting 방식은 9번 문제에 가중치를 부여해서 9번 문제를 잘 �
 
 <p><img src="https://quantdare.com/wp-content/uploads/2016/04/bb3.png" alt="" /></p>
 
-<p>Boosting도 Bagging과 동일하게 비복원 랜덤 샘플링을 하지만, 가중치를 부여한다는 차이점이 있습니다.
+<p>Boosting도 Bagging과 동일하게 복원 랜덤 샘플링을 하지만, 가중치를 부여한다는 차이점이 있습니다.
 Bagging이 병렬로 학습하는 반면, Boosting은 순차적으로 학습시킵니다.
 학습이 끝나면 나온 결과에 따라 가중치가 재분배됩니다.</p>
 
