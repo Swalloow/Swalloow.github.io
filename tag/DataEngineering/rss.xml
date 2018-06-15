@@ -12,6 +12,197 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>AWS에 Hadoop MR 어플리케이션 환경 구축하기</title>
+	  <link>//aws-hadoop</link>
+	  <author>Swalloow</author>
+	  <pubDate>2018-06-13T19:18:00+09:00</pubDate>
+	  <guid>//aws-hadoop</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>이번 학기에 하둡 프로그래밍 강의를 들으면서 정말 실습 환경의 개선이 필요하다는 생각이 들었습니다…
+나약한 실습 환경속에서 과제와 기말 프로젝트를 제출해야하는 후배들을 위해 AWS를 추천합니다!</p>
+
+<p>​</p>
+
+<h2 id="ec2-amazon-linux2---">EC2 Amazon Linux2에 기본 환경 구축</h2>
+
+<p>AWS에는 EMR이라는 클러스터 서비스가 있지만, 스터디 목적이라면 비용을 생각해서 사용하지 않겠습니다.
+Amazon Linux AMI는 EC2에서 편하게 사용할 수 있도록 지원하고 관리하는 리눅스 이미지입니다.
+만일 학생용 크레딧이 있다면 <strong>t2.medium</strong> 인스턴스를 추천합니다.</p>
+
+<p>먼저, JAVA JDK와 Hadoop 파일을 받겠습니다. 실습 환경은 자바 7, 하둡 1.2 버전입니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>sudo yum update -y
+<span class="gp">$ </span>sudo yum install -y java-1.7.0-openjdk-devel
+<span class="gp">$ </span>wget https://archive.apache.org/dist/hadoop/core/hadoop-1.2.1/hadoop-1.2.1.tar.gz
+<span class="gp">$ </span>tar xvfz hadoop-1.2.1</code></pre></figure>
+
+<p>그리고 자바 프로젝트를 위해 Maven도 설치해줍니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>wget http://mirror.navercorp.com/apache/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz
+<span class="gp">$ </span>tar xvfs apache-maven-3.5.3-bin.tar.gz
+<span class="gp">$ </span>mv apache-maven-3.5.3/ apache-maven
+<span class="gp">$ </span>sudo vi /etc/profile.d/maven.sh
+
+<span class="c"># Apache Maven Environment Variables</span>
+<span class="c"># MAVEN_HOME for Maven 1 - M2_HOME for Maven 2</span>
+<span class="gp">$ </span><span class="nb">export </span><span class="nv">M2_HOME</span><span class="o">=</span>/home/ec2-user/apache-maven
+<span class="gp">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">M2_HOME</span><span class="k">}</span>/bin:<span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>
+
+<span class="gp">$ </span>chmod +x maven.sh
+<span class="gp">$ </span><span class="nb">source</span> /etc/profile.d/maven.sh</code></pre></figure>
+
+<p>정상적으로 설치가 되었다면 아래의 명령어에 대한 결과가 나옵니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>java --version
+<span class="gp">$ </span>mvn --version</code></pre></figure>
+
+<p>​</p>
+
+<h3 id="hadoop--">Hadoop 환경 구축</h3>
+
+<p>실습환경은 <strong>Pseudo-Distibuted</strong> 모드로 진행합니다.
+먼저 Password less SSH Login을 설정해주어야 합니다.
+그리고 편의를 위해 hadoop-1.2.1 폴더에 Symbolic link를 생성하겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># ssh login setting</span>
+<span class="gp">$ </span>ssh-keygen -t rsa -P <span class="s2">""</span>
+<span class="gp">$ </span>cat /home/ec2-user/.ssh/id_rsa.pub &gt;&gt; /home/ec2-user/.ssh/authorized_keys
+
+<span class="c"># symbolic link</span>
+<span class="gp">$ </span>ln -s hadoop-1.2.1 hadoop</code></pre></figure>
+
+<p>이제 HDFS와 MR 실행을 위해 설정파일을 수정해줍니다.
+먼저 <code class="highlighter-rouge">hadoop-env.sh</code>을 열어 <code class="highlighter-rouge">JAVA_HOME</code> 환경변수를 지정해줍니다.
+가상분산모드에서는 masters, slaves 파일을 수정할 필요가 없습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span><span class="nb">cd </span>hadoop
+<span class="gp">$ </span>vi conf/hadoop-env.sh
+
+<span class="c"># set JAVA_HOME in this file, so that it is correctly defined on</span>
+<span class="c"># remote nodes.</span>
+
+<span class="c"># The java implementation to use. Required.</span>
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-1.7.0
+
+<span class="c"># Extra Java CLASSPATH elements.  Optional.</span>
+<span class="c"># export HADOOP_CLASSPATH=</span></code></pre></figure>
+
+<p>이제 <code class="highlighter-rouge">core-site.xml</code> 파일을 아래와 같이 수정해줍니다.
+HDFS 데이터 파일들은 홈 디렉토리의 hadoop-data 폴더에 저장하겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>vi conf/core-site.xml
+
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;fs.default.name&lt;/name&gt;
+        &lt;value&gt;hdfs://localhost:9000&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+        &lt;value&gt;/home/ec2-user/hadoop-data/&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;</code></pre></figure>
+
+<p><code class="highlighter-rouge">hdfs-site.xml</code> 파일도 수정해줍니다.
+dfs.replication 프로퍼티는 복제 개수를 의미합니다.
+일반적으로 복제 개수를 3으로 두는 것을 권장하지만,
+실습에서는 Fully-Distributed 모드가 아니기 때문에 1로 설정하겠습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>vi conf/hdfs-site.xml
+
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.replication&lt;/name&gt;
+        &lt;value&gt;1&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;</code></pre></figure>
+
+<p><code class="highlighter-rouge">mapred-site.xml</code> 파일도 수정해줍니다.
+mapred.job.tracker 프로퍼티는 job tracker가 동작하는 서버를 말합니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>vi conf/mapred-site.xml
+
+&lt;configuration&gt;
+    &lt;property&gt;
+        &lt;name&gt;mapred.job.tracker&lt;/name&gt;
+        &lt;value&gt;localhost:9001&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/configuration&gt;</code></pre></figure>
+
+<p>​</p>
+
+<h3 id="hadoop-mr">Hadoop MR</h3>
+
+<p>이제 NameNode를 초기화하고 하둡과 관련된 모든 데몬을 실행합니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">./bin/hadoop namenode-format
+./bin/start-all.sh</code></pre></figure>
+
+<p>jps를 통해 자바 프로세스가 제대로 실행되었는지 확인할 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>jps
+3368 TaskTracker
+2991 DataNode
+3241 JobTracker
+3480 Jps
+2872 NameNode
+3139 SecondaryNameNode</code></pre></figure>
+
+<p>HDFS 웹 인터페이스 주소는 http://localhost:50070 이며,
+MapReduce 웹 인터페이스 주소는 http://localhost:50030 입니다.
+들어가시면 아래와 같은 화면이 나타납니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=15OIYCbnc1cy93jJgqX1y8a5vfpCBkpqM" alt="" /></p>
+
+<p>이제 기본으로 설치되어 있는 WordCount 예제를 실행시켜보겠습니다.
+먼저 WordCount 예제의 input 데이터를 HDFS에 업로드하고 jar 파일과 output 경로를 지정해줍니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>./bin/hadoop fs -put conf/hadoop-env.sh ./hadoop-env.sh
+<span class="gp">$ </span>./bin/hadoop jar hadoop-examples-1.2.1.jar wordcount hadoop-env.sh output</code></pre></figure>
+
+<p>HDFS에 write한 결과는 HDFS의 output 경로에서 확인하실 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>./bin/hadoop fs -ls output
+<span class="gp">$ </span>./bin/hadoop fs -cat output/part-r-00000</code></pre></figure>
+
+<p>​</p>
+
+<h3 id="intellij">IntelliJ</h3>
+
+<p>이번엔 예제가 아니라 Hadoop MR 어플리케이션 프로젝트를 새로 생성해보겠습니다.
+IntelliJ에서 JAVA, maven 프로젝트를 생성하시면 됩니다.</p>
+
+<p>그리고 pom.xml은 아래와 같이 수정해줍니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">&lt;groupId&gt;org.swalloow.hadoop&lt;/groupId&gt;
+&lt;artifactId&gt;hadoop&lt;/artifactId&gt;
+&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+
+&lt;!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-core --&gt;
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;
+        &lt;artifactId&gt;hadoop-core&lt;/artifactId&gt;
+        &lt;version&gt;1.2.1&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre></figure>
+
+<p>Mapper와 Reducer 클래스를 수정한 다음, <code class="highlighter-rouge">mvn packages</code> 명령어를 통해 jar 파일을 생성합니다.
+그리고 input 파일을 이전과 동일하게 HDFS에 추가하고 생성한 jar 파일을 통해 MR job을 실행시키시면 됩니다.</p>
+
+<p>아래 링크는 코인 거래 데이터를 입력받아 이동평균선(SMA) 추세를 계산해주는 간단한 예시 프로젝트입니다.
+템플릿은 자유롭게 참고하셔도 됩니다!</p>
+
+<p>https://github.com/Swalloow/hadoop-mr-project</p>
+
+<p>​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>제플린 노트북 자동 실행 스크립트 만들기</title>
 	  <link>//zeppelin-bootstrap</link>
 	  <author>Swalloow</author>
@@ -738,66 +929,6 @@ Cloudera Manager는 기본으로 7180 포트를 사용하기 때문에 Inbound�
 <ul>
   <li>
     <p><a href="http://www.cloudera.com/documentation/manager/5-1-x/Cloudera-Manager-Installation-Guide/cm5ig_install_on_ec2.html">http://www.cloudera.com/documentation/manager/5-1-x/Cloudera-Manager-Installation-Guide/cm5ig_install_on_ec2.html</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Spark의 Random Sampling에 대하여</title>
-	  <link>//spark-sampling</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-06-20T19:18:00+09:00</pubDate>
-	  <guid>//spark-sampling</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>데이터를 분석하다보면 임의의 샘플을 추출해야 하는 상황이 생깁니다.
-그래서 이번에는 Spark에서 랜덤 샘플링을 하는 방법에 대해 정리해보았습니다.</p>
-
-<p>​</p>
-
-<h3 id="sample">Sample()</h3>
-
-<p>Spark RDD API 에는 다양한 sampling 메서드가 존재합니다.
-그 중에서 가장 기본이 되는 <code class="highlighter-rouge">sample()</code>에 대해 먼저 알아보겠습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># sample(boolean withReplacement, double fraction, long seed)</span>
-<span class="n">val</span> <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">rdd</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">false</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">count</span></code></pre></figure>
-
-<p>첫 번째 인자는 추출 방식을 결정합니다. <strong>True면 복원추출, False면 비복원추출</strong> 을 실행합니다.
-여기에서 말하는 복원추출이란, 한 번 뽑은 것을 다시 뽑을 수 있게 하는 방법을 말합니다.
-세 번째 인자로 시드 변수를 지정할 수 있습니다.
-시드란, 컴퓨터가 난수를 일정하게 생성하지 않도록 변화를 주는 값을 말합니다.</p>
-
-<p>​</p>
-
-<h3 id="takesample">takeSample()</h3>
-
-<p>takeSample()도 랜덤 샘플링을 지원하는 메서드지만, 위와 조금 다른 점이 있습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># takeSample(boolean withReplacement, int num, long seed)</span>
-<span class="n">val</span> <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">rdd</span><span class="o">.</span><span class="n">takeSample</span><span class="p">(</span><span class="n">false</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></code></pre></figure>
-
-<p><code class="highlighter-rouge">takeSample()</code>은 두 번째 인자를 지정하여 몇 개를 추출할 것인지 정할 수 있습니다.
-하지만, 결과 값이 RDD가 아닌 리스트나 배열이기 때문에 <strong>메모리에 주의</strong> 해야 합니다.
-정리하자면, 크기를 정해놓고 샘플을 추출하고자 한다면 takeSample() 메서드가 적합하고
-메모리를 생각해서 작은 값을 추출할 때 사용하는 것이 좋습니다.</p>
-
-<p>이외에도 <code class="highlighter-rouge">sampleByKey, sampleByKeyExtract</code> 메서드가 존재합니다.</p>
-
-<p>​</p>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li>
-    <p><a href="https://spark.apache.org/docs/1.6.2/api/java/org/apache/spark/rdd/RDD.html">https://spark.apache.org/docs/1.6.2/api/java/org/apache/spark/rdd/RDD.html</a></p>
 
     <p>​</p>
   </li>
