@@ -12,6 +12,123 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Raft consensus algorithm</title>
+	  <link>//raft-consensus</link>
+	  <author>Swalloow</author>
+	  <pubDate>2018-09-01T19:18:00+09:00</pubDate>
+	  <guid>//raft-consensus</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>Consensus란 분산 시스템에서 노드 간의 상태를 공유하는 알고리즘을 말합니다.
+가장 유명한 알고리즘으로 Paxos가 있고, Zookeeper에서 사용하는 Zab이 있습니다.
+Raft는 이해하기 어려운 기존의 알고리즘과 달리 쉽게 이해하고 구현하기 위해 설계되었습니다.
+(PS. 이 글은 블록체인에서의 Consensus 알고리즘을 말하는 것이 아닙니다)</p>
+
+<p>​</p>
+
+<h2 id="what-is-consensus-problem">What is consensus problem</h2>
+
+<p>하나의 클라이언트와 서버가 있고 클라이언트가 서버에게 데이터를 전달한다고 가정해보겠습니다.
+서버는 하나의 노드로 이루어져있기 때문에 합의가 이루어지는건 아주 쉬운 문제입니다.
+(여기에서 말하는 합의는 공유된 상태라고 이해하시면 됩니다)</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1-KZIAy8UAFgLlUCHESjbOO7pgCVHByGS" alt="con1" /></p>
+
+<p>만일 위 그림처럼 여러 노드로 이루어진 분산 서버에서 합의를 이루어내야한다면 어떻게 해야할까요?
+이러한 문제를 <strong>distributed consensus problem</strong> 이라고 합니다.</p>
+
+<p>​</p>
+
+<h2 id="raft-algorithm">Raft Algorithm</h2>
+
+<p>Raft의 node는 <strong>Follower, Candidate, Leader</strong>라는 3가지 state를 가집니다.
+모든 노드는 처음에 Follower state를 가지고 시작합니다.
+만일 Follower가 Leader의 응답을 받지 못하면 Candidate 상태로 전환될 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1CiOwa7f7dv50HgqvF3Rm4MrWVQlQMRF4" alt="election" /></p>
+
+<p>Candidate는 다른 노드들에게 투표를 요청하고 노드들은 투표 결과를 응답으로 전달합니다.
+노드 중 가장 많은 표를 얻은 노드는 Leader가 될 수 있습니다.
+이러한 프로세스를 <strong>Leader Election</strong> 이라고 부릅니다.</p>
+
+<p>​</p>
+
+<h3 id="leader-election">Leader Election</h3>
+
+<p>Raft는 투표를 관리하기 위해 두 가지 timeout 설정을 가지고 있습니다.
+첫 번째는 <strong>Election timeout</strong> 입니다.
+Election timeout 이란, Follower에서 Candidate로 전환되기 위해 기다리는 시간을 의미합니다.
+일반적으로 Election timeout은 150ms에서 300ms 사이의 값으로 랜덤하게 설정됩니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=18EJCDHGadTVHAtFEoXIms6OnB8hn8DTY" alt="timeout" /></p>
+
+<ol>
+  <li>Election timeout이 끝나면 Follower는 Candidate가 되고 Election term을 시작합니다.</li>
+  <li>Candidate는 본인에게 투표를 하고 다른 노드들에게 투표 요청 메세지를 전달합니다.</li>
+  <li>만일 메세지를 받는 노드가 해당 Election term에서 아직 투표를 하지 않았다면, 먼저 메세지를 전달해준 Candidate에게 투표합니다.</li>
+  <li>투표를 마친 해당 노드는 Election timeout이 초기화 됩니다.</li>
+  <li>가장 많은 표를 받은 노드가 Leader로 선정됩니다.</li>
+</ol>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=14gQt-B4NYslCtwca8xcATt9a2IVH7qqH" alt="reelection" /></p>
+
+<ol>
+  <li>선정 이후 Leader는 Append Entries 메세지를 Follower들에게 전송합니다.
+(이 메세지는 <strong>Heartbeat timeout</strong> 에 설정된 간격마다 보내게 됩니다)</li>
+  <li>Follower들은 Append Entries 메세지를 받으면 Election timeout이 초기화되고 메세지에 대한 응답을 Leader에게 보냅니다.</li>
+  <li>만일 Follower에게 Heartbeat가 도달하지 않으면 다시 Election term이 시작되고, Follower는 Candidate 상태로 전환됩니다.
+(위 그림은 노드A가 죽고 난 이후 노드B가 Leader로 선정되고 Heartbeat 메세지를 전달하는 예시입니다)</li>
+</ol>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1OtRVbaqBh-QmGg5JjDF4hxt4LFxK4oTP" alt="same1" /></p>
+
+<ol>
+  <li>만일 두 개의 노드가 동시에 Election term을 시작하고 메세지가 동시에 Follower에게 도달한다고 가정해보겠습니다.</li>
+  <li>이러한 경우 노드A, 노드B는 2표씩 얻게 되고, 표가 동일하므로 해당 Election term에는 Leader가 선정되지 않습니다.</li>
+  <li>Leader가 선정되지 않았으므로 Election timeout에 따라 새로운 Election term을 시작하게 됩니다.</li>
+</ol>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1o-llsn2rZop8u0jxzam8_K2hu-3n-nvD" alt="same2" /></p>
+
+<p>​</p>
+
+<h3 id="log-replication">Log Replication</h3>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=13PUDuWgR3bl8frAbiHhpkRieWuKrygVI" alt="message" /></p>
+
+<p>Leader가 선정되고 난 이후, 시스템의 모든 변화는 Leader를 통해 이루어집니다.
+클라이언트는 Leader에게 데이터를 전달하고, Leader는 데이터의 복제하여 Follower에게 전달합니다.
+이 과정은 앞서 언급했던 <strong>Append Entries</strong> 메세지를 통해 이루어집니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1RQVmzrOGOg0HZnZ8fO5dpZwoW7XVMd79" alt="res" /></p>
+
+<p>Follower는 받은 데이터를 commit 하고 결과를 Leader에게 전달합니다.
+Leader는 Follow로부터 받은 결과를 Client에게 전달합니다.</p>
+
+<p>​</p>
+
+<h2 id="reference">Reference</h2>
+
+<p>정리하자면 분산 시스템은 fault-tolerence를 보장하기 위해 consensus algorithm을 사용하고 있고,
+분산 시스템을 다루는 프레임워크마다 Consensus 구현이 조금씩 다를 수 있습니다.
+그리고 원활한 Leader Election을 위해 클러스터 노드의 개수는 홀수로 구성하는 것이 좋습니다.</p>
+
+<p>Raft의 경우 Redis cluster에서 응용하여 사용하고 있고,
+Elasticsearch cluster 또한 quorum-based consensus algorithm을 사용하고 있습니다.
+아래의 Raft 논문과 시각화 자료 링크를 보시면 더 쉽게 이해할 수 있습니다.</p>
+
+<ul>
+  <li>https://raft.github.io/raft.pdf</li>
+  <li>http://thesecretlivesofdata.com/raft/</li>
+  <li>https://raft.github.io/</li>
+</ul>
+
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>AWS에 Hadoop MR 어플리케이션 환경 구축하기</title>
 	  <link>//aws-hadoop</link>
 	  <author>Swalloow</author>
@@ -848,87 +965,6 @@ ActionOnFailure를 통해 실패 시 Terminate, Stop 등의 옵션을 지정할 
   </li>
   <li>
     <p><a href="http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-work-with-steps.html">http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-work-with-steps.html</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>AWS 환경에서 Cloudera Manager 설치하기</title>
-	  <link>//cloudera-install</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-06-23T19:18:00+09:00</pubDate>
-	  <guid>//cloudera-install</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>클라우데라 매니저는 하둡 에코시스템을 쉽게 설치하고 관리할 수 있도록 도와주는 도구입니다.
-이를 이용하여 AWS EC2 인스턴스에 하둡 클러스터를 설치하고 실행시키는 방법에 대해 정리해보았습니다.
-내 노트북에 가상머신 여러 개를 띄우기 힘든 경우에 좋은 대안이 될 수 있습니다.</p>
-
-<p>​</p>
-
-<h3 id="cloudera-manager">Cloudera Manager</h3>
-
-<p>클라우데라는 데이터 인프라 관련 솔루션과 컨설팅을 하는 하둡 전문 기업입니다.
-하둡의 창시자 “더그 커팅”도 클라우데라의 수석 아키텍트로 일하고 있습니다.
-Impala, Hue 등 여러 오픈소스도 개발하고 있으며,
-오픈소스 하둡 프로젝트로부터 사람들이 쉽게 설치할 수 있도록 배포판(CDH)을 만들어서 제공해줍니다.
-Cloudera Manager에는 유료, 무료버전이 있는데 여기에서는 무료버전(Express)을 설치하겠습니다.</p>
-
-<p>​</p>
-
-<h3 id="install">Install</h3>
-
-<p><img src="https://hadoopabcd.files.wordpress.com/2015/01/2.png?w=1378&amp;h=510" alt="" /></p>
-
-<p>설치는 AWS EC2 m4.large / CentOS / 8GiB 에서 진행하였습니다.
-프리티어인 t2.micro 의 경우 내려가거나 설치가 안될 수 있기 때문에 제외하고 아무거나 쓰셔도 상관없습니다.</p>
-
-<p><img src="https://hadoopabcd.files.wordpress.com/2015/01/3.png" alt="" /></p>
-
-<p>클러스터의 수에 따라 인스턴스를 생성해줍니다. 그리고 Elastic IP로 public IP를 할당시켜줍니다.
-Cloudera Manager는 기본으로 7180 포트를 사용하기 때문에 Inbound에서 열어주어야 합니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>yum install wget
-<span class="gp">$ </span>wget http://archive.cloudera.com/cm4/installer/latest/cloudera-manager-installer.bin
-<span class="gp">$ </span>chmod +x cloudera-manager-installer.bin
-<span class="gp">$ </span>./cloudera-manager-installer.bin</code></pre></figure>
-
-<p>먼저 JDK를 설치한 다음, 위의 명령어를 통해 cloudera-manager-installer를 설치하고 실행시켜줍니다.</p>
-
-<p><img src="/assets/images/cloudera-login.png" alt="" /></p>
-
-<p>설치가 완료되고 나서, <code class="highlighter-rouge">localhost:7180</code>으로 접속하면 다음과 같은 로그인 화면이 나타납니다.
-초기 유저 아이디와 패스워드는 admin 입니다. 이후에는 본인이 원하는 환경에 맞추어 설치를 진행하면 됩니다.</p>
-
-<p>​</p>
-
-<h3 id="trouble-shooting">Trouble Shooting</h3>
-
-<p><img src="/assets/images/error.png" alt="Error1" /></p>
-
-<p><code class="highlighter-rouge">Fatal Error: SELinux is enabled. It must be disabled to install and use this product.</code>
-보안 관련된 문제인데 <code class="highlighter-rouge">vi /etc/selinux/config</code>로 들어가서 SELinux를 해제시켜주면 해결 됩니다.</p>
-
-<p>​</p>
-
-<p><img src="/assets/images/fail.png" alt="Error2" /></p>
-
-<p>CDH를 설치하기 위해 <code class="highlighter-rouge">sudo vi /etc/ssh/sshd_config</code>에 들어가
-임시로 루트 계정의 SSH 접속을 허용해주어야 합니다.
-설치후에는 다시 잠금 설정해주셔도 됩니다.</p>
-
-<p>​</p>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li>
-    <p><a href="http://www.cloudera.com/documentation/manager/5-1-x/Cloudera-Manager-Installation-Guide/cm5ig_install_on_ec2.html">http://www.cloudera.com/documentation/manager/5-1-x/Cloudera-Manager-Installation-Guide/cm5ig_install_on_ec2.html</a></p>
 
     <p>​</p>
   </li>

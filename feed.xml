@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>Raft consensus algorithm</title>
+        
+          <description>​ Consensus란 분산 시스템에서 노드 간의 상태를 공유하는 알고리즘을 말합니다. 가장 유명한 알고리즘으로 Paxos가 있고, Zookeeper에서 사용하는 Zab이 있습니다. Raft는...</description>
+        
+        <pubDate>Sat, 01 Sep 2018 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//raft-consensus</link>
+        <guid isPermaLink="true">http://swalloow.github.io//raft-consensus</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>AWS에 Hadoop MR 어플리케이션 환경 구축하기</title>
         
           <description>​ 이번 학기에 하둡 프로그래밍 강의를 들으면서 정말 실습 환경의 개선이 필요하다는 생각이 들었습니다… 나약한 실습 환경속에서 과제와 기말 프로젝트를...</description>
