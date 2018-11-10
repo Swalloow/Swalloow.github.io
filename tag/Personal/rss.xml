@@ -12,6 +12,35 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>17-18년 블로그 회고</title>
+	  <link>//start</link>
+	  <author>Swalloow</author>
+	  <pubDate>2018-11-09T19:18:00+09:00</pubDate>
+	  <guid>//start</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>지킬 블로그로 이사한지도 벌써 2년이 다 되어 간다.
+항상 이 맘때쯤이면 글쓰는 횟수가 줄어들고 블로그를 또 이사하고 싶은 욕구가 생긴다.
+하지만 지금 운영하고 있는 블로그도 전혀 문제가 없기 때문에 올해까지는 참기로 결정했다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1BC2DMbBuEZCL8oBNSNPTD6PM4rOs8y5B" alt="" /></p>
+
+<p>18년 들어서 글을 정말 안쓰기 시작했는데 이상하게도 방문자 수는 계속 증가했다.
+특히 최근 몇달 간 방문자 수가 6천 - 8천 사이에만 있는 걸 보니 다시 글을 써야겠다는 생각이 들었다.
+가장 많이 방문한 페이지 리스트를 보면 어려운 주제에 대한 글보다
+간단한 주제이면서 잊지 않기 위해 기록해 둔 글들이 더 인기가 많았다.</p>
+
+<p>이번달부터 다시 최소한 2주에 1번 정도 글을 써보려 한다.
+주로 백엔드, 데이터 엔지니어링에 대한 주제에 대한 내용이며,
+가끔씩 금융 도메인에 대한 내용도 정리해보려 한다.</p>
+
+<p>​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>넷플릭스 본사 방문 후기</title>
 	  <link>//netflix</link>
 	  <author>Swalloow</author>

@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>17-18년 블로그 회고</title>
+        
+          <description>​ 지킬 블로그로 이사한지도 벌써 2년이 다 되어 간다. 항상 이 맘때쯤이면 글쓰는 횟수가 줄어들고 블로그를 또 이사하고 싶은 욕구가...</description>
+        
+        <pubDate>Fri, 09 Nov 2018 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//start</link>
+        <guid isPermaLink="true">http://swalloow.github.io//start</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Raft consensus algorithm</title>
         
           <description>​ Consensus란 분산 시스템에서 노드 간의 상태를 공유하는 알고리즘을 말합니다. 가장 유명한 알고리즘으로 Paxos가 있고, Zookeeper에서 사용하는 Zab이 있습니다. Raft는...</description>
