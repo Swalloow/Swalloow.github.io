@@ -12,6 +12,132 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Kafka Connect로 S3에 데이터를 저장해보자</title>
+	  <link>//kafka-connect</link>
+	  <author>Swalloow</author>
+	  <pubDate>2018-11-16T19:18:00+09:00</pubDate>
+	  <guid>//kafka-connect</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>Kafka에는 정말 유용한 컴포넌트들이 존재합니다.
+오늘은 그 중 하나인 Kafka-Connect에 대해 알아보고,
+Confluent에서 제공하는 Kafka-Connect-S3를 활용하여
+S3로 데이터를 저장하는 방법에 대해 정리해보려고 합니다.</p>
+
+<p>​</p>
+
+<h2 id="kafka-connect">Kafka Connect</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=172qcC4a0mgYnkeZHlH7HH4lar1dAebA3" alt="kafka-connect" /></p>
+
+<p>우리는 서버로부터 생성되는 데이터를 실시간으로 Kafka에 보내기도 하고,
+Kafka Topic에 쌓여있는 데이터를 실시간으로 RDBMS, Object Storage와 같은 시스템에 보내기도 합니다.
+Kafka Connect는 위의 그림과 같이 다양한 시스템과 Kafka 사이의 연결을 도와주는 역할을 하는 컴포넌트입니다.
+Source System에서 Kafka로 들어가는 Connector를 Source Connect라 부르고,
+Kafka에서 Target System으로 보내는 Connector를 Sink Connect라 부릅니다.</p>
+
+<p>Kafka Connect는 JSON, Avro, Protobuf 등의 다양한 직렬화 포멧을 지원하며
+Kafka Schema Registry와 연동시켜 공통된 스키마 지정을 할 수도 있습니다.</p>
+
+<p>사실 Fluentd와 ELK Stack에서 사용하는 Logstash 등 서로 다른 시스템 간의 브릿지 역할을 하는 프레임워크들은 다양하게 존재합니다.
+하지만 Kafka Connect가 갖는 강점은 Kafka와 긴밀히 연동되어 있다는 점 입니다.</p>
+
+<p>Kafka Connect를 사용하지 않고 데이터를 실시간으로 전달하기 위해서는 Producer, Consumer API를 사용해야 합니다.
+이 과정에서 이미 처리되거나 실패한 데이터를 추적한다거나, 데이터 분산처리, 작업을 배포하는 등의 작업을 수행해야만 합니다.</p>
+
+<p>Kafka Connect는 앞의 모든 작업을 수행할 뿐만 아니라 connector task를 클러스터 전체에 자동으로 배포합니다.
+또한, Connect Worker 중에 하나가 실패하거나 Network partition이 발생하더라도 실행하던 작업을 나머지 Worker들에게 자동으로 재조정합니다.
+Offset을 자동으로 관리, 유지하기 때문에 재시작하더라도 중단 시점부터 다시 시작할 수 있고 (Exactly Once Delivery),
+High performance Kafka library로 작성되어 빠르며 불필요한 polling 작업을 수행하지 않습니다.
+무엇보다 코드 한 줄 없이 사용하기 편하다는 것도 큰 강점입니다.
+혹시 Kafka를 이미 중앙 집중형 로그 저장소로 사용하고 있다면 Kafka Connect를 고려해볼만 하다고 생각합니다.</p>
+
+<p>​</p>
+
+<h2 id="kafka-connect-s3">Kafka-Connect-S3</h2>
+
+<p>이 글에서는 Confluent로 Kafka를 설치하지 않은 경우를 예시로 들겠습니다.
+이미 confluent-hub를 설치하셨거나 Confluent로 Kafka를 설치하셨다면 공식문서를 따라가시면 됩니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1R80lOarW9k1RGv2kYAYxNz_-q6wUsm28" alt="aws-kafka-s3" /></p>
+
+<p>데이터 인프라가 AWS 환경에 구축되어 있다면 S3를 Cold Storage로 많이 사용하게 됩니다.
+최대한 단순하게 그림을 그려보면 위의 그림과 같은 아키텍쳐가 나오게 됩니다.
+여기에서는 Kafka에서 S3로 실시간 데이터를 저장하기 위해 Kafka-Connect-S3를 사용하게 됩니다.</p>
+
+<p>먼저 confluent에서 kafka-connect-s3를 다운받아 plugins 경로에 추가합니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>wget https://api.hub.confluent.io/api/plugins/confluentinc/kafka-connect-s3/versions/4.1.1/archive
+<span class="gp">$ </span>unzip archive
+<span class="gp">$ </span>mkdir -p plugins/kafka-connect-s3
+<span class="gp">$ </span>cp confluentinc-kafka-connect-s3-4.1.1/lib/<span class="k">*</span> plugins/kafka-connect-s3/</code></pre></figure>
+
+<p>이제 kafka config 경로에 <code class="highlighter-rouge">connect.properties</code>라는 이름으로 설정 파일을 추가합니다.
+<code class="highlighter-rouge">bootstrap.servers</code>와 <code class="highlighter-rouge">plugin.path</code> 경로는 상황에 맞게 수정하시면 됩니다.
+추가로 kafka 클러스터를 private network로 연결하고 싶다면 9093 포트를 사용해주시면 됩니다.</p>
+
+<script src="https://gist.github.com/Swalloow/3657a0f3c44e969f388a39ff135d38d3.js"></script>
+
+<p>기존 클러스터에 Authentication credentials, encryption이 설정되어 있다면,
+connect.properties에 관련 설정을 추가해주셔야 합니다.</p>
+
+<p>다음 S3에 데이터가 저장될 Bucket을 생성하고, AWS Credentials를 설정합니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>pip install awscli
+<span class="gp">$ </span>aws configure</code></pre></figure>
+
+<p>이제 sink connector 관련 설정 파일을 <code class="highlighter-rouge">s3-sink.properties</code>라는 이름으로 config 경로에 추가합니다.
+topics와 s3.bucket.name의 이름은 맞게 수정해주셔야 합니다.</p>
+
+<script src="https://gist.github.com/Swalloow/6dcc4604ca3847afa631d35ffaa24ac4.js"></script>
+
+<p>이제 Kafka 설치 경로로 이동하고 Kafka-Connect를 실행시킵니다.
+여기에서는 standalone mode로 실행시켰지만, 경우에 따라 cluster mode로 실행하거나
+docker container로 실행시켜도 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">./bin/connect-standalone.sh connect.properties s3-sink.properties</code></pre></figure>
+
+<p>이제 지정한 S3 Bucket의 topic/my-topic-name/2018-11-16 경로에 가시면
+지정한 설정 값에 따라 파일이 저장되는 것을 확인하실 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1bepmpAHi7kwUnqvGOwyq0i8jSMIhhMeU" alt="" /></p>
+
+<p>이미 Yahoo의 kafka-manager를 사용하고 계신 분들은 consumers 메뉴로 가시면
+topic 마다 lag도 모니터링할 수 있습니다.</p>
+
+<p>​</p>
+
+<h3 id="kafka-connect-s3-configuration">Kafka-Connect-S3 Configuration</h3>
+
+<p>데이터 인프라에 맞게 수정해야할 옵션은 아래와 같습니다.</p>
+
+<ul>
+  <li><strong>s3.part.size</strong>: S3의 multi part upload 사이즈를 지정</li>
+  <li><strong>flush.size</strong>: file commit 시 저장할 record의 수 (파일 사이즈와 연관)</li>
+  <li><strong>partitioner.class</strong>: partition 기준을 지정 (TimeBasedPartitioner는 시간을 기준으로 파티셔닝)</li>
+</ul>
+
+<p>이외에도 Avro Format과 Schema Registry를 사용하신다면 <code class="highlighter-rouge">format.class</code>, <code class="highlighter-rouge">schema.generator.class</code>를 수정해야 합니다.
+더 자세한 내용은 <a href="https://docs.confluent.io/5.0.0/connect/kafka-connect-s3/configuration_options.html#s3-configuration-options">공식문서</a>에서 확인하시면 됩니다.</p>
+
+<p>​</p>
+
+<h2 id="reference">Reference</h2>
+
+<p>사실 Kafka는 이미 대부분의 데이터 파이프라인에서 활용하고 있다는 것이 강점이라고 생각합니다.
+ETL 과정이 다양하고 복잡할 수록 새로운 프레임워크가 추가되고 아키텍쳐가 복잡해지기 마련인데,
+Kafka의 다양한 컴포넌트들을 잘 활용하면 아키텍쳐를 단순화시킬 수도 있습니다.</p>
+
+<ul>
+  <li>https://www.confluent.io/blog/kafka-connect-deep-dive-converters-serialization-explained</li>
+  <li>https://docs.confluent.io/5.0.0/connect/kafka-connect-s3/index.html</li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Raft consensus algorithm</title>
 	  <link>//raft-consensus</link>
 	  <author>Swalloow</author>
@@ -898,73 +1024,6 @@ Imputer feature transformer, Tweedie distribution, FPGrowth frequent pattern min
 <ul>
   <li>
     <p><a href="http://spark.apache.org/releases/spark-release-2-2-0.html">http://spark.apache.org/releases/spark-release-2-2-0.html</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>AWS EMR step을 이용한 Spark Batch 작업</title>
-	  <link>//emr-step</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-07-02T19:18:00+09:00</pubDate>
-	  <guid>//emr-step</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>AWS EMR은 특정 작업을 등록할 수 있는 <strong>step</strong> 이라는 기능을 제공합니다.
-예를 들어 매일 새벽에 클러스터에서 돌려야하는 Batch 작업이 있다면 step과 스케줄러를 통해 쉽게 해결할 수 있습니다.</p>
-
-<p>​</p>
-
-<h3 id="emr-step">EMR Step</h3>
-
-<p>Step은 AWS console 내에서 추가해도 되지만, AWS-Cli를 이용해서 등록해보도록 하겠습니다.
-AWS-Cli로 등록하면 이후에 스크립트로 활용할 수도 있다는 편리함이 있습니다.</p>
-
-<p>AWS EMR step을 등록하는 방법은 아래와 같습니다.
-가독성을 위해 줄바꿈, 띄어쓰기를 했지만 실제로 등록할 때는 전부 붙이셔야 합니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>aws emr add-steps
-    --cluster-id <span class="nv">$CLUSTERID</span>,
-    --steps <span class="nv">Name</span><span class="o">=</span><span class="nv">$JOBNAME</span>,
-    <span class="nv">Jar</span><span class="o">=</span><span class="nv">$JARFILE</span>,
-    <span class="nv">Args</span><span class="o">=[</span>
-        /usr/lib/spark/bin/spark-submit,
-        --deploy-mode,client,
-        --properties-file,/etc/spark/conf/spark-defaults.conf,
-        --conf,spark.yarn.executor.memoryOverhead<span class="o">=</span>2048,
-        --conf,spark.executor.memory<span class="o">=</span>4g,
-        --packages,<span class="nv">$SPARK_PACKAGES</span>
-    <span class="o">]</span>,
-    <span class="nv">ActionOnFailure</span><span class="o">=</span><span class="k">${</span><span class="nv">ACTION_ON_FAIL</span><span class="k">}</span><span class="s1">'</span></code></pre></figure>
-
-<p>Spark 작업 실행은 <code class="highlighter-rouge">Spark-submit</code>을 이용하여 클라이언트에 배포하는 형식입니다.
-이를 위해 jar 파일이 클라이언트의 로컬 경로에 포함되어 있어야 합니다.
-ActionOnFailure를 통해 실패 시 Terminate, Stop 등의 옵션을 지정할 수 있습니다.</p>
-
-<p>만약 등록한 작업을 취소하고 싶다면, <code class="highlighter-rouge">cancel-steps</code>를 이용하시면 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>aws emr cancel-steps ...</code></pre></figure>
-
-<p>Spark 작업이 주기적으로 실행되어야 한다면,
-가장 간단한 방법은 위의 EMR step 등록 스크립트를 crontab으로 등록하는 것 입니다.
-만약 작업이 다양하고 복잡하다면, <strong>AWS Data Pipeline</strong> 이라는 제품을 고려해보는 것도 방법입니다.
-<a href="https://aws.amazon.com/ko/datapipeline/details/">https://aws.amazon.com/ko/datapipeline/details/</a></p>
-
-<p>​</p>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li>
-    <p><a href="http://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-submit-step.html">http://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-spark-submit-step.html</a></p>
-  </li>
-  <li>
-    <p><a href="http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-work-with-steps.html">http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-work-with-steps.html</a></p>
 
     <p>​</p>
   </li>
