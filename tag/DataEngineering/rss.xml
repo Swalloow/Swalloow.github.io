@@ -79,6 +79,8 @@ High performance Kafka library로 작성되어 빠르며 불필요한 polling �
 
 <script src="https://gist.github.com/Swalloow/3657a0f3c44e969f388a39ff135d38d3.js"></script>
 
+<p>​</p>
+
 <p>기존 클러스터에 Authentication credentials, encryption이 설정되어 있다면,
 connect.properties에 관련 설정을 추가해주셔야 합니다.</p>
 
@@ -87,10 +89,12 @@ connect.properties에 관련 설정을 추가해주셔야 합니다.</p>
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>pip install awscli
 <span class="gp">$ </span>aws configure</code></pre></figure>
 
-<p>이제 sink connector 관련 설정 파일을 <code class="highlighter-rouge">s3-sink.properties</code>라는 이름으로 config 경로에 추가합니다.
+<p>sink connector 관련 설정 파일을 <code class="highlighter-rouge">s3-sink.properties</code>라는 이름으로 config 경로에 추가합니다.
 topics와 s3.bucket.name의 이름은 맞게 수정해주셔야 합니다.</p>
 
 <script src="https://gist.github.com/Swalloow/6dcc4604ca3847afa631d35ffaa24ac4.js"></script>
+
+<p>​</p>
 
 <p>이제 Kafka 설치 경로로 이동하고 Kafka-Connect를 실행시킵니다.
 여기에서는 standalone mode로 실행시켰지만, 경우에 따라 cluster mode로 실행하거나
