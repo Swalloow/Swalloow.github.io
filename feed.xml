@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>Apache Airflow에 기여하면서 배운 점들</title>
+        
+          <description>​ Apache Airflow는 코드를 통해 워크플로우를 관리하고 모니터링 할 수 있도록 도와주는 플랫폼이다. Airflow 프로젝트에 대한 설명은 다른 글에서도 많이...</description>
+        
+        <pubDate>Sat, 08 Dec 2018 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//airflow-contrib</link>
+        <guid isPermaLink="true">http://swalloow.github.io//airflow-contrib</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Kafka Connect로 S3에 데이터를 저장해보자</title>
         
           <description>​ Kafka에는 정말 유용한 컴포넌트들이 존재합니다. 오늘은 그 중 하나인 Kafka-Connect에 대해 알아보고, Confluent에서 제공하는 Kafka-Connect-S3를 활용하여 S3로 데이터를 저장하는...</description>

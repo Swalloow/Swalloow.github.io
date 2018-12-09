@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://swalloow.github.io///airflow-contrib</loc>
+<lastmod>2018-12-08T19:18:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://swalloow.github.io///kafka-connect</loc>
 <lastmod>2018-11-16T19:18:00+09:00</lastmod>
 </url>
@@ -287,6 +291,9 @@
 </url>
 <url>
 <loc>http://swalloow.github.io///tag/Personal/</loc>
+</url>
+<url>
+<loc>http://swalloow.github.io///tag/Personal/page2/</loc>
 </url>
 <url>
 <loc>http://swalloow.github.io///tag/DataEngineering/</loc>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- [[! Document Settings ]] -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- [[! Page Meta ]] -->
+    <title>Apache Airflow에 기여하면서 배운 점들</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" >
+
+    <!-- [[! Styles'n'Scripts ]] -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css"
+          href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <!-- [[! highlight.js ]] -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
+        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <link rel="canonical" href="/" />
+    <meta name="referrer" content="origin" />
+    <link rel="next" href="/page2/" />
+
+    
+        <meta property="og:site_name" content="Swalloow Blog" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Apache Airflow에 기여하면서 배운 점들" />
+        <meta property="og:description" content="​ Apache Airflow는 코드를 통해 워크플로우를 관리하고 모니터링 할 수 있도록 도와주는 플랫폼이다. Airflow 프로젝트에 대한 설명은 다른 글에서도 많이..." />
+        <meta property="og:url" content="/" />
+        <meta property="og:image" content="/assets/images/cover_main.jpg" />
+    
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Swalloow Blog" />
+    <meta name="twitter:description" content="About Data Science, Data Engineering" />
+    <meta name="twitter:url" content="/" />
+    <meta name="twitter:image:src" content="/assets/images/cover_main.jpg" />
+
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Website",
+    "publisher": "Swalloow Blog",
+    "url": "/",
+    "image": "/assets/images/cover_main.jpg",
+    "description": "About Data Science, Data Engineering"
+}
+    </script>
+
+    <meta name="generator" content="Jekyll 3.0.0" />
+    <link rel="alternate" type="application/rss+xml" title="Swalloow Blog" href="/feed.xml" />
+
+</head>
+<body class="home-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        <li class="nav-home " role="presentation"><a href="/">Home</a></li>
+        <li class="nav-about " role="presentation"><a href="/about">About</a></li>
+        <li class="nav-personal " role="presentation"><a href="/tag/Personal">Personal</a></li>
+        <li class="nav-develop " role="presentation"><a href="/tag/Develop">Develop</a></li>
+        <li class="nav-devops " role="presentation"><a href="/tag/DevOps">DevOps</a></li>
+        <li class="nav-datascience " role="presentation"><a href="/tag/DataScience">DataScience</a></li>
+        <li class="nav-dataengineering " role="presentation"><a href="/tag/DataEngineering">DataEngineering</a></li>
+        <li class="nav-financial " role="presentation"><a href="/tag/Financial">Financial</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        <!-- [[! Everything else gets inserted here ]] -->
+        <!-- < default -->
+
+<!-- The comment above "< default" means - insert everything in this file into -->
+    <!-- the [body] of the default.hbs template, which contains our header/footer. -->
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post tag-personal">
+
+        <header class="post-header">
+            <h1 class="post-title">Apache Airflow에 기여하면서 배운 점들</h1>
+            <section class="post-meta">
+            <!-- <a href='/'>Swalloow</a> -->
+            <time class="post-date" datetime="2018-12-08">08 Dec 2018</time>
+                <!-- [[tags prefix=" on "]] -->
+                
+                on
+                
+                    
+                       <a href='/tag/Personal'>Personal</a>
+                    
+                
+                
+            </section>
+        </header>
+
+        <section class="post-content">
+
+            <p>​</p>
+
+<p>Apache Airflow는 코드를 통해 워크플로우를 관리하고 모니터링 할 수 있도록 도와주는 플랫폼이다.
+Airflow 프로젝트에 대한 설명은 다른 글에서도 많이 다루기 때문에 생략하고
+이 글에서는 처음으로 아파치 프로젝트에 기여해본 경험을 정리해보려 한다.</p>
+
+<p>​</p>
+
+<h2 id="section">기여하게 된 배경</h2>
+
+<p>당시에 관리하던 데이터 인프라에는 의존성이 얽혀있는 배치 작업이 상당히 많았다.
+여기에서 의존성이 얽혀있다는 말은 A 작업과 B 작업이 성공적으로 끝나고 난 뒤 C 작업을 해야하는 경우를 말한다.
+또한 각 작업들은 서로 다른 시간에 스케줄링 되어야 했고, 작업이 실패하는 경우 재시도 또는 특정 로직을 실행시킬 수 있어야 했다.</p>
+
+<p>처음에는 단순한 구조이다 보니 스크립트로 관리했지만 점차 늘어나는 운영 이슈에 대응하기 위해 Airflow를 활용하기로 결정했다.
+하지만 운영하다 보니 AWS 관련 컴포넌트들의 여러 버그를 발견하게 되었고 이를 수정하기 위해 PR을 추가했었다.</p>
+
+<p>​</p>
+
+<h2 id="pr-">아파치 프로젝트 PR 프로세스</h2>
+
+<p>아파치 프로젝트는 이슈 관리 도구로 JIRA를 사용한다. CI 도구는 프로젝트마다 다른 편인데 Airflow의 경우 TravisCI를 사용한다.
+모든 프로젝트에는 처음 프로젝트에 기여하려는 개발자를 위해 <strong>CONTRIBUTING.md</strong> 라는 문서를 제공한다.
+문서에는 개발 및 테스트 환경을 어떻게 구축해야하는지, 지켜야할 규칙, PR 가이드라인 등에 대해 설명되어 있다.
+그리고 PR template를 준수해야 하는데 잘 모르겠다면, 이전 PR들을 확인하고 비슷한 양식으로 작성하면 된다.</p>
+
+<p>내가 처음 접했던 Airflow 문서에는 AWS 관련 Hook, Operator도 반영되어 있지 않았다.
+그래서 첫 PR로 AWS, GCP 관련 컴포넌트를 업데이트하는 문서 기여를 하게 되었다.
+문서 관리에는 <a href="https://readthedocs.org/">readthedocs</a>를 사용하고 있었고 Sphinx 빌드를 통해 문서를 확인할 수 있었다.</p>
+
+<p>사용하다보니 특히 EMR 관련 Hook과 Operator에 버그가 많았다.
+만일 JIRA에 이미 등록되어 있는 이슈가 아니라면 이슈를 새로 생성한 다음 PR을 추가해주어야 한다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1d0SNiE9qJza0CtmU8S2k8h4Q3iRPE8vN" alt="" /></p>
+
+<p>비슷한 이슈를 겪고 있는 사람들이 있어서 좀 신기했다.
+그리고 <strong>아주 작은 수정이라도 테스트 케이스를 추가</strong>해야 한다는 사실을 알게 되었다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1Re-gmGnEOlB8hxPhAkbjYQpQ-6kOzm6j" alt="" /></p>
+
+<p>양식만 잘 지키면 커미터들은 정말 친절하다. 내가 파악하지 못한 부분까지 알려주고, 코드 리뷰도 받을 수 있다.
+다른 PR을 참고하면서 많이 배울 수 있었다.</p>
+
+<p>​</p>
+
+<h2 id="section-1">클라우드 인프라 테스트 방법</h2>
+
+<p>AWS는 기본적으로 클라우드 환경이다.
+따라서 과금문제로 인해 실제로 추가, 변경한 오퍼레이터가 잘 동작하는지 매번 확인해보기가 힘들다.
+Airflow에서는 AWS 서비스를 Mocking 하기 위해 <a href="https://github.com/spulec/moto">moto</a> 라는 라이브러를 활용해서 테스트를 작성한다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nd">@mock_s3</span>
+<span class="k">def</span> <span class="nf">test_my_model_save</span><span class="p">():</span>
+    <span class="c"># Create Bucket so that test can run</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s">'s3'</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s">'us-east-1'</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">create_bucket</span><span class="p">(</span><span class="n">Bucket</span><span class="o">=</span><span class="s">'mybucket'</span><span class="p">)</span>
+    <span class="n">model_instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">(</span><span class="s">'steve'</span><span class="p">,</span> <span class="s">'is awesome'</span><span class="p">)</span>
+    <span class="n">model_instance</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span><span class="s">'mybucket'</span><span class="p">,</span> <span class="s">'steve'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="s">'Body'</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">body</span> <span class="o">==</span> <span class="s">'is awesome'</span></code></pre></figure>
+
+<p>위와 같이 moto에서 미리 정의한 mock object를 decorator를 사용하여 쉽게 활용할 수 있다.
+하지만 AWS에서 공식으로 지원하는 라이브러리가 아니다보니 업데이트가 늦어지기도 한다.
+이런 이유로 인해 unittest의 mock으로 작성된 테스트 코드도 많이 있다.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">TestEmrAddStepsOperator</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="c"># When</span>
+    <span class="n">_config</span> <span class="o">=</span> <span class="p">[{</span>
+        <span class="s">'Name'</span><span class="p">:</span> <span class="s">'test_step'</span><span class="p">,</span>
+        <span class="s">'ActionOnFailure'</span><span class="p">:</span> <span class="s">'CONTINUE'</span><span class="p">,</span>
+        <span class="s">'HadoopJarStep'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'Jar'</span><span class="p">:</span> <span class="s">'command-runner.jar'</span><span class="p">,</span>
+            <span class="s">'Args'</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s">'/usr/lib/spark/bin/run-example'</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}]</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">load_test_config</span><span class="p">()</span>
+
+        <span class="c"># Mock out the emr_client (moto has incorrect response)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emr_client_mock</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operator</span> <span class="o">=</span> <span class="n">EmrAddStepsOperator</span><span class="p">(</span>
+            <span class="n">task_id</span><span class="o">=</span><span class="s">'test_task'</span><span class="p">,</span>
+            <span class="n">job_flow_id</span><span class="o">=</span><span class="s">'j-8989898989'</span><span class="p">,</span>
+            <span class="n">aws_conn_id</span><span class="o">=</span><span class="s">'aws_default'</span><span class="p">,</span>
+            <span class="n">steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="o">.</span><span class="n">aws_conn_id</span><span class="p">,</span> <span class="s">'aws_default'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="o">.</span><span class="n">emr_conn_id</span><span class="p">,</span> <span class="s">'emr_default'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_render_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ti</span> <span class="o">=</span> <span class="n">TaskInstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="p">,</span> <span class="n">DEFAULT_DATE</span><span class="p">)</span>
+        <span class="n">ti</span><span class="o">.</span><span class="n">render_templates</span><span class="p">()</span>
+
+        <span class="n">expected_args</span> <span class="o">=</span> <span class="p">[{</span>
+            <span class="s">'Name'</span><span class="p">:</span> <span class="s">'test_step'</span><span class="p">,</span>
+            <span class="s">'ActionOnFailure'</span><span class="p">:</span> <span class="s">'CONTINUE'</span><span class="p">,</span>
+            <span class="s">'HadoopJarStep'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">'Jar'</span><span class="p">:</span> <span class="s">'command-runner.jar'</span><span class="p">,</span>
+                <span class="s">'Args'</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s">'/usr/lib/spark/bin/run-example'</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="o">.</span><span class="n">steps</span><span class="p">,</span> <span class="n">expected_args</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span></code></pre></figure>
+
+<p>unittest로 작성된 테스트 케이스는 API로 주고 받는 json을 직접 정의해줘야 하는 번거로움이 있다.
+테스트 케이스를 작성하고 난 다음 바로 PR을 추가하는 것보다 로컬 CI를 미리 돌려보는게 좋다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1MEOqsKocQTV8y5y_y2xrpIppkw2ndOvT" alt="" /></p>
+
+<p>TravisCI는 오픈소스인 경우 무료로 사용할 수 있으며, yml 파일에 미리 정의되어 있으니 참고하면 된다.
+로컬에서 CI가 통과되고 나면 PR을 추가해도 좋다.
+작업이 길어지면서 커밋이 여러 개로 늘어나는 경우, <strong>commit을 squash</strong> 해주는 것이 좋다.
+(나중에 문제가 생겼을 때 쉽게 rebase 하기 위함)</p>
+
+<p>​</p>
+
+<h2 id="section-2">잡다한 정리</h2>
+
+<p>그 동안 5개 정도의 버그를 해결했고 수정했던 AWS EMR 관련 버그들은 1.9 - 10 버전에 모두 반영 되었다.
+이외에도 Airflow에는 여전히 자잘한 버그가 많이 남아있다.
+(Docker로 운영했을 때 로그가 이상하게 나타난다거나, SubDag Deadlock 문제 등)
+당시에 블로그를 열심히 했다면 운영 관련해서 글을 남겼을텐데 하는 아쉬움이 남아있다.</p>
+
+<p>어쨋든 Airflow를 적용하고 난 뒤, 편히 새벽에 잠들 수 있게 되었다.
+지금은 머신러닝 파이프라인 관련 도구가 많이 나왔지만, Airflow도 충분히 해당 영역을 커버할 수 있다.</p>
+
+<p>그리고 오픈소스에 대해 다시 한번 생각해보게 되었다.
+많은 사람들이 참여하는 오픈소스이다 보니 당연히 버그나 이슈가 생길 수 있고,
+문제가 생겼을 때 고쳐달라고 강요하거나 기다리는 것보다 스스로 수정해서 기여하는 것이 올바른 태도가 아닌가 싶다.</p>
+
+
+        </section>
+
+        <footer class="post-footer">
+
+            <!-- Everything inside the #author tags pulls data from the author -->
+            <!-- #author-->
+
+            
+            <figure class="author-image">
+                <a class="img" href="/author/Swalloow" style="background-image: url(/assets/images/avatar.png)"><span class="hidden">'s Picture</span></a>
+            </figure>
+            
+
+            <section class="author">
+                <h4><a href="/author/Swalloow">Swalloow</a></h4>
+
+                
+                    <p> Interested in Data Science & Engineering</p>
+                
+                <div class="author-meta">
+                    <span class="author-location icon-location"> Seoul, Korea</span>
+                    <span class="author-link icon-link"><a href="http://swalloow.github.io/"> swalloow.github.io/</a></span>
+                </div>
+            </section>
+
+            <!-- /author  -->
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Apache Airflow에 기여하면서 배운 점들&amp;url=http://swalloow.github.io/airflow-contrib"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/airflow-contrib"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/airflow-contrib"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+            <!-- Add Disqus Comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+<aside class="read-next">
+
+    <!-- [[! next_post ]] -->
+    
+    <!-- [[! /next_post ]] -->
+    <!-- [[! prev_post ]] -->
+    
+        <a class="read-next-story prev no-cover" href="/kafka-connect">
+            <section class="post">
+                <h2>Kafka Connect로 S3에 데이터를 저장해보자</h2>
+                <p>​ Kafka에는 정말 유용한 컴포넌트들이 존재합니다. 오늘은 그 중 하나인 Kafka-Connect에 대해 알아보고, Confluent에서 제공하는...</p>
+            </section>
+        </a>
+    
+    <!-- [[! /prev_post ]] -->
+</aside>
+
+<!-- /post -->
+
+
+        <footer class="site-footer clearfix">
+          <section class="copyright"><a href="/">Swalloow Blog</a> &copy; 2018</section>
+          <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> using <a href="https://github.com/biomadeira/jasper">Jasper</a></section>
+        </footer>
+    </div>
+    <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- [[! The main JavaScript file for Casper ]] -->
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Add Google Analytics  -->
+        <!-- Google Analytics Tracking code -->
+     <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-89689523-1', 'auto');
+	    ga('send', 'pageview');
+
+     </script>
+</body>
+</html>
