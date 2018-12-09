@@ -256,6 +256,13 @@ Airflow에서는 AWS 서비스를 Mocking 하기 위해 <a href="https://github.
 
 <h2 id="section-2">잡다한 정리</h2>
 
+<ul>
+  <li><a href="https://issues.apache.org/jira/browse/AIRFLOW-713">[AIRFLOW-713] EmrCreateJobFlowOperator and EmrAddStepsOperator attributes are not jinjafied</a></li>
+  <li><a href="https://issues.apache.org/jira/browse/AIRFLOW-950">[AIRFLOW-950] Missing AWS integrations on documentation::integrations</a></li>
+  <li><a href="https://issues.apache.org/jira/browse/AIRFLOW-1453">[AIRFLOW-1453] Add ‘steps’ into template_fields in EmrAddSteps</a></li>
+  <li><a href="https://issues.apache.org/jira/browse/AIRFLOW-1436">[AIRFLOW-1436, AIRFLOW-1475] EmrJobFlowSensor consideres Cancelled step as Successful</a></li>
+</ul>
+
 <p>그 동안 5개 정도의 버그를 해결했고 수정했던 AWS EMR 관련 버그들은 1.9 - 10 버전에 모두 반영 되었다.
 이외에도 Airflow에는 여전히 자잘한 버그가 많이 남아있다.
 (Docker로 운영했을 때 로그가 이상하게 나타난다거나, SubDag Deadlock 문제 등)
