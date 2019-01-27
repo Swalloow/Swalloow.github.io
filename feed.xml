@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>분산 컨테이너 환경에서의 디자인 패턴</title>
+        
+          <description>​ 구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은 분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다. 분산...</description>
+        
+        <pubDate>Sat, 26 Jan 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//container-patterns</link>
+        <guid isPermaLink="true">http://swalloow.github.io//container-patterns</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>일본의 주식시장 특징</title>
         
           <description>​ 도쿄 증권거래소 (전 TSE, 현 JPX) 거래소: 도쿄, 오사카, 나고야, 삿포로 등 존재 (도쿄가 압도적) 약 3600개의 기업이 상장...</description>

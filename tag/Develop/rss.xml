@@ -12,6 +12,152 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>분산 컨테이너 환경에서의 디자인 패턴</title>
+	  <link>//container-patterns</link>
+	  <author>Swalloow</author>
+	  <pubDate>2019-01-26T19:18:00+09:00</pubDate>
+	  <guid>//container-patterns</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은
+분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다.
+분산 어플리케이션을 컨테이너 환경으로 옮기려는 분들에게 많은 도움이 될 듯 합니다.</p>
+
+<p>​</p>
+
+<h2 id="modular-container-design">Modular Container Design</h2>
+
+<p>최근 많은 개발 환경이 Docker 기반의 컨테이너 환경으로 옮겨가고 있습니다.
+그 중에서는 복잡한 의존성에서 벗어나 독립적으로 운영하고 싶어서 옮기는 경우가 많습니다.</p>
+
+<p>하지만 분산 컨테이너 환경은 아주 복잡하게 연결되어 있어서 운영하기 힘듭니다.
+복잡한 연결을 쉽게 이해하려면 이 문제가 어디에 해당하는지 경계를 잘 정의하는 것이 중요합니다.
+이렇게 <strong>경계를 정의하고 분류하는 것을 모듈화</strong>라고 부릅니다.</p>
+
+<p>우리는 과거부터 효율적인 코드를 작성하기 위해 절차지향 프로그래밍에서 객체지향 프로그래밍으로 변화해왔습니다.
+객체지향 프로그래밍의 클래스는 경계를 정의한다는 측면에서 컨테이너 환경과 유사한 면이 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1KTN3XFpFugvI6OXqnJdvc0LBUjW0HfbV" alt="modular" /></p>
+
+<p>과거 모놀리틱 아키텍쳐에서는 왼쪽 그림과 같은 구조로 설계되어 왔습니다.
+우리가 기여하거나 자주 수정하는 코드가 있는 반면, 코어 모듈이나 공통에 해당하는 부분은 잘 변하지 않습니다.</p>
+
+<p>컨테이너 환경은 이와 조금 다릅니다.
+우선 <strong>컨테이너 환경에서 컨테이너는 하나의 어플리케이션이 아니라는 점</strong>을 이해하고 있어야 합니다.
+하나의 컨테이너는 객체지향 언어의 클래스 또는 함수와 유사합니다.
+오른쪽 그림처럼 작은 모듈 조각을 모으고 조립해서 다음 어플리케이션을 설계하는 형태가 되어야 합니다.</p>
+
+<p>​</p>
+
+<h3 id="benefit">Benefit</h3>
+
+<p>위와 같은 컨테이너 환경을 구성했을 때 가지는 장점은 아래와 같습니다.</p>
+
+<ul>
+  <li>이미 만들어 놓은 컨테이너를 재사용할 수 있고 사용하기 쉬움</li>
+  <li>컨테이너 경계에 따라 팀의 역할을 분리시킬 수 있음</li>
+  <li>분리되어 있기 때문에 각 모듈에 대해 더 깊게 이해할 수 있음</li>
+  <li>각 모듈에 대해 작은 수정사항을 빠르게 업데이트할 수 있음</li>
+  <li>
+    <p>흔히 얘기하는 관심사의 분리를 만족시킬 수 있음 (Seperate concerns)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="requirements">Requirements</h3>
+
+<p>위와 같은 컨테이너 환경을 구성하기 위해 필요한 요소는 아래와 같습니다.</p>
+
+<ul>
+  <li>공통된 네임스페이스 (PID, IPC, 네트워크 등), 마치 localhost 처럼 사용할 수 있도록 하나의 컨테이너가 다른 컨테이너의 프로세스를 컨트롤 할 수 있어야 합니다.</li>
+  <li>공유할 수 있는 파일 시스템, Kubernetes의 PV, PVC에 내한 내용을 떠올리면 이해하기 쉽습니다.</li>
+  <li>어플리케이션을 구성할 때 노드의 분리도 고려되어야 합니다. 예시로 WordPress-MySQL 어플리케이션을 배포한다고 가정했을 때, WordPress가 배포된 노드와 MySQL 노드의 위치가 달라야 합니다. 그리고 WordPress, MySQL에 각각에 대한 Scale-out도 고려되어야 합니다.</li>
+  <li>
+    <p>컨테이너가 런타임 시점에 파라메터로 설정 값을 받을 수 있도록 설계되어야 합니다. 그리고 각 이미지에 대한 문서화도 필요합니다.
+특히 여러 컨테이너에서 공통으로 사용하는 라이브러리의 경우 필요</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="sidecar-pattern">Sidecar Pattern</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1zkTfbZgsYUlylN6kGVXDjCqfZGVTo5jF" alt="" /></p>
+
+<p>이제부터 자주 사용되는 세 가지 디자인 패턴을 소개드리려고 합니다.
+먼저 첫 번째는 사이드 카 패턴입니다.
+<strong>사이드 카 패턴은 이전에 사용되던 컨테이너의 기능을 확장시키고 싶을 때</strong> 유용하게 사용됩니다.
+여기서 이전에 사용되던 컨테이너란 잘 변하지 않으며 같은 작업을 반복하는 어플리케이션을 말합니다.</p>
+
+<p>위 그림의 예시에서 이전에 사용되던 컨테이너는 왼쪽의 node.js 어플리케이션 입니다.
+node.js 어플리케이션은 단순히 파일 시스템에 접근하여 어떤 작업을 수행하는 일만 합니다.
+만일 파일 시스템에 대해 git 동기화 기능을 추가하고 싶다면, 오른쪽 컨테이너처럼 확장시킬 수 있습니다.
+node.js 어플리케이션은 사이드 카 컨테이너가 어떤 작업을 수행하는지 고려할 필요가 없습니다.
+사이드 카 컨테이너 역시 어떤 어플리케이션이 이 파일을 서빙하는지 고려할 필요가 없습니다.
+앞서 말한 것처럼 관심사의 분리를 만족시키며, 컨테이너를 관리하는 팀을 분리시킬 수 있습니다.
+또한 사이드 카 컨테이너를 다른 어플리케이션에서 재사용할 수 있고, 더 다양한 기능으로 확장시킬 수 있습니다.</p>
+
+<p>​</p>
+
+<h2 id="ambassador-pattern">Ambassador Pattern</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1pzXLY74nqBfNti5cPd-zSw0kGPEh2CUK" alt="" /></p>
+
+<p>다음은 엠베서더 패턴입니다.
+<strong>엠베서더 패턴은 어플리케이션을 대신하여 외부의 네트워크 또는 요청을 처리해야할 때</strong> 유용하게 사용됩니다.</p>
+
+<p>위 그림의 예시에서 어플리케이션은 PHP 앱이고 Memcache를 사용한 지속적인 해싱이 필요하다고 가정해보겠습니다.
+그리고 Memcache 사용을 위해 <a href="https://github.com/twitter/twemproxy">twemproxy</a>라는 라이브러리를 가져와야 합니다.
+위 그림처럼 어플리케이션과 twemproxy 컨테이너를 분리시킨다면,
+twemproxy 컨테이너는 외부에 있는 Memcache 샤드를 관리하고 통신하는 역할을 수행할 수 있습니다.
+기존에 있던 어플리케이션 컨테이너는 twemproxy 컨테이너와 같은 네임스페이스에 존재하지만, 외부의 통신에 대해서는 관여할 필요가 없습니다.
+역시 마찬가지로 관심사의 분리를 만족시키며, 재사용될 수 있고, 다양한 기능으로 확장시킬 수 있습니다.</p>
+
+<p>​</p>
+
+<h2 id="adapter-pattern">Adapter Pattern</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1Vpp_gVNarlAql_eGKkBJ2ojntRkAYzQL" alt="" /></p>
+
+<p>다음은 어댑터 패턴입니다.
+<strong>어댑터 패턴은 추상화된 레이어가 필요할 때</strong> 유용하게 사용됩니다.</p>
+
+<p>대표적인 예시로 위 그림과 같은 모니터링 에이전트가 있습니다.
+일반적으로 Redis, Memcache, MySQL 등 다양한 컴포넌트에 모니터링이 필요합니다.
+모놀리틱 구조로 설계되었다면, 새로운 컴포넌트에 대한 지원이 필요할때마다 변경이 필요합니다.
+하지만 분리되어 있는 공통 인터페이스가 존재한다면, 새로운 컴포넌트를 쉽게 추가할 수 있습니다.
+특히 오픈소스 진영에서는 많은 사람들이 다양한 컴포넌트를 사용하기 때문에 많이 활용됩니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1doLkvd4eNSQvCtw0KT1ipw2EVA0uTXJP" alt="" /></p>
+
+<p>많이 사용하는 prometheus exporter도 이와 같은 패턴으로 설계되어 있습니다.
+exporter는 모니터링 시스템과 쉽게 결합할 수 있습니다.
+그리고 exporter와 memcache, redis는 결합해서 하나의 컨테이너로 배포하는 형태입니다.
+redis-exporter에 코드 변경이 이루어지더라도 memcache-exporter는 변경될 필요가 없습니다.</p>
+
+<p>​</p>
+
+<h2 id="reference">Reference</h2>
+
+<p>이외에도 Replication, Micro service Load Balancer에 사용되는 다양한 패턴이 존재합니다.
+분산 컨테이너 환경에서 어플리케이션을 개발하는 일은 레고 블럭을 조립하는 것과 비슷합니다.
+더 자세한 내용이 궁금하신 분은 아래 링크를 확인하시면 됩니다.</p>
+
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=Ph3t8jIt894">DockerCon - Container patterns for modular distributed system design</a></li>
+  <li>
+    <p><a href="https://static.googleusercontent.com/media/research.google.com/ko//pubs/archive/45406.pdf">GooglePaper - Design patterns for container-based distributed systems</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Scala의 빌드 도구 SBT</title>
 	  <link>//scala-sbt</link>
 	  <author>Swalloow</author>
@@ -1056,161 +1202,6 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
   <li>카카오 개발자센터 : <a href="https://developers.kakao.com">https://developers.kakao.com</a></li>
   <li>
     <p>네이버 개발자센터 : <a href="https://developers.naver.com">https://developers.naver.com</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>OAuth2에 대해 알아보자</title>
-	  <link>//about-oauth2</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
-	  <guid>//about-oauth2</guid>
-	  <description><![CDATA[
-	     <p>먼저 OAuth 인증을 이해하기 위해 필요한 몇 가지 개념들에 대해 알아보자. OAuth 인증을 진행할 때 해당 서비스 제공자는 ‘제 3자가 어떤 정보나 서비스에 사용자의 권한으로 접근하려 하는데 허용하겠느냐’라는 안내 메시지를 보여 주는 것이다.</p>
-
-<p>​   ​</p>
-
-<h3 id="section">인증과 허가</h3>
-
-<ol>
-  <li>Authentication : 인증</li>
-  <li>
-    <p>Authorization : 허가</p>
-
-    <p>​   ​</p>
-  </li>
-</ol>
-
-<p>일반 로그인은 사원이 63빌딩에 출입하는 것이라면, (사원증이 있어야 출입가능)</p>
-
-<p>OAuth는 1층에서 방문증을 수령한 후 63빌딩에 출입하는 것이다. (방문증만 있어도 출입가능)</p>
-
-<p>​   ​</p>
-
-<h2 id="oauth-10-">OAuth 1.0의 특징</h2>
-
-<p>기존의 다른 인증방식(OpenID)과 구분되는 특징은 크게 두 가지이다.</p>
-
-<ol>
-  <li>API 인증 시, 써드파티 어플리케이션에게 사용자의 비번을 노출하지 않고 인증할 수 있다는 점</li>
-  <li>
-    <p>인증(Authentication)과 API 권한(Authorization) 부여를 동시에 할 수 있다는 점</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h2 id="oauth-10--1">OAuth 1.0의 동작방식</h2>
-
-<p>OAuth 1.0은 기본적으로 user / consumer / service provider가 있어야 한다.</p>
-
-<p>OAuth 1.0 인증을 3-legged OAuth 라고도 하는데 결국 주체가 셋 이라는 말이다.</p>
-
-<p><img src="assets/images/oauth1_triangle.png" alt="oauth1_triangle" /></p>
-
-<p>우리의 서비스에서 트위터 로그인을 연동한다고 가정해보자. 사용자 입장에서는 아이디 / 비밀번호를 통해 가입하면 그 정보를 이용해서 무슨 짓을 할지 모르기 때문에 꺼려한다. OAuth 1.0은 우리의 서비스(Consumer)에게 인증토큰 (Access Token)만을 전달하고 서비스에서 인증토큰으로 트위터 API(Service Provider)를 사용할 수 있도록 해준다.</p>
-
-<p>​</p>
-
-<h3 id="outh-10-">Outh 1.0 프로세스</h3>
-
-<ol>
-  <li>사용자(User)가 트위터 로그인 요청</li>
-  <li>사용자를 트위터(Service Provider) 로그인 화면으로 리다이렉트</li>
-  <li>트위터 로그인 진행</li>
-  <li>
-    <p>서비스(Consumer)로 인증토큰(Access Token)이 전달</p>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h3 id="section-1">인증토큰의 장점</h3>
-
-<ul>
-  <li>사용자의 아이디 / 패스워드를 몰라도 토큰을 통해 허가 받은 API에 접근 가능</li>
-  <li>필요한 API에만 제한적으로 접근할 수 있도록 권한 제어 가능</li>
-  <li>저장되어 있는 인증토큰이 유출되더라도 트위터의 관리자 화면에서 인증토큰의 권한 취소 가능</li>
-  <li>
-    <p>사용자가 트위터(Service Provider)의 패스워드를 변경해도 인증토큰은 계속 유효</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="oauth-20-">OAuth 2.0의 개선사항</h2>
-
-<p>일단 OAuth 2.0은 1.0과 호환되지 않으며 용어부터 많은 것이 다르다. 모바일에서의 사용성 문제나 서명과 같은 개발이 복잡하고 기능과 규모의 확장성 등을 지원하기 위해 만들어진 표준이다. 표준이 매우 크고 복잡해서 이름도 “OAuth 인증 프레임워크(OAuth 2.0 Authorization Framework)” 이다. <a href="http://tools.ietf.org/wg/oauth/">http://tools.ietf.org/wg/oauth/</a> 에서 확인 가능</p>
-
-<p>​</p>
-
-<h3 id="oauth-10--">OAuth 1.0에서 개선된 사항</h3>
-
-<ol>
-  <li>용어 변경
-    <ul>
-      <li>Resource Owner : 사용자</li>
-      <li>Resource Server : REST API 서버</li>
-      <li>Authorization Server : 인증서버 (API 서버와 같을 수도 있음)</li>
-      <li>Client : 써드파티 어플리케이션 (서비스)</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>간단하고 직관적
-    <ul>
-      <li>OAuth 1.0에서는 HTTPS가 필수</li>
-      <li>Signature 없이 생성, 호출 가능</li>
-      <li>URL 인코딩이 필요없음</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>더 많은 인증 방법을 지원
-    <ul>
-      <li>이전에는 HMAC을 이용한 암호화 인증만 지원</li>
-      <li>OAuth 2.0은 여러 인증 방식을 통해 웹 / 모바일 등 다양한 시나리오에 대응 가능</li>
-      <li>Access Token의 Life-time을 지정하여 만료일 설정 가능</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-  <li>대형 서비스로의 확장성 지원
-    <ul>
-      <li>커다란 서비스는 인증 서버를 분리하거나 다중화 할 수 있어야 함</li>
-      <li>Authorization Server의 역할을 명확히 하여 이에 대한 고려가 되었음</li>
-    </ul>
-
-    <p>​</p>
-  </li>
-</ol>
-
-<h2 id="oauth-20--">OAuth 2.0 사용 서비스</h2>
-
-<p>2013년까지만 해도 1.0만 지원하거나 2.0으로 개선하는 인터넷 서비스 기업이 많았지만,</p>
-
-<p>현재는 대부분 2.0만 지원한다고 봐도 무방하다. (1.0은 자체 로그인에만 사용하는 기업이 많음)</p>
-
-<ul>
-  <li>
-    <p>Facebook, Instagram, Google, LinkedIn, Twitter…</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="section-2">참고하면 좋은 자료</h2>
-
-<ul>
-  <li>Naver D2 : <a href="http://d2.naver.com/helloworld/24942">http://d2.naver.com/helloworld/24942</a></li>
-  <li>정리 잘 된 블로그 : <a href="http://earlybird.kr/1584">http://earlybird.kr/1584</a></li>
-  <li>
-    <p>조대협의 블로그 : <a href="http://bcho.tistory.com/942">http://bcho.tistory.com/942</a></p>
 
     <p>​</p>
   </li>
