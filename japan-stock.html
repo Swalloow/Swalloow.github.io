@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>AWS EC2 인스턴스 SSH 접속을 위한 초기설정 그리고 주의사항</title>
+    <title>일본의 주식시장 특징</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,8 +34,8 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="AWS EC2 인스턴스 SSH 접속을 위한 초기설정 그리고 주의사항" />
-        <meta property="og:description" content="​ ​ 이 포스팅의 모든 내용은 OS X에 최적화되어 있습니다. 그리고, 정리한 내용은 AWS 공식문서에 아주 잘 소개되어 있습니다. ​..." />
+        <meta property="og:title" content="일본의 주식시장 특징" />
+        <meta property="og:description" content="​ 도쿄 증권거래소 (전 TSE, 현 JPX) 거래소: 도쿄, 오사카, 나고야, 삿포로 등 존재 (도쿄가 압도적) 약 3600개의 기업이 상장..." />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
@@ -94,8 +94,8 @@
 <!-- Everything inside the #post tags pulls data from the post -->
 <!-- #post -->
 
-<header class="main-header post-head " style="background-image: url(/assets/images/aws-logo.png) ">
-    <nav class="main-nav  overlay  clearfix">
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
         <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
             <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
@@ -105,19 +105,19 @@
 
 <main class="content" role="main">
 
-    <article class="post tag-DevOps">
+    <article class="post tag-Financial">
 
         <header class="post-header">
-            <h1 class="post-title">AWS EC2 인스턴스 SSH 접속을 위한 초기설정 그리고 주의사항</h1>
+            <h1 class="post-title">일본의 주식시장 특징</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2017-03-10">10 Mar 2017</time>
+            <time class="post-date" datetime="2019-01-25">25 Jan 2019</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
                 
                     
-                       <a href='/tag/DevOps'>Devops</a>
+                       <a href='/tag/Financial'>Financial</a>
                     
                 
                 
@@ -126,78 +126,135 @@
 
         <section class="post-content">
 
-            <p>​   ​</p>
+            <p>​</p>
 
-<p>이 포스팅의 모든 내용은 OS X에 최적화되어 있습니다.
-그리고, 정리한 내용은 AWS 공식문서에 아주 잘 소개되어 있습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="aws-cli">AWS CLI</h2>
-
-<p>AWS CLI는 여러 AWS 서비스를 명령줄에서 제어하고 스크립트를 통해 자동화할 수 있는 커멘드라인 인터페이스입니다.
-이를 사용하기 전에 먼저, brew를 통해 <code class="highlighter-rouge">awscli</code>를 설치해야 합니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>brew install awscli</code></pre></figure>
-
-<p>설치하고 나면 이제 aws 명령어를 사용할 수 있습니다.
-가장 먼저 configure 명령어를 통해 Access key를 입력해야합니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>aws configure
-AWS Access Key ID <span class="o">[</span>None]: AKIAIOSFODNN7EXAMPLE
-AWS Secret Access Key <span class="o">[</span>None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-Default region name <span class="o">[</span>None]: us-west-2
-Default output format <span class="o">[</span>None]: ENTER</code></pre></figure>
-
-<p>여기에서 Access Key ID는 <code class="highlighter-rouge">[IAM - Security credentials]</code>에서 확인할 수 있습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="aws-ec2-">AWS EC2 접속</h2>
-
-<p>EC2 인스턴스를 만들면 .pem이라는 파일을 발급받게 됩니다.
-이 파일은 절대 외부로 유출되면 안되기 때문에 조심해야합니다.
-.pem 파일이 있는 경로로 이동한 다음 아래의 명령어를 통해 접속하면 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>chmod 400 /path/my-key-pair.pem
-<span class="gp">$ </span>ssh -i /path/my-key-pair.pem ec2-user@ec2-198-51-100-1.compute-1.amazonaws.com</code></pre></figure>
-
-<p>“Permission denied” 에러가 발생하면 <code class="highlighter-rouge">-vvv</code> 옵션을 통해 디버깅 할 수 있습니다.
-(가장 많이 하는 실수가 user_id에 ubuntu를 안적어주는 경우)</p>
-
-<p>​   ​</p>
-
-<h2 id="aws---">AWS를 사용하면서 조심해야할 사항</h2>
-
-<p>​   ​</p>
-
-<h4 id="section">1.인스턴스 관리</h4>
-
-<p>프리티어를 사용하는 경우, 다 사용하고 나서 인스턴스를 항상 꺼주는 습관을 들여 과도한 요금이 과금되지 않도록 해야합니다.
-특히 여러 개의 인스턴스를 돌리는 경우 순식간에 청구서가 날아올 수 있습니다.</p>
-
-<h4 id="root---">2. ROOT 계정 사용 자제</h4>
-
-<p>많은 경우에 ROOT 계정의 키가 털려서 과금이 발생됩니다. IAM을 통해 Admin 계정을 만들어서 사용하고,
-GitHub 같은 곳에 설정파일을 올리지 말아야합니다.</p>
-
-<h4 id="cloudwatch--">3. CloudWatch로 요금 확인</h4>
-
-<p>CloudWatch를 통해 Billing Cost가 일정 금액을 넘어가면 메일이나 Slack 메세지로 보내도록 설정해두면 편합니다.</p>
-
-<h4 id="section-1">4. 네트워크 확인</h4>
-
-<p>네트워크에서 모든 포트를 여는 것도 위험합니다. 이렇게 되면 DDoS 공격을 받을 위험이 있습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="section-2">참고링크</h2>
 <ul>
-  <li><a href="http://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">SSH를 사용하여 Linux 인스턴스에 연결</a></li>
-  <li><a href="http://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html#TroubleshootingInstancesConnectingMindTerm">인스턴스 연결문제 해결방법</a></li>
+  <li>도쿄 증권거래소 (전 TSE, 현 JPX)</li>
+  <li>거래소: 도쿄, 오사카, 나고야, 삿포로 등 존재 (도쿄가 압도적)</li>
+  <li>약 3600개의 기업이 상장 (상장 법인 수 세계 3위)</li>
+  <li>일 평균 거래 금액 약 3조 2천억 엔</li>
+  <li>시가총액을 따르는 TOPIX 지수를 발표함</li>
+  <li>2010년에 오사카 증권 거래소에서 JASDAQ을 합병함</li>
+  <li>2013년에 도쿄 증권 거래소와 오사카 증권 거래소가 합병함</li>
+  <li>일본 주식은 액면가가 존재하지 않으므로 무상 증자는 주식 분할 형태로 발생</li>
+  <li>
+    <p>한국처럼 1주 씩 거래하는 방식이 아닌 100주 또는 1000주 단위로 거래 (종목마다 상이)</p>
+
+    <p>​</p>
+  </li>
 </ul>
 
-<p>​   ​</p>
+<h2 id="section">매매 시간</h2>
+
+<ul>
+  <li>08:00 ~ 09:00 - 동시 호가</li>
+  <li>09:00 ~ 11:30 - 오전 장</li>
+  <li>11:30 ~ 12:05 - 휴장</li>
+  <li>12:05 ~ 12:30 - 동시 호가</li>
+  <li>12:30 ~ 15:00 - 오후 장</li>
+  <li>
+    <p>토, 일, 공휴일, 연말, 연초는 폐장</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="section-1">19년 공휴일</h2>
+
+<ul>
+  <li>01/01(화): 설날</li>
+  <li>01/02(수): 마켓 홀리데이</li>
+  <li>01/03(목): 마켓 홀리데이</li>
+  <li>01/14(월): 성년의 날</li>
+  <li>02/11(월): 국경일</li>
+  <li>03/21(목): 춘분</li>
+  <li>04/29(월): 쇼와 데이</li>
+  <li>05/03(금): 헌법 현충일</li>
+  <li>05/04(토): 녹색의 날</li>
+  <li>05/06(월): 어린이 날</li>
+  <li>07/15(월): 해양의 날</li>
+  <li>08/12(월): 산의 날</li>
+  <li>09/16(월): 노약자의 날 존중</li>
+  <li>09/23(월): 오색 춘분</li>
+  <li>10/14(월): 건강과 스포츠의 날</li>
+  <li>11/04(월): 문화의 날</li>
+  <li>11/23(토): 노동절의 추수 감사절</li>
+  <li>12/23(월): 황제 탄생일</li>
+  <li>12/31(화): 마켓 홀리데이</li>
+</ul>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=15PNHQiSD6AIKnKh86FWd00gbOFyF_iaX" alt="시장 구분" /></p>
+
+<p>​</p>
+
+<h2 id="section-2">호가 단위</h2>
+
+<ul>
+  <li>1엔: 3,000엔 이하</li>
+  <li>5엔: 3,000엔 초과 ~ 5,000 이하</li>
+  <li>10엔: 5,000엔 초과 ~ 30,000엔 이하</li>
+  <li>50엔: 30,000엔 초과 ~ 50,000엔 이하</li>
+  <li>100엔: 50,000엔 초과 ~ 300,000엔 이하</li>
+  <li>500엔: 300,000엔 초과 ~ 500,000엔 이하</li>
+  <li>1,000엔: 500,000엔 초과 ~ 3,000,000엔 이하</li>
+  <li>5,000엔: 3,000,000엔 초과 ~ 5,000,000엔 이하</li>
+  <li>10,000엔: 5,000,000엔 초과 ~ 30,000,000엔 이하</li>
+  <li>50,000엔: 30,000,000엔 초과 ~ 50,000,000엔 이하</li>
+  <li>
+    <p>100,000엔: 50,000,000엔 초과</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="section-3">외국인 지분 제한 종목</h2>
+
+<ul>
+  <li>8301 일본은행</li>
+  <li>9202 전일본공수</li>
+  <li>9204 스카이마크</li>
+  <li>9205 일본항공</li>
+  <li>9432 닛폰전신전화</li>
+  <li>4676 후지텔레비젼</li>
+  <li>4838 스페스샤워네트워크</li>
+  <li>4839 WOWOW</li>
+  <li>9401 TBS</li>
+  <li>9404 닛폰테레비방송망</li>
+  <li>9405 아사히방송</li>
+  <li>9408 니가타방송</li>
+  <li>9409 테레비아사히</li>
+  <li>
+    <p>9411 테레비도쿄</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="jpx---">JPX 회사 정보 데이터</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1Wbb_L76mzCKiR0ILrq0OGw1HuFsp2rNP" alt="" /></p>
+
+<p>​</p>
+
+<h2 id="jpx----1">JPX 개별 종목 데이터</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1zeg1M7Hg0AqBwWh7Rs8Y5_8SOsZKfo2l" alt="" /></p>
+
+<p>​</p>
+
+<h2 id="section-4">참고</h2>
+
+<ul>
+  <li><a href="https://namu.wiki/w/%EB%8F%84%EC%BF%84%EC%A6%9D%EA%B6%8C%EA%B1%B0%EB%9E%98%EC%86%8C">https://namu.wiki/w/도쿄증권거래소</a></li>
+  <li><a href="https://namu.wiki/w/%EC%98%A4%EC%82%AC%EC%B9%B4%EC%A6%9D%EA%B6%8C%EA%B1%B0%EB%9E%98%EC%86%8C">https://namu.wiki/w/오사카증권거래소</a></li>
+  <li><a href="https://namu.wiki/w/%EB%8B%9B%EC%BC%80%EC%9D%B4%20225">https://namu.wiki/w/닛케이 225</a></li>
+  <li><a href="https://www.jpx.co.jp/english/markets/index.html">https://www.jpx.co.jp/english/markets/index.html</a></li>
+  <li>
+    <p><a href="https://quote.jpx.co.jp/jpx/template/tmp/Ekessan.asp?QCODE=3938">https://quote.jpx.co.jp/jpx/template/tmp/Ekessan.asp?QCODE=3938</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
 
 
         </section>
@@ -229,15 +286,15 @@ GitHub 같은 곳에 설정파일을 올리지 말아야합니다.</p>
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=AWS EC2 인스턴스 SSH 접속을 위한 초기설정 그리고 주의사항&amp;url=http://swalloow.github.io/aws-config"
+                <a class="icon-twitter" href="http://twitter.com/share?text=일본의 주식시장 특징&amp;url=http://swalloow.github.io/japan-stock"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/aws-config"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/japan-stock"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/aws-config"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/japan-stock"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -249,8 +306,8 @@ GitHub 같은 곳에 설정파일을 올리지 말아야합니다.</p>
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/aws-config';
-        var disqus_url = 'http://swalloow.github.io//aws-config';
+        var disqus_identifier = '/japan-stock';
+        var disqus_url = 'http://swalloow.github.io//japan-stock';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -275,20 +332,13 @@ GitHub 같은 곳에 설정파일을 올리지 말아야합니다.</p>
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/cover_dataengineering.jpg)" href="/spark-zeppelin-install">
-            <section class="post">
-                <h2>OS X에서 Homebrew로 Spark, Zeppelin 설치하기</h2>
-                <p>​ ​ > **Apache Spark** is a fast and general engine for large-scale data processing....</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/flask-security">
+        <a class="read-next-story prev no-cover" href="/airflow-contrib">
             <section class="post">
-                <h2>파이썬 웹 어플리케이션 보안 점검 가이드</h2>
-                <p>​ ​ 이 포스팅은 Jacob Kaplan-Moss가 2013년 호주 pycon에서 발표한 자료를 바탕으로 하며, OYT님이 최신화하여...</p>
+                <h2>Apache Airflow에 기여하면서 배운 점들</h2>
+                <p>​ Apache Airflow는 코드를 통해 워크플로우를 관리하고 모니터링 할 수 있도록 도와주는 플랫폼이다. Airflow 프로젝트에...</p>
             </section>
         </a>
     
