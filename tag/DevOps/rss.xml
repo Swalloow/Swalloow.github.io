@@ -12,6 +12,194 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>KOPS로 AWS에 Kubernetes 클러스터 구축하기</title>
+	  <link>//aws-kops</link>
+	  <author>Swalloow</author>
+	  <pubDate>2019-02-10T19:18:00+09:00</pubDate>
+	  <guid>//aws-kops</guid>
+	  <description><![CDATA[
+	     <p>​   ​</p>
+
+<p>Kubernetes 클러스터를 구성하는 방법은 여러 가지가 있습니다.
+그 중에서 kubeadam은 온프레미스 환경에서 많이 사용하고 kops는 클라우드 환경에서 많이 사용하고 있습니다.
+이번 글에서는 kops로 AWS EC2에 Kubernetes 클러스터 구축하는 방법에 대해 정리해보겠습니다.</p>
+
+<p>​   ​</p>
+
+<h3 id="kops-kubectl-awscli--linux">kops, kubectl, awscli 설치 (Linux)</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># kops 설치</span>
+wget -O kops https://github.com/kubernetes/kops/releases/download/<span class="k">$(</span>curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d <span class="s1">'"'</span> -f 4<span class="k">)</span>/kops-linux-amd64
+chmod +x ./kops
+sudo mv ./kops /usr/local/bin/
+
+<span class="c"># kubectl 설치</span>
+wget -O kubectl https://storage.googleapis.com/kubernetes-release/release/<span class="k">$(</span>curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt<span class="k">)</span>/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+<span class="c"># aws-cli 설치 (amazon linux라면 불필요)</span>
+pip install awscli</code></pre></figure>
+
+<p>​   ​</p>
+
+<h3 id="iam-user-">IAM User 설정</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># 아래의 권한이 필요</span>
+AmazonEC2FullAccess
+AmazonRoute53FullAccess
+AmazonS3FullAccess
+IAMFullAccess
+AmazonVPCFullAccess</code></pre></figure>
+
+<p>​   ​</p>
+
+<h3 id="aws-cli-iam--">aws-cli로 IAM 계정 생성</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">aws iam create-group --group-name kops
+
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonEC2FullAccess --group-name kops
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonRoute53FullAccess --group-name kops
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess --group-name kops
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/IAMFullAccess --group-name kops
+aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonVPCFullAccess --group-name kops
+
+aws iam create-user --user-name kops
+aws iam add-user-to-group --user-name kops --group-name kops
+aws iam create-access-key --user-name kops
+
+aws configure   <span class="c"># AccessKeyID와 SecretAccessKey 등록</span></code></pre></figure>
+
+<p>​   ​</p>
+
+<h3 id="dns-cluster-state-storage-">DNS, Cluster State storage 설정</h3>
+
+<ul>
+  <li>kops 1.6.2 버전 이상이라면 DNS 설정은 옵션 (gossip-based cluster)</li>
+  <li>Cluster Configuration Storage로 S3를 사용 (Bucket 미리 생성해야 함)</li>
+  <li>S3 default bucket encryption을 사용할 수 있음</li>
+  <li>default encryption 설정이 안되어 있다면 kops에서 AES256 encryption</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Create Bucket</span>
+aws s3api create-bucket <span class="se">\</span>
+    --bucket prefix-example-com-state-store <span class="se">\</span>
+    --region ap-northeast-2
+
+<span class="c"># S3 versioning</span>
+aws s3api put-bucket-versioning <span class="se">\</span>
+    --bucket prefix-example-com-state-store <span class="se">\</span>
+    --versioning-configuration <span class="nv">Status</span><span class="o">=</span>Enabled</code></pre></figure>
+
+<p>​   ​</p>
+
+<h3 id="kubernetes-cluster-">Kubernetes Cluster 생성</h3>
+
+<ul>
+  <li>kops를 통해 생성된 인스턴스는 자동으로 Auto Scaling 그룹에 들어감</li>
+  <li><code class="highlighter-rouge">kops create</code>: cluster configuration을 생성, SSH-Key가 필요</li>
+  <li><code class="highlighter-rouge">kops edit</code>: cluster configuation을 수정</li>
+  <li><code class="highlighter-rouge">kops update</code>: Build 단계, kubernetes component를 모두 설치하고 나면 ready 상태로 전환</li>
+  <li><code class="highlighter-rouge">kops delete</code>: cluster 제거, –yes (구성요소까지 전부 삭제)</li>
+  <li><code class="highlighter-rouge">kops rolling-update</code>: downtime이 없는 rolling-update 실행</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Environment</span>
+<span class="nb">export </span><span class="nv">NAME</span><span class="o">=</span>myfirstcluster.example.com  <span class="c"># DNS가 설정되어 있는 경우</span>
+<span class="nb">export </span><span class="nv">NAME</span><span class="o">=</span>myfirstcluster.k8s.local    <span class="c"># DNS가 설정되어 있지 않은 경우</span>
+<span class="nb">export </span><span class="nv">KOPS_STATE_STORE</span><span class="o">=</span>s3://prefix-example-com-state-store
+
+<span class="c"># Seoul region</span>
+aws ec2 describe-availability-zones --region ap-northeast-2
+kops create cluster --zones ap-northeast-2 <span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>
+kops edit cluster <span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>
+kops update cluster <span class="k">${</span><span class="nv">NAME</span><span class="k">}</span> --yes
+kops validate cluster
+
+<span class="c"># Kubectl</span>
+kubectl get nodes
+kubectl cluster-info
+kubectl -n kube-system get po   <span class="c"># system pod</span>
+
+<span class="c"># Dashboard</span>
+kops get secrets admin -oplaintext
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+<span class="c"># Access https://&lt;kubernetes-master-hostname&gt;/ui</span>
+kops get secrets admin --type secret -oplaintext
+
+<span class="c"># Stop cluster</span>
+<span class="c"># Change minSize, MaxSize to 0</span>
+kops get ig
+kops edit ig nodes
+kops edit ig master</code></pre></figure>
+
+<p>​   ​</p>
+
+<h3 id="advanced">Advanced</h3>
+
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>Network topology를 설정할 수 있음 (–topology public</td>
+          <td>private)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>Private: VPC내의 private subnet으로 생성</li>
+  <li>Public: VPC내의 public subnet으로 생성 (routed to Internet Gateway)</li>
+  <li>Multiple zone, HA Master를 구성할 수 있음 (–master-zones=us-east-1b,us-east-1c,us-east-1d)</li>
+  <li>Instance Group을 지정 가능 (https://github.com/kubernetes/kops/blob/master/docs/instance_groups.md)</li>
+  <li>AMI를 지정가능, CoreOS AMI</li>
+  <li>Container Network Interface (CNI) 지정 가능 (https://kubernetes.io/docs/concepts/cluster-administration/networking/)</li>
+  <li>Authorization (https://kubernetes.io/docs/reference/access-authn-authz/authorization/)</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># SSH Key</span>
+ssh-keygen -t rsa -f <span class="nv">$NAME</span>.key -N <span class="s1">''</span>
+<span class="nb">export </span><span class="nv">PUBKEY</span><span class="o">=</span><span class="s2">"</span><span class="nv">$NAME</span><span class="s2">.key.pub"</span>
+
+<span class="c"># CoreOS Image</span>
+<span class="nb">export </span><span class="nv">IMAGE</span><span class="o">=</span><span class="k">$(</span>curl -s https://coreos.com/dist/aws/aws-stable.json|sed <span class="s1">'s/-/_/g'</span>|jq <span class="s1">'.'</span><span class="nv">$REGION</span><span class="s1">'.hvm'</span>|sed <span class="s1">'s/_/-/g'</span> | sed <span class="s1">'s/\"//g'</span><span class="k">)</span>
+
+<span class="c"># Create Cluster</span>
+kops create cluster --kubernetes-version<span class="o">=</span>1.12.1 <span class="se">\</span>
+    --ssh-public-key <span class="nv">$PUBKEY</span> <span class="se">\</span>
+    --networking flannel <span class="se">\</span>
+    --api-loadbalancer-type public <span class="se">\</span>
+    --admin-access 0.0.0.0/0 <span class="se">\</span>
+    --authorization RBAC <span class="se">\</span>
+    --zones ap-northeast-2 <span class="se">\</span>
+    --master-zones ap-northeast-2 <span class="se">\</span>
+    --master-size t2.medium <span class="se">\</span>
+    --node-size t2.medium <span class="se">\</span>
+    --image <span class="nv">$IMAGE</span> <span class="se">\</span>
+    --node-count 3 <span class="se">\</span>
+    --cloud aws <span class="se">\</span>
+    --bastion <span class="se">\</span>
+    --name <span class="nv">$NAME</span> <span class="se">\</span>
+    --yes</code></pre></figure>
+
+<p>​   ​</p>
+
+<h3 id="reference">Reference</h3>
+
+<ul>
+  <li>https://github.com/kubernetes/kops</li>
+  <li>
+    <p>https://kubernetes.io/ko/docs/setup/custom-cloud/kops/</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>influxDB와 Grafana로 실시간 서버 모니터링 구축하기(2)</title>
 	  <link>//influx-grafana2</link>
 	  <author>Swalloow</author>
@@ -790,100 +978,6 @@ docker cp <span class="o">[</span>PATH]</code></pre></figure>
 <p><code class="highlighter-rouge">docker history [container/image]</code> 명령어를 통해 히스토리를 확인할 수 있습니다.
 <code class="highlighter-rouge">docker inspect [container/image]</code> 명령어를 통해 상세정보를 확인할 수 있습니다.
 <code class="highlighter-rouge">docker cp [PATH]</code> 명령어를 통해 파일을 지정한 경로로 꺼내올 수 있습니다.</p>
-
-<p>​   ​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Docker 간편한 설치부터 실행까지</title>
-	  <link>//docker-install</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-02-21T19:18:00+09:00</pubDate>
-	  <guid>//docker-install</guid>
-	  <description><![CDATA[
-	     <p>​   ​</p>
-
-<p>Docker는 오픈소스 컨테이너입니다. 기존의 가상머신과 비슷하면서도 훨씬 가벼운 형태라고 볼 수 있습니다. 그렇다면 VMWare, VirtualBox와 같은 기존의 가상머신과 Docker Container가 어떻게 다른지 살펴보겠습니다.</p>
-
-<p><img src="/assets/images/vm-docker.png" alt="vm-docker" /></p>
-
-<p>먼저 기존의 가상머신(Virtual Machine)을 보면 Hypervisor(VMWare, VirtualBox…) 위에 GuestOS가 올라간 형태임을 알 수 있습니다. OS가 올라갔다는 것은 말 그대로 x86 하드웨어가 그대로 가상화 된 것입니다. 가상머신을 설치하고 메모리 영역을 확인해보면 호스트 메모리와 게스트 메모리를 볼 수 있는데, 게스트 메모리를 얼마나 할당할 것인지에 따라 가상머신의 성능이 변하기도 합니다.</p>
-
-<p>반면에 Docker는 Docker Engine 위에 Application이 올라간 것을 볼 수 있습니다. 즉, Docker Engine을 통해 Host OS 위에서 컨테이너가 생성되는 것입니다. 여기서 컨테이너는 리눅스 커널의 <code class="highlighter-rouge">cgroups, namespaces</code> 등의 기능을 사용해 가상공간을 생성할 수 있도록 하는 기능입니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="section">컨테이너가 가상머신보다 뛰어난 점은?</h4>
-
-<p>기본적으로 가상머신을 사용하게 되면 상세 설정을 해주지 않는 한 메모리, CPU 코어, 프로세스 등 각종 성능 손실이 발생합니다. 반면에 컨테이너는 Host OS의 커널은 그대로 사용하고 일부분만 패키징 되기 때문에 용량이 크게 줄어들 뿐만 아니라, 프로세스 영역도 기존의 OS와 공유해서 사용합니다. 정리하자면, <u>컨테이너는 하드웨어를 가상화하는 계층이 없기 때문에 메모리 접근, 파일시스템, 네트워크 속도가 가상 머신에 비해 월등히 빠릅니다</u>.</p>
-
-<p>​   ​</p>
-
-<h4 id="boot2docker">Boot2Docker</h4>
-
-<p>앞서 말했던 것 처럼 Docker는 리눅스 커널의 컨테이너 기능을 기반으로 하기 때문에 Windows나 OS X 환경에서 실행할 수 없습니다. 그래서 이를 지원하기 위해 나온 것이 <strong>Boot2Docker</strong> 입니다. Boot2Docker는 가상머신 안에 리눅스를 설치하고 Docker를 실행하는 방식으로 이를 해결했습니다.</p>
-
-<p>하지만 15년 9월쯤 부터 <strong>boot2docker-cil이 deprecated</strong> 되었습니다. 이제 공식 레퍼런스를 보면 toolbox를 이용하여 설치하는 방법을 권장하고 있으며 기존의 boot2docker에서 이전하는 방법에 대해서도 설명하고 있습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="os-x-docker-">OS X에서 Docker 설치</h2>
-
-<p>Docker를 설치하는 방법으로는 크게 2가지가 있습니다. 첫번째는 Docker for Mac으로 설치하는 방법이고, 두번째는 Docker Toolbox로 설치하는 방법입니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="docker-for-mac-docker-toolbox-">Docker for Mac과 Docker Toolbox의 차이점은?</h4>
-
-<p>가장 큰 차이점은 사용하는 가상머신이 다르다는 점입니다. Docker Toolbox 같은 경우에는 Boot2Docker에서 사용해왔던 VirtualBox를 그대로 사용합니다. 반면에 Docker for Mac은 <strong>HyperKit</strong> 이라는 macOS를 위한 경량화 가상머신을 사용합니다.</p>
-
-<p><img src="/assets/images/docker-formac.png" alt="docker-formac" /></p>
-
-<p>Docker Toolbox를 사용하는 경우, 위와 같이 <code class="highlighter-rouge">/usr/local/bin</code> 폴더에 docker, docker-compose, docker-machine이 설치됩니다. 그리고 가상화는 VirtualBox를 통해 이루어지게 됩니다.</p>
-
-<p><img src="/assets/images/docker-toolbox.png" alt="docker-toolbox" /></p>
-
-<p>반면에 Docker for Mac은 <code class="highlighter-rouge">Applications</code> 폴더 내에 app으로 관리할 수 있게 됩니다. 그리고 가상화는 오라클의 <strong>VirtualBox</strong> 을 통해 이루어집니다. 따라서, 둘다 설치할 필요가 없습니다.</p>
-
-<p>만일 전부터 Docker를 써왔고, VirtualBox를 꼭 써야한다면, Docker Toolbox를 설치하시면 됩니다. 또는 “나는 App으로 관리하는게 편하다” 라고 한다면 Docker for Mac을 사용하시면 됩니다. 자세한 내용은 다음을 참고하시면 됩니다. <a href="https://docs.docker.com/docker-for-mac/docker-toolbox/">https://docs.docker.com/docker-for-mac/docker-toolbox/</a></p>
-
-<p>만일 둘 다 설치했고, Docker toolbox를 제거하고 싶다면 다음 링크를 참고하시면 됩니다.
-<a href="https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox">https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox</a></p>
-
-<p>​   ​</p>
-
-<h2 id="docker-">Docker 실행</h2>
-
-<p>저는 Docker for Mac을 사용하여 설치했습니다.</p>
-
-<p><img src="/assets/images/docker-run.png" alt="docker-run" /></p>
-
-<p>어플리케이션 데몬을 실행시키면 이제 docker 명령어를 사용할 수 있게 됩니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker version
-docker info</code></pre></figure>
-
-<p>이제 한번 테스트 해볼 시간입니다.
-아래의 명령어를 통해 nginx 이미지를 만들고 80번 포트에 웹 서버를 띄워 보겠습니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker run -d -p 80:80 --name webserver nginx</code></pre></figure>
-
-<p><img src="/assets/images/docker-test.png" alt="docker-test" /></p>
-
-<p>실행되고 있는 웹 서버를 중지하고 컨테이너를 삭제해보겠습니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker ps
-docker stop webserver
-docker rm -f webserver</code></pre></figure>
-
-<p>아직 이미지는 남아있는 상태입니다. 이미지까지 삭제해줍니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker images
-docker rmi nginx</code></pre></figure>
-
-<p>자세한 Docker 사용법이나 명령어는 다음에 정리하도록 하겠습니다.</p>
 
 <p>​   ​</p>
 

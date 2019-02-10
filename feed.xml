@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>KOPS로 AWS에 Kubernetes 클러스터 구축하기</title>
+        
+          <description>​ ​ Kubernetes 클러스터를 구성하는 방법은 여러 가지가 있습니다. 그 중에서 kubeadam은 온프레미스 환경에서 많이 사용하고 kops는 클라우드 환경에서 많이...</description>
+        
+        <pubDate>Sun, 10 Feb 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//aws-kops</link>
+        <guid isPermaLink="true">http://swalloow.github.io//aws-kops</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>분산 컨테이너 환경에서의 디자인 패턴</title>
         
           <description>​ 구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은 분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다. 분산...</description>
