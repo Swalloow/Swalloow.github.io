@@ -34,19 +34,6 @@
     
       
       <item>
-        <title>일본의 주식시장 특징</title>
-        
-          <description>​ 도쿄 증권거래소 (전 TSE, 현 JPX) 거래소: 도쿄, 오사카, 나고야, 삿포로 등 존재 (도쿄가 압도적) 약 3600개의 기업이 상장...</description>
-        
-        <pubDate>Fri, 25 Jan 2019 19:18:00 +0900</pubDate>
-        <link>
-        http://swalloow.github.io//japan-stock</link>
-        <guid isPermaLink="true">http://swalloow.github.io//japan-stock</guid>
-      </item>
-      
-    
-      
-      <item>
         <title>Apache Airflow에 기여하면서 배운 점들</title>
         
           <description>​ Apache Airflow는 코드를 통해 워크플로우를 관리하고 모니터링 할 수 있도록 도와주는 플랫폼이다. Airflow 프로젝트에 대한 설명은 다른 글에서도 많이...</description>
