@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>Kubeflow(1) - Why Kubeflow in your Infrastructure?</title>
+        
+          <description>​ 실제 ML을 서비스에 적용시키는 일은 위 그림에 나타난 바와 같이 ML 모델링 보다 이외의 작업들이 많이 필요합니다. 특히 서비스의...</description>
+        
+        <pubDate>Sat, 09 Mar 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//why-kubeflow</link>
+        <guid isPermaLink="true">http://swalloow.github.io//why-kubeflow</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>KOPS로 AWS에 Kubernetes 클러스터 구축하기</title>
         
           <description>​ ​ Kubernetes 클러스터를 구성하는 방법은 여러 가지가 있습니다. 그 중에서 kubeadam은 온프레미스 환경에서 많이 사용하고 kops는 클라우드 환경에서 많이...</description>

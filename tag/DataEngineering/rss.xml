@@ -12,6 +12,68 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Kubeflow(1) - Why Kubeflow in your Infrastructure?</title>
+	  <link>//why-kubeflow</link>
+	  <author>Swalloow</author>
+	  <pubDate>2019-03-09T19:18:00+09:00</pubDate>
+	  <guid>//why-kubeflow</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1JO_ek8Dyr-i5-uvjd4NpzMKBqL6PICDV" alt="Hidden Technical Dept in Machine Learning Systems" /></p>
+
+<p>실제 ML을 서비스에 적용시키는 일은 위 그림에 나타난 바와 같이 ML 모델링 보다 이외의 작업들이 많이 필요합니다. 특히 서비스의 여러 기능에 ML을 적용시키려 하는 경우, 이러한 파이프라인이 복잡해지고 유지보수가 힘든 방향으로 가는 경우가 많습니다. 이러한 이유로 규모있는 IT 서비스 회사들은 공통의 ML 플랫폼을 구축하곤 합니다.</p>
+
+<p>앞으로 소개하려는 Kubeflow는 Kubernetes를 기반으로 하는 오픈소스 ML Toolkit 입니다. 아직 버전이 낮아 production 환경에서 사용하는 곳이 많지 않지만 미리 알아두면 좋을 것 같아 컴포넌트들을 하나씩 분석해보려 합니다.</p>
+
+<p>​</p>
+
+<h2 id="why-kubeflow">Why Kubeflow?</h2>
+
+<p>이미 기존의 인프라를 기반으로 자동화된 ML Workflow가 구축되어 있다면, 굳이 Kubeflow로 옮길 필요는 없습니다. 하지만 아래와 같은 상황을 가진 팀이라면 Kubeflow는 좋은 선택지가 될 수 있습니다.</p>
+
+<ul>
+  <li>이미 Kubernetes 기반의 인프라를 사용하고 있으며, ML 인프라를 구축하려는 경우</li>
+  <li>서비스를 On-premise, Multi-cloud 환경에 배포해야 하는 경우</li>
+  <li>Scalable ML이 필수적이며, 기존의 여러 ML 서비스를 쉽게 배포하고 리소스 관리 비용을 줄이려는 경우</li>
+  <li>
+    <p>Research Engineer, Data Scientist 를 위한 인프라 관리의 복잡성을 최소화하고 일관된 인터페이스를 제공하여 몇 번의 클릭만으로 설정을 쉽게 하고 싶은 경우</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="consistency-in-infrastructure">Consistency in Infrastructure</h2>
+
+<p>Kubeflow는 Kubernetes 기반의 인프라가 가지는 장점을 그대로 가지고 있습니다. 각 서비스에 대한 Monitoring, Health Check, Replication 등의 기본 요구사항을 갖추고 있으며 쉬운 배포 환경을 제공합니다. 이외에도 아래와 같은 usecase에서 활용될 수 있습니다.</p>
+
+<ul>
+  <li>Research Engineer들이 인프라가 아닌 모델링에만 집중할 수 있는 환경을 제공할 수 있습니다. 모두가 Docker 기반의 추상화된 환경에서 연구를 할 수 있으며, 동일한 데이터, 연구 결과를 공유할 수 있습니다. 가상화된 GPU 환경에서 모델을 분산 학습시킬 수 있으며, TensorFlow, PyTorch, MXNet 등 다양한 프레임워크 환경을 지원할 수 있습니다.</li>
+  <li>Kubeflow는 end-to-end를 제공하기 때문에 ML 프로젝트를 production에 반영하는 과정이 단순해집니다. 지속적인 데이터 파이프라인을 구축하여 <strong>argo</strong>를 통해 모델을 업데이트 하고, <strong>seldon</strong>을 통해 production 환경을 테스트해 볼 수 있습니다.</li>
+  <li>
+    <p><strong>Katlib</strong>을 통해 Hyper parameter tuning 과정을 쉽게 자동화 할 수 있습니다. <strong>Katlib</strong>에서 제공하는 인터페이스를 통해 여러 어플리케이션으로 확장시킬 수 있으며, 튜닝 결과를 지속적으로 기록하고 공유할 수 있습니다.</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="resource-utilization-by-the-training--serving-modules">Resource utilization by the Training / Serving modules</h2>
+
+<p>테스트 환경을 쉽게 구축할 수 있으며, 클라우드 비용을 최적화시킬 수 있습니다. K8S 클러스터는 동일한 인스턴스에 여러 Pod을 실행시킬 수 있습니다. 따라서, 사용하는 리소스를 팀 또는 프로젝트 단위로 namespace를 분리시켜 리소스 사용량을 모니터링 할 수 있습니다.</p>
+
+<p>일반적인 클라우드 인프라 환경을 서비스 라이프사이클과 연계되어 있지 않기 때문에 training job이 끝난 이후에도 인스턴스가 켜져 있기 때문에 그에 대한 비용을 지불해야 합니다. 하지만 Kubeflow를 사용하는 경우, 사용량에 따라 클러스터를 auto scaling 한다거나 spot instance로 training job을 실행시킬 수 있습니다.</p>
+
+<p>​</p>
+
+<h2 id="reference">Reference</h2>
+<ul>
+  <li><a href="https://medium.com/kubeflow/why-kubeflow-in-your-infrastructure-56b8fabf1f3e">https://medium.com/kubeflow/why-kubeflow-in-your-infrastructure-56b8fabf1f3e</a></li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Kafka Connect로 S3에 데이터를 저장해보자</title>
 	  <link>//kafka-connect</link>
 	  <author>Swalloow</author>
@@ -907,131 +969,6 @@ Hive metastore의 parameter에 <code class="highlighter-rouge">spark.sql.sources
 <code class="highlighter-rouge">SaveMode.Overwrite</code>의 경우 기존의 테이블을 새로운 데이터로 대체하는 방식입니다.</p>
 
 <p>​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Spark 2.2.0 릴리즈 업데이트 정리</title>
-	  <link>//spark22</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-07-14T19:18:00+09:00</pubDate>
-	  <guid>//spark22</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>7월 11일 약 2개월 만에 Spark 2.2.0이 릴리즈 되었습니다.
-어떤 변경 사항들이 있었는지 릴리즈 노트를 통해 간략하게 정리해보았습니다.</p>
-
-<p>​</p>
-
-<h3 id="pypi---pyspark-">pypi 를 통한 PySpark 설치</h3>
-
-<p>드디어 PySpark이 <code class="highlighter-rouge">pip</code>을 지원하게 되었습니다.
-<code class="highlighter-rouge">pip install pyspark</code> 명령어를 통해 쉽게 설치 가능합니다.
-설치된 버전은 Spark 2.2.0 버전 입니다.</p>
-
-<p><img src="/assets/images/pyspark-install.png" alt="" /></p>
-
-<p><code class="highlighter-rouge">numpy, pandas</code> 파이썬 패키지에 dependency가 있으며,
-자세한 사항은 <a href="https://pypi.python.org/pypi/pyspark">pypi 패키지 링크</a>를 통해 확인하실 수 있습니다.
-이번 업데이트를 통해 standalone cluster에서 누구나 쉽게 사용해 볼 수 있을 듯 합니다.</p>
-
-<p>​</p>
-
-<h3 id="structured-streaming">Structured Streaming</h3>
-
-<p>이번 버전부터 Structured Streaming이 새로 추가 되었습니다.
-Structured Streaming은 스트리밍 어플리케이션을 더 빠르고 쉽게 개발하기 위해 만들어진 패키지입니다.</p>
-
-<p>Spark Streaming이 내부적으로 RDD API를 지원하는 반면, Structured Streaming은 DataFrame, Dataset API를 지원합니다.
-언어는 Scala, Java, Python 모두 지원하며, <code class="highlighter-rouge">readStream</code> 이라는 메서드를 통해 다양한 저장소로부터 데이터를 읽을 수 있습니다.
-특히 이번 업데이트를 통해 Apache Kafka 스트리밍 지원이 추가되었습니다.</p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># Subscribe to 1 topic</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">spark</span> \
-  <span class="o">.</span><span class="n">readStream</span> \
-  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">"kafka"</span><span class="p">)</span> \
-  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s">"kafka.bootstrap.servers"</span><span class="p">,</span> <span class="s">"host1:port1,host2:port2"</span><span class="p">)</span> \
-  <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s">"subscribe"</span><span class="p">,</span> <span class="s">"topic1"</span><span class="p">)</span> \
-  <span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="n">df</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s">"CAST(key AS STRING)"</span><span class="p">,</span> <span class="s">"CAST(value AS STRING)"</span><span class="p">)</span></code></pre></figure>
-
-<p>Structured Streaming에 대한 자세한 내용은 <a href="http://spark.apache.org/docs/2.2.0/structured-streaming-programming-guide.html">http://spark.apache.org/docs/2.2.0/structured-streaming-programming-guide.html</a> 에서 확인하실 수 있습니다.</p>
-
-<p>​</p>
-
-<h3 id="mllib">MLlib</h3>
-
-<p>예상했던 대로 MLlib에도 많은 변화가 생겼습니다.
-RDD-based MLlib이 아니라 DataFrame-based MLlib을 확인하시면 됩니다.</p>
-
-<ul>
-  <li>기존에 scala API만 지원하던 모델들에 <code class="highlighter-rouge">python, R API</code>가 추가되었습니다.</li>
-  <li>지원이 추가된 모델은 <strong>Gradient Boosted Trees, Bisecting K-Means, LSH, Distributed PCA, SVD</strong> 입니다.</li>
-  <li>DataFreame-based MLlib에 새로운 모델이 추가되었습니다.</li>
-  <li>
-    <p>추가된 모델은 <strong>LinearSVC (Linear SVM Classifier), ChiSquare test, Correlation,
-Imputer feature transformer, Tweedie distribution, FPGrowth frequent pattern mining, AssociationRules</strong> 입니다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="sparkr">SparkR</h3>
-
-<p>이번 업데이트를 통해 SparkR에서 Spark SQL API가 확대되었습니다.</p>
-
-<ul>
-  <li>R API에 Structured Streaming, Catalog가 추가되었습니다.</li>
-  <li>to_json, from_json 메서드가 추가되었습니다.</li>
-  <li>
-    <p>Coalesce, DataFrame checkpointing, Multi-column approxQuantile 기능이 추가되었습니다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="graphx">GraphX</h3>
-
-<p>GraphX는 버그 수정, 최적화 업데이트가 추가되었습니다.
-이번 Structured Steaming이 메인에 추가된 것으로 보아,
-추후에 DataFrame, DataSet API 기반의 GraphFrame이 추가될 수도 있다고 예상합니다.</p>
-
-<ul>
-  <li>PageRank, vertexRDD/EdgeRDD checkpoint 버그를 수정했습니다.</li>
-  <li>
-    <p>PageRank, Pregel API가 개선되었습니다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="core-and-sparksql-deprecations">Core and SparkSQL, Deprecations</h3>
-
-<p>마지막으로 Core, SparkSQL 그리고 Deprecation 업데이트 입니다.
-전체 업데이트 및 기타 자세한 내용은 맨 아래의 링크를 참고하시면 됩니다.</p>
-
-<ul>
-  <li>Python 2.6, Java 7, Hadoop 2.5 지원이 종료되었습니다.</li>
-  <li><code class="highlighter-rouge">ALTER TABLE table_name ADD COLUMNS</code> 구문이 추가되었습니다.</li>
-  <li>Cost-Based Optimizer 성능이 개선되었습니다.</li>
-  <li>
-    <p>CSV, JSON 포멧의 File listing/IO 성능이 개선되었습니다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="reference">Reference</h2>
-
-<ul>
-  <li>
-    <p><a href="http://spark.apache.org/releases/spark-release-2-2-0.html">http://spark.apache.org/releases/spark-release-2-2-0.html</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
 
 	  ]]></description>
 	</item>
