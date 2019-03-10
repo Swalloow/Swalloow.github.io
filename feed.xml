@@ -8,7 +8,20 @@
     
       
       <item>
-        <title>Kubeflow(1) - Why Kubeflow in your Infrastructure?</title>
+        <title>Amazon EKS에 Kubeflow 구축하기</title>
+        
+          <description>​ AWS EKS는 Fully managed K8S 서비스 입니다. 이번 글에서는 EKS 환경에 Kubeflow를 구축하는 방법에 대해 정리해보겠습니다. Why kubeflow in...</description>
+        
+        <pubDate>Sun, 10 Mar 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//eks-kubeflow</link>
+        <guid isPermaLink="true">http://swalloow.github.io//eks-kubeflow</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Why Kubeflow in your Infrastructure?</title>
         
           <description>​ 실제 ML을 서비스에 적용시키는 일은 위 그림에 나타난 바와 같이 ML 모델링 보다 이외의 작업들이 많이 필요합니다. 특히 서비스의...</description>
         

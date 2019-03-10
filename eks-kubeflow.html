@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>Why Kubeflow in your Infrastructure?</title>
+    <title>Amazon EKS에 Kubeflow 구축하기</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,8 +34,8 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Why Kubeflow in your Infrastructure?" />
-        <meta property="og:description" content="​ 실제 ML을 서비스에 적용시키는 일은 위 그림에 나타난 바와 같이 ML 모델링 보다 이외의 작업들이 많이 필요합니다. 특히 서비스의..." />
+        <meta property="og:title" content="Amazon EKS에 Kubeflow 구축하기" />
+        <meta property="og:description" content="​ AWS EKS는 Fully managed K8S 서비스 입니다. 이번 글에서는 EKS 환경에 Kubeflow를 구축하는 방법에 대해 정리해보겠습니다. Why kubeflow in..." />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
@@ -108,10 +108,10 @@
     <article class="post tag-DataEngineering">
 
         <header class="post-header">
-            <h1 class="post-title">Why Kubeflow in your Infrastructure?</h1>
+            <h1 class="post-title">Amazon EKS에 Kubeflow 구축하기</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2019-03-09">09 Mar 2019</time>
+            <time class="post-date" datetime="2019-03-10">10 Mar 2019</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -128,11 +128,7 @@
 
             <p>​</p>
 
-<p><img src="http://drive.google.com/uc?export=view&amp;id=1JO_ek8Dyr-i5-uvjd4NpzMKBqL6PICDV" alt="Hidden Technical Dept in Machine Learning Systems" /></p>
-
-<p>실제 ML을 서비스에 적용시키는 일은 위 그림에 나타난 바와 같이 ML 모델링 보다 이외의 작업들이 많이 필요합니다. 특히 서비스의 여러 기능에 ML을 적용시키려 하는 경우, 이러한 파이프라인이 복잡해지고 유지보수가 힘든 방향으로 가는 경우가 많습니다. 이러한 이유로 규모있는 IT 서비스 회사들은 공통의 ML 플랫폼을 구축하곤 합니다.</p>
-
-<p>앞으로 소개하려는 Kubeflow는 Kubernetes를 기반으로 하는 오픈소스 ML Toolkit 입니다. 아직 버전이 낮아 production 환경에서 사용하는 곳이 많지 않지만 미리 알아두면 좋을 것 같아 컴포넌트들을 하나씩 분석해보려 합니다.</p>
+<p>AWS EKS는 Fully managed K8S 서비스 입니다. 이번 글에서는 EKS 환경에 Kubeflow를 구축하는 방법에 대해 정리해보겠습니다.</p>
 
 <ul>
   <li><a href="http://swalloow.github.io/why-kubeflow">Why kubeflow in your Infrastructure</a></li>
@@ -145,46 +141,104 @@
   </li>
 </ul>
 
-<h2 id="why-kubeflow">Why Kubeflow?</h2>
+<h2 id="section">기본 환경 설치</h2>
 
-<p>이미 기존의 인프라를 기반으로 자동화된 ML Workflow가 구축되어 있다면, 굳이 Kubeflow로 옮길 필요는 없습니다. 하지만 아래와 같은 상황을 가진 팀이라면 Kubeflow는 좋은 선택지가 될 수 있습니다.</p>
+<p>Kubeflow를 설치하기 이전에 AWS CLI, Docker가 설치되어 있어야 합니다.
+EKS에서는 최근에 GPU 인스턴스인 P2, P3에 대한 지원을 제공하고 있습니다.
+이를 사용하기 위해 AWS Marketplace에서 <a href="https://aws.amazon.com/marketplace/pp/B07GRHFXGM">EKS-optimized AMI with GPU Support</a>를 구독해주어야 합니다.</p>
+
+<p>EKS는 Web UI 또는 eksctl이라는 cli 도구를 사용해서 클러스터를 구성할 수 있습니다.
+eksctl은 kubectl이나 kops와 유사한 명령어를 제공합니다.
+자세한 내용은 https://aws.amazon.com/ko/blogs/opensource/eksctl-eks-cluster-one-command/ 에서 참고하시면 됩니다.</p>
+
+<p>​</p>
+
+<h2 id="eks--">EKS 클러스터 생성</h2>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># install eksctl</span>
+<span class="gp">$ </span>brew tap weaveworks/tap
+<span class="gp">$ </span>brew install weaveworks/tap/eksctl
+
+<span class="c"># create cluster</span>
+<span class="gp">$ </span>eksctl create cluster eks-cpu <span class="se">\</span>
+--node-type<span class="o">=</span>c4.xlarge <span class="se">\</span>
+--timeout<span class="o">=</span>40m <span class="se">\</span>
+--nodes<span class="o">=</span>2 <span class="se">\</span>
+--region<span class="o">=</span>ap-northeast-2
+
+<span class="c"># NVIDIA driver plugin</span>
+kubectl apply -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v1.11/nvidia-device-plugin.yml
+kubectl get nodes <span class="s2">"-o=custom-columns=NAME:.metadata.name,MEMORY:.status.allocatable.memory,CPU:.status.allocatable.cpu,GPU:.status.allocatable.nvidia</span><span class="se">\.</span><span class="s2">com/gpu"</span></code></pre></figure>
 
 <ul>
-  <li>이미 Kubernetes 기반의 인프라를 사용하고 있으며, ML 인프라를 구축하려는 경우</li>
-  <li>서비스를 On-premise, Multi-cloud 환경에 배포해야 하는 경우</li>
-  <li>Scalable ML이 필수적이며, 기존의 여러 ML 서비스를 쉽게 배포하고 리소스 관리 비용을 줄이려는 경우</li>
-  <li>
-    <p>Research Engineer, Data Scientist 를 위한 인프라 관리의 복잡성을 최소화하고 일관된 인터페이스를 제공하여 몇 번의 클릭만으로 설정을 쉽게 하고 싶은 경우</p>
-
-    <p>​</p>
-  </li>
+  <li>먼저 Homebrew로 <code class="highlighter-rouge">eksctl</code>을 설치합니다. 이후 아래의 명령어를 통해 c4 인스턴스 기반의 EKS 클러스터를 생성하고 Memory, CPU, GPU 정보를 확인해줍니다.</li>
+  <li>GPU 인스턴스로 클러스터를 생성하고 싶다면 생성하기 이전에 EC2 Limit 페이지에서 p2 또는 p3 인스턴스의 limit을 확인해야 합니다. 0으로 되어있다면 <code class="highlighter-rouge">Request limit Increase</code>가 필요합니다.</li>
+  <li>GPU-enabled worker를 가지는 EKS 클러스터를 생성한다면 NVIDIA driver plugin을 활성화시키는 과정이 필요합니다.</li>
+  <li>Create cluster에서 <code class="highlighter-rouge">AccessDenied</code> 오류가 발생하는 경우, 사용할 IAM 유저를 생성하고 EKS 관련 permission과 <code class="highlighter-rouge">AWSCloudFormationReadOnlyAccess</code>를 추가해주어야 합니다. EKS는 현재 기준 1.11 버전을 default로 사용하고 있습니다.</li>
 </ul>
 
-<h2 id="consistency-in-infrastructure">Consistency in Infrastructure</h2>
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1y10f8hW0KFZGSn7WLFne_aqUV4YjPQqJ" alt="eks" /></p>
 
-<p>Kubeflow는 Kubernetes 기반의 인프라가 가지는 장점을 그대로 가지고 있습니다. 각 서비스에 대한 Monitoring, Health Check, Replication 등의 기본 요구사항을 갖추고 있으며 쉬운 배포 환경을 제공합니다. 이외에도 아래와 같은 usecase에서 활용될 수 있습니다.</p>
+<p>EKS 메뉴에 가보시면 EC2 인스턴스, 네트워크 설정이 완료된 것을 확인하실 수 있습니다.
+AWS CloudFormation에서 cluster와 node-group에 대한 stack이 생성됩니다.</p>
 
-<ul>
-  <li>Research Engineer들이 인프라가 아닌 모델링에만 집중할 수 있는 환경을 제공할 수 있습니다. 모두가 Docker 기반의 추상화된 환경에서 연구를 할 수 있으며, 동일한 데이터, 연구 결과를 공유할 수 있습니다. 가상화된 GPU 환경에서 모델을 분산 학습시킬 수 있으며, TensorFlow, PyTorch, MXNet 등 다양한 프레임워크 환경을 지원할 수 있습니다.</li>
-  <li>Kubeflow는 end-to-end를 제공하기 때문에 ML 프로젝트를 production에 반영하는 과정이 단순해집니다. 지속적인 데이터 파이프라인을 구축하여 <strong>argo</strong>를 통해 모델을 업데이트 하고, <strong>seldon</strong>을 통해 production 환경을 테스트해 볼 수 있습니다.</li>
-  <li>
-    <p><strong>Katib</strong>을 통해 Hyper parameter tuning 과정을 쉽게 자동화 할 수 있습니다. <strong>Katib</strong>에서 제공하는 인터페이스를 통해 여러 어플리케이션으로 확장시킬 수 있으며, 튜닝 결과를 지속적으로 기록하고 공유할 수 있습니다.</p>
+<p>K8S 대시보드는 <a href="https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/dashboard-tutorial.html">AWS EKS 공식 문서</a>를 참고하여 띄울 수 있습니다.</p>
 
-    <p>​</p>
-  </li>
-</ul>
+<p>​</p>
 
-<h2 id="resource-utilization-by-the-training--serving-modules">Resource utilization by the Training / Serving modules</h2>
+<h2 id="ksonnet--kubeflow-">ksonnet을 이용한 KubeFlow 설치</h2>
 
-<p>테스트 환경을 쉽게 구축할 수 있으며, 클라우드 비용을 최적화시킬 수 있습니다. K8S 클러스터는 동일한 인스턴스에 여러 Pod을 실행시킬 수 있습니다. 따라서, 사용하는 리소스를 팀 또는 프로젝트 단위로 namespace를 분리시켜 리소스 사용량을 모니터링 할 수 있습니다.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># install ksonnet</span>
+<span class="gp">$ </span>brew install ksonnet/tap/ks
+<span class="gp">$ </span>ks version
+ksonnet version: 0.13.1
+jsonnet version: v0.11.2
+client-go version: kubernetes-1.10.4
 
-<p>일반적인 클라우드 인프라 환경을 서비스 라이프사이클과 연계되어 있지 않기 때문에 training job이 끝난 이후에도 인스턴스가 켜져 있기 때문에 그에 대한 비용을 지불해야 합니다. 하지만 Kubeflow를 사용하는 경우, 사용량에 따라 클러스터를 auto scaling 한다거나 spot instance로 training job을 실행시킬 수 있습니다.</p>
+<span class="c"># install kubeflow</span>
+<span class="gp">$ </span><span class="nb">export </span><span class="nv">KUBEFLOW_TAG</span><span class="o">=</span>v0.4.1
+<span class="gp">$ </span><span class="nb">export </span><span class="nv">KUBEFLOW_SRC</span><span class="o">=</span>/tmp/kubeflow_src
+<span class="gp">$ </span><span class="nb">export </span><span class="nv">KFAPP</span><span class="o">=</span>eks-kubeflow
+
+<span class="gp">$ </span>mkdir <span class="k">${</span><span class="nv">KUBEFLOW_SRC</span><span class="k">}</span> <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="k">${</span><span class="nv">KUBEFLOW_SRC</span><span class="k">}</span>
+<span class="gp">$ </span>curl https://raw.githubusercontent.com/kubeflow/kubeflow/<span class="k">${</span><span class="nv">KUBEFLOW_TAG</span><span class="k">}</span>/scripts/download.sh | bash
+
+<span class="gp">$ </span>sh <span class="k">${</span><span class="nv">KUBEFLOW_SRC</span><span class="k">}</span>/scripts/kfctl.sh init <span class="k">${</span><span class="nv">KFAPP</span><span class="k">}</span> --platform none
+<span class="gp">$ </span><span class="nb">cd</span> <span class="k">${</span><span class="nv">KFAPP</span><span class="k">}</span>
+<span class="gp">$ </span>sh <span class="k">${</span><span class="nv">KUBEFLOW_SRC</span><span class="k">}</span>/scripts/kfctl.sh generate k8s
+<span class="gp">$ </span>sh <span class="k">${</span><span class="nv">KUBEFLOW_SRC</span><span class="k">}</span>/scripts/kfctl.sh apply k8s</code></pre></figure>
+
+<p>ksonnet으로 KubeFlow를 설치하기 이전에 먼저 Homebrew로 ksonnet을 설치합니다.</p>
+
+<p>​</p>
+
+<h2 id="kubeflow">KubeFlow</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1W9rnEB-Bn5IZjLOymYXNxMPNclyY4eJn" alt="kubeflow-pods" />
+<img src="http://drive.google.com/uc?export=view&amp;id=15IWqbbib_vhB_k4FlUK_K39ERUbkVHr0" alt="kubeflow-pvc" /></p>
+
+<p>KubeFlow를 설치하고 나면 Pods, Deployment, Service, ConfigMap 등 모든 컴포넌트들이 자동으로 배포됩니다. default로 PVC는 EBS gp2 볼륨이 설정된 것을 확인하실 수 있습니다.</p>
+
+<p>EKS에서는 IAM 기반의 RBAC 인증을 사용합니다.
+아래의 명령어를 통해 EKS의 JupyterHub를 로컬의 8080 포트로 포워딩해서 접속하실 수 있습니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>kubectl port-forward svc/jupyter-lb -n kubeflow 8080:80</code></pre></figure>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1XNiADQX6faiejXKz3OlpwYMhqZQ6xPoz" alt="kubeflow-jupyterhub" /></p>
+
+<p>위와 같이 설치하고 난 이후에 KubeFlow 문서의 git summerization 튜토리얼을 그대로 따라하실 수 있습니다. 모든 컴포넌트가 자동으로 배포되다 보니 생략하고 넘어가는 경우가 많은데 production 환경에서 사용하려면 각 설정 YAML 파일을 내 환경에 맞도록 수정할 필요가 있습니다. 삭제는 아래의 명령어를 통해 실행시키면 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span><span class="nb">cd</span> <span class="k">${</span><span class="nv">KUBEFLOW_SRC</span><span class="k">}</span>/<span class="k">${</span><span class="nv">KFAPP</span><span class="k">}</span>
+<span class="gp">$ </span>sh <span class="k">${</span><span class="nv">KUBEFLOW_SRC</span><span class="k">}</span>/scripts/kfctl.sh delete k8s</code></pre></figure>
 
 <p>​</p>
 
 <h2 id="reference">Reference</h2>
+
 <ul>
-  <li><a href="https://medium.com/kubeflow/why-kubeflow-in-your-infrastructure-56b8fabf1f3e">https://medium.com/kubeflow/why-kubeflow-in-your-infrastructure-56b8fabf1f3e</a></li>
+  <li><a href="https://aws.amazon.com/ko/blogs/opensource/kubeflow-amazon-eks/">https://aws.amazon.com/ko/blogs/opensource/kubeflow-amazon-eks/</a></li>
+  <li><a href="https://github.com/aws-samples/machine-learning-using-k8s/blob/master/kubeflow.md">https://github.com/aws-samples/machine-learning-using-k8s/blob/master/kubeflow.md</a></li>
+  <li><a href="https://eksctl.io/">https://eksctl.io/</a></li>
 </ul>
 
 
@@ -217,15 +271,15 @@
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=Why Kubeflow in your Infrastructure?&amp;url=http://swalloow.github.io/why-kubeflow"
+                <a class="icon-twitter" href="http://twitter.com/share?text=Amazon EKS에 Kubeflow 구축하기&amp;url=http://swalloow.github.io/eks-kubeflow"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/why-kubeflow"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/eks-kubeflow"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/why-kubeflow"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/eks-kubeflow"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -237,8 +291,8 @@
 <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = 'swalloow'; // required: replace example with your forum shortname
-        var disqus_identifier = '/why-kubeflow';
-        var disqus_url = 'http://swalloow.github.io//why-kubeflow';
+        var disqus_identifier = '/eks-kubeflow';
+        var disqus_url = 'http://swalloow.github.io//eks-kubeflow';
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
             (function() {
@@ -263,20 +317,13 @@
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story no-cover" href="/eks-kubeflow">
-            <section class="post">
-                <h2>Amazon EKS에 Kubeflow 구축하기</h2>
-                <p>​ AWS EKS는 Fully managed K8S 서비스 입니다. 이번 글에서는 EKS 환경에 Kubeflow를 구축하는 방법에...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/aws-kops">
+        <a class="read-next-story prev no-cover" href="/why-kubeflow">
             <section class="post">
-                <h2>KOPS로 AWS에 Kubernetes 클러스터 구축하기</h2>
-                <p>​ ​ Kubernetes 클러스터를 구성하는 방법은 여러 가지가 있습니다. 그 중에서 kubeadam은 온프레미스 환경에서 많이...</p>
+                <h2>Why Kubeflow in your Infrastructure?</h2>
+                <p>​ 실제 ML을 서비스에 적용시키는 일은 위 그림에 나타난 바와 같이 ML 모델링 보다 이외의...</p>
             </section>
         </a>
     
