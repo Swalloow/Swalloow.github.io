@@ -12,7 +12,215 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
-	  <title>분산 컨테이너 환경에서의 디자인 패턴</title>
+	  <title>분산 컨테이너 환경에서의 디자인 패턴 (2)</title>
+	  <link>//container-patterns2</link>
+	  <author>Swalloow</author>
+	  <pubDate>2019-03-23T19:18:00+09:00</pubDate>
+	  <guid>//container-patterns2</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은
+분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다.
+지난 글에 이어서 멀티 노드에 관련된 디자인 패턴에 대한 내용입니다.</p>
+
+<ul>
+  <li><a href="http://swalloow.github.io/container-patterns">분산 컨테이너 환경에서의 디자인 패턴 1. Single-Node Patterns</a></li>
+  <li>
+    <p><a href="http://swalloow.github.io/container-patterns2">분산 컨테이너 환경에서의 디자인 패턴 2. Multi-Node Serving Patterns</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="multi-node-serving-pattern">Multi-Node Serving Pattern</h2>
+
+<p>지난 번에 소개했던 싱글 노드 패턴들은 컨테이너 간에 커플링이 강하다는 특징이 있다.
+반면 이번에 소개할 멀티 노드 패턴들은 컨테이너 간에 커플링이 약하다.
+서로 다른 노드 간에 네트워크 호출을 통해 통신이 이루어지며
+<strong>Parallel, Coordinate via loose synchronization</strong>에 대한 이슈가 존재한다.
+특히 어플리케이션이 MSA 아키텍쳐로 구성된 경우, 컨테이너 간의 커플링이 낮다보니 스케일링에 이점이 있다.
+하지만 여러 노드에서 복잡한 구조로 동작하다보니 디버깅이 어려울 수 있다.</p>
+
+<p>​</p>
+
+<h2 id="replicated-load-balanced-services">Replicated Load-Balanced Services</h2>
+
+<p>LoadBalancer가 트래픽을 관리하는 패턴입니다. 가장 간단하면서 잘 알려져 있다.
+stateless한 서비스의 경우, LoadBalancer + Replica 형태로 쉽게 구성할 수 있다.
+처리해야 하는 요청에 따라 Scale-Up, Down을 쉽게 구성할 수 있어야 한다.</p>
+
+<ul>
+  <li>LoadBalancing 패턴은 서비스의 network layer에 해당 (TCP/IP)</li>
+  <li>Caching Layer는 web 서비스에서 유저의 요청을 메모리에 캐싱하는 프록시</li>
+  <li>Caches Server에서 유저의 요청을 캐싱하고 있기 때문에 2번 요청을 보내더라도 실제 서버에는 1번만 요청</li>
+</ul>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1vzxSQ-qTm3g4rg1tGrmKfnH7GGYGGfpO" alt="" /></p>
+
+<p>가장 간단하게 웹 서버와 캐시 서버를 구성하는 방법은 위 그림과 같이 앞서 배웠던 Sidecar를 활용하는 방법.
+이 방법은 간단하게 구현할 수 있지만 내 웹 서버와 동일한 레벨에 있기 때문에 각자 스케일링하기 어렵다.
+Kubernetes의 Deployments와 Service로 동일한 환경을 쉽게 구성해볼 수 있다.</p>
+
+<p>​</p>
+
+<h2 id="shared-services">Shared Services</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1vzG4BnqfHFQ4IRhwmS9z7ZwsI4AZTtKZ" alt="" /></p>
+
+<p>위의 Load-Balanced Services가 stateless 하다면 shared service는 stateful.
+Replicated Service에서는 각 Pod에서 모두 동일한 요청을 처리하고,
+Shared Service에서는 root가 routing 해주면서 서로 다른 요청을 처리한다.</p>
+
+<ul>
+  <li>앞의 글에서 ambassador 패턴을 활용해 shared cache를 만드는 예제의 응용편</li>
+  <li>요구사항: Cache Proxy에서 적절한 Cache Shard로 라우팅해주어야 한다</li>
+  <li>cache hit, miss에 대한 처리 결과를 노드 사이에서 통신</li>
+  <li>sharding은 single node에 들어갈 수 없을 정도의 데이터 사이즈가 있는 경우에 장점</li>
+  <li>
+    <p>네트워크 latency와 데이터 등을 파악해서 적절한 아키텍쳐를 구성하는 것이 중요</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="scatter-getter">Scatter, Getter</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1WpL_5H5auqYY6jmcvTnismPrdiLJL5CY" alt="" /></p>
+
+<p>scatter, getter 패턴은 스케일링, 분산처리에 유용한 패턴 중 하나이다.
+위에 언급했던 패턴들처럼 트리 구조로 되어 있고,
+root 서버가 요청을 분산시키거나 여러 서버로부터 받아오는 구조.
+이 패턴은 분산처리에서 embarassingly parallel 문제를 해결하는 것과 동일하다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1XrL4vaLHARyNarjIhLWthC4dhCNpOMl7" alt="" /></p>
+
+<p><strong>Hands On: Distributed Document Search</strong></p>
+
+<p>모든 문서 파일로부터 cat, dog 단어가 모두 포함되어 있는지 검색하는 문제를 풀어야 한다고 가정해보자.
+왼쪽 그림과 같이 각 노드로부터 서로 다른 단어를 검색하고 결과를 내는 방법이 있다.
+하지만 document 하나의 사이즈가 아주 크다면? 하나의 노드에서 처리는 불가능하다.
+이 경우, 단어 기준이 아니라 document 기준으로 분산처리해야 한다. (MapReduce의 WordCount 예제와 동일)</p>
+
+<p>이 때 적절한 노드 개수를 선정하는 것이 중요하다. (컴퓨팅과 비용 사이의 문제)
+노드가 많아질수록 요청을 분산하고 수집하는데 오버헤드가 발생할 수 있다.
+위 경우 처리가 가장 오래걸리는 노드의 시간이 전체 처리 시간을 결정할 것이다. (straggler problem)
+이를 해결하기 위해 Erasure Coding을 통해 연산을 추정하는 방법도 있다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1DPFcq_ggveaUcw_kXdRlN4Ic-DqLMnud" alt="" /></p>
+
+<p><strong>Scaling Scatter/Gather for Reliability and Scale</strong></p>
+
+<p>항상 실패에 대한 대비가 되어 있어야 한다. (Fault Tolerance)
+앞서 설명한대로 단순히 샤드의 수를 늘리는 것은 적절하지 못한 방법이다.
+각 Shard가 Replica로 구성되어 있기 때문에 동시에 업그레이드도 가능할 수 있어야 한다.</p>
+
+<p>​</p>
+
+<h2 id="functions-and-event-driven-processing">Functions and Event-Driven Processing</h2>
+
+<p>방금 전까지는 long-running computation에 대한 패턴에 대해 소개했다면,
+이번에는 FaaS 기반의 일시적인 서비스에 대한 패턴에 대한 내용이다. (serverless computing)
+서버리스는 좋은 패턴이자 도구이지만 모든 어플리케이션에 무조건 적용하기 보다는
+장점과 단점을 잘 이해하고 적절한 경우에 사용하는 것이 좋다.</p>
+
+<ul>
+  <li>함수 단위로 모듈화하고 바로 클라우드를 통해 서비스할 수 있다는 장점</li>
+  <li>각 서비스가 완전히 독립적이어야 하고 상태를 스토리지에 저장해야 하기 때문에 운영이 복잡해질 수 있음</li>
+  <li>함수 사이에 루프가 생기는 경우, 심각한 문제가 발생 (모니터링 필수적임)</li>
+  <li>Event-Driven의 우선순위가 낮은 일시적인 작업을 처리할 때 유용함</li>
+  <li>인메모리 수준의 빠른 처리가 필요한 경우, <strong>함수가 로드되는 오버헤드</strong>를 고려하면 부적합 할 수 있음</li>
+  <li>가끔씩 수행되어야 하는 경우, 비용 측면에서 일반 인스턴스보다 저렴</li>
+  <li>FaaS는 아주 간단한 Code Snippet으로 쉽게 구현할 수 있음</li>
+</ul>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1xgMYmBFb3538gT5gOv3XPAPt72qt9mIV" alt="" /></p>
+
+<p><strong>FaaS Decorator Pattern: Request or Response Transformation</strong></p>
+
+<p>Input이 들어왔을 때, transform 해서 output을 내는 패턴이다.
+이번에는 Kubernetes 기반의 serverless 플랫폼인 kubeless로 간단한 예제를 진행해보았다. 
+설치와 실행은 아래와 같이 진행하면 된다.
+예제 코드와 이에 대한 자세한 설명은 https://github.com/Swalloow/KubeStudy/tree/master/faas 에서 확인.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># install kubeless, cli</span>
+kubectl create ns kubeless
+kubectl create -f https://github.com/kubeless/kubeless/releases/download/v1.0.3/kubeless-v1.0.3.yaml
+
+curl -OL https://github.com/kubeless/kubeless/releases/download/v1.0.3/kubeless_darwin-amd64.zip
+unzip kubeless_darwin-amd64.zip
+sudo mv bundles/kubeless_darwin-amd64/kubeless /usr/local/bin/
+
+<span class="c"># install kubeless UI</span>
+kubectl create -f https://raw.githubusercontent.com/kubeless/kubeless-ui/master/k8s.yaml
+kubectl get svc ui -n kubeless
+kubectl port-forward svc/ui -n kubeless 3000:3000</code></pre></figure>
+
+<p><strong>Hands On: Implementing Two-Factor Authentication</strong></p>
+
+<ul>
+  <li>Random Code Generator를 비동기로 생성</li>
+  <li>로그인 서비스에 코드를 등록</li>
+  <li>사용자의 전화로 문자메세지를 전송</li>
+</ul>
+
+<p><strong>Hands On: Implementing a Pipeline for New-User Signup</strong></p>
+
+<ul>
+  <li>이벤트 기반의 파이프라인 예제</li>
+  <li>MSA는 long-running 인 반면, Event Pipeline은 async, short-running</li>
+  <li>빌드, 배포 CI 도구가 좋은 예제 (각 단계의 이벤트가 발생하면 함수 실행)</li>
+  <li>유저가 신규 가입하면, welcome 이메일 전송하는 예제</li>
+  <li>A list of required actions (e.g., sending a welcome mail)</li>
+  <li>
+    <p>A list of optional actions (e.g., subscribing the user to a mailing list)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="ownership-election">9. Ownership Election</h2>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1PN0T-kHQRzxm41D8JLKl9p3Z9rvlsYax" alt="" /></p>
+
+<p>분산 시스템에서는 Ownership을 결정하는 것이 중요하다. 리더가 여러 책임을 가지고 있다.
+마스터 노드에 장애가 발생하더라도 Election에 의해 새로운 마스터 노드를 선정할 수 있어야 한다.</p>
+
+<p><strong>Determining If You Even Need Master Election</strong></p>
+
+<ul>
+  <li>노드가 안정적으로 영원히 돌아갈리가 없기 때문에 필요</li>
+  <li>singleton container로 구현하는 방법도 있음</li>
+  <li>컨테이너에 장애가 발생해도 재시작 가능</li>
+  <li>health check를 구현했다면, hang에 걸려도 재시작</li>
+  <li>노드에 장애가 발생하면 다른 노드로 이전</li>
+  <li>하지만 이 방법은 uptime이 발생할 수 밖에 없음 (2초~5분 간 서비스 정지)</li>
+  <li>노력하면 uptime을 일부 줄일 수 있겠지만 그 만큼 복잡성이 증가</li>
+</ul>
+
+<p><strong>The Basics of Master Election</strong></p>
+
+<p>가장 잘 알려진 Leader Election 알고리즘으로 Paxos와 Raft가 있다.
+자세한 내용은 이전에 작성한 <a href="http://swalloow.github.io/raft-consensus">Raft Consensus</a> 글을 참고.</p>
+
+<p>​</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://static.googleusercontent.com/media/research.google.com/ko//pubs/archive/45406.pdf">GooglePaper - Design patterns for container-based distributed systems</a></li>
+  <li>
+    <p>Designing Distributed Systems: Brendan Burns</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>분산 컨테이너 환경에서의 디자인 패턴 (1)</title>
 	  <link>//container-patterns</link>
 	  <author>Swalloow</author>
 	  <pubDate>2019-01-26T19:18:00+09:00</pubDate>
@@ -24,7 +232,14 @@
 분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다.
 분산 어플리케이션을 컨테이너 환경으로 옮기려는 분들에게 많은 도움이 될 듯 합니다.</p>
 
-<p>​</p>
+<ul>
+  <li><a href="http://swalloow.github.io/container-patterns">분산 컨테이너 환경에서의 디자인 패턴 1. Single-Node Patterns</a></li>
+  <li>
+    <p><a href="http://swalloow.github.io/container-patterns2">분산 컨테이너 환경에서의 디자인 패턴 2. Multi-Node Serving Patterns</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
 
 <h2 id="modular-container-design">Modular Container Design</h2>
 
@@ -965,243 +1180,6 @@ git stash drop 명령어를 통해 스택에서 삭제할 수 있습니다.</p>
   <li><a href="http://www.popit.kr/why-microservice/">Popit - 마이크로서비스 아키텍쳐의 장단점</a></li>
   <li>
     <p><a href="http://bcho.tistory.com/942">조대협 블로그 - OAuth 2.0 Architecture</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Open API를 설계할 때 알아야 하는 것들</title>
-	  <link>//open-api-guide</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-05T19:18:00+09:00</pubDate>
-	  <guid>//open-api-guide</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>오픈 API를 사용하다보면 공통의 패턴을 발견할 수 있을 것이다.
-이처럼, API를 설계할 때도 개발자들이 쉽게 사용할 수 있도록 만든 규칙이라는게 존재한다.
-오늘은 RESTful한 Open API를 설계하기 위해 알아야 하는 것들에 대해 정리해보았다.</p>
-
-<p>​</p>
-
-<h2 id="open-api-">Open API 디자인</h2>
-
-<p>​</p>
-
-<h3 id="api-">API 란?</h3>
-
-<blockquote>
-  <p>운영체제, 시스템, 애플리케이션, 라이브러리 등을 개발자들이 프로그래밍 작업을 통해 응용 프로그램을 작성할 수 있는 다양한 인터페이스들을 총칭한다. (예: Window API, Java API, HTML5 API, Android API…) - 네이버 개발자센터 인용</p>
-</blockquote>
-
-<p>​</p>
-
-<h3 id="api--1">오픈 API 란?</h3>
-
-<blockquote>
-  <p>API 중에서 플랫폼의 기능 또는 컨텐츠를 외부에서 쓸 수 있도록 웹 프로토콜(HTTP)로 호출할 수 있도록 개방(open)한 API를 의미한다. 네이버 개발자센터에서 제공하고 있는 지도, 검색을 비롯 기계번역, 캡차, 단축 URL 등 대부분 API 들은 HTTP로 호출할 수 있는 오픈 API에 해당한다. - 네이버 개발자센터 인용</p>
-</blockquote>
-
-<p>​</p>
-
-<p>이제 기업 또는 사용자에게 제공할 RESTful Open API를 어떻게 설계할지 고민해보자.
-기업에게 전문적으로 API를 공급하는 Apigee 사의 <strong>Web API Design</strong> 을 레퍼런스로 삼았다.</p>
-
-<p>​</p>
-
-<h2 id="best-web-api-design-rules">Best Web API Design Rules</h2>
-
-<p>​</p>
-
-<h5 id="url------2--url-">1. 기본 URL에는 동사가 아닌 명사를 사용, 리소스마다 2개의 기본 URL을 유지하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">/</span><span class="n">dogs</span> <span class="p">(</span><span class="n">Collection</span><span class="p">),</span> <span class="o">/</span><span class="n">dogs</span><span class="o">/</span><span class="mi">1234</span> <span class="p">(</span><span class="n">Element</span><span class="p">)</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="http-post-get-put-delete-">2. 올바른 HTTP 메서드(POST, GET, PUT, DELETE)를 사용하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">POST</span><span class="p">(</span><span class="n">create</span><span class="p">),</span> <span class="n">GET</span><span class="p">(</span><span class="n">read</span><span class="p">),</span> <span class="n">PUT</span><span class="p">(</span><span class="n">update</span><span class="p">),</span> <span class="n">DELETE</span><span class="p">(</span><span class="n">delete</span><span class="p">)</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="section">3. 복수형 명사와 구체적인 이름을 사용하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">/</span><span class="n">animals</span><span class="p">,</span> <span class="o">/</span><span class="n">dogs</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="url----">4. 자원 간의 관계를 간단히 하여 URL 계층이 깊어지는 것을 피하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">GET</span>	<span class="o">/</span><span class="n">owners</span><span class="o">/</span><span class="mi">5678</span><span class="o">/</span><span class="n">dogs</span><span class="err">?</span><span class="n">color</span><span class="o">=</span><span class="n">red</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="section-1">5. 오류 처리를 명확하게 하고 에러 스택은 절대 비공개 해야 한다.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="mi">200</span> <span class="o">-</span> <span class="n">OK</span>
-<span class="mi">400</span> <span class="o">-</span> <span class="n">Bad</span> <span class="n">Request</span>
-<span class="mi">500</span> <span class="o">-</span> <span class="n">Internal</span> <span class="n">Server</span> <span class="n">Error</span>
-<span class="mi">201</span> <span class="o">-</span> <span class="n">Created</span>
-<span class="mi">304</span> <span class="o">-</span> <span class="n">Not</span> <span class="n">Modified</span>
-<span class="mi">404</span> <span class="o">-</span> <span class="n">Not</span> <span class="n">Found</span>
-<span class="mi">401</span> <span class="o">-</span> <span class="n">Unauthorized</span>
-<span class="mi">403</span> <span class="o">-</span> <span class="n">Forbidden</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="v------">6. 접두사 “v”로 버전을 지정하고 지속적인 버전 관리를 하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">GET</span>	<span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">dogs</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="section-2">7. 데이터베이스에 없는 자원에 대한 응답일 경우 동사를 사용하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ex</span><span class="p">)</span> <span class="n">Caculate</span><span class="p">,</span> <span class="n">Translate</span><span class="p">,</span> <span class="n">Convert</span> <span class="o">...</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="javascript-----">8. 속성의 네이밍은 Javascript의 관습을 따르고 카멜 케이스를 사용하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">"createdAt"</span><span class="p">:</span> <span class="mi">123415125</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="api---">9. 하위 도메인의 독립적인 API 요청 처리는 통일하자.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">company</span><span class="o">.</span><span class="n">com</span>
-<span class="n">api</span><span class="o">.</span><span class="n">company</span><span class="o">.</span><span class="n">com</span>	<span class="p">(</span><span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">,</span> <span class="n">redirect</span><span class="p">)</span>
-<span class="n">developers</span><span class="o">.</span><span class="n">company</span><span class="o">.</span><span class="n">com</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="section-3">10. 기타</h5>
-
-<ul>
-  <li>권한 관리(OAuth)는 2.0을 사용하자.</li>
-  <li>필요한 경우, SDK로 API를 보완하자.</li>
-  <li>
-    <p>API Facade Pattern을 API 설계에 고려해라.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="naver-open-api">NAVER Open API</h3>
-
-<p>실제 네이버와 카카오의 오픈 API는 어떻게 디자인되어 있는지 간단히 살펴보자.
-<a href="https://developers.naver.com">https://developers.naver.com</a> 참조</p>
-
-<blockquote>
-  <p>이전(2015년 쯤)에는 네이버에서 제공하는 API를 사용하기 위해 ‘API 키’라는 유니크한 텍스트 문자열을 발급받고, 이를 API 호출시 같이 API 게이트웨이 서버로 전송함으로써 인증된 사용자임을 입증했다. 새로운 개발자센터에서는 API 키 방식은 더 이상 사용하지 않고 애플리케이션마다 일종의 유니크한 아이디와 비밀번호(클라이언트 아이디, 시크릿)값을 이용해서 인증하고 있다.</p>
-</blockquote>
-
-<p>​</p>
-
-<h4 id="api--url--">1. API 호출 URL과 요청 변수</h4>
-
-<ul>
-  <li>https://openapi.naver.com/버전/서비스구분/API 구분 형태</li>
-  <li>예시) 기계번역 API : https://openapi.naver.com/v1/language/translate</li>
-  <li>요청변수란, 오픈 API를 호출할 때 함께 서버로 전송해야 하는 값이다.</li>
-  <li>
-    <p>요청변수에 한글이나 특수문자가 요청 변수값에 포함되어 있을 경우, 서버 전송 시 값이 깨지기 때문에 인코딩/디코딩 과정이 필요하다.</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h4 id="http-status-code">2. 에러 코드 정의 - HTTP status code</h4>
-
-<ul>
-  <li>400 (요청변수) : 필수 요청 변수가 빠졌거나 요청변수 이름이 잘못되었을 경우나 요청 변수 값을 URL 인코딩하지 않고 전송하였을 경우</li>
-  <li>401 (인증실패) : 애플리케이션 클라이언트 아이디와 시크릿 값이 없거나 잘못되었을 경우</li>
-  <li>401 (인증실패) : 클라이언트 아이디와 시크릿 값을 HTTP 헤더에 정확히 설정하지 않고 호출했을 경우</li>
-  <li>401 (인증실패) : API 권한 설정이 안되어 있을 경우</li>
-  <li>401 (인증오류) : 로그인 오픈 API를 호출할 때 접근 토큰(access_token) 값이 빠졌거나 잘못된 값 (기간 만료)을 설정하였을 경우</li>
-  <li>403 (호출금지) : https가 아닌 http로 호출하였을 경우</li>
-  <li>403 (호출금지) : 약관 동의를 하지 않고 호출할 경우 또는 권한이 없거나 비공개인 경우</li>
-  <li>404 (API없음) : API 요청 URL이 잘못되었을 경우</li>
-  <li>405 (메서드오류) : HTTP 메서드를 잘못하여 호출하였을 경우 (POST인데 GET으로 호출)</li>
-  <li>429 (한도초과) : 오픈 API를 호출할 때 일 허용량을 초과하였을 경우</li>
-  <li>
-    <p>500 (서버오류) : API 호출은 정상적으로 했지만, API 서버 유지보수나 시스템 오류로 인한 에러가 발생하였을 경우</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="kakao-rest-api--">Kakao REST API (카카오톡, 카카오페이)</h3>
-
-<p>​</p>
-
-<h5 id="section-4">1. 먼저, 카카오 로그인 후에 사용자 토큰을 받아온다.</h5>
-
-<h5 id="get-">2. 사용자 토큰을 헤더에 담아 GET으로 요청한다.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">GET</span> <span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">talk</span><span class="o">/</span><span class="n">profile</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
-<span class="n">Host</span><span class="p">:</span> <span class="n">kapi</span><span class="o">.</span><span class="n">kakao</span><span class="o">.</span><span class="n">com</span>
-<span class="n">Authorization</span><span class="p">:</span> <span class="n">Bearer</span> <span class="p">{</span><span class="n">access_token</span><span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="json-----">3. 응답은 JSON 형태로 다음과 같은 정보를 포함한다.</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span>
- <span class="s">"nickName"</span><span class="p">:</span><span class="s">"홍길동"</span><span class="p">,</span>
- <span class="s">"profileImageURL"</span><span class="p">:</span><span class="s">"http://xxx.kakao.co.kr/.../aaa.jpg"</span><span class="p">,</span>
- <span class="s">"thumbnailURL"</span><span class="p">:</span><span class="s">"http://xxx.kakao.co.kr/.../bbb.jpg"</span><span class="p">,</span>
- <span class="s">"countryISO"</span><span class="p">:</span><span class="s">"KR"</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="response-code-example">Response Code Example</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span>
-  <span class="s">"meta"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">"code"</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-    <span class="s">"response_time"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">"time"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="s">"measure"</span><span class="p">:</span> <span class="s">"seconds"</span>
-    <span class="p">}</span>
-  <span class="p">},</span>
-  <span class="s">"notifications"</span><span class="p">:</span> <span class="p">{},</span>
-  <span class="s">"response"</span><span class="p">:</span> <span class="p">{}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h5 id="error-code-example">Error Code Example</h5>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">{</span>
-  <span class="s">"meta"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">"code"</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
-    <span class="s">"error_detail"</span><span class="p">:</span> <span class="s">"The user has not authorized or the token is invalid."</span><span class="p">,</span>
-    <span class="s">"error_type"</span><span class="p">:</span> <span class="s">"invalid_auth"</span><span class="p">,</span>
-    <span class="s">"developer_friendly"</span><span class="p">:</span> <span class="s">"The user has not authorized or the token is invalid."</span><span class="p">,</span>
-    <span class="s">"response_time"</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s">"time"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="s">"measure"</span><span class="p">:</span> <span class="s">"seconds"</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>​</p>
-
-<h2 id="section-5">참고자료</h2>
-
-<ul>
-  <li>API Platform Design : <a href="http://bcho.tistory.com/808">http://bcho.tistory.com/808</a></li>
-  <li>Web API Design : <a href="https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf">https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf</a></li>
-  <li>카카오 개발자센터 : <a href="https://developers.kakao.com">https://developers.kakao.com</a></li>
-  <li>
-    <p>네이버 개발자센터 : <a href="https://developers.naver.com">https://developers.naver.com</a></p>
 
     <p>​</p>
   </li>

@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>분산 컨테이너 환경에서의 디자인 패턴 (2)</title>
+        
+          <description>​ 구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은 분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다. 지난...</description>
+        
+        <pubDate>Sat, 23 Mar 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//container-patterns2</link>
+        <guid isPermaLink="true">http://swalloow.github.io//container-patterns2</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Amazon EKS에 Kubeflow 구축하기</title>
         
           <description>​ AWS EKS는 Fully managed K8S 서비스 입니다. 이번 글에서는 EKS 환경에 Kubeflow를 구축하는 방법에 대해 정리해보겠습니다. Why kubeflow in...</description>
@@ -47,7 +60,7 @@
     
       
       <item>
-        <title>분산 컨테이너 환경에서의 디자인 패턴</title>
+        <title>분산 컨테이너 환경에서의 디자인 패턴 (1)</title>
         
           <description>​ 구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은 분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다. 분산...</description>
         
