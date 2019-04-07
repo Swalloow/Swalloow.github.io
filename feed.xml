@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>분산 컨테이너 환경에서의 디자인 패턴 (3)</title>
+        
+          <description>​ 구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은 분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다. 지난...</description>
+        
+        <pubDate>Sat, 06 Apr 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//container-patterns3</link>
+        <guid isPermaLink="true">http://swalloow.github.io//container-patterns3</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>분산 컨테이너 환경에서의 디자인 패턴 (2)</title>
         
           <description>​ 구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은 분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다. 지난...</description>
