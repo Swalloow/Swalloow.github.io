@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>글또 회고글</title>
+        
+          <description>​ 반년 간 글또를 하면서 아쉬운 점과 좋았던 점을 정리해보려 한다. 우선, 얼어붙은 블로그를 다시 살리는데 성공했다. 확실히 패널티 제도는...</description>
+        
+        <pubDate>Sun, 21 Apr 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//end</link>
+        <guid isPermaLink="true">http://swalloow.github.io//end</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>분산 컨테이너 환경에서의 디자인 패턴 (3)</title>
         
           <description>​ 구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은 분산 컨테이너 환경에서의 디자인 패턴에 대해 정리한 내용입니다. 지난...</description>

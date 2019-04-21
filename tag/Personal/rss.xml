@@ -12,6 +12,33 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>글또 회고글</title>
+	  <link>//end</link>
+	  <author>Swalloow</author>
+	  <pubDate>2019-04-21T19:18:00+09:00</pubDate>
+	  <guid>//end</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>반년 간 글또를 하면서 아쉬운 점과 좋았던 점을 정리해보려 한다.
+우선, 얼어붙은 블로그를 다시 살리는데 성공했다.
+확실히 패널티 제도는 효과가 있었고 비슷한 개발 분야를 공부하는 사람들과
+글을 공유하고 피드백을 받을 수 있어서 좋았다.</p>
+
+<p>그리고 글을 나름 자주 쓰다보니 주제에 대한 고민을 많이 하게 되었다.
+상반기에 이직 준비를 하면서 기본기에 대한 공부를 많이 했지만
+글은 오히려 다른 주제로 많이 남긴 것 같다.</p>
+
+<p>시간이 없더라도 글쓰기를 위한 글은 남기지 말아야겠다는 생각을 했었는데
+이것도 어느정도 잘 지켜진 것 같아 다행이다.
+앞으로도 꾸준히 블로그에 기록을 남길 수 있었으면 한다.</p>
+
+<p>​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Apache Airflow에 기여하면서 배운 점들</title>
 	  <link>//airflow-contrib</link>
 	  <author>Swalloow</author>
