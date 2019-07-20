@@ -12,6 +12,143 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Open Infra Days 2019 후기</title>
+	  <link>//openinfra</link>
+	  <author>Swalloow</author>
+	  <pubDate>2019-07-20T19:18:00+09:00</pubDate>
+	  <guid>//openinfra</guid>
+	  <description><![CDATA[
+	     <p>​</p>
+
+<p>19일부터 진행했던 <a href="https://openinfradays.kr/#schedule">Open Infra Days 2019</a>에 참여하면서
+배운 점들을 간단히 정리해보고자 한다. 해외의 CNCF 컨퍼런스처럼 사람들의 관심이 높아지고 있다는걸 느낄 수 있었다.
+그리고 돈 많은 후원사가 많아서 그런지 먹거리와 경품이 풍성했다. 하지만 내 번호는 한번도 당첨되지 않았다.</p>
+
+<p>내가 들었던 세션들은 주로 Kubernetes Scheduler, Controller, Kubernetes 기반의 ML Workflow에 대한 내용이었다.</p>
+
+<p>​</p>
+
+<h3 id="kubernetes-scheduler-deep-dive">kubernetes scheduler deep dive</h3>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1yIIsllw24U7pTsytGg38t1OapYsLo0UT" alt="" /></p>
+
+<ul>
+  <li>kube default 스케줄러가 어떻게 동작하는지, custom 스케줄러를 어떻게 적용시킬 수 있는지에 대한 내용</li>
+  <li>어려운 내용을 단계 별로 도식화하여 쉽게 설명해주셔서 좋았음</li>
+  <li>
+    <p><a href="https://drive.google.com/file/d/1bqkUrXOEUvNZxf0iXghlPZ5DSJhRZ85t/view?fbclid=IwAR34JIei_4nzEgZfZkk8knwLQN-ldyRI5t1x-VQN9dVSq4b1CjAcZQ_LTpk">발표자료 링크</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="kubernetes-kafka-flink----">Kubernetes에서 kafka와 flink를 사용하여 실시간 스트리밍 구현하기</h3>
+
+<ul>
+  <li>주로 적용하면서 겪었던 문제들에 대한 내용을 공유</li>
+  <li>kafka, flink의 state가 크게 증가하는 경우 이슈 발생 가능 (retension으로 정리)</li>
+  <li><a href="https://www.slideshare.net/secret/xLiHQcuZoRWhZd?fbclid=IwAR34j570PitRo3lwwDpU1LvJ5CI5MmsJky3pYXE5PVRyY29J5XBmqXKQt3I">발표자료 링크</a></li>
+  <li>
+    <p><a href="https://github.com/protess/k3a-f3k-k8s">핸즈온 링크</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="line-kubernetes----">LINE에서 Kubernetes를 쓰는 방법, 배운 것들</h3>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1RXRMOZYuyVSOvXGcZwFb9l5yTiW5I_aX" alt="" /></p>
+
+<ul>
+  <li>사내 프라이빗 클라우드 Verda에 Kubernetes 기반의 서비스를 올리면서 겪은 이슈</li>
+  <li>Kubernetes as a Service를 개발하면서 겪은 이슈</li>
+  <li>
+    <p>Kube Custom Controller를 구현하는 방법</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="t----kubernetes-as-a-service">카카오 T택시를 통해 살펴보는 카카오의 kubernetes as a service</h3>
+
+<ul>
+  <li>사내 프라이빗 클라우드에 Kubernetes as a Service 개발하면서 이슈 공유</li>
+  <li>기존 LDAP 통합 인증을 위해 kubectl login plugin 개발</li>
+  <li>In-House Custom DNS Controller 개발 과정 (Operator SDK 사용)</li>
+  <li>
+    <p>카카오 T 택시를 Kubernetes 기반으로 마이그레이션 했던 과정 공유</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="kakao-automatic-k8s-monitoring">Kakao automatic k8s monitoring</h3>
+
+<ul>
+  <li>카카오의 대용량 K8S 클러스터 모니터링 자동화 서비스 개발 공유</li>
+  <li>pod, ingress, api-server, system 지표를 자동으로 수집, 알림, 모니터링</li>
+  <li>자동으로 리소스 정리, 플러그인을 Helm으로 배포</li>
+  <li>EFK + prometheus 기반으로 개발</li>
+  <li>
+    <p>OOM 이슈 해결을 위한 불필요 메트릭 제거 (카디널리티 분석)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="efficient-job-scheduling-for-ml-workloads-in-kube-env">Efficient Job scheduling for ML workloads in kube env</h3>
+
+<ul>
+  <li>삼성전자의 ML Workflow 플랫폼 개발하면서 겪은 이슈 공유</li>
+  <li>kube default scheduler가 ML Workflow에 안맞는 이유 설명</li>
+  <li>Kube 기반의 분산 DL 학습에서 병목이 가능한 지점들 설명</li>
+  <li>kube-batch로 스케줄링 최적화하는 과정 (PodGroup을 기준으로 스케줄링)</li>
+  <li>
+    <p>기타 ML Job에서 발생할 수 있는 이슈 (GPU Staggler, Locality…)</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="gpu--k8s-cluster--ml-training-">대규모 GPU 기반 k8s cluster를 활용한 ml training 이슈</h3>
+<ul>
+  <li>삼성전자의 Kube 기반 GPU 클러스터를 운영하면서 겪은 이슈 공유</li>
+  <li>CPU-GPU, GPU-GPU 간의 연결 파이프라인 (NVIDIA/DALI)</li>
+  <li>GPGPU 간 데이터 복제 오버헤드 문제, CNI 이슈</li>
+  <li>
+    <p>Processing 단계에서 Feeding Bottleneck 문제</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="kubernetes---ml-pipeline-">kubernetes를 활용하여 효율적인 ml pipeline 만들기</h3>
+
+<ul>
+  <li>AWS 에서 ML 플랫폼 개발, 설계 단계에 대해 공유</li>
+  <li>학습 데이터를 전달하기 위해 EC2 NFS 서버를 PV로 사용 (S3FS로 했다가 수정)</li>
+  <li>Inference 서버는 TensorRT를 활용 (Sync, Async)</li>
+  <li>
+    <p><a href="https://on-demand.gputechconf.com/gtc/2019/presentation/_/s9264-how-to-build-efficient-ml-pipelines-from-the-startup-perspective.pdf">발표자료 링크</a></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="section">정리하면서</h2>
+
+<p>발표를 통해 Scheduler, Controller에 대한 내용을 더 잘 이해할 수 있었고, 기술 세션 뿐만 아니라 Kubernetes에 대한 생각과
+향후 개발 방향을 공유하는 발표도 많았던 점이 좋았다.</p>
+
+<p>여러 세션에서 공유했던 이슈들을 다시 보니 Ingreess/Egress, DNS Controller, RBAC에 대한 내용이 특히 많았다.
+사내에 적용하면서 당연히 마주하게 될 부분일테니 네트워크, 인증 관련 부분은 다시 공부해보려한다.</p>
+
+<p>​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>19년 상반기 회고</title>
 	  <link>//start-3</link>
 	  <author>Swalloow</author>
@@ -526,88 +663,6 @@ UI/UX 팀이 위치한 곳은 전부 오픈된 공간에 자유로운 분위기�
 <p>혹시 이미지 리소스가 필요하신 분들을 위해 올려드립니다.</p>
 
 <p>이것저것 만들다보면 시간이 많이 걸리므로 연휴 때 하는 것을 추천드립니다 !</p>
-
-<p>​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>맥북프로 터치바 모델 초기설정</title>
-	  <link>//macbook-setting</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-01-08T19:18:00+09:00</pubDate>
-	  <guid>//macbook-setting</guid>
-	  <description><![CDATA[
-	     <p><img src="assets/images/mac.png" alt="macbook" /></p>
-
-<p>1년을 기다린 결과 드디어 맥북프로 터치바 모델을 질렀다!</p>
-
-<p>맥을 처음 사용하는 입장에서 초기에 어떤 것들을 설정해야 하는지 정리해보았다.</p>
-
-<p>​</p>
-
-<h3 id="section">프로그램 관련</h3>
-
-<ul>
-  <li>창닫기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">W</code></li>
-  <li>실행중인 프로그램 종료 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Q</code></li>
-  <li>열려있는 모든 창 닫기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">W</code></li>
-  <li>창 전환 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">TAB</code></li>
-  <li>복사 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">C</code></li>
-  <li>붙여넣기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">V</code></li>
-  <li>잘라내기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">X</code></li>
-  <li>실행취소 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Z</code></li>
-  <li>모두선택 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">A</code></li>
-  <li>찾기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">F</code></li>
-  <li>파일삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Del</code></li>
-  <li>영구삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">Del</code></li>
-  <li>강제종료 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">esc</code></li>
-  <li>새로고침 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">R</code></li>
-  <li>스크린샷 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">3</code></li>
-  <li>드래그 스크린샷 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">4</code></li>
-  <li>Dock 보이기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">D</code></li>
-  <li>
-    <p>Finder 검색 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">space</code></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="section-1">문서작성</h3>
-
-<ul>
-  <li>특수문자 선택화면 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Ctrl</code> + <code class="highlighter-rouge">Space</code></li>
-  <li>한문입력 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">enter</code></li>
-  <li>단어이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">←</code></li>
-  <li>문장이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">←</code></li>
-  <li>문단이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">↓</code></li>
-  <li>단어삭제 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">Del</code></li>
-  <li>
-    <p>문장삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Del</code></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="section-2">커멘드 및 기타 설정</h3>
-
-<ul>
-  <li>iTerm2 : 기본 커멘드보다 빠르고 편하게 사용할 수 있는 오픈소스 커멘드 도구</li>
-  <li>Homebrew : OS X에서 설치 및 관리를 도와주는 패키지</li>
-  <li>Oh-my-zsh : 커멘드를 편리하고 아름답게 바꿔주는 패키지</li>
-  <li>
-    <p>Theme : zsh-syntax-highlighting, powerlevel9k</p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h2 id="section-3">후기</h2>
-
-<p>윈도우에서는 초기에 환경구축하려면 온갖 삽질을 해야 했는데,
-맥은 금방 설치되는 점이 가장 좋았다.
-터치바를 커스터마이징 하는 것은 나중에 따로 정리해봐야겠다.</p>
 
 <p>​</p>
 
