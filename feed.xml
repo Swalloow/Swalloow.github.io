@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>Serverless ETL 서비스들에 대한 리뷰</title>
+        
+          <description>​ 15년 AWS Lambda가 출시된 이후, 뜨거운 반응을 보이며 다양한 서버리스 서비스들이 출시되었다. 그 중 ETL에 관련되어 있는 서비스들을 사용해보면서...</description>
+        
+        <pubDate>Fri, 23 Aug 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//serverless-etl</link>
+        <guid isPermaLink="true">http://swalloow.github.io//serverless-etl</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Open Infra Days 2019 후기</title>
         
           <description>​ 19일부터 진행했던 Open Infra Days 2019에 참여하면서 배운 점들을 간단히 정리해보고자 한다. 해외의 CNCF 컨퍼런스처럼 사람들의 관심이 높아지고 있다는걸...</description>
