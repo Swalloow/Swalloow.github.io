@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>Terraform 입문자를 위한 미세 팁</title>
+        
+          <description>​ ​ 클라우드를 활용하는 경우, 인프라 구성 관리 도구로 테라폼을 많이 사용합니다. 오늘은 처음 테라폼을 도입하려고 할때 알아두면 좋은 점들에...</description>
+        
+        <pubDate>Fri, 20 Sep 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//tf-tips</link>
+        <guid isPermaLink="true">http://swalloow.github.io//tf-tips</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Serverless ETL 서비스들에 대한 리뷰</title>
         
           <description>​ 15년 AWS Lambda가 출시된 이후, 뜨거운 반응을 보이며 다양한 서버리스 서비스들이 출시되었다. 그 중 ETL에 관련되어 있는 서비스들을 사용해보면서...</description>

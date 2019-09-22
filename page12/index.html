@@ -35,7 +35,7 @@
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Swalloow Blog" />
-        <meta property="og:description" content="About Data Science, Data Engineering" />
+        <meta property="og:description" content="{% if page.logo %}{% endif %} {% if page.navigation %} Menu {% endif %} {{ site.name }} {{ site.description }}..." />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
@@ -69,11 +69,11 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-        <li class="nav-home " role="presentation"><a href="/">Home</a></li>
+        <li class="nav-home  nav-current" role="presentation"><a href="/">Home</a></li>
         <li class="nav-about " role="presentation"><a href="/about">About</a></li>
         <li class="nav-personal " role="presentation"><a href="/tag/Personal">Personal</a></li>
         <li class="nav-develop " role="presentation"><a href="/tag/Develop">Develop</a></li>
-        <li class="nav-devops  nav-current" role="presentation"><a href="/tag/DevOps">DevOps</a></li>
+        <li class="nav-devops " role="presentation"><a href="/tag/DevOps">DevOps</a></li>
         <li class="nav-datascience " role="presentation"><a href="/tag/DataScience">DataScience</a></li>
         <li class="nav-dataengineering " role="presentation"><a href="/tag/DataEngineering">DataEngineering</a></li>
         <li class="nav-financial " role="presentation"><a href="/tag/Financial">Financial</a></li>
@@ -86,14 +86,12 @@
     <div class="site-wrapper">
 
         <!-- [[! Everything else gets inserted here ]] -->
-        <!-- < dynamically overriding backgrounds for tags as well as descriptions -->
-
-
-<!-- < default}} -->
+        <!-- < default -->
 <!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
 
-<!-- If we have a tag cover, display that - else blog cover - else nothing -->
-<header class="main-header tag-head " style="background-image: url(/assets/images/cover_devops.jpg) ">
+<!-- The big featured header  -->
+<header class="main-header "
+        style="background-image: url(/assets/images/cover_main.jpg) ">
     <nav class="main-nav overlay clearfix">
         <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
@@ -102,14 +100,11 @@
     </nav>
     <div class="vertical">
         <div class="main-header-content inner">
-            <h1 class="page-title">Devops</h1>
-            <h2 class="page-description">
-            
-                A series of short stories about devops.
-            
-            </h2>
+            <h1 class="page-title">Swalloow Blog</h1>
+            <h2 class="page-description">About Data Science, Data Engineering</h2>
         </div>
     </div>
+    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
 </header>
 
 <!-- The main content area on the homepage -->
@@ -122,10 +117,10 @@
             <nav class="pagination" role="pagination">
     
         
-            <a class="newer-posts" href="/tag/DevOps/page2/" title="Previous Page">&laquo; Newer Posts</a>
+            <a class="newer-posts" href="/page11/" title="Previous Page">&laquo; Newer Posts</a>
       
     
-    <span class="page-number"> Page 3 of 3 </span>
+    <span class="page-number"> Page 12 of 12 </span>
      
 </nav>
         
@@ -135,10 +130,10 @@
     
     <article class="post">
         <header class="post-header">
-            <h2 class="post-title"><a href="/linux1">자주 사용하는 리눅스 명령어 정리 (1) - 기본 명령어</a></h2>
+            <h2 class="post-title"><a href="/windows-bash-jekyll">윈도우 10에서 bash를 통해 Jekyll 블로그 간단하게 설치하기</a></h2>
         </header>
         <section class="post-excerpt">
-            <p>​ ​ 리눅스는 리누스 토발즈가 1991년 처음 개발을 시작한 오픈소스 소프트웨어이다. 보통 윈도우를 오래 사용하다보면 터미널보다 GUI에 익숙해지기 마련이다. 하지만 최근 맥북으로 갈아타면서 커멘드라인이 편하다는 걸... <a class="read-more" href="/linux1">&raquo;</a></p>
+            <p>기존에 Windows 환경에서 Jekyll 블로그를 설치하는 글을 살펴보던 중 환경변수와 루비에 스트레스 받아서, 새로 포스팅하기로 마음 먹었습니다. (2017년 1월 2일 기준) ​ 윈도우 10에서 Ruby 설치... <a class="read-more" href="/windows-bash-jekyll">&raquo;</a></p>
         </section>
         <footer class="post-meta">
             <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
@@ -149,35 +144,11 @@
                 on 
                 
                     
-                       <a href='/tag/DevOps'>Devops</a>
+                       <a href='/tag/Develop'>Develop</a>
                        
                 
             
-            <time class="post-date" datetime="2017-02-15">15 Feb 2017</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/jenkins-install">OS X에서 Jenkins 설치하기</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>​ 이번 포스팅에서는 CI 도구인 Jenkins를 설치하고 실행하는 방법에 대해 정리해보겠습니다. ​ Jenkins 설치하기 홈페이지에서 패키지 파일로 설치해도 되지만 관리를 편하게 하기 위해 brew로 설치하겠습니다. brew... <a class="read-more" href="/jenkins-install">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="/assets/images/avatar.png" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href='/author/Swalloow'>Swalloow</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                       <a href='/tag/DevOps'>Devops</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-02-13">13 Feb 2017</time>
+            <time class="post-date" datetime="2017-01-03">03 Jan 2017</time>
         </footer>
     </article>
     
@@ -187,10 +158,10 @@
         <nav class="pagination" role="pagination">
     
         
-            <a class="newer-posts" href="/tag/DevOps/page2/" title="Previous Page">&laquo; Newer Posts</a>
+            <a class="newer-posts" href="/page11/" title="Previous Page">&laquo; Newer Posts</a>
       
     
-    <span class="page-number"> Page 3 of 3 </span>
+    <span class="page-number"> Page 12 of 12 </span>
      
 </nav>
     
