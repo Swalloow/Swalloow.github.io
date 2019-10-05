@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>19년 상반기 회고</title>
+    <title>AWS MFA CLI 설정 변경 자동화하기</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,8 +34,8 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="19년 상반기 회고" />
-        <meta property="og:description" content="​ 상반기에 많은 일이 있었지만 가장 많은 부분을 차지한 졸업과 이직에 대한 글을 남겨두려 한다. 졸업을 하기 이전에 가고 싶었던..." />
+        <meta property="og:title" content="AWS MFA CLI 설정 변경 자동화하기" />
+        <meta property="og:description" content="​ ​ 클라우드 인프라를 관리하는 경우 여러 계정에 걸친 CLI를 사용하는 경우가 빈번합니다. 만일 CLI 사용 시 MFA 인증을 요구하는..." />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
@@ -105,19 +105,19 @@
 
 <main class="content" role="main">
 
-    <article class="post tag-personal">
+    <article class="post tag-DevOps">
 
         <header class="post-header">
-            <h1 class="post-title">19년 상반기 회고</h1>
+            <h1 class="post-title">AWS MFA CLI 설정 변경 자동화하기</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2019-07-06">06 Jul 2019</time>
+            <time class="post-date" datetime="2019-10-03">03 Oct 2019</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
                 
                     
-                       <a href='/tag/Personal'>Personal</a>
+                       <a href='/tag/DevOps'>Devops</a>
                     
                 
                 
@@ -126,23 +126,41 @@
 
         <section class="post-content">
 
-            <p>​</p>
+            <p>​ ​</p>
 
-<p>상반기에 많은 일이 있었지만 가장 많은 부분을 차지한 졸업과 이직에 대한 글을 남겨두려 한다.
-졸업을 하기 이전에 가고 싶었던 IT 회사에 운이 좋게 입사할 수 있었다.
-그러나 내가 기대했던 것과 많이 달라서 1년 만에 이직을 결심하게 되었다.
-이직을 준비하면서 기본기를 빠르게 다시 공부할 수 있었고 많은 도움이 되었다.</p>
+<p>클라우드 인프라를 관리하는 경우 여러 계정에 걸친 CLI를 사용하는 경우가 빈번합니다.
+만일 CLI 사용 시 MFA 인증을 요구하는 계정과 아닌 계정이 혼재되어 있다면 설정이 정말 귀찮아집니다.
+이 글에서는 간단한 스크립트를 통해 AWS CLI 설정 변경을 자동화해보려 합니다.</p>
 
-<p>보통 신입으로 입사하게 되면 본인이 어떤 팀으로 들어가게 될지 모르는 경우가 많다.
-게다가 팀에 대한 정보도 적은 편이라 많은 학생들이 회사의 이름 또는 이미지를 보고 들어간다.
-하지만 회사의 알려진 문화가 모든 팀에 해당하는 것은 아니다.
-흔히 팀바팀이라고 말하는데 팀마다 다르고 사람마다 다를 수 있다.
-이 부분이 내가 신입이었기에 놓친 부분이었다.
-이후에 이직 준비를 하면서 주변 사람들을 통해 미리 알아보고 선택하게 되었다.</p>
+<p>​</p>
 
-<p>사실 지금 입사하게 된 회사도 들어가기 이전에는 걱정과 선입견이 있었지만
-결과적으로 매우 만족하면서 다니고 있다. 역시 팀바팀이 중요하다는 걸 다시 한번 깨닫는 중.
-하반기에는 클라우드 인프라, 데이터 엔지니어링을 주제로 다양한 글을 남겨보려고 한다.</p>
+<h3 id="aws-credential-">AWS Credential 설정</h3>
+
+<p>먼저 사용하는 프로필의 credential 정보를 설정해줍니다.
+MFA인 프로필과 MFA가 아닌 프로필을 구분하기 위해 아래와 같은 구조로 저장하겠습니다.
+<code class="highlighter-rouge">-default</code>가 붙은 프로필이 MFA를 사용하는 프로필입니다.
+스크립트 실행을 통해 autogen 값이 자동생성됩니다.</p>
+
+<script src="https://gist.github.com/Swalloow/6f20f25f2efaf1c572b4b53942fb8148.js"></script>
+
+<ul>
+  <li><code class="highlighter-rouge">aws_arn_mfa</code> : MFA 에 대한 ARN 값 입니다. 콘솔의 security credentials 메뉴에서 확인하실 수 있습니다.</li>
+  <li><code class="highlighter-rouge">aws_session_token</code>: MFA 인증을 거치게 되면 생성되는 STS 토큰 값 입니다. 스크립트를 통해 자동생성 됩니다.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="mfa--">MFA 설정 스크립트</h3>
+
+<p>다음으로 아래의 스크립트를 각 <code class="highlighter-rouge">awsp.sh</code>, <code class="highlighter-rouge">mfa.py</code> 이름으로 <code class="highlighter-rouge">~/.aws/</code> 경로에 추가해줍니다.
+이후에 <code class="highlighter-rouge">~/.zshrc</code> 또는 <code class="highlighter-rouge">~/.bashrc</code> 경로에 <code class="highlighter-rouge">source ~/.aws/awsp.sh</code>를 추가해줍니다.</p>
+
+<script src="https://gist.github.com/Swalloow/916b21cd599295aa86e5a67783f5eb47.js"></script>
+
+<p><br />
+이제 <code class="highlighter-rouge">awsp [프로필명] [mfa code]</code>과 같은 명령어로 사용하실 수 있습니다.
+예를 들어 dev 프로필의 경우 <code class="highlighter-rouge">awsp dev 012345</code>와 같이 실행합니다.
+MFA 조건이 없는 프로필의 경우 <code class="highlighter-rouge">awsp test 0</code>과 같이 실행하시면 됩니다.</p>
 
 <p>​</p>
 
@@ -176,15 +194,15 @@
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=19년 상반기 회고&amp;url=http://swalloow.github.io/start-3"
+                <a class="icon-twitter" href="http://twitter.com/share?text=AWS MFA CLI 설정 변경 자동화하기&amp;url=http://swalloow.github.io/aws-cli-mfa"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/start-3"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/aws-cli-mfa"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/start-3"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/aws-cli-mfa"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -203,20 +221,13 @@
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story no-cover" href="/openinfra">
-            <section class="post">
-                <h2>Open Infra Days 2019 후기</h2>
-                <p>​ 19일부터 진행했던 [Open Infra Days 2019](https://openinfradays.kr/#schedule)에 참여하면서 배운 점들을 간단히 정리해보고자 한다. 해외의 CNCF...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/container-patterns3">
+        <a class="read-next-story prev no-cover" href="/tf-tips">
             <section class="post">
-                <h2>분산 컨테이너 환경에서의 디자인 패턴 (3)</h2>
-                <p>​ 구글 클라우드 팀이 Kubernetes와 같은 Container Orchestration 기술을 개발하면서 겪은 분산 컨테이너 환경에서의 디자인...</p>
+                <h2>Terraform 입문자를 위한 미세 팁</h2>
+                <p>​ ​ 클라우드를 활용하는 경우, 인프라 구성 관리 도구로 테라폼을 많이 사용합니다. 오늘은 처음 테라폼을...</p>
             </section>
         </a>
     

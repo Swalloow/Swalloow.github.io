@@ -179,33 +179,6 @@
 	</item>
 
 	<item>
-	  <title>글또 회고글</title>
-	  <link>//end</link>
-	  <author>Swalloow</author>
-	  <pubDate>2019-04-21T19:18:00+09:00</pubDate>
-	  <guid>//end</guid>
-	  <description><![CDATA[
-	     <p>​</p>
-
-<p>반년 간 글또를 하면서 아쉬운 점과 좋았던 점을 정리해보려 한다.
-우선, 얼어붙은 블로그를 다시 살리는데 성공했다.
-확실히 패널티 제도는 효과가 있었고 비슷한 개발 분야를 공부하는 사람들과
-글을 공유하고 피드백을 받을 수 있어서 좋았다.</p>
-
-<p>그리고 글을 나름 자주 쓰다보니 주제에 대한 고민을 많이 하게 되었다.
-상반기에 이직 준비를 하면서 기본기에 대한 공부를 많이 했지만
-글은 오히려 다른 주제로 많이 남긴 것 같다.</p>
-
-<p>시간이 없더라도 글쓰기를 위한 글은 남기지 말아야겠다는 생각을 했었는데
-이것도 어느정도 잘 지켜진 것 같아 다행이다.
-앞으로도 꾸준히 블로그에 기록을 남길 수 있었으면 한다.</p>
-
-<p>​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
 	  <title>Apache Airflow에 기여하면서 배운 점들</title>
 	  <link>//airflow-contrib</link>
 	  <author>Swalloow</author>
@@ -663,6 +636,88 @@ UI/UX 팀이 위치한 곳은 전부 오픈된 공간에 자유로운 분위기�
 <p>혹시 이미지 리소스가 필요하신 분들을 위해 올려드립니다.</p>
 
 <p>이것저것 만들다보면 시간이 많이 걸리므로 연휴 때 하는 것을 추천드립니다 !</p>
+
+<p>​</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
+	  <title>맥북프로 터치바 모델 초기설정</title>
+	  <link>//macbook-setting</link>
+	  <author>Swalloow</author>
+	  <pubDate>2017-01-08T19:18:00+09:00</pubDate>
+	  <guid>//macbook-setting</guid>
+	  <description><![CDATA[
+	     <p><img src="assets/images/mac.png" alt="macbook" /></p>
+
+<p>1년을 기다린 결과 드디어 맥북프로 터치바 모델을 질렀다!</p>
+
+<p>맥을 처음 사용하는 입장에서 초기에 어떤 것들을 설정해야 하는지 정리해보았다.</p>
+
+<p>​</p>
+
+<h3 id="section">프로그램 관련</h3>
+
+<ul>
+  <li>창닫기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">W</code></li>
+  <li>실행중인 프로그램 종료 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Q</code></li>
+  <li>열려있는 모든 창 닫기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">W</code></li>
+  <li>창 전환 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">TAB</code></li>
+  <li>복사 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">C</code></li>
+  <li>붙여넣기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">V</code></li>
+  <li>잘라내기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">X</code></li>
+  <li>실행취소 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Z</code></li>
+  <li>모두선택 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">A</code></li>
+  <li>찾기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">F</code></li>
+  <li>파일삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Del</code></li>
+  <li>영구삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">Del</code></li>
+  <li>강제종료 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">esc</code></li>
+  <li>새로고침 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">R</code></li>
+  <li>스크린샷 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">3</code></li>
+  <li>드래그 스크린샷 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Shift</code> + <code class="highlighter-rouge">4</code></li>
+  <li>Dock 보이기 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">D</code></li>
+  <li>
+    <p>Finder 검색 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">space</code></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="section-1">문서작성</h3>
+
+<ul>
+  <li>특수문자 선택화면 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Ctrl</code> + <code class="highlighter-rouge">Space</code></li>
+  <li>한문입력 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">enter</code></li>
+  <li>단어이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">←</code></li>
+  <li>문장이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">←</code></li>
+  <li>문단이동 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">↓</code></li>
+  <li>단어삭제 : <code class="highlighter-rouge">Opt</code> + <code class="highlighter-rouge">Del</code></li>
+  <li>
+    <p>문장삭제 : <code class="highlighter-rouge">cmd</code> + <code class="highlighter-rouge">Del</code></p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h3 id="section-2">커멘드 및 기타 설정</h3>
+
+<ul>
+  <li>iTerm2 : 기본 커멘드보다 빠르고 편하게 사용할 수 있는 오픈소스 커멘드 도구</li>
+  <li>Homebrew : OS X에서 설치 및 관리를 도와주는 패키지</li>
+  <li>Oh-my-zsh : 커멘드를 편리하고 아름답게 바꿔주는 패키지</li>
+  <li>
+    <p>Theme : zsh-syntax-highlighting, powerlevel9k</p>
+
+    <p>​</p>
+  </li>
+</ul>
+
+<h2 id="section-3">후기</h2>
+
+<p>윈도우에서는 초기에 환경구축하려면 온갖 삽질을 해야 했는데,
+맥은 금방 설치되는 점이 가장 좋았다.
+터치바를 커스터마이징 하는 것은 나중에 따로 정리해봐야겠다.</p>
 
 <p>​</p>
 
