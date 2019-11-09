@@ -12,6 +12,101 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>EKS의 VPC 네트워크 구성 이해하기</title>
+	  <link>//eks-vpc-cni</link>
+	  <author>Swalloow</author>
+	  <pubDate>2019-11-04T19:18:00+09:00</pubDate>
+	  <guid>//eks-vpc-cni</guid>
+	  <description><![CDATA[
+	     <p>​ ​</p>
+
+<p>모든 Kubernetes as a Service가 그렇듯 EKS 역시 빠르게 변화하고 있습니다.
+오늘의 주제는 EKS의 VPC 네트워크 구성과 CNI 플러그인 입니다.</p>
+
+<p>​</p>
+
+<h3 id="aws-vpc">AWS VPC</h3>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1YFGsyvNbctia5Q3dPrRT8KxtirnkII71" alt="" /></p>
+
+<p>아마 AWS를 production 환경에서 사용하고 있다면 VPC 구성은 이미 잘 이해하고 계시리라 생각합니다.
+VPC 내에 생성한 인스턴스는 eth0이라는 기본 네트워크 인터페이스를 가지게 됩니다.
+그리고 네트워크 인터페이스에 하나 이상의 IPv4 또는 IPv6 주소를 할당할 수 있습니다.
+또한 각 Subnet에 존재하는 인스턴스는 Route Table을 통해 통신을 할 수 있습니다.
+여기까지가 우리가 알고 있는 VPC 내의 Host 간 통신입니다.</p>
+
+<p>그렇다면 EKS는 어떤 점이 다를까요?
+쿠버네티스의 Pod은 <strong>한 개 이상의 컨테이너를 구성</strong>하고 같은 Host와 Network 스택을 공유합니다.
+그리고 여러 Host에 사이에 걸쳐 생성된 Pod은 <strong>Overlay Network</strong>를 통해 서로 통신하게 됩니다.
+기존 VPC 환경에서는 Pod 네트워크 통신을 기존 방식처럼 지원하기 어려웠습니다.</p>
+
+<p>하지만 대부분의 사용자들이 VPC 기반의 인프라를 구성하고 있었기 때문에
+EKS는 VPC를 지원할 수 있어야 했습니다.
+예를 들어 사용자는 Security Group, VPC Flow 로그 등의 기능을 그대로 사용하면서,
+PrivateLink를 통해 다른 AWS 서비스와 통신할 수 있어야 합니다.
+이 문제를 해결하기 위해 AWS는 CNI 라는 네트워크 플러그인을 지원하기 시작했습니다.</p>
+
+<p><br /></p>
+
+<h3 id="eks-cni">EKS CNI</h3>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1pMXq0s4jrnvwLjoUGwfTfj4HQBsf2NiB" alt="" /></p>
+
+<p>CNI 는 다음과 같은 통신을 지원합니다.</p>
+
+<ul>
+  <li>단일 Host 내에 존재하는 Pod 간의 통신</li>
+  <li>서로 다른 Host 내에 존재하는 Pod 간의 통신</li>
+  <li>Pod 과 다른 AWS 서비스 간의 통신</li>
+  <li>Pod 과 온프레미스 데이터 센터 간의 통신</li>
+  <li>Pod 과 인터넷 간의 통신</li>
+</ul>
+
+<p>앞서 말했듯 VPC 내의 EC2는 여러 개의 ENI 를 가질 수 있으며,
+ENI 는 여러 개의 IP 주소를 가질 수 있습니다.
+하지만 인스턴스 유형 별 가질 수 있는 ENI 와 주소의 최대 수에는 제한이 있습니다.
+만약 EC2 인스턴스가 N개의 ENI와 M개의 주소를 가질 수 있다면 최대 IP는 아래와 같이 계산됩니다.</p>
+
+<p><code class="highlighter-rouge">Max IPs = min((N * M - N), subnet's free IP)</code></p>
+
+<p>처음 Worker Node가 추가되면 하나의 ENI 가 인스턴스에 할당됩니다.
+하지만 실행되는 Pod의 수가 단일 ENI 에서 허용하는 주소를 초과하면 CNI는 노드에 새로운 ENI 를 추가합니다.
+ENI 에 secondary IP 할당과 Pod에 할당할 노드의 IP 주소 풀 관리는 <strong>L-IPAM</strong> 데몬을 통해 이루어집니다.
+L-IPAM 데몬은 모든 노드에 DeamonSet으로 배포되며 gRPC를 통해 CNI 플러그인과 통신합니다.</p>
+
+<p>사용하고 있는 인스턴스 유형이 m5.xlarge라고 가정하고 예시를 들어보겠습니다.
+우선 m5.xlarge 유형은 4 ENI 와 ENI 당 15 개의 IP 주소를 가질 수 있습니다.
+배포된 Pod의 수가 0에서 14 사이라면 IPAM 데몬은 2개의 Warm Pool을 유지하기 위해 ENI를 하나 더 할당합니다.
+이때 사용가능한 IP 수는 <code class="highlighter-rouge">2 * (15 - 1) = 28</code> 개가 됩니다.
+이런식으로 Warm Pool을 늘려가면서 최대 <code class="highlighter-rouge">4 * (15 - 1) = 56</code> 개의 IP를 가질 수 있습니다.
+물론 이 부분은 <code class="highlighter-rouge">WARM_ENI_TARGET</code> 과 같은 CNI 옵션을 통해 수정할 수 있습니다.</p>
+
+<p><br /></p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1YctEii4hpUFN5ajMU0j0LSEv6AjGS3PU" alt="" /></p>
+
+<p>구체적으로 CNI를 통해 Pod1 과 Pod2가 어떻게 통신하는지 다이어그램으로 표현하면 위와 같습니다.
+각 Pod의 eth0에는 secondary IP address가 할당되며 Pod Side Route Table를 가지고 있습니다.
+노드의 네트워크 인터페이스까지 도달한 패킷은 EC2-VPC fabric에 의해 포워딩 됩니다.</p>
+
+<p>따라서 EKS 노드를 결정할 때 ENI 제한 관련 부분도 중요하게 생각하셔야 합니다.
+노드 당 ENI, IP 주소 제한은 <a href="https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/using-eni.html">해당 공식 문서</a>에서 확인하실 수 있습니다.
+물론 CNI를 사용하지 않고 기존의 Calico와 같은 Overlay Network를 사용할 수도 있습니다.
+하지만 이를 사용하게 되면 네트워크까지 관리해야하며 새로운 장애 포인트로 이어질 수 있습니다.</p>
+
+<p>​<br /></p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://github.com/aws/amazon-vpc-cni-k8s/blob/master/docs/cni-proposal.md">https://github.com/aws/amazon-vpc-cni-k8s/blob/master/docs/cni-proposal.md</a></li>
+  <li><a href="https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727">https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727</a></li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>AWS MFA CLI 설정 변경 자동화하기</title>
 	  <link>//aws-cli-mfa</link>
 	  <author>Swalloow</author>
@@ -886,125 +981,6 @@ OS X에서는 <code class="highlighter-rouge">vm_stat</code> 명령어로, 리�
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>sudo vi /etc/default/sysstat
 <span class="gp">$ </span><span class="nv">ENABLED</span><span class="o">=</span>”true”</code></pre></figure>
-
-<p>​   ​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>SSH 프로토콜과 Tunneling 이해하기</title>
-	  <link>//ssh-tunneling</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-03-20T19:18:00+09:00</pubDate>
-	  <guid>//ssh-tunneling</guid>
-	  <description><![CDATA[
-	     <p>​   ​</p>
-
-<p>지금까지 아무 생각없이 SSH를 사용하다가 한번 정리해보았습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="ssh-protocol">SSH Protocol</h2>
-
-<p>SSH는 Secure Shell의 약자입니다. SSH는 한마디로 정의하면,
-네트워크 상의 다른 컴퓨터에 로그인하거나 원격 시스템에서 명령을 실행하고
-다른 시스템으로 파일을 복사할 수 있도록 해 주는 프로토콜입니다.
-VPN을 구성하는 것보다 가격이 저렴하고 쉽게 연결할 수 있어 많이 사용됩니다.</p>
-
-<p>MacOS에는 <strong>OpenSSH</strong> 클라이언트와 서버가 내장되어 있기 때문에 바로 사용할 수 있습니다.
-SSH는 <strong>22번 포트</strong> 를 사용하며, 크게 다음의 3가지를 제공합니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="authentication">1. Authentication</h4>
-
-<p><img src="/assets/images/ssh-key-auth-flow.png" alt="SSH-Auth" /></p>
-
-<p>SSH는 public key와 private key를 사용하는 비대칭 암호방식을 사용합니다.
-간단히 설명하면, <code class="highlighter-rouge">public key</code>와 <code class="highlighter-rouge">private key</code>가 모두 있어야 인증이 되는 방식입니다.
-각자 private key는 외부 유출없이 가지고 있고, public key만 네트워크를 통해 전달합니다.
-SSH는 RSA, DSA 등 다양한 인증 방식을 지원합니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>ssh-keygen
-<span class="gp">$ </span>cat ~/.ssh/id_rsa.pub</code></pre></figure>
-
-<p><code class="highlighter-rouge">ssh-keygen</code> 명령어를 통해 ssh 키를 생성하고
-<code class="highlighter-rouge">~/.ssh/id_rsa.pub</code>에서 public key를 확인할 수 있습니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="encryption--integrity">2. Encryption &amp; Integrity</h4>
-
-<p>SSH는 네트워크를 통해 전달되는 데이터를 암호화합니다.
-<code class="highlighter-rouge">3DES, blowfish</code> 등 여러 가지 암호화 방식을 제공하며,
-새로운 암호화 기법을 추가할 수도 있습니다.</p>
-
-<p>그리고 SSH는 네트워크를 통해 받은 데이터가 변경되지 않았음(무결성)을 보장해줍니다.
-이를 위해 <strong>MAC(Message Authentication Code)</strong> 이라는 알고리즘을 사용합니다.</p>
-
-<p><img src="/assets/images/mac-algo.jpg" alt="MAC-Algo" /></p>
-
-<p>MAC 알고리즘은 다음과 같이 동작합니다.
-SSH 클라이언트가 서버로 메세지를 보내면,
-MAC 알고리즘을 통해 <code class="highlighter-rouge">secret key</code>를 입력받아 MAC 코드를 생성합니다.
-그리고, 임의 길이의 암호화 된 메시지와 MAC 코드를 SSH 서버로 보냅니다.</p>
-
-<p>서버에서는 다시 메세지와 서버의 <code class="highlighter-rouge">secret key</code>를 조합하여 MAC 코드를 만들고,
-클라이언트로부터 받은 MAC 코드와 비교하여 인증을 진행하게 됩니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="compression">4. Compression</h4>
-
-<p>SSH는 네트워크 상에서 데이터를 전송하고 수신할 때 압축 과정을 거칩니다.
-이를 통해 전송 데이터의 크기를 줄여 네트워크 비용을 낮출 수 있습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="ssh-tunneling">SSH Tunneling</h2>
-
-<p>SSH Tunneling은 터널을 통해 데이터를 주고받는다 해서 붙여진 이름입니다.
-앞서 얘기했던 것처럼 연결, 통신은 모두 암호화되며 <code class="highlighter-rouge">SMTP, IMAP</code> 등 여러 가지로 사용될 수 있습니다.</p>
-
-<p>Direct로 보내면 네트워크 층에서 수 많은 공격을 받을 수 있기 때문에
-SSH를 통해 다른 Application에 연결하는 것이 안전합니다.
-SSH Tunneling에는 다음과 같이 두 가지 방법이 있습니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="local-port-forwarding">Local port forwarding</h4>
-
-<p><img src="/assets/images/ssh-local.png" alt="SSH-Local" /></p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>ssh -L port1:host_name:port2 server_name</code></pre></figure>
-
-<p>로컬에서 서버에 있는 MySQL과 SSH 연결을 한다고 가정해보겠습니다.
-<code class="highlighter-rouge">Local port forwarding</code>은
-로컬에 설치된 MySQL 클라이언트의 3306 포트가
-연결된 SSH Tunnel을 거쳐 서버에 있는 MySQL 서버의 3306 포트와 연결됩니다.
-이를 통해 직접 서버의 데이터베이스에 안전하게 접근할 수 있으며
-요청을 보내서 서로 데이터를 주고 받을 수 있습니다.</p>
-
-<p>​   ​</p>
-
-<h4 id="remote-port-forwarding">Remote port forwarding</h4>
-
-<p><img src="/assets/images/ssh-remote.png" alt="SSH-Remote" /></p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>ssh -R port1:host_name:port2 server_name</code></pre></figure>
-
-<p>이번에는 로컬에서 파이썬 웹 애플리케이션을 개발 중인데 친구에게 보여주고 싶다고 가정 해보겠습니다.
-아직 공개 IP 주소를 제공하지 않기 때문에 인터넷을 통해 직접 기기에 연결할 수 없을 겁니다.
-라우터에서 NAT를 구성하여 해결할 수 있지만 라우터의 구성을 변경해야하므로 번거롭습니다.
-이럴때 <code class="highlighter-rouge">Remote port forwarding</code>을 통해 쉽게 해결할 수 있습니다.</p>
-
-<p>먼저 port1의 서버에서 port2로 로컬 트래픽을 전달하는 SSH 터널을 생성합니다.
-이후 로컬에서 port2의 서버에 연결하면 실제로 SSH 터널을 통해 데이터를 요청하는 것을 확인할 수 있습니다.</p>
-
-<p>OSI 7계층에서 생각해보면 SSH는 <code class="highlighter-rouge">Application - Transport - Network</code> 계층에 걸쳐있습니다.
-Application 계층에서 포트를 연결하면 Transport 계층의 TCP 통신을 통해 전달되고,
-Network 계층을 통해 목적지로 이동하게 됩니다.</p>
 
 <p>​   ​</p>
 
