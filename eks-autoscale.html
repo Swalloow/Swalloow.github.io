@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>EKS의 VPC 네트워크 구성 이해하기</title>
+    <title>EKS의 AutoScaling 이해하기</title>
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,8 +34,8 @@
     
         <meta property="og:site_name" content="Swalloow Blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="EKS의 VPC 네트워크 구성 이해하기" />
-        <meta property="og:description" content="​ ​ 모든 Kubernetes as a Service가 그렇듯 EKS 역시 빠르게 변화하고 있습니다. 오늘의 주제는 EKS의 VPC 네트워크 구성과 CNI..." />
+        <meta property="og:title" content="EKS의 AutoScaling 이해하기" />
+        <meta property="og:description" content="​ ​ 오늘은 Kubernetes의 Cluster AutoScaling에 대해 정리해보려 합니다. 그 다음 EKS에서는 어떻게 적용할 수 있는지, 어떤 효과를 볼 수..." />
         <meta property="og:url" content="/" />
         <meta property="og:image" content="/assets/images/cover_main.jpg" />
     
@@ -108,10 +108,10 @@
     <article class="post tag-DevOps">
 
         <header class="post-header">
-            <h1 class="post-title">EKS의 VPC 네트워크 구성 이해하기</h1>
+            <h1 class="post-title">EKS의 AutoScaling 이해하기</h1>
             <section class="post-meta">
             <!-- <a href='/'>Swalloow</a> -->
-            <time class="post-date" datetime="2019-11-04">04 Nov 2019</time>
+            <time class="post-date" datetime="2019-11-23">23 Nov 2019</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -128,88 +128,60 @@
 
             <p>​ ​</p>
 
-<p>모든 Kubernetes as a Service가 그렇듯 EKS 역시 빠르게 변화하고 있습니다.
-오늘의 주제는 EKS의 VPC 네트워크 구성과 CNI 플러그인 입니다.</p>
-
-<p>​</p>
-
-<h3 id="aws-vpc">AWS VPC</h3>
-
-<p><img src="http://drive.google.com/uc?export=view&amp;id=1YFGsyvNbctia5Q3dPrRT8KxtirnkII71" alt="" /></p>
-
-<p>아마 AWS를 production 환경에서 사용하고 있다면 VPC 구성은 이미 잘 이해하고 계시리라 생각합니다.
-VPC 내에 생성한 인스턴스는 eth0이라는 기본 네트워크 인터페이스를 가지게 됩니다.
-그리고 네트워크 인터페이스에 하나 이상의 IPv4 또는 IPv6 주소를 할당할 수 있습니다.
-또한 각 Subnet에 존재하는 인스턴스는 Route Table을 통해 통신을 할 수 있습니다.
-여기까지가 우리가 알고 있는 VPC 내의 Host 간 통신입니다.</p>
-
-<p>그렇다면 EKS는 어떤 점이 다를까요?
-쿠버네티스의 Pod은 <strong>한 개 이상의 컨테이너를 구성</strong>하고 같은 Host와 Network 스택을 공유합니다.
-그리고 여러 Host에 사이에 걸쳐 생성된 Pod은 <strong>Overlay Network</strong>를 통해 서로 통신하게 됩니다.
-기존 VPC 환경에서는 Pod 네트워크 통신을 기존 방식처럼 지원하기 어려웠습니다.</p>
-
-<p>하지만 대부분의 사용자들이 VPC 기반의 인프라를 구성하고 있었기 때문에
-EKS는 VPC를 지원할 수 있어야 했습니다.
-예를 들어 사용자는 Security Group, VPC Flow 로그 등의 기능을 그대로 사용하면서,
-PrivateLink를 통해 다른 AWS 서비스와 통신할 수 있어야 합니다.
-이 문제를 해결하기 위해 AWS는 CNI 라는 네트워크 플러그인을 지원하기 시작했습니다.</p>
-
-<p><br /></p>
-
-<h3 id="eks-cni">EKS CNI</h3>
-
-<p><img src="http://drive.google.com/uc?export=view&amp;id=1pMXq0s4jrnvwLjoUGwfTfj4HQBsf2NiB" alt="" /></p>
-
-<p>CNI 는 다음과 같은 통신을 지원합니다.</p>
-
-<ul>
-  <li>단일 Host 내에 존재하는 Pod 간의 통신</li>
-  <li>서로 다른 Host 내에 존재하는 Pod 간의 통신</li>
-  <li>Pod 과 다른 AWS 서비스 간의 통신</li>
-  <li>Pod 과 온프레미스 데이터 센터 간의 통신</li>
-  <li>Pod 과 인터넷 간의 통신</li>
-</ul>
-
-<p>앞서 말했듯 VPC 내의 EC2는 여러 개의 ENI 를 가질 수 있으며,
-ENI 는 여러 개의 IP 주소를 가질 수 있습니다.
-하지만 인스턴스 유형 별 가질 수 있는 ENI 와 주소의 최대 수에는 제한이 있습니다.
-만약 EC2 인스턴스가 N개의 ENI와 M개의 주소를 가질 수 있다면 최대 IP는 아래와 같이 계산됩니다.</p>
-
-<p><code class="highlighter-rouge">Max IPs = min((N * M - N), subnet's free IP)</code></p>
-
-<p>처음 Worker Node가 추가되면 하나의 ENI 가 인스턴스에 할당됩니다.
-하지만 실행되는 Pod의 수가 단일 ENI 에서 허용하는 주소를 초과하면 CNI는 노드에 새로운 ENI 를 추가합니다.
-ENI 에 secondary IP 할당과 Pod에 할당할 노드의 IP 주소 풀 관리는 <strong>L-IPAM</strong> 데몬을 통해 이루어집니다.
-L-IPAM 데몬은 모든 노드에 DeamonSet으로 배포되며 gRPC를 통해 CNI 플러그인과 통신합니다.</p>
-
-<p>사용하고 있는 인스턴스 유형이 m5.xlarge라고 가정하고 예시를 들어보겠습니다.
-우선 m5.xlarge 유형은 4 ENI 와 ENI 당 15 개의 IP 주소를 가질 수 있습니다.
-배포된 Pod의 수가 0에서 14 사이라면 IPAM 데몬은 2개의 Warm Pool을 유지하기 위해 ENI를 하나 더 할당합니다.
-이때 사용가능한 IP 수는 <code class="highlighter-rouge">2 * (15 - 1) = 28</code> 개가 됩니다.
-이런식으로 Warm Pool을 늘려가면서 최대 <code class="highlighter-rouge">4 * (15 - 1) = 56</code> 개의 IP를 가질 수 있습니다.
-물론 이 부분은 <code class="highlighter-rouge">WARM_ENI_TARGET</code> 과 같은 CNI 옵션을 통해 수정할 수 있습니다.</p>
-
-<p><br /></p>
-
-<p><img src="http://drive.google.com/uc?export=view&amp;id=1YctEii4hpUFN5ajMU0j0LSEv6AjGS3PU" alt="" /></p>
-
-<p>구체적으로 CNI를 통해 Pod1 과 Pod2가 어떻게 통신하는지 다이어그램으로 표현하면 위와 같습니다.
-각 Pod의 eth0에는 secondary IP address가 할당되며 Pod Side Route Table를 가지고 있습니다.
-노드의 네트워크 인터페이스까지 도달한 패킷은 EC2-VPC fabric에 의해 포워딩 됩니다.</p>
-
-<p>따라서 EKS 노드를 결정할 때 ENI 제한 관련 부분도 중요하게 생각하셔야 합니다.
-노드 당 ENI, IP 주소 제한은 <a href="https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/using-eni.html">해당 공식 문서</a>에서 확인하실 수 있습니다.
-물론 CNI를 사용하지 않고 기존의 Calico와 같은 Overlay Network를 사용할 수도 있습니다.
-하지만 이를 사용하게 되면 네트워크까지 관리해야하며 새로운 장애 포인트로 이어질 수 있습니다.</p>
+<p>오늘은 Kubernetes의 Cluster AutoScaling에 대해 정리해보려 합니다.
+그 다음 EKS에서는 어떻게 적용할 수 있는지, 어떤 효과를 볼 수 있는지 알아보겠습니다.</p>
 
 <p>​<br /></p>
 
-<h2 id="reference">Reference</h2>
+<h3 id="kubernetes-cluster-autoscaling">Kubernetes Cluster AutoScaling</h3>
 
-<ul>
-  <li><a href="https://github.com/aws/amazon-vpc-cni-k8s/blob/master/docs/cni-proposal.md">https://github.com/aws/amazon-vpc-cni-k8s/blob/master/docs/cni-proposal.md</a></li>
-  <li><a href="https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727">https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727</a></li>
-</ul>
+<p>Kubernetes는 Cluster AutoScaler를 통해 동적으로 인프라를 확장할 수 있습니다.
+Cluster AutoScaler는 Pod의 리소스 요청에 따라 클러스터의 노드를 추가하거나 제거합니다.
+만약 리소스 부족으로 인해 스케줄링 대기 상태의 Pod가 존재하는 경우 Cluster AutoScaler가 노드를 추가합니다.
+추가 시 설정한 Min, Max 값을 넘어가지 않도록 구성 할 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1XDum_t6J_lEt88o0X776XUxCHB-Ry_rW" alt="" /></p>
+
+<p>먼저 AutoScaler를 설정하면 대기 상태의 Pod을 주기적으로 확인합니다.
+클러스터 리소스가 부족하면서 사용자가 정의한 최대 노드 수에 도달하지 않은 경우 노드 프로비저닝을 요청합니다.
+노드가 추가되면 스케줄러에 의해 대기 상태의 Pod들이 새로운 노드로 할당됩니다.</p>
+
+<p>노드를 축소하는 프로세스는 사용자가 정의한 메트릭에 의해 시작됩니다.
+예를 들어 CPU Utilization이 50% 이하로 설정했다고 가정해보겠습니다.
+Cluster AutoScaler는 삭제할 노드에서 실행 중인 Pod를 다른 노드로 안전하게 이동시킬 수 있는지 확인합니다.
+이때 Pod가 로컬 스토리지를 사용하고 있었다면 데이터 유실이 발생할 수 있으니 <strong>PV 사용</strong>을 권장합니다.
+이러한 확인 프로세스를 노드 또는 Pod 단위로 수행하고 Pod이 모두 이동하게 되면 노드를 제거합니다.</p>
+
+<p><br /></p>
+
+<h3 id="eks-autoscaler">EKS AutoScaler</h3>
+
+<p>EKS의 AutoScaler는 AWS의 Auto Scaling Group을 활용하고 있습니다.
+ASG는 주기적으로 현재 상태를 확인하고 <strong>Desired State</strong>로 변화하는 방식으로 동작합니다.
+사용자는 클러스터 노드 수를 제한하는 Min, Max 값을 지정할 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1qZRhnghSiYRTzKTFJat2594-mv3hdPKS" alt="" /></p>
+
+<p>위와 같이 목적에 따라 여러 종류의 ASG를 설정하고 서로 다른 <strong>AutoScaling Policy</strong>를 적용할 수 있습니다.
+<strong>Spot Instance Group</strong>을 설정하면 저렴하지만 입찰 가격에 의해 언제든지 인스턴스가 내려갈 수 있습니다.
+하지만 EKS의 <strong>Spot Interrupt Handler (DeamonSet)</strong> 에 의해 정상적으로 실행 중인 Pod들을 재배치할 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1jErnWXOdrtMQU0o1Aa504yZGMqSy8dbf" alt="" /></p>
+
+<p>그리고 위 그림과 같이 앞서 설정한 Cluster AutoScaler에 의해 새로운 Spot Instance가 추가됩니다.
+분석용 클러스터 같은 경우, 주말과 야간 시간에 사용량이 낮다는 사실을 이미 알고 있기 때문에
+<strong>CloudWatch Scheduled Policy</strong>를 통해 노드를 축소하면 비용을 절감할 수 있습니다.</p>
+
+<p><br /></p>
+
+<h3 id="eks-autoscaler-">EKS AutoScaler 설정</h3>
+
+<p>먼저 EKS에 ASG 권한을 가지는 IAM Role을 만들어서 Worker Node 보안 그룹에 추가합니다.
+다음으로 ASG 그룹 태그를 설정하고 yaml 파일을 클러스터에 배포합니다.
+자세한 내용은 <a href="https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cluster-autoscaler.html">공식 문서</a>를 통해 진행하실 수 있습니다.
+만약 Policy로 메모리 지표를 사용하고 싶다면 각 노드에 <strong>CloudWatch Agent</strong>를 배포해야 합니다.</p>
+
+<p>​<br /></p>
 
 
         </section>
@@ -241,15 +213,15 @@ L-IPAM 데몬은 모든 노드에 DeamonSet으로 배포되며 gRPC를 통해 CN
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=EKS의 VPC 네트워크 구성 이해하기&amp;url=http://swalloow.github.io/eks-vpc-cni"
+                <a class="icon-twitter" href="http://twitter.com/share?text=EKS의 AutoScaling 이해하기&amp;url=http://swalloow.github.io/eks-autoscale"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/eks-vpc-cni"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://swalloow.github.io/eks-autoscale"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/eks-vpc-cni"
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://swalloow.github.io/eks-autoscale"
                    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <span class="hidden">Google+</span>
                 </a>
@@ -268,20 +240,13 @@ L-IPAM 데몬은 모든 노드에 DeamonSet으로 배포되며 gRPC를 통해 CN
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story no-cover" href="/eks-autoscale">
-            <section class="post">
-                <h2>EKS의 AutoScaling 이해하기</h2>
-                <p>​ ​ 오늘은 Kubernetes의 Cluster AutoScaling에 대해 정리해보려 합니다. 그 다음 EKS에서는 어떻게 적용할 수...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/aws-cli-mfa">
+        <a class="read-next-story prev no-cover" href="/eks-vpc-cni">
             <section class="post">
-                <h2>AWS MFA CLI 설정 변경 자동화하기</h2>
-                <p>​ ​ 클라우드 인프라를 관리하는 경우 여러 계정에 걸친 CLI를 사용하는 경우가 빈번합니다. 만일 CLI...</p>
+                <h2>EKS의 VPC 네트워크 구성 이해하기</h2>
+                <p>​ ​ 모든 Kubernetes as a Service가 그렇듯 EKS 역시 빠르게 변화하고 있습니다. 오늘의 주제는...</p>
             </section>
         </a>
     

@@ -12,6 +12,73 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>EKS의 AutoScaling 이해하기</title>
+	  <link>//eks-autoscale</link>
+	  <author>Swalloow</author>
+	  <pubDate>2019-11-23T19:18:00+09:00</pubDate>
+	  <guid>//eks-autoscale</guid>
+	  <description><![CDATA[
+	     <p>​ ​</p>
+
+<p>오늘은 Kubernetes의 Cluster AutoScaling에 대해 정리해보려 합니다.
+그 다음 EKS에서는 어떻게 적용할 수 있는지, 어떤 효과를 볼 수 있는지 알아보겠습니다.</p>
+
+<p>​<br /></p>
+
+<h3 id="kubernetes-cluster-autoscaling">Kubernetes Cluster AutoScaling</h3>
+
+<p>Kubernetes는 Cluster AutoScaler를 통해 동적으로 인프라를 확장할 수 있습니다.
+Cluster AutoScaler는 Pod의 리소스 요청에 따라 클러스터의 노드를 추가하거나 제거합니다.
+만약 리소스 부족으로 인해 스케줄링 대기 상태의 Pod가 존재하는 경우 Cluster AutoScaler가 노드를 추가합니다.
+추가 시 설정한 Min, Max 값을 넘어가지 않도록 구성 할 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1XDum_t6J_lEt88o0X776XUxCHB-Ry_rW" alt="" /></p>
+
+<p>먼저 AutoScaler를 설정하면 대기 상태의 Pod을 주기적으로 확인합니다.
+클러스터 리소스가 부족하면서 사용자가 정의한 최대 노드 수에 도달하지 않은 경우 노드 프로비저닝을 요청합니다.
+노드가 추가되면 스케줄러에 의해 대기 상태의 Pod들이 새로운 노드로 할당됩니다.</p>
+
+<p>노드를 축소하는 프로세스는 사용자가 정의한 메트릭에 의해 시작됩니다.
+예를 들어 CPU Utilization이 50% 이하로 설정했다고 가정해보겠습니다.
+Cluster AutoScaler는 삭제할 노드에서 실행 중인 Pod를 다른 노드로 안전하게 이동시킬 수 있는지 확인합니다.
+이때 Pod가 로컬 스토리지를 사용하고 있었다면 데이터 유실이 발생할 수 있으니 <strong>PV 사용</strong>을 권장합니다.
+이러한 확인 프로세스를 노드 또는 Pod 단위로 수행하고 Pod이 모두 이동하게 되면 노드를 제거합니다.</p>
+
+<p><br /></p>
+
+<h3 id="eks-autoscaler">EKS AutoScaler</h3>
+
+<p>EKS의 AutoScaler는 AWS의 Auto Scaling Group을 활용하고 있습니다.
+ASG는 주기적으로 현재 상태를 확인하고 <strong>Desired State</strong>로 변화하는 방식으로 동작합니다.
+사용자는 클러스터 노드 수를 제한하는 Min, Max 값을 지정할 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1qZRhnghSiYRTzKTFJat2594-mv3hdPKS" alt="" /></p>
+
+<p>위와 같이 목적에 따라 여러 종류의 ASG를 설정하고 서로 다른 <strong>AutoScaling Policy</strong>를 적용할 수 있습니다.
+<strong>Spot Instance Group</strong>을 설정하면 저렴하지만 입찰 가격에 의해 언제든지 인스턴스가 내려갈 수 있습니다.
+하지만 EKS의 <strong>Spot Interrupt Handler (DeamonSet)</strong> 에 의해 정상적으로 실행 중인 Pod들을 재배치할 수 있습니다.</p>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1jErnWXOdrtMQU0o1Aa504yZGMqSy8dbf" alt="" /></p>
+
+<p>그리고 위 그림과 같이 앞서 설정한 Cluster AutoScaler에 의해 새로운 Spot Instance가 추가됩니다.
+분석용 클러스터 같은 경우, 주말과 야간 시간에 사용량이 낮다는 사실을 이미 알고 있기 때문에
+<strong>CloudWatch Scheduled Policy</strong>를 통해 노드를 축소하면 비용을 절감할 수 있습니다.</p>
+
+<p><br /></p>
+
+<h3 id="eks-autoscaler-">EKS AutoScaler 설정</h3>
+
+<p>먼저 EKS에 ASG 권한을 가지는 IAM Role을 만들어서 Worker Node 보안 그룹에 추가합니다.
+다음으로 ASG 그룹 태그를 설정하고 yaml 파일을 클러스터에 배포합니다.
+자세한 내용은 <a href="https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cluster-autoscaler.html">공식 문서</a>를 통해 진행하실 수 있습니다.
+만약 Policy로 메모리 지표를 사용하고 싶다면 각 노드에 <strong>CloudWatch Agent</strong>를 배포해야 합니다.</p>
+
+<p>​<br /></p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>EKS의 VPC 네트워크 구성 이해하기</title>
 	  <link>//eks-vpc-cni</link>
 	  <author>Swalloow</author>
@@ -920,67 +987,6 @@ CMD <span class="p">[</span><span class="nv">"app.py"</span><span class="p">]</s
 그리고 <code class="highlighter-rouge">docker run [image]</code> 명령어를 통해 컨테이너를 실행시킵니다.
 <code class="highlighter-rouge">-p</code> 옵션은 포트를 지정하며, <code class="highlighter-rouge">-d</code> 옵션은 백그라운드로 실행시키는 옵션입니다.
 5000번 포트를 확인해보면 플라스크 어플리케이션이 실행된 것을 확인할 수 있습니다.</p>
-
-<p>​   ​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>리눅스 시스템 모니터링 명령어 정리</title>
-	  <link>//system-monitoring</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-03-24T19:18:00+09:00</pubDate>
-	  <guid>//system-monitoring</guid>
-	  <description><![CDATA[
-	     <p>​   ​</p>
-
-<p>리눅스 시스템 모니터링을 위한 명령어에 대해 정리해보았습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="top">프로세스 모니터링 명령어 - top</h2>
-
-<p><img src="/assets/images/linux_top.png" alt="top" /></p>
-
-<p><strong>top</strong> 명령어는 커널을 통하여 관리되는 프로세스들의 정보(메모리 사용률, CPU 사용률, 상태정보 등)를 확인할 수 있는 명령어입니다.
-응용프로그램을 강제로 종료시키고 싶을 때, 실행중인 프로세스를 찾아 <code class="highlighter-rouge">kill</code> 명령어를 통해 강제종료시킬 수도 있습니다.</p>
-
-<p>OS X에서는 <code class="highlighter-rouge">-o</code> 옵션을 통해, 리눅스에서는 <code class="highlighter-rouge">shift + f</code> 명령어를 통해 프로세스를 key에 따라 정렬할 수 있습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="vmstat-iostat-sar">시스템 리소스 정보 - vmstat, iostat, sar</h2>
-
-<p><img src="/assets/images/linux_vmstat.png" alt="vmstat" /></p>
-
-<p><strong>vmstat</strong> 명령어는 <em>virtual memory statistics</em> 의 줄임말로 가상메모리 등 다양한 리소스 정보를 제공합니다.
-OS X에서는 <code class="highlighter-rouge">vm_stat</code> 명령어로, 리눅스에서는 <code class="highlighter-rouge">vmstat</code> 명령어로 확인하실 수 있습니다.</p>
-
-<p><img src="/assets/images/linux_iostat.png" alt="iostat" /></p>
-
-<p><strong>iostat</strong> 명령어는 sysstat에서 가장 기본적인 명령어로 CPU 및 디스크 입출력에 대한 기본정보를 제공합니다.</p>
-
-<p><img src="/assets/images/linux_sar.png" alt="sar" /></p>
-
-<p><strong>sar</strong> 명령어는 시스템 활동 모니터링에 유용합니다.
-특히 <code class="highlighter-rouge">-r, -f</code> 옵션을 통해 CPU, 메모리 사용률을 날짜, 시간 대 별로 확인할 수 있습니다.</p>
-
-<p>​   ​</p>
-
-<h2 id="linux-sysstat--">Linux sysstat 패키지 설치</h2>
-
-<p>CentOS, Ubuntu에서는 앞서 말씀드린 <code class="highlighter-rouge">sar, vmstat</code> 등의 명령어를 사용하기 위해서 <code class="highlighter-rouge">sysstat</code> 패키지를 설치해야 합니다.
-아래의 명령어를 통해 설치할 수 있습니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">// CentOS, Ubuntu
-<span class="gp">$ </span>yum install sysstat -y
-<span class="gp">$ </span>apt install sysstat -y</code></pre></figure>
-
-<p>만일 권한 오류나 명령어를 찾을 수 없다는 오류가 나타난다면 아래의 설정을 통해 해결할 수 있습니다.</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>sudo vi /etc/default/sysstat
-<span class="gp">$ </span><span class="nv">ENABLED</span><span class="o">=</span>”true”</code></pre></figure>
 
 <p>​   ​</p>
 
