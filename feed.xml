@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>AWS Solutions Architect Associate 취득 후기</title>
+        
+          <description>​ 그동안 관심은 있었지만 굳이 내 돈주고 시험볼 생각이 없었기에 미루고 있다가 12월까지 취득하면 50달러를 준다는 이벤트에 눈이 돌아가 시험을...</description>
+        
+        <pubDate>Sat, 30 Nov 2019 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//aws-cert</link>
+        <guid isPermaLink="true">http://swalloow.github.io//aws-cert</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>EKS의 AutoScaling 이해하기</title>
         
           <description>​ ​ 오늘은 Kubernetes의 Cluster AutoScaling에 대해 정리해보려 합니다. 그 다음 EKS에서는 어떻게 적용할 수 있는지, 어떤 효과를 볼 수...</description>
