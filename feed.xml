@@ -8,6 +8,19 @@
     
       
       <item>
+        <title>EKS 클러스터에 VPC CIDR 추가하기</title>
+        
+          <description>​ 앞서 정리했던 EKS의 VPC 네트워크 구성 이해하기 글에서 언급한 바와 같이 내 요구사항보다 적은 범위의 대역으로 클러스터를 생성한다면 VPC...</description>
+        
+        <pubDate>Sat, 14 Mar 2020 19:18:00 +0900</pubDate>
+        <link>
+        http://swalloow.github.io//eks-cidr</link>
+        <guid isPermaLink="true">http://swalloow.github.io//eks-cidr</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>AWS Solutions Architect Associate 취득 후기</title>
         
           <description>​ 그동안 관심은 있었지만 굳이 내 돈주고 시험볼 생각이 없었기에 미루고 있다가 12월까지 취득하면 50달러를 준다는 이벤트에 눈이 돌아가 시험을...</description>

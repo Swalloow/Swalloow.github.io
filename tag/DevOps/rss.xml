@@ -12,6 +12,103 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>EKS 클러스터에 VPC CIDR 추가하기</title>
+	  <link>//eks-cidr</link>
+	  <author>Swalloow</author>
+	  <pubDate>2020-03-14T19:18:00+09:00</pubDate>
+	  <guid>//eks-cidr</guid>
+	  <description><![CDATA[
+	     <p>​<br /></p>
+
+<p>앞서 정리했던 <a href="https://swalloow.github.io/eks-vpc-cni">EKS의 VPC 네트워크 구성 이해하기</a> 글에서 언급한 바와 같이 내 요구사항보다 적은 범위의 대역으로 클러스터를 생성한다면 VPC CNI로 인한 IP 제한에 마주할 수 있습니다.</p>
+
+<p>처음부터 넓은 범위의 대역으로 생성하면 좋겠지만 이미 클러스터를 생성한 이후에는 어떻게 하면 좋을까요? 
+이러한 경우에는 VPC에 새로운 CIDR을 할당하고 이를 클러스터에 추가할 수 있습니다.</p>
+
+<p>​<br /></p>
+
+<h3 id="vpc-cidr">VPC CIDR</h3>
+
+<p><img src="http://drive.google.com/uc?export=view&amp;id=1i0LURjsrJbJWwqaVikpEDg3DQtmPhUp-" alt="" /></p>
+
+<p>먼저 확장하고자 하는 VPC를 선택한 후 새로운 CIDR 범위를 추가해주어야 합니다. 저는 위의 그림과 같이 10.X.X.X와 100.X.X.X 범위를 추가해주었습니다. 이후 새로운 CIDR 범위를 사용하여 서브넷을 생성한 다음 라우팅 테이블을 연결해줍니다.
+EKS에서 서브넷을 검색 가능하도록 하기 위해 아래와 같은 태그를 추가해줍니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">Key</span><span class="o">=</span>kubernetes.io/cluster/yourClusterName,Value<span class="o">=</span>shared</code></pre></figure>
+
+<p><br /></p>
+
+<h3 id="custom-eni-config">Custom ENI Config</h3>
+
+<p>이제 새로운 CIDR 범위를 사용하도록 CNI 플러그인 설정을 변경해주어야 합니다. 먼저 클러스터에서 사용 중인 CNI 플러그인 버전을 확인하고 만일 1.5.3 미만인 경우 최신 버전으로 업데이트 합니다. (2020년 3월 기준, 최신 버전은 1.6 입니다)</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>kubectl describe daemonset aws-node --namespace kube-system | grep Image | cut -d <span class="s2">"/"</span> -f 2
+<span class="gp">$ </span>kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/master/config/v1.6/aws-k8s-cni.yaml</code></pre></figure>
+
+<p>설치한 이후에 <code class="highlighter-rouge">kubectl get crd</code>를 통해 <strong>ENIConfig CRD</strong>가 제대로 설치되었는지 확인해줍니다. 만약 설치가 안되었다면 아래의 파일을 통해 CRD를 정의해주시면 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">apiextensions.k8s.io/v1beta1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">CustomResourceDefinition</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">eniconfigs.crd.k8s.amazonaws.com</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">scope</span><span class="pi">:</span> <span class="s">Cluster</span>
+  <span class="s">group</span><span class="pi">:</span> <span class="s">crd.k8s.amazonaws.com</span>
+  <span class="s">version</span><span class="pi">:</span> <span class="s">v1alpha1</span>
+  <span class="s">names</span><span class="pi">:</span>
+    <span class="s">plural</span><span class="pi">:</span> <span class="s">eniconfigs</span>
+    <span class="s">singular</span><span class="pi">:</span> <span class="s">eniconfig</span>
+    <span class="s">kind</span><span class="pi">:</span> <span class="s">ENIConfig</span></code></pre></figure>
+
+<p>이후에 aws-node daemonset에서 커스텀 네트워크 설정을 활성화하는 환경변수를 업데이트 해줍니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>kubectl <span class="nb">set </span>env daemonset aws-node -n kube-system <span class="nv">AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG</span><span class="o">=</span><span class="nb">true</span></code></pre></figure>
+
+<p>이제 앞서 생성한 서브넷에 대해 ENIConfig CRD를 생성해줍니다.
+아래는 ap-northeast-2a, 2c에 대한 2개의 서브넷에 대한 파일입니다.
+보안 그룹도 클러스터 설정에 맞게 정의해주시면 됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">apiVersion</span><span class="pi">:</span> <span class="s">crd.k8s.amazonaws.com/v1alpha1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">ENIConfig</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">private-user-2a</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">subnet</span><span class="pi">:</span> <span class="s">subnet-0ddddaaaaddddccdd</span>
+  <span class="s">securityGroups</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">sg-05555598cc88ffd00</span>
+
+<span class="nn">---</span>
+<span class="s">apiVersion</span><span class="pi">:</span> <span class="s">crd.k8s.amazonaws.com/v1alpha1</span>
+<span class="s">kind</span><span class="pi">:</span> <span class="s">ENIConfig</span>
+<span class="s">metadata</span><span class="pi">:</span>
+  <span class="s">name</span><span class="pi">:</span> <span class="s">private-user-2c</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">subnet</span><span class="pi">:</span> <span class="s">subnet-0ccccaaaaddddccee</span>
+  <span class="s">securityGroups</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">sg-05555598cc88ffd00</span></code></pre></figure>
+
+<p>마지막으로 클러스터에 해당하는 노드 그룹의 어노테이션을 수정해주어야 합니다. <a href="https://github.com/terraform-aws-modules/terraform-aws-eks">terraform-aws-eks</a> 모듈을 통해 클러스터를 생성하셨다면 <code class="highlighter-rouge">worker_groups</code> 하위에 <code class="highlighter-rouge">kubelet_extra_args</code> 변수 설정을 통해 오토스케일링 그룹 설정을 수정할 수 있습니다.</p>
+
+<p>추가되어야할 어노테이션 값은 아래와 같습니다.
+Value 값의 경우, 위에서 추가한 ENIConfig CRD의 name metadata를 넣어주시면 됩니다. 업데이트 이후에는 노드를 재시작해주어야 정상적으로 적용됩니다.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">k8s.amazonaws.com/eniConfig<span class="o">=</span>private-user-2c</code></pre></figure>
+
+<p><br /></p>
+
+<h3 id="reference">Reference</h3>
+
+<ul>
+  <li><a href="https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cni-custom-network.html">https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/cni-custom-network.html</a></li>
+  <li><a href="https://aws.amazon.com/ko/premiumsupport/knowledge-center/eks-multiple-cidr-ranges/">https://aws.amazon.com/ko/premiumsupport/knowledge-center/eks-multiple-cidr-ranges/</a></li>
+</ul>
+
+<p>​<br /></p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>EKS의 AutoScaling 이해하기</title>
 	  <link>//eks-autoscale</link>
 	  <author>Swalloow</author>
@@ -924,75 +1021,6 @@ Docker cache의 기본 규칙은 다음과 같습니다.</p>
     <p>캐시가 무효화되면 이후의 모든 Dockerfile 명령은 새로운 이미지를 생성하고 캐시는 사용되지 않습니다.</p>
   </li>
 </ul>
-
-<p>​   ​</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>파이썬을 위한 Dockerfile 작성하기</title>
-	  <link>//dockerfile</link>
-	  <author>Swalloow</author>
-	  <pubDate>2017-03-27T19:18:00+09:00</pubDate>
-	  <guid>//dockerfile</guid>
-	  <description><![CDATA[
-	     <p>​   ​</p>
-
-<p>Docker가 처음이라면, 이전 포스팅을 참고하시기 바랍니다.</p>
-
-<ul>
-  <li><a href="https://swalloow.github.io/docker-install">Docker 간편한 설치부터 실행까지</a></li>
-  <li><a href="https://swalloow.github.io/docker-command">Docker, DockerHub 명령어 정리</a></li>
-  <li>
-    <p><a href="https://swalloow.github.io/dockerfile">파이썬을 위한 Dockerfile 작성하기</a></p>
-
-    <p>​</p>
-  </li>
-</ul>
-
-<h3 id="flask-application">Flask Application</h3>
-
-<p>Dockerfile은 일종의 이미지 설정파일입니다. <code class="highlighter-rouge">build</code> 명령어를 통해 이미지를 생성할 수 있습니다.
-파이썬 웹 어플리케이션을 Docker로 실행시키는 예제를 통해 천천히 정리해보겠습니다.</p>
-
-<script src="https://gist.github.com/Swalloow/deef1f6d161198ad65d74db54466b921.js"></script>
-
-<p>먼저 위와 같이 간단한 플라스크 웹 어플리케이션을 작성합니다.
-필요한 패키지는 requirements.txt로 관리합니다.
-<code class="highlighter-rouge">pip freeze &gt; requirements.txt</code> 명령어를 통해 파일을 생성할 수 있습니다.</p>
-
-<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">Flask==0.12</code></pre></figure>
-
-<p>​   ​</p>
-
-<h3 id="dockerfile-">Dockerfile 작성하기</h3>
-
-<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">FROM ubuntu:latest
-MAINTAINER your_name "email@gmail.com"
-RUN apt-get update -y
-RUN apt-get install -y python-pip python-dev build-essential
-COPY . /app
-WORKDIR /app
-RUN pip install -r requirements.txt
-ENTRYPOINT <span class="p">[</span><span class="nv">"python"</span><span class="p">]</span>
-CMD <span class="p">[</span><span class="nv">"app.py"</span><span class="p">]</span></code></pre></figure>
-
-<p>위와 같이 Dockerfile을 작성하시면 됩니다.
-간단히 설명하자면, ubuntu 이미지를 받아와서 파이썬 환경설정을 하고
-현재 경로에 있는 폴더를 복사해서 파이썬 패키지를 설치하고 앱을 실행시키는 이미지입니다.</p>
-
-<p>​   ​</p>
-
-<h3 id="dockerfile---">Dockerfile 빌드 및 실행하기</h3>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>docker build -t flask-application:latest .
-<span class="gp">$ </span>docker run -d -p 5000:5000 flask-application</code></pre></figure>
-
-<p><code class="highlighter-rouge">docker build [name]</code> 명령어를 통해 이미지를 빌드합니다.
-그리고 <code class="highlighter-rouge">docker run [image]</code> 명령어를 통해 컨테이너를 실행시킵니다.
-<code class="highlighter-rouge">-p</code> 옵션은 포트를 지정하며, <code class="highlighter-rouge">-d</code> 옵션은 백그라운드로 실행시키는 옵션입니다.
-5000번 포트를 확인해보면 플라스크 어플리케이션이 실행된 것을 확인할 수 있습니다.</p>
 
 <p>​   ​</p>
 
