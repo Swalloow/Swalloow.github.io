@@ -1,419 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-<loc>http://swalloow.github.io///eks-cidr</loc>
-<lastmod>2020-03-14T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///aws-cert</loc>
-<lastmod>2019-11-30T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///eks-autoscale</loc>
-<lastmod>2019-11-23T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///eks-vpc-cni</loc>
-<lastmod>2019-11-04T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///aws-cli-mfa</loc>
-<lastmod>2019-10-03T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///tf-tips</loc>
-<lastmod>2019-09-20T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///serverless-etl</loc>
-<lastmod>2019-08-23T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///openinfra</loc>
-<lastmod>2019-07-20T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///start-3</loc>
-<lastmod>2019-07-06T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///container-patterns3</loc>
-<lastmod>2019-04-06T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///container-patterns2</loc>
-<lastmod>2019-03-23T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///eks-kubeflow</loc>
-<lastmod>2019-03-10T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///why-kubeflow</loc>
-<lastmod>2019-03-09T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///aws-kops</loc>
-<lastmod>2019-02-10T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///container-patterns</loc>
-<lastmod>2019-01-26T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///airflow-contrib</loc>
-<lastmod>2018-12-08T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///kafka-connect</loc>
-<lastmod>2018-11-16T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///start</loc>
-<lastmod>2018-11-09T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///raft-consensus</loc>
-<lastmod>2018-09-01T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///aws-hadoop</loc>
-<lastmod>2018-06-13T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///portfolio-basic</loc>
-<lastmod>2018-04-25T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///structuring-tf</loc>
-<lastmod>2018-04-20T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///ds-truth</loc>
-<lastmod>2018-04-01T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///deep-learning-style</loc>
-<lastmod>2018-01-05T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///zeppelin-bootstrap</loc>
-<lastmod>2017-09-13T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///aws-emr-s3-spark</loc>
-<lastmod>2017-09-09T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///spark-shuffling</loc>
-<lastmod>2017-08-25T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///spark-reduceByKey-groupByKey</loc>
-<lastmod>2017-08-22T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///hive-metastore-issue</loc>
-<lastmod>2017-08-11T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///bagging-boosting</loc>
-<lastmod>2017-07-19T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///spark-df-mysql</loc>
-<lastmod>2017-07-17T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///spark22</loc>
-<lastmod>2017-07-14T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///scala-sbt</loc>
-<lastmod>2017-07-08T21:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///emr-step</loc>
-<lastmod>2017-07-02T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///cloudera-install</loc>
-<lastmod>2017-06-23T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///spark-sampling</loc>
-<lastmod>2017-06-20T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///spark-temp-view</loc>
-<lastmod>2017-06-16T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///netflix</loc>
-<lastmod>2017-06-05T21:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///sanfran-travel</loc>
-<lastmod>2017-06-05T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///spring-boot-jpa</loc>
-<lastmod>2017-04-05T21:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///influx-grafana2</loc>
-<lastmod>2017-04-05T21:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///influx-grafana1</loc>
-<lastmod>2017-04-05T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///gitlabci-docker</loc>
-<lastmod>2017-03-31T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///dockerfile-ignore</loc>
-<lastmod>2017-03-28T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///dockerfile</loc>
-<lastmod>2017-03-27T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///polyglot-programming</loc>
-<lastmod>2017-03-25T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///system-monitoring</loc>
-<lastmod>2017-03-24T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///jupyter-spark</loc>
-<lastmod>2017-03-22T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///ssh-tunneling</loc>
-<lastmod>2017-03-20T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///developer-roadmap</loc>
-<lastmod>2017-03-18T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///scala-for-bigdata</loc>
-<lastmod>2017-03-17T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///map-reduce</loc>
-<lastmod>2017-03-14T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///spark-zeppelin-install</loc>
-<lastmod>2017-03-13T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///aws-config</loc>
-<lastmod>2017-03-10T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///flask-security</loc>
-<lastmod>2017-03-08T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///implement-jwt</loc>
-<lastmod>2017-03-03T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///https-ssl</loc>
-<lastmod>2017-03-01T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///pandas-parallel</loc>
-<lastmod>2017-02-27T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///dataframe-to-mysql</loc>
-<lastmod>2017-02-26T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///swagger-api-doc</loc>
-<lastmod>2017-02-25T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///git-stash</loc>
-<lastmod>2017-02-23T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///docker-command</loc>
-<lastmod>2017-02-22T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///docker-install</loc>
-<lastmod>2017-02-21T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///linux3</loc>
-<lastmod>2017-02-18T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///linux2</loc>
-<lastmod>2017-02-16T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///linux1</loc>
-<lastmod>2017-02-15T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///jenkins-install</loc>
-<lastmod>2017-02-13T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///jupyter-config</loc>
-<lastmod>2017-02-12T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///decison-randomforest</loc>
-<lastmod>2017-02-10T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///pyml-intro2</loc>
-<lastmod>2017-02-08T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///pyml-intro1</loc>
-<lastmod>2017-02-05T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///macbook-touchbar-customizing</loc>
-<lastmod>2017-01-30T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///social-api-cognito</loc>
-<lastmod>2017-01-28T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///jupyter-notebook-kernel</loc>
-<lastmod>2017-01-28T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///cs224d-lecture2</loc>
-<lastmod>2017-01-21T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///db-to-dataframe</loc>
-<lastmod>2017-01-14T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///cs224d-lecture1</loc>
-<lastmod>2017-01-14T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///macbook-setting</loc>
-<lastmod>2017-01-08T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///cs224d-intro</loc>
-<lastmod>2017-01-07T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///open-api-guide</loc>
-<lastmod>2017-01-05T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///about-oauth2</loc>
-<lastmod>2017-01-05T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///windows-bash-jekyll</loc>
-<lastmod>2017-01-03T19:18:00+09:00</lastmod>
-</url>
-<url>
-<loc>http://swalloow.github.io///404.html</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///about/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/Develop/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/Develop/page2/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DataScience/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DataScience/page2/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/Personal/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/Personal/page2/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DataEngineering/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DataEngineering/page2/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DataEngineering/page3/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DataEngineering/page4/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DevOps/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DevOps/page2/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/DevOps/page3/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///tag/Financial/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page2/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page3/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page4/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page5/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page6/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page7/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page8/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page9/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page10/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page11/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///page12/</loc>
-</url>
-<url>
-<loc>http://swalloow.github.io///google0db23fb3261b8e88.html</loc>
-<lastmod>2017-01-29T18:39:45+09:00</lastmod>
-</url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://swalloow.github.io/eks-cidr/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/aws-cert/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/eks-autoscale/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/eks-vpc-cni/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/aws-cli-mfa/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tf-tips/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/serverless-etl/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/openinfra/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/container-patterns3/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/container-patterns2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/eks-kubeflow/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/why-kubeflow/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/aws-kops/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/container-patterns/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/airflow-contrib/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/kafka-connect/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/start/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/raft-consensus/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/aws-hadoop/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/portfolio-basic/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/structuring-tf/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/data-science-inconvenient-truth/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/deep-learning-style/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/zeppelin-bootstrap/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/aws-emr-s3-spark/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spark-shuffling/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spark-reduceByKey-groupByKey/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/hive-metastore-issue/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/bagging-boosting/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spark-df-mysql/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spark22/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/scala-sbt/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/emr-step/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/cloudera-install/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spark-sampling/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spark-temp-view/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/sanfran-travel/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/netflix/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spring-boot-jpa/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/influx-grafana2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/influx-grafana1/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/gitlabci-docker/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/dockerfile-ignore/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/dockerfile/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/polyglot-programming/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/system-monitoring/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/jupyter-spark/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/ssh-tunneling/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/scala-for-bigdata/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/map-reduce/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spark-zeppelin-install/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/aws-ec2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/flask-security/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/implement-jwt/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/https-ssl/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/pandas-parallel/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/dataframe-to-mysql/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/swagger-api-doc/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/git-stash/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/docker-command/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/docker-install/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/linux3/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/linux2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/linux1/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/jupyter-config/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/decision-randomforest/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/pyml-intro2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/pyml-intro1/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/macbook-touchbar-customizing/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/social-api-cognito/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/jupyter-notebook-kernel/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/open-api-guide/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/cs224d-lecture2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/db-to-dataframe/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/cs224d-lecture1/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/macbook-setting/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/about-oauth2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/5</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/6</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/7</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/8</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/9</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/10</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/11</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/12</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/13</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/financial</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/dataengineering</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/dataengineering/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/dataengineering/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/dataengineering/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/dataengineering/5</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/datascience</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/datascience/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/devops</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/devops/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/devops/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/devops/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/develop</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/develop/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/develop/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/personal</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/tag/personal/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/about/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/contact/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>

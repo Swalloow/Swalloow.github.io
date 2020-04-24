@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: http://swalloow.github.io/sitemap.xml
+Sitemap: https://swalloow.github.io/sitemap.xml
+Host: https://swalloow.github.io
