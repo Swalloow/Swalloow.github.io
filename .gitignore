@@ -1,2 +1,8 @@
 node_modules
-.cache
+.cache/
+public/
+.DS_Store
+*.log
+contentful-import-error-log*
+.env*
+.contentful.json
