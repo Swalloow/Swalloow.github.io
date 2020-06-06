@@ -89,14 +89,17 @@ Headless CMS라 불리기도 하는 Contentful은 컨텐츠를 관리하기 위�
 <p>이러한 장점들은 기존에 가지고 있던 불편함을 해소하기에 충분했고 글을 전부 마이그레이션하기에도 불편함이 없었습니다. 특히 slug 지정을 통해 기존 경로를 그대로 유지할 수 있었습니다. </p>
 <br>
 <p><img src="https://drive.google.com/uc?export=view&#x26;id=1Z8OQ0u_QDqp2ClgYvQQVHvS0Z5ywx_Ig" alt="BlogMeta"></p>
+<br>
 <p><a href="https://swalloow.github.io/contents-url">https://swalloow.github.io/contents-url</a> 경로를 예를 들면 하위에 오는 contents-url이 위 그림에서 slug 값에 해당합니다. 이런식으로 Post 마다 태그 등의 다양한 메타데이터를 설정할 수 있습니다. 모든 포스트는 <strong>Draft, Publish, Archive</strong> 단계의 상태를 가지게 됩니다. 아직 글을 작성 중이라면 Draft 상태로 남겨두고 완성 후 Pulish를 수행하는 식으로 활용할 수 있습니다. Publish 할때마다 자동으로 버전이 추가되기 때문에 이전으로 롤백하는 것도 쉽게 가능합니다.</p>
 <br>
 <p><img src="https://drive.google.com/uc?export=view&#x26;id=18hawHsV-JhNIbEAdyuNzX4wzkojDqIIM" alt="BlogEditor"></p>
+<br>
 <p>위 그림은 Contentful에서 제공하는 마크다운 에디터 입니다.
 마크다운 문법이 기억나지 않더라도 상단바를 통해 쉽게 글을 작성하고 편집할 수 있도록 구성되어 있습니다.</p>
 <br>
 <p><img src="https://drive.google.com/uc?export=view&#x26;id=1n-ZeNrNt1lHmNzXDZw7141YTV4c1Hxkr" alt="BlogTags"></p>
 <p>위와 같이 내가 미리 설정해둔 태그를 포스트에 매핑시킬 수 있습니다. 태그마다 필요한 대표사진, 설명 등의 하위 필드도 사용자가 직접 정의할 수 있습니다.</p>
+<br>
 <br>
 <h2 id="github-action" style="position:relative;"><a href="#github-action" aria-label="github action permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>GitHub Action</h2>
 <p>이번에 GitHub Action을 통해 글을 배포하도록 개선하면서 블로그 개발 환경이 구축되어 있지 않더라도 어디서든지 글을 작성하고 내보낼 수 있게 되었습니다. 변경된 배포 방식은 아래와 같습니다.</p>
