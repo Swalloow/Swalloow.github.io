@@ -231,7 +231,7 @@ $ airflow create_user \
       <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
       <span class="token key atrule">refreshTime</span><span class="token punctuation">:</span> <span class="token number">60</span></code></pre></div>
 <br>
-<p>첫 번째 방식은 <strong>git-sync 사이드카 컨테이너</strong>를 활용하는 방법입니다. 사이드카 패턴이 생소하시다면 이전에 작성한 <a href="https://swalloow.github.io/container-patterns/#sidecar-pattern">분산 컨테이너에서의 디자인 패턴</a> 글을 참고하시기 바랍니다.</p>
+<p>첫 번째 방식은 <strong>git-sync 사이드카 컨테이너</strong>를 활용하는 방법입니다. 간단히 말하자면 주기적으로 외부 저장소를 당겨오는 방식으로 git 인증이 필요합니다. 사이드카 패턴이 생소하시다면 이전에 작성한 <a href="https://swalloow.github.io/container-patterns/#sidecar-pattern">분산 컨테이너에서의 디자인 패턴</a> 글을 참고하시기 바랍니다.</p>
 <br>
 <p><strong>2. Shared Persistent Volume</strong></p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token comment"># EFS PV, PVC</span>
@@ -280,7 +280,7 @@ $ airflow create_user \
     <span class="token key atrule">accessMode</span><span class="token punctuation">:</span> ReadWriteMany
     <span class="token key atrule">size</span><span class="token punctuation">:</span> 1Gi</code></pre></div>
 <br>
-<p>두 번째 방식은 <strong>EFS와 같은 공유 파일시스템을 활용한 방법</strong>입니다. 저는 EFS PV와 PVC를 먼저 추가한다음 existingClaim을 통해 참조하도록 설정해주었습니다.</p>
+<p>두 번째 방식은 <strong>EFS와 같은 공유 파일시스템을 활용한 방법</strong>입니다. EFS의 특정 경로에 DAG 파일을 저장하고 마운트를 통해 모든 Pod이 같은 경로를 바라보도록 설정하는 방식입니다. 저는 EFS PV와 PVC를 먼저 추가한다음 existingClaim을 통해 참조하도록 설정해주었습니다.</p>
 <br>
 <h2 id="deploy" style="position:relative;"><a href="#deploy" aria-label="deploy permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Deploy</h2>
 <p>필요한 설정을 완료했다면 배포는 아래 Helm 명령어를 통해 할 수 있습니다. 가능하다면 데이터베이스는 external로 사용하는 방법을 추천드립니다. DB 암호는 secret을 통해 생성하고 참조하도록 설정해주시면 됩니다.</p>
