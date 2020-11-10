@@ -23,6 +23,7 @@ jobs:
         env:
           SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          GOOGLE_ANALYTICS: ${{ secrets.GOOGLE_ANALYTICS }} 
 
       - name: Deploy to master
         uses: JamesIves/github-pages-deploy-action@releases/v3
