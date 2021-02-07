@@ -84,7 +84,13 @@
 <h2 id="airflow-logging" style="position:relative;"><a href="#airflow-logging" aria-label="airflow logging permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Airflow Logging</h2>
 <p><img src="https://drive.google.com/uc?export=view&#x26;id=1qGMB1yIsT06y3y9knBQ2T2G2O3xQs-8b" alt="airflow-log"></p>
 <p>Airflow의 Task 로그는 PV를 통해 영구 볼륨에 저장하거나 <strong>Remote Logging</strong> 설정을 통해 외부 저장소로 수집할 수 있습니다. S3, ES, GCS 등 다양한 저장소를 지원합니다.
-예를 들어 S3로 설정하면 Task 로그의 수명주기를 S3 Lifecycle에 의해 관리할 수 있게 됩니다.</p>
+예를 들어 S3로 설정하면 Task 로그의 수명주기를 S3 Lifecycle에 의해 관리할 수 있게 됩니다.
+참고로 2.0 버전부터 로그 관련 설정은 <code class="language-text">core</code>에서 <code class="language-text">logging</code> 섹션으로 이동했습니다.</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">logging:
+  remote_logging: &quot;True&quot;
+  remote_base_log_folder: &quot;s3://mybucketname/airflow&quot;
+  remote_log_conn_id: &quot;aws_default&quot;
+  logging_level: INFO</code></pre></div>
 <br>
 <h2 id="airflow-metrics" style="position:relative;"><a href="#airflow-metrics" aria-label="airflow metrics permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Airflow Metrics</h2>
 <p>Airflow는 <a href="https://airflow.apache.org/docs/apache-airflow/stable/logging-monitoring/metrics.html">StatsD를 통한 메트릭 전송 방법</a>을 공식 지원합니다.
