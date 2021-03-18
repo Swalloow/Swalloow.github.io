@@ -88,7 +88,8 @@
 </ul>
 <br>
 <h2 id="aws-emr-spark-그리고-s3" style="position:relative;"><a href="#aws-emr-spark-%EA%B7%B8%EB%A6%AC%EA%B3%A0-s3" aria-label="aws emr spark 그리고 s3 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>AWS EMR, Spark 그리고 S3</h2>
-<p><img src="/assets/images/aws_etl.png"></p>
+<p><img src="http://drive.google.com/uc?export=view&#x26;id=1FWjProAZAa51cBO6nkLEq1kRhpeG8uhQ"></p>
+<br>
 <p>Daily로 돌려야 하는 ETL 작업의 경우 위와 같이 간단한 아키텍쳐로 구성하는 경우가 많습니다.
 대부분의 경우 저장소로 S3를 적극 활용하게 됩니다.
 최초 입수되는 로그를 저장하기도 하고, Transformation 작업 이후 중간 또는 최종 데이터로 저장하기도 합니다.</p>
@@ -98,7 +99,8 @@
 ERROR ContextCleaner: Error cleaning broadcast 5</code></pre></div>
 <p>최근 Spark RDD 코드를 DataFrame으로 리팩토링 하던 중에 위와 같은 오류를 겪었습니다.
 일별 로그를 불러와서 전처리하고 다시 저장하는데 s3 write 부분에서 갑자기 Executor의 Connection이 끊기는 문제였습니다.</p>
-<p><img src="/assets/images/ganglia_a.png"></p>
+<p><img src="http://drive.google.com/uc?export=view&#x26;id=1jKeOxJk_fjDCXfmkLr_GVxTiMAY5IKAQ"></p>
+<br>
 <p>Ganglia 모니터링 결과를 보면 중간에 약 15분의 공백이 있는데,
 이 부분이 Connection이 중간에 끊기고 다시 뜰 때까지 걸리는 시간입니다.</p>
 <br>
