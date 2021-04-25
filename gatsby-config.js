@@ -92,6 +92,15 @@ module.exports = {
         head: true,
       },
     },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `Noto+Sans+KR\:300,400,500,700`
+        ],
+        display: 'swap'
+      }
+    },
     'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-plugin-manifest',

@@ -9,11 +9,11 @@ export default {
   },
   fonts: {
     body:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+      "'Noto Sans KR'",
   },
   sizes: {
     maxWidth: '1050px',
-    maxWidthCentered: '650px',
+    maxWidthCentered: '750px',
   },
   responsive: {
     small: '35em',
