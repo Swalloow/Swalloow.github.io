@@ -157,6 +157,14 @@ idle-culler를 활성화하면 JupyterHub Service에 등록되며 이후 Jupyter
 <p>예를 들어 일반적인 설정이라면, pod가 다양한 노드에 분산되어 클러스터 scale-in 조건까지 도달하기가 어렵습니다. 하지만 user-scheduler를 사용한다면, 위 그림과 같이 노드에 할당된 pod의 수가 점진적으로 줄어들게 됩니다.</p>
 <br>
 <h2 id="image-pre-puller" style="position:relative;"><a href="#image-pre-puller" aria-label="image pre puller permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Image Pre Puller</h2>
+<div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">prePuller</span><span class="token punctuation">:</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+    <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+      <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 10m
+      <span class="token key atrule">memory</span><span class="token punctuation">:</span> 8Mi
+  <span class="token key atrule">hook</span><span class="token punctuation">:</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">pullOnlyOnChanges</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre></div>
 <p>Image prePuller는 사용자가 노트북을 실행하기 전에 노드에 미리 이미지를 준비하여 노트북 환경 생성 시간을 단축시켜 줍니다. 예를 들어 CA에 의해 노드가 새로 추가된다거나 새로운 이미지가 프로필에 등록된 경우, 미리 노드에 프로필 이미지를 pull 하게 됩니다.</p>
 <br>
 <h2 id="monitoring" style="position:relative;"><a href="#monitoring" aria-label="monitoring permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Monitoring</h2>
