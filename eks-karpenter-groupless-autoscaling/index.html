@@ -140,6 +140,7 @@ Karpenter는 Cluster AutoScaler와 동일한 역할을 하지만 자체 구현�
 <li>Cluster AutoScaler의 일부 노드 그룹을 Provisioner로 이관하는 방식으로 진행하면 점진적으로 옮겨갈 수 있습니다.</li>
 <li>Provisioner yaml 설정에 익숙하지 않다면 <a href="https://karpenter.sh/v0.10.0/aws/launch-templates/">launch template을 만들어 정의하는 방법</a>도 있습니다. 하지만 동일 설정이 있다면 Karpenter에서는 Provisioner yaml을 우선시하기 때문에 launch template 사용하는 방법을 권장하지 않습니다.</li>
 <li>Scale In에서 노드가 종료되는 시간을 조정하기 위해 TTL 설정을 사용하는 것이 좋습니다. TTL 설정이 너무 작으면 잠시 재시작하는 상황에서도 Scale In/Out이 빈번하게 발생할 수 있습니다.</li>
+<li>karpenter 관련 pod는 karpenter에 의해 생성된 노드에 띄울 수 없습니다. 따라서 ASG 노드 그룹이 적어도 하나는 존재해야 합니다.</li>
 </ul>
 <br>
 <h3 id="karpenter가-가지는-제한-사항" style="position:relative;"><a href="#karpenter%EA%B0%80-%EA%B0%80%EC%A7%80%EB%8A%94-%EC%A0%9C%ED%95%9C-%EC%82%AC%ED%95%AD" aria-label="karpenter가 가지는 제한 사항 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Karpenter가 가지는 제한 사항</h3>
