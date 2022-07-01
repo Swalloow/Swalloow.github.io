@@ -127,7 +127,7 @@ HPA는 이를 제어하기 위해 <strong>안정화 윈도우와 스케일링 �
       <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">300</span></code></pre></div>
 <p><code class="language-text">scaleDown.polices</code>를 통해 Scale-In 발생 시 replica 변경 허용에 대한 정책을 지정할 수 있습니다. 위의 예시는 5분 내에 최대 1개의 replica를 scaleDown 하도록 허용하는 정책입니다. 이를 통해 계단식으로 천천히 pod를 축소할 수 있습니다.</p>
 <p>현재 Airflow 공식 차트에서는 KEDA의 advanced 옵션을 지원하지 않아 <a href="https://github.com/apache/airflow/pull/24220">PR</a>을 추가했습니다.<br>
-신규 버전에 추가되기 전까지는 별도의 scaledobject를 추가하여 옵션을 적용할 수 있습니다.</p>
+차트 1.7 버전부터 사용하실 수 있습니다.</p>
 <br>
 <h3 id="2-worker-warm-shutdown-문제" style="position:relative;"><a href="#2-worker-warm-shutdown-%EB%AC%B8%EC%A0%9C" aria-label="2 worker warm shutdown 문제 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Worker Warm Shutdown 문제</h3>
 <p><img src="http://drive.google.com/uc?export=view&#x26;id=10C7umomf0yxDRGav3STo5-uX3i5JUmdA" alt="celery"></p>
