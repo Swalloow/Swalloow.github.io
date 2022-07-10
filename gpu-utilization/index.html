@@ -167,7 +167,7 @@ $ kubectl describe node $NODE
 <p>위와 같이 MIG를 통해 Pod 마다 1개의 파티션을 갖도록 설정해서 7개의 replica 구성하는 것도 가능합니다. 이처럼 사용자는 <strong>MIG를 통해 GPU를 최대로 활용</strong>할 수 있습니다.</p>
 <br>
 <h2 id="time-slicing-vs-mig" style="position:relative;"><a href="#time-slicing-vs-mig" aria-label="time slicing vs mig permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Time Slicing vs MIG</h2>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1xIWskhHKGNafO2eOEihwBeMqCB68GcPw" alt="compare"></p>
+<p><img src="http://drive.google.com/uc?export=view&#x26;id=1NYVmMl0RyQVEnL5toybX8DH-AwpF1Bw2" alt="compare"></p>
 <p>두 방식을 비교해보면 위의 표와 같습니다.
 Time Slicing 방식은 7개 이상의 컨테이너를 사용할 수 있습니다. 따라서 <strong>bursting 워크로드에 적합한 방식</strong>이라고 볼 수 있습니다. 반면 <strong>MIG는 적은 양의 고정된 사용량을 가지는 워크로드에 적합</strong>합니다.
 A100은 MIG를 통해 분할하고 그 외의 GPU는 Time Slicing을 사용하는 방식으로 함께 사용할 수 있으니 워크로드에 맞는 방식을 선택하는 것이 중요합니다.</p>
