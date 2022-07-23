@@ -80,7 +80,7 @@
 <p><img src="http://drive.google.com/uc?export=view&#x26;id=1OJV0IVyYU3NjbRYFbM2ZueKAMVZi5_4y" alt="utilization"></p>
 <p>여러 아키텍쳐(암페어, 파스칼 등)로 구성된 GPU들을 모아 쿠버네티스 노드 풀을 구성하고 사용자들은 GPU 리소스를 할당받아 사용하는 환경이라고 가정해보겠습니다. 사용자들은 GPU 할당을 못 받는 상황임에도 실제 GPU 사용량을 측정해보면 생각보다 낮게 유지되고 있는 경우가 있습니다. 워크로드에 따라 필요한 리소스가 다르기 때문입니다.</p>
 <p>노트북 환경은 항상 개발을 하는게 아니기 때문에 idle 상태로 대기하는 시간이 많습니다. 작은 배치 사이즈로 운영되는 인퍼런스의 경우, 트래픽에 따라 사용량이 달라질 수 있습니다.
-따라서 이런 상황에서는 <strong>항상 리소스를 점유하기 보다 필요할 때 busting 가능한 방식으로 운영</strong>하는 것이 효율적입니다.</p>
+따라서 이런 상황에서는 <strong>항상 리소스를 점유하기 보다 필요할 때 bursting 가능한 방식으로 운영</strong>하는 것이 효율적입니다.</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
