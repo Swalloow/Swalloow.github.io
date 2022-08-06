@@ -103,7 +103,7 @@ Karpenter를 사용한다면, 여러 인스턴스 유형을 지정하여 Pod의 
 <p><code class="language-text">Graceful Executor Decommissioning</code>은 Spark 3.1 버전에 추가된 기능입니다.
 이 기능을 통해 <strong>노드가 중단되더라도 최소한의 손실로 Spark 작업이 지속되도록 설정</strong>할 수 있습니다. 이를 사용하려면 먼저 클러스터에 <code class="language-text">Node Termination Handler</code>가 설치되어 있어야 합니다. <code class="language-text">Node Termination Handler</code>는 클라우드에 따라 다르게 설치할 수 있도록 지원하고 있습니다.</p>
 <p>이제 노드가 중단되었을 때 과정을 아래 그림을 통해 확인해보겠습니다.</p>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=13uYTCOGv5FG9RY4I_mkFMjpWubX9XVv_" alt="spark-decom"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1HVzNyHmW0YRn9LzX-sBe_uCoYpH3iMse" alt="spark-decom"></p>
 <ol>
 <li>스팟 인스턴스가 중단되기 약 120초 전에 <code class="language-text">Termination Handler</code>의 notice 발생</li>
 <li>driver가 해당 executor를 blacklist에 추가하고 신규 task의 스케줄링을 차단</li>
@@ -121,7 +121,7 @@ spark.storage.decommission.shuffleBlocks.enabled</code></pre></div>
 <p><code class="language-text">Graceful Executor Decommissioning</code>은 위의 설정을 통해 활성화 할 수 있습니다.</p>
 <p><br><br></p>
 <h2 id="spark-32-executor-pvc-reuse" style="position:relative;"><a href="#spark-32-executor-pvc-reuse" aria-label="spark 32 executor pvc reuse permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Spark 3.2: Executor PVC Reuse</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=10K0rCJi2wCrEwZSU00GUV4JozCf15ivw" alt="spark-reuse"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1X7Ud-SEi0jwoZjuWtaqCrXTsK-5X97Zd" alt="spark-reuse"></p>
 <p><code class="language-text">Executor PVC Reuse</code>는 Spark 3.2 버전에 추가된 기능입니다.
 이 기능을 통해 spot kill 이후에도 <strong>동일한 PVC 연결을 통해 셔플 파일을 재사용</strong>할 수 있습니다. 이를 사용하려면 먼저 클러스터에 <code class="language-text">Dynamic PVC</code>에 대한 설정이 필요합니다.</p>
 <p>현재는 NVMe 기반의 SSD에서 사용이 어렵다는 제한 사항이 있습니다.<br>
