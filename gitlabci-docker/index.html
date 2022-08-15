@@ -94,17 +94,17 @@ Gitlab과 완벽하게 연동되며 CI를 위해 CI linter, pipeline, cycle anal
 <h2 id="gitlab-ci" style="position:relative;"><a href="#gitlab-ci" aria-label="gitlab ci permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Gitlab CI</h2>
 <p>Gitlab CI는 Gitlab에서 무료로 제공하는 CI 툴 입니다.
 Gitlab과 완벽하게 연동되며 CI를 위해 <strong>CI linter, pipeline, cycle analytics</strong> 등 다양한 서비스를 제공합니다.</p>
-<p><img src="/assets/images/gitlab-ci.png" alt="Gitlab-CI"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=12ueSzm9zHHNjbB0obiyQKQkq0oRDQRyT" alt="Gitlab-CI"></p>
 <p>travis, circle CI와 마찬가지로 Gitlab CI는 <code class="language-text">gitlab-ci.yml</code> 파일로 설정할 수 있습니다.
 Gitlab은 DigitalOcean과 제휴하여 CI 서버(Runner)를 따로 제공합니다.
 따라서 <code class="language-text">Runner</code>에 job을 할당하여 돌아가도록 설정할 수 있습니다.</p>
-<p><img src="/assets/images/gitlab-pipe.png" alt="Gitlab-Pipe"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=18UiYA8YavR5RFRPsWyTqn5KgllC0_R_n" alt="Gitlab-Pipe"></p>
 <p>그리고 Runner는 <strong>Docker 컨테이너</strong> 를 기반으로 돌아갑니다.
 Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이너를 실행시키는 것을 볼 수 있습니다.
 따라서, <strong>Base Image를 내 어플리케이션 이미지로 바꾸면 빌드 및 테스트 속도가 빠르게 향상됩니다</strong>.</p>
 <br>
 <h2 id="gitlab-registry" style="position:relative;"><a href="#gitlab-registry" aria-label="gitlab registry permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Gitlab Registry</h2>
-<p><img src="/assets/images/gitlab-registry.png" alt="Gitlab-Registry"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1bttUEMvybKSWTIsnZCjgZ95m33o7ZX8G" alt="Gitlab-Registry"></p>
 <p>Docker 친화적인 Gitlab은 Docker Registry도 무료로 제공해줍니다.
 <code class="language-text">Gitlab Registry</code> 탭에 들어가면 Docker Registry의 주소가 적혀있고 친절하게 명령어까지 써있습니다.</p>
 <p>아마 많은 분들이 DockerHub를 결제하거나, AWS S3를 이용하여 Docker Registry를 구축하셨을 겁니다. 하지만 Gitlab에서는 그럴 필요가 없습니다.</p>
@@ -133,7 +133,7 @@ Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이�
   <span class="token key atrule">script</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> deployment</code></pre></div>
 <p>Gitlab CI와 Docker를 활용한 빌드 테스트 자동화는 위의 그림과 같이 이루어집니다.</p>
-<p><img src="/assets/images/ci-process.png" alt="CI"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1pi_awWtNGHqPLHT_hWF7m16TRTxs9qcr" alt="CI"></p>
 <ol>
 <li>사용자가 Gitlab 저장소에 push를 하면, Gitlab CI Runner로 전달됩니다.</li>
 <li>Gitlab CI는 Gitlab Registry로부터 Docker 이미지를 받아옵니다. Docker 이미지에는 어플리케이션 환경이 설정되어 있습니다.</li>
@@ -143,7 +143,7 @@ Gitlab CI를 실행해보면 처음에 Ruby 이미지를 받아와서 컨테이�
 <li>각 과정은 모두 Slack 알림으로 확인할 수 있습니다.</li>
 </ol>
 <br>
-<p><img src="/assets/images/gitlab-pipeline.png" alt="Gitlab"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1tYKR4ykz1LcuHCtGhe1Sim7Vhy7SGOCi" alt="Gitlab"></p>
 <p>위와 같이 모든 과정을 <code class="language-text">Gitlab Pipeline</code>을 통해 확인하실 수 있습니다.</p>
 <p>Gitlab의 단점이라면 Community 버전의 서버가 조금 불안정하다는 점입니다.
 물론 설치형 Gitlab을 사용하신다면 이런 단점마저 존재하지 않습니다.
