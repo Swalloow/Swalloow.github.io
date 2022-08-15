@@ -87,7 +87,7 @@
 이에 대해 간단히 정리해보았습니다.</p>
 <br>
 <h2 id="spark-architecture-shuffle" style="position:relative;"><a href="#spark-architecture-shuffle" aria-label="spark architecture shuffle permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Spark Architecture: Shuffle</h2>
-<p><img src="/assets/images/shuffle.png"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1jH6eFX_nkb9vzPFlIiFOV9z-afkUOELQ"></p>
 <p>Shuffle을 설명하기 전에 한 가지 예시를 들어보겠습니다.
 테이블에 전화 통화 기록 목록이 있고 매일 발생한 통화량을 계산한다고 가정 해보겠습니다.
 “날짜”를 키로 설정하고 각 레코드에 대해 값으로 “1”을 지정한 다음, 각 키의 값을 합산하여 결과 값을 계산할 수 있을 것 입니다.</p>
@@ -95,7 +95,7 @@
 이를 위한 유일한 방법은 같은 키의 모든 값을 동일한 시스템에 두는 것입니다. 그런 다음 이 값들을 합치면 됩니다.</p>
 <br>
 <h2 id="narrow-and-wide-transformation" style="position:relative;"><a href="#narrow-and-wide-transformation" aria-label="narrow and wide transformation permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Narrow and Wide Transformation</h2>
-<p><img src="/assets/images/narrow_and_wide.png"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1TrPHpsimWez75krgjIQHYr49Wr8WwEdA"></p>
 <p>몇 가지 사례를 통해 더 자세히 알아보겠습니다.
 만일 데이터가 이미 키 값으로 파티셔닝 되어 있고 키 값에 대해 변화를 주고 싶다면, 좌측의 그림처럼 수행하게 됩니다.
 <code class="language-text">filter(), sample(), map(), flatMap()</code> 등의 transformation이 이에 해당하며, 이 경우 Shuffle이 필요 없습니다.
@@ -104,14 +104,14 @@
 <code class="language-text">groupByKey(), reduceByKey()</code> 등이 이에 해당하며, 이를 <strong>Wide Transformation</strong> 이라고 합니다.</p>
 <br>
 <h2 id="shuffled-hashjoin" style="position:relative;"><a href="#shuffled-hashjoin" aria-label="shuffled hashjoin permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Shuffled HashJoin</h2>
-<p><img src="/assets/images/shuffle_join.png"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1BlOjTPvvIknPOyZvSZ0SUG6dDvPewvn-"></p>
 <p>두 개의 테이블을 <code class="language-text">Join</code> 할 때에도 Shuffle 이 발생할 수 있습니다.
 위의 예시 처럼 두 테이블에서 키 값을 기준으로 Join 하게 되면, 동일한 키를 가진 데이터가 동일한 파티션으로 이동합니다.</p>
 <p>하지만 이 때, 셔플 되는 데이터의 양이 성능에 영향을 미칠 수 있습니다.
 만일 C의 데이터의 크기가 A보다 훨씬 크다면, C에 대한 작업으로 인해 전체의 수행시간이 오래 걸리게 될 것 입니다.</p>
 <br>
 <h2 id="broadcast-hashjoin" style="position:relative;"><a href="#broadcast-hashjoin" aria-label="broadcast hashjoin permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Broadcast HashJoin</h2>
-<p><img src="/assets/images/broadcast_join.png"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1v4QkFLzoEGFhahqnfaXiYlOFuE4XioUL"></p>
 <p>이를 개선하기 위해 Spark에서는 <strong>Broadcast Join</strong> 을 제공합니다.
 이 경우 RDD 중 하나가 모든 파티션으로 브로드 캐스팅되며 복사됩니다.
 만일 RDD 중 하나가 다른 것에 비해 상당히 작다면 큰 RDD가 전혀 셔플 할 필요가 없습니다.
