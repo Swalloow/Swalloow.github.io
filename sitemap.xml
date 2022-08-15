@@ -53,11 +53,11 @@
 <url> <loc>https://swalloow.github.io/cloudera-install/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://swalloow.github.io/spark-sampling/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://swalloow.github.io/spark-temp-view/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://swalloow.github.io/sanfran-travel/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://swalloow.github.io/netflix/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://swalloow.github.io/spring-boot-jpa/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/sanfran-travel/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://swalloow.github.io/influx-grafana2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://swalloow.github.io/influx-grafana1/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://swalloow.github.io/spring-boot-jpa/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://swalloow.github.io/gitlabci-docker/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://swalloow.github.io/dockerfile-ignore/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://swalloow.github.io/dockerfile/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>

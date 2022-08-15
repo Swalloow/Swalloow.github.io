@@ -111,7 +111,7 @@ wicked, badass, ninjia... (미국에서 쓰는 신조어인듯 싶다.)</p>
 <br>
 <h3 id="distributional-similarity-based-representations" style="position:relative;"><a href="#distributional-similarity-based-representations" aria-label="distributional similarity based representations permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Distributional similarity based representations</h3>
 <p>이 방법은 현대 통계적 NLP 방법론 중에서 가장 좋게 평가받는 모델 중 하나이다.</p>
-<p><img src="assets/images/distributional.png" alt="distributional"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1escsCa2d0KNOKx6FQk_rmgKhpvgYTiAs" alt="distributional"></p>
 <p>위 그림을 예로 들면, banking 이라는 단어를 표현할 때,
 단어의 왼쪽과 오른쪽으로부터 banking이라는 단어의 정보를 얻는다. (dept, crises...)
 이러한 방법을 통해 문맥으로부터 뭔가 더 얻을 수 있지 않을까? 라는 생각에서 출발한 모델이다.</p>
@@ -140,7 +140,7 @@ wicked, badass, ninjia... (미국에서 쓰는 신조어인듯 싶다.)</p>
 </ul>
 <p>위와 같은 corpus가 있을 때, 이를 matrix로 표현하면 다음과 같다.
 간단히 보면 각 단어의 빈도 수를 체크한 것이다.</p>
-<p><img src="assets/images/matrix.png" alt="matrix"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1BPyaD4IN-Gq-uMxkNkydhS_lxNCI9QuH" alt="matrix"></p>
 </li>
 </ol>
 <br>
@@ -153,7 +153,7 @@ wicked, badass, ninjia... (미국에서 쓰는 신조어인듯 싶다.)</p>
 <p>그렇다면 차원은 어떻게 낮출 수 있을까? 이에 대한 방법을 소개한다.</p>
 <br>
 <h4 id="singular-value-decomposition-svd" style="position:relative;"><a href="#singular-value-decomposition-svd" aria-label="singular value decomposition svd permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Singular Value Decomposition (SVD)</h4>
-<p><img src="assets/images/svd.png" alt="svd"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1zW80xzOpymNd2EPoJkGigJmE2HAAfUCy" alt="svd"></p>
 <p>​	SVD는 원래의 matrix X를 3개의 matrix로 분해한다.
 ​	여기에서 n보다 훨씬 작은 값 k를 설정해서 top - k만 가져가고,
 ​	그 이상의 차원은 날려버리는 방법으로 차원 축소를 해버린다.
@@ -197,7 +197,7 @@ Word2Vec과 GloVe는 상당히 유사한데, Word2Vec은 구글에서 GloVe는 �
 Objective Function : 중심단어를 기준으로 log probability가 최대가 되도록 한다.
 wt가 나왔을 때, wt 주변의 단어가 나올 확률이 얼마나 되는지가 J(0)이다.</p>
 <br>
-<p><img src="assets/images/word2vec%20cost.png" alt="word2vec cost"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1SL6F_jcod9d6TKXlPHya1qkUyGORdtHf" alt="word2vec cost"></p>
 <ul>
 <li>window length : n</li>
 <li>T token의 아주 큰 corpus</li>
@@ -205,7 +205,7 @@ wt가 나왔을 때, wt 주변의 단어가 나올 확률이 얼마나 되는지
 <li>하나의 중심 단어로 주변의 단어를 찾는 probability를 최대화하는 것이 목표</li>
 </ul>
 <br>
-<p><img src="assets/images/word2vec%20cost2.png" alt="word2vec cost"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1zbyzRCUnxMFaoeWgNtC6hYdp8eKyfRp0" alt="word2vec cost"></p>
 <ul>
 <li>o : outside word id</li>
 <li>c : center word id</li>
