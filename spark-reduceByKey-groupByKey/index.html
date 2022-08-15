@@ -103,9 +103,9 @@ spark<span class="token punctuation">.</span>textFile<span class="token punctuat
 둘의 결과는 같지만 성능은 확인히 차이가 납니다.</p>
 <p>먼저 위의 코드에서 <code class="language-text">flatMap, map</code> 까지는 동일한 노드에서 실행이 됩니다.
 하지만 reducer 부분에서는 모든 동일한 단어 쌍을 같은 노드로 이동시켜야 하기 때문에 <strong>Shuffle</strong> 이 발생합니다.</p>
-<p><img src="/assets/images/reduceByKey.png"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1ogSb1p0MRbvEsrXKsvP-9ItWxkMMK6eb"></p>
 <p>우선 reduceByKey의 경우, 먼저 각 노드에서 중간 집계를 진행하고 이에 대한 결과를 동일한 키 값으로 전송합니다.</p>
-<p><img src="/assets/images/groupByKey.png"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1PvGTtQ9wpGA0ZLveZ8zF1FZUj9VhVpkf"></p>
 <p>반면, groupByKey는 각 노드에 있는 데이터에 대해 바로 Shuffle 과정을 거치게 되고 결과를 내보냅니다.
 따라서 groupByKey는 네트워크를 통해 전송되는 데이터의 양이 많아질 뿐만 아니라, <strong>Out of disk</strong> 문제가 발생할 수도 있습니다.</p>
 <p>Shuffle은 기본적으로 비용이 큰 연산입니다.
