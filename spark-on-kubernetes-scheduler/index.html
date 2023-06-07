@@ -100,8 +100,8 @@ driver가 생성되기 전까지 전체 executor에 필요한 리소스를 알 �
 <p>각 앱은 리소스 경쟁에 의해 driver와 executor 1개씩 정상적으로 생성되어 3개의 앱이 실행 중인 상태입니다. 하지만 3개의 앱은 executor 리소스를 확보하지 못했기 때문에 작업을 완료할 수 없습니다. EKS 환경이라면 노드 리소스를 확보하더라도 VPC IP 고갈 문제로 인해 이러한 상황을 충분히 마주칠 수 있습니다.</p>
 <br>
 <p><img src="https://drive.google.com/uc?export=view&#x26;id=1ErqVM9uKqc8WZO0-BNIRlBBA5DRsNeYS" alt="allo2"></p>
-<p>위와 같이 리소스 내에서 가능한 앱이 정상적으로 실행, 종료되고 나머지는 대기하는게 더 효율적이라고 볼 수 있습니다.</p>
-<p>쿠버네티스에서는 기본 스케줄러가 배치 작업에 최적화된 형태가 아니기 때문에 위와 같은 문제가 발생할 수 있습니다. 이를 해결하기 위해 <code class="language-text">kube-batch</code>, <code class="language-text">volcano</code>, <code class="language-text">yunikorn</code> 등의 커스텀 배치 스케줄러가 개발되었습니다.</p>
+<p>위와 같이 리소스 내에서 가능한 앱이 정상적으로 실행, 종료되고 나머지는 대기하는게 더 효율적이라고 볼 수 있습니다.
+쿠버네티스에서는 기본 스케줄러가 배치 작업에 최적화된 형태가 아니기 때문에 위와 같은 문제가 발생할 수 있습니다. 이를 해결하기 위해 <code class="language-text">kube-batch</code>, <code class="language-text">volcano</code>, <code class="language-text">yunikorn</code> 등의 커스텀 배치 스케줄러가 개발되었습니다.</p>
 <p><br><br></p>
 <h2 id="spark-app-aware-scheduling" style="position:relative;"><a href="#spark-app-aware-scheduling" aria-label="spark app aware scheduling permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Spark App-aware Scheduling</h2>
 <p>기본 스케줄러는 <code class="language-text">filtering</code>, <code class="language-text">scoring</code> 과정을 거쳐 pod가 실행될 최적의 노드를 찾습니다. 이 때 스케줄 단위는 pod 입니다. 반면 대용량 배치 작업에서는 동시에 수 백개의 pod가 생성되기도 합니다. 또한 동시에 여러 작업이 실행되기 때문에 우선순위, 조직 별 리소스 제한 등을 고려해서 안정적으로 작업을 마치기 위한 대기열이 필요합니다.</p>
@@ -110,19 +110,19 @@ driver가 생성되기 전까지 전체 executor에 필요한 리소스를 알 �
 <img src="https://drive.google.com/uc?export=view&#x26;id=10yt7Xf1w4pWqLf8Z0cYJQbA5BzUSX_--" alt="binpack"></p>
 <p>Node Sorting 단계를 예시로 들어보겠습니다.
 기본 스케줄러에서 driver, executor pod가 여러 노드에 고르게 분산하면 앱은 네트워크 지연, 셔플 시 원격에서 데이터를 가져와야 하는 상황이 발생합니다.</p>
-<p>이 때 테트리스처럼 Bin Packing 방식을 적용한다면 어플리케이션을 최대한 가깝게 할당할 수 있습니다. 클라우드 환경에서 이를 적용하면 노드 scale-in도 원활하게 수행할 수 있습니다.</p>
+<p>이 때 테트리스처럼 <strong>Bin Packing 방식을 적용한다면 어플리케이션을 최대한 가깝게 할당</strong>할 수 있습니다. 클라우드 환경에서 이를 적용하면 노드 scale-in도 원활하게 수행할 수 있습니다.</p>
 <p><br><br></p>
 <h2 id="spark-gang-scheduling" style="position:relative;"><a href="#spark-gang-scheduling" aria-label="spark gang scheduling permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Spark Gang Scheduling</h2>
 <p>앞서 리소스가 고갈된 상황의 경우, Gang Scheduling을 사용한다면 안정적으로 작업을 실행할 수 있습니다. 노드가 0대인 상황에서 앱이 제출되었다고 가정해보겠습니다.</p>
 <p><img src="https://drive.google.com/uc?export=view&#x26;id=1zT9Y-cjE65n-H-WgVDefQ02oI0ZVCjWH" alt="gang1"></p>
-<p>위의 그림은 기본 스케줄러를 적용했을 때 모습입니다.
+<p>위의 그림은 기본 스케줄러를 적용했을 때 모습입니다.<br>
 필요한 최소 리소스가 미리 정해져있으나 노드 생성까지 대기 시간이 발생합니다.</p>
 <ul>
 <li>driver 리소스 요청 → 1대 생성</li>
 <li>executor 리소스 요청 → 2대 생성</li>
 </ul>
 <p><img src="https://drive.google.com/uc?export=view&#x26;id=1kGf51ivLYDgS8ZsuAIYEdNAAN643ze2r" alt="gang2"></p>
-<p>위의 그림은 gang 스케줄링을 적용했을 때 모습입니다.
+<p>위의 그림은 gang 스케줄링을 적용했을 때 모습입니다.<br>
 한번에 필요한 리소스를 확보하여 대기 시간을 최소화합니다.</p>
 <ul>
 <li>driver 리소스 요청 → placeholder 리소스 요청 → 노드 3대 생성</li>
@@ -130,9 +130,8 @@ driver가 생성되기 전까지 전체 executor에 필요한 리소스를 알 �
 </ul>
 <p>여기에서 placeholder pod은 아무 동작도 안하지만 미리 리소스를 확보하기 위해 존재하는 dummy pod 입니다. 만약 리소스를 확보하지 못하는 상황이라면 앱은 대기합니다.
 Gang Scheduling은 FIFO 큐와 함께 실행하여 리소스 경쟁으로 인한 교착상태에 빠지지 않도록 할 수 있습니다. </p>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1Cagf4Ko_HjV--k8zR8Wm7O86MyoSZXTx" alt="kubemark"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1NwRgb5nl-b4hecA_PYxuNC59M_5irQbq" alt="kubemark"></p>
 <p>또한 동시 실행 Pod가 많을 수록 스케줄링 성능 향상을 기대할 수 있습니다. 위 그림은 Yunikorn에서 kubemark를 통해 벤치마크한 결과입니다. 회사 환경에서 spark 작업 시간을 기준으로 테스트했을 때도 성능 향상을 확인할 수 있었습니다.</p>
-<br>
 <p>다음 글에서는 Spark 3.4 버전에서 공식적으로 지원하는 Volcano, Yunikorn에 대해 이어서 정리해보겠습니다.</p>
 <h2 id="reference" style="position:relative;"><a href="#reference" aria-label="reference permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reference</h2>
 <ul>
