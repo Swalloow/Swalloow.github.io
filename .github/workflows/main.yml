@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - develop
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'tags'
+        required: false
+        type: boolean
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
