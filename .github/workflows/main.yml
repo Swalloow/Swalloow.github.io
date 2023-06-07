@@ -1,14 +1,8 @@
 name: Build and Deploy
-on:
-  push:
-    branches:
-      - develop
-  workflow_dispatch:
-    inputs:
-      tags:
-        description: 'tags'
-        required: false
-        type: boolean
+on: workflow_dispatch
+#   push:
+#     branches:
+#       - develop
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
