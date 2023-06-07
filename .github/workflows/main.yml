@@ -26,7 +26,7 @@ jobs:
           GOOGLE_ANALYTICS: ${{ secrets.GOOGLE_ANALYTICS }} 
 
       - name: Deploy to master
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: master # The branch the action should deploy to.
