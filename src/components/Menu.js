@@ -58,6 +58,11 @@ const Menu = () => {
               </Link>
             </li>
           ))}
+          <li key='Subscribe'>
+            <a href='/feed.xml'>
+              Subscribe
+            </a>
+          </li>
         </ul>
       </Nav>
     </Header>
