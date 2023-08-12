@@ -18,7 +18,7 @@ jobs:
 
       - name: Install and Build
         run: |
-          yarn install
+          yarn clean && yarn install
           npm run build
         env:
           SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
