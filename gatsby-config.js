@@ -38,10 +38,6 @@ module.exports = {
         name: 'About',
         slug: '/about/',
       },
-      {
-        name: 'Subscribe',
-        slug: '/feed.xml',
-      },
     ],
     postsPerFirstPage: 7,
     postsPerPage: 6,
