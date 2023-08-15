@@ -141,13 +141,10 @@ module.exports = {
           {
             site {
               siteMetadata {
-                rssMetadata {
-                  site_url
-                  feed_url
-                  title
-                  description
-                  image_url
-                }
+                title
+                description
+                siteUrl
+                site_url: siteUrl
               }
             }
           }
@@ -155,7 +152,7 @@ module.exports = {
         feeds: [
           {
             serialize(ctx) {
-              const rssMetadata = ctx.query.site.siteMetadata.rssMetadata
+              const rssMetadata = ctx.query.site.siteMetadata
               return ctx.query.allContentfulPost.edges.map((edge) => ({
                 date: edge.node.publishDate,
                 title: edge.node.title,
