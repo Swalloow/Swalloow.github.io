@@ -1,4 +1,4 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 export const globalStyles = css`
   /* http://meyerweb.com/eric/tools/css/reset/
  v2.0 | 20110126
@@ -158,7 +158,21 @@ export const globalStyles = css`
 
   table {
     border-collapse: collapse;
-    border-spacing: 0;
+    width: 80%;
+    border: 1px solid #ccc;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+
+  td {
+    text-align: center;
   }
 
   * {
