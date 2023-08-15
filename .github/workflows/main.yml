@@ -12,9 +12,9 @@ jobs:
           ref: develop
           persist-credentials: false
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: "14.x"
+          node-version: 14
 
       - name: Install and Build
         run: |
@@ -23,7 +23,7 @@ jobs:
         env:
           SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
-          GOOGLE_ANALYTICS: ${{ secrets.GOOGLE_ANALYTICS }} 
+          GOOGLE_ANALYTICS: ${{ secrets.GOOGLE_ANALYTICS }}
 
       - name: Deploy to master
         uses: JamesIves/github-pages-deploy-action@v4
