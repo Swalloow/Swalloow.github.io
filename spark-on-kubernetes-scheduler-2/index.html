@@ -78,7 +78,7 @@
 <br>
 <h2 id="volcano" style="position:relative;"><a href="#volcano" aria-label="volcano permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Volcano</h2>
 <p>초기의 Volcano는 <a href="https://github.com/kubernetes-retired/kube-batch">kube-batch</a> 프로젝트 기반으로 구성되었으나 <strong>1.8 버전부터 쿠버네티스 스케줄러 플러그인 방식을 지원</strong>하게 되었습니다. 스케줄러 플러그인 기반으로 구성한 커스텀 스케줄러는 기본 스케줄러와 호환 가능하며 버전 업데이트 영향도 적게 받는 장점이 있습니다.</p>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1Z2UQfhDvd9-F5k9Kwya0KGoENsOIRuHk_link" alt="volcano"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1ok4Vrmy6CJ3pML9-Bw1qIytZ9gFGJtu-" alt="volcano"></p>
 <p>Volcano의 주요 컴포넌트는 다음과 같습니다.</p>
 <ul>
 <li><strong>Scheduler</strong>: 여러 스케줄링 알고리즘을 거쳐 가장 적합한 노드에 작업을 할당합니다.</li>
@@ -86,18 +86,20 @@
 <li><strong>Admission</strong>: CRD API에 대한 유효성 검사를 담당합니다.</li>
 </ul>
 <p>PodGroup을 통해 그룹 단위의 스케줄링이 가능하며, 하나의 Queue에는 여러 개의 PodGroup이 할당될 수 있습니다. 각 PodGroup은 status를 가지고 있어 Pending, Running 등의 상태가 관리됩니다.</p>
+<br>
 <p>스케줄링이 실행되는 워크플로우는 다음과 같습니다.</p>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1hhBAlSFUsCS65sxF7CCvR9jOzC3InpR__link" alt="volscheduler"></p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1yLnnef5C-NesyyK66pOxf_c8AItA4k2J" alt="volscheduler"></p>
 <ol>
 <li>client가 제출한 작업을 watch하고 캐싱합니다.</li>
 <li>session을 새로 생성하고 스케줄링 사이클을 시작합니다.</li>
 <li>캐시에 예약되지 않은 작업은 session의 대기열로 보냅니다.</li>
-<li>예약이 필요한 작업을 순회하면서 순서대로 enqueue, allocate, preempt, reclaim 등의 스케줄링 단계를 실행하고 가장 적합한 노드를 찾습니다.</li>
+<li>필요한 작업을 순회하면서 순서대로 스케줄링 단계를 실행하고 적합한 노드를 찾습니다.</li>
 <li>작업을 노드에 바인딩합니다.</li>
 <li>세션을 종료합니다.</li>
 </ol>
-<p><strong>Volcano 적용 과정</strong></p>
-<p>Volcano 적용을 위해 필요한 단계는 다음과 같습니다.</p>
+<br>
+<p><strong>Volcano 적용 과정</strong><br>
+Volcano 적용을 위해 필요한 단계는 다음과 같습니다.</p>
 <ol>
 <li>Volcano 환경 및 리소스 배포</li>
 <li>Spark Volcano 이미지 빌드 및 배포</li>
@@ -113,16 +115,13 @@
 <h2 id="apache-yunikorn" style="position:relative;"><a href="#apache-yunikorn" aria-label="apache yunikorn permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Apache Yunikorn</h2>
 <p>Yunikorn은 Volcano보다 뒤늦게 시작된 Apache 프로젝트입니다.
 컨테이너 오케스트레이션을 위한 경량의 범용 스케줄러를 지향하고 있으며 대부분의 스케줄링 알고리즘도 지원하고 있습니다.
-또한 Volcano와 동일하게 스케줄러 플러그인 방식을 지원합니다. 추가로 Yunikorn은 조직 단위로 리소스 관리가 가능하도록 계층 구조의 큐를 지원합니다.</p>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1MCI9redj04UC5NwDydwJi3EjuuCzQAF6_link" alt="yunikorn"></p>
+또한 Volcano와 동일하게 스케줄러 플러그인 방식을 지원합니다. 추가로 Yunikorn은 조직 단위로 리소스 관리가 가능하도록 <strong>계층 구조의 큐를 지원</strong>합니다.</p>
+<p><img src="https://drive.google.com/uc?export=view&#x26;id=1ksyjijuS-rcasePNp0pqHwR8XTuF8v0F" alt="yunikorn"></p>
 <p>Yunikorn의 주요 컴포넌트는 다음과 같습니다.</p>
 <ul>
 <li><strong>Scheduler Interface</strong>: 다른 리소스 플랫폼(K8S, YARN)과 통신을 위한 인터페이스</li>
 <li><strong>Scheduler Core</strong>: 스케줄링 알고리즘 구현, 메트릭 수집, 컨테이너 할당 요청</li>
 <li><strong>Kubernetes Shim</strong>: 쿠버네티스와 통신을 담당, Pod를 특정 노드에 바인딩하는 역할</li>
-</ul>
-<p>리소스 요청을 받아 Scheduler Core에 전달</p>
-<ul>
 <li><strong>Admission Controller</strong>: mutation, validation hook을 담당</li>
 </ul>
 <p>Yunikorn은 Volcano와 달리 추가로 배포되는 CRD가 없습니다.<br>
@@ -156,11 +155,11 @@
               <span class="token key atrule">memory</span><span class="token punctuation">:</span> 200G
               <span class="token key atrule">vcore</span><span class="token punctuation">:</span> <span class="token number">200</span></code></pre></div>
 <p>위와 같이 prod, stage 등 여러 개의 큐를 계층형으로 생성할 수 있습니다.<br>
-스케줄링 정책은 크게 <strong>node sorting 단계와 application sorting 단계</strong>로 나누어집니다.
+스케줄링 정책은 크게 <strong>node sorting 단계와 application sorting 단계</strong>로 나누어집니다.<br>
 gang scheduling을 사용하는 경우, application sorting은 항상 fifo를 사용해야 합니다.</p>
 <p>Yunikorn에서 Gang Scheduling이 실행되는 단계는 다음과 같습니다.
-<img src="http://drive.google.com/uc?export=view&#x26;id=17eBKLQ5eRE_exVAiN0O1jRPi9OHpexyC_link" alt="yunikorn-gang"></p>
-<ol>
+<img src="https://drive.google.com/uc?export=view&#x26;id=1E81nP3qq2D2IPMuPR13xkPVaBAmLy9u-" alt="yunikorn-gang"></p>
+<ul>
 <li>TaskGroup이 정의된 application을 submit 합니다.</li>
 <li>Shim이 application을 생성하고 이를 Core(Kube scheduler)에 전달합니다.</li>
 <li>Shim은 TaskGroup의 각 member에 대한 placeholder pod를 생성합니다. spark의 경우, member는 driver, executor가 될 수 있습니다.</li>
@@ -168,9 +167,10 @@ gang scheduling을 사용하는 경우, application sorting은 항상 fifo를 �
 <li>placeholder는 Core를 통해 적절한 노드에 바인딩됩니다.</li>
 <li>이제 실제 pod가 AllocationAsk로 Core에 전달됩니다.</li>
 <li>실제 pod와 모든 placeholder pod가 스케줄링 완료된 이후 Shim은 실제 pod를 바인딩합니다.</li>
-</ol>
-<p><strong>Yunikorn 적용 과정</strong></p>
-<p>Yunikorn 적용을 위해 필요한 단계는 다음과 같습니다.</p>
+</ul>
+<p><strong>Yunikorn 적용 과정</strong><br>
+Yunikorn 적용을 위해 필요한 단계는 다음과 같습니다.<br>
+Yunikorn의 경우 annotation 설정을 사용합니다.</p>
 <ol>
 <li>Yunikorn 환경 및 설정 배포</li>
 <li>Spark configuration 전달</li>
@@ -182,12 +182,12 @@ gang scheduling을 사용하는 경우, application sorting은 항상 fifo를 �
 --conf spark.kubernetes.executor.annotation.yunikorn.apache.org/app-id={{APP_ID}}</code></pre></div>
 <p><br><br></p>
 <h2 id="volcano-vs-apache-yunikorn" style="position:relative;"><a href="#volcano-vs-apache-yunikorn" aria-label="volcano vs apache yunikorn permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Volcano vs Apache Yunikorn</h2>
-<p>앞서 살펴 본 내용을 통해 각 스케줄러의 장단점을 정리해보면 다음과 같습니다.</p>
-<p><strong>Volcano</strong></p>
-<ul>
-<li>장점: Kubeflow에 대한 지원</li>
-<li>단점: spark 이미지 빌드, CRD 단위로 관리가 필요</li>
-</ul>
+<p>앞서 살펴 본 내용을 통해 각 스케줄러의 장단점을 정리해보면 다음과 같습니다.<br>
+모두 Helm 차트를 지원하므로 쉽게 구성할 수 있습니다.<br></p>
+<p><strong>Volcano</strong>
+장점: Kubeflow에 대한 지원
+단점: spark 이미지 빌드, CRD 단위로 관리가 필요</p>
+<br>
 <p><strong>Yunikorn</strong></p>
 <ul>
 <li>장점: 작업 상태를 확인할 수 있는 Web UI 지원</li>
@@ -197,6 +197,7 @@ gang scheduling을 사용하는 경우, application sorting은 항상 fifo를 �
 </ul>
 <p><br><br></p>
 <h2 id="운영을-하면서-마주칠-수-있는-부분들" style="position:relative;"><a href="#%EC%9A%B4%EC%98%81%EC%9D%84-%ED%95%98%EB%A9%B4%EC%84%9C-%EB%A7%88%EC%A3%BC%EC%B9%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EB%B6%80%EB%B6%84%EB%93%A4" aria-label="운영을 하면서 마주칠 수 있는 부분들 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>운영을 하면서 마주칠 수 있는 부분들</h2>
+<p>다음은 적용한 이후에 운영을 하다보면 마주칠 수 있는 이슈 또는 고민을 정리해보았습니다.<br></p>
 <p><strong>placeholder 리소스 설정</strong><br>
 application submit 시 placeholder에 할당할 리소스 사이즈 결정이 필요합니다.
 placeholder를 작게 설정하면 리소스 확보가 안되어 스케줄링에 영향이 있을 수 있고 지나치게 크게 설정하면 실제로 여유가 있음에도 리소스 부족 현상 발생할 수 있습니다. <a href="https://github.com/GoogleCloudPlatform/spark-on-k8s-operator">spark-on-k8s-operator</a>를 사용한다면 스케줄러에 따라 placeholder 사이즈를 결정하는 로직이 포함되어 있으니 편하게 적용이 가능합니다.</p>
@@ -209,6 +210,7 @@ placeholder를 작게 설정하면 리소스 확보가 안되어 스케줄링에
 상황에 따라 application이 accepted 또는 waiting 상태에서 계속 머무르는 이슈가 발생할 수 있습니다. 이처럼 placeholder가 할당되지 못하는 경우, 스케줄러에서 timeout 설정을 통해 실패 처리되어야 다음 작업이 원활하게 진행될 수 있습니다. 만약 좀비 상태로 placeholder가 남는다면 core에서 확인 후 GC를 통해 정리됩니다.</p>
 <p><br><br></p>
 <h2 id="reference" style="position:relative;"><a href="#reference" aria-label="reference permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reference</h2>
+<p>두 가지 스케줄러 모두 범용적으로 많이 사용되고 있어 운영 중인 환경에 따라 선택하시면 좋을 것 같습니다. 각 스케줄러에 대한 자세한 내용은 아래의 공식문서에서 찾아보실 수 있습니다!</p>
 <ul>
 <li><a href="https://yunikorn.apache.org/docs/">https://yunikorn.apache.org/docs/</a></li>
 <li><a href="https://volcano.sh/en/">https://volcano.sh/en/</a></li>
