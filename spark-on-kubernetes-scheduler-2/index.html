@@ -89,14 +89,14 @@
 <br>
 <p>스케줄링이 실행되는 워크플로우는 다음과 같습니다.</p>
 <p><img src="https://drive.google.com/uc?export=view&#x26;id=1yLnnef5C-NesyyK66pOxf_c8AItA4k2J" alt="volscheduler"></p>
-<ol>
+<ul>
 <li>client가 제출한 작업을 watch하고 캐싱합니다.</li>
 <li>session을 새로 생성하고 스케줄링 사이클을 시작합니다.</li>
 <li>캐시에 예약되지 않은 작업은 session의 대기열로 보냅니다.</li>
 <li>필요한 작업을 순회하면서 순서대로 스케줄링 단계를 실행하고 적합한 노드를 찾습니다.</li>
 <li>작업을 노드에 바인딩합니다.</li>
 <li>세션을 종료합니다.</li>
-</ol>
+</ul>
 <br>
 <p><strong>Volcano 적용 과정</strong><br>
 Volcano 적용을 위해 필요한 단계는 다음과 같습니다.</p>
@@ -168,6 +168,7 @@ gang scheduling을 사용하는 경우, application sorting은 항상 fifo를 �
 <li>이제 실제 pod가 AllocationAsk로 Core에 전달됩니다.</li>
 <li>실제 pod와 모든 placeholder pod가 스케줄링 완료된 이후 Shim은 실제 pod를 바인딩합니다.</li>
 </ul>
+<br>
 <p><strong>Yunikorn 적용 과정</strong><br>
 Yunikorn 적용을 위해 필요한 단계는 다음과 같습니다.<br>
 Yunikorn의 경우 annotation 설정을 사용합니다.</p>
@@ -184,17 +185,15 @@ Yunikorn의 경우 annotation 설정을 사용합니다.</p>
 <h2 id="volcano-vs-apache-yunikorn" style="position:relative;"><a href="#volcano-vs-apache-yunikorn" aria-label="volcano vs apache yunikorn permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Volcano vs Apache Yunikorn</h2>
 <p>앞서 살펴 본 내용을 통해 각 스케줄러의 장단점을 정리해보면 다음과 같습니다.<br>
 모두 Helm 차트를 지원하므로 쉽게 구성할 수 있습니다.<br></p>
-<p><strong>Volcano</strong>
-장점: Kubeflow에 대한 지원
+<p><strong>Volcano</strong><br>
+장점: Kubeflow에 대한 지원<br>
 단점: spark 이미지 빌드, CRD 단위로 관리가 필요</p>
 <br>
-<p><strong>Yunikorn</strong></p>
-<ul>
-<li>장점: 작업 상태를 확인할 수 있는 Web UI 지원</li>
-<li>장점: 경량화되어 있으며 계층 구조의 큐를 지원</li>
-<li>장점: 추가로 필요한 부분이 적어 운영이 편리</li>
-<li>단점: 주요 설정은 모두 있으나 Volcano 대비 적은 옵션 지원</li>
-</ul>
+<p><strong>Yunikorn</strong><br>
+장점: 작업 상태를 확인할 수 있는 Web UI 지원<br>
+장점: 경량화되어 있으며 계층 구조의 큐를 지원<br>
+장점: 추가로 필요한 부분이 적어 운영이 편리<br>
+단점: 주요 설정은 모두 있으나 Volcano 대비 적은 옵션 지원</p>
 <p><br><br></p>
 <h2 id="운영을-하면서-마주칠-수-있는-부분들" style="position:relative;"><a href="#%EC%9A%B4%EC%98%81%EC%9D%84-%ED%95%98%EB%A9%B4%EC%84%9C-%EB%A7%88%EC%A3%BC%EC%B9%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EB%B6%80%EB%B6%84%EB%93%A4" aria-label="운영을 하면서 마주칠 수 있는 부분들 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>운영을 하면서 마주칠 수 있는 부분들</h2>
 <p>다음은 적용한 이후에 운영을 하다보면 마주칠 수 있는 이슈 또는 고민을 정리해보았습니다.<br></p>
@@ -210,7 +209,7 @@ placeholder를 작게 설정하면 리소스 확보가 안되어 스케줄링에
 상황에 따라 application이 accepted 또는 waiting 상태에서 계속 머무르는 이슈가 발생할 수 있습니다. 이처럼 placeholder가 할당되지 못하는 경우, 스케줄러에서 timeout 설정을 통해 실패 처리되어야 다음 작업이 원활하게 진행될 수 있습니다. 만약 좀비 상태로 placeholder가 남는다면 core에서 확인 후 GC를 통해 정리됩니다.</p>
 <p><br><br></p>
 <h2 id="reference" style="position:relative;"><a href="#reference" aria-label="reference permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reference</h2>
-<p>두 가지 스케줄러 모두 범용적으로 많이 사용되고 있어 운영 중인 환경에 따라 선택하시면 좋을 것 같습니다. 각 스케줄러에 대한 자세한 내용은 아래의 공식문서에서 찾아보실 수 있습니다!</p>
+<p>두 가지 스케줄러 모두 범용적으로 많이 사용되고 있어 운영 중인 환경에 따라 선택하시면 좋을 것 같습니다.<br>각 스케줄러에 대한 자세한 내용은 아래의 공식문서에서 찾아보실 수 있습니다!</p>
 <ul>
 <li><a href="https://yunikorn.apache.org/docs/">https://yunikorn.apache.org/docs/</a></li>
 <li><a href="https://volcano.sh/en/">https://volcano.sh/en/</a></li>
