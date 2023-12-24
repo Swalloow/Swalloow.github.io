@@ -77,7 +77,8 @@
 </ul>
 <br>
 <h2 id="pandas-dataframe" style="position:relative;"><a href="#pandas-dataframe" aria-label="pandas dataframe permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pandas DataFrame</h2>
-<p>Pandas CoW에 대해 알아보기 이전에 먼저 DataFrame의 내부 구조에 대한 이해가 필요합니다.<br> <code class="language-text">DataFrame</code>은 Pandas의 행, 열 기반 2차원 데이터 구조입니다. 초기에 Pandas는 아주 느린 컬럼 기반 연산을 빠르게 처리하기 위해 <code class="language-text">BlockManager</code>를 추가했습니다.</p>
+<p>Pandas CoW에 대해 알아보기 이전에 먼저 DataFrame의 내부 구조에 대한 이해가 필요합니다.<br> <code class="language-text">DataFrame</code>은 Pandas의 행, 열 기반 2차원 데이터 구조입니다.<br>
+초기에 Pandas는 아주 느린 컬럼 기반 연산을 빠르게 처리하기 위해 <code class="language-text">BlockManager</code>를 추가했습니다.</p>
 <p><strong>BlockManager</strong><br>
 BlockManager는 numpy array로 저장된 데이터를 참조하는 블록을 관리하는 역할을 합니다.<br>
 아래 코드를 통해 자세히 알아보겠습니다.</p>
@@ -97,7 +98,7 @@ Axis <span class="token number">1</span><span class="token punctuation">:</span>
 NumpyBlock<span class="token punctuation">:</span> <span class="token builtin">slice</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span> x <span class="token number">3</span><span class="token punctuation">,</span> dtype<span class="token punctuation">:</span> int64
 NumpyBlock<span class="token punctuation">:</span> <span class="token builtin">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span> x <span class="token number">3</span><span class="token punctuation">,</span> dtype<span class="token punctuation">:</span> <span class="token builtin">object</span></code></pre></div>
 <p>DataFrame을 생성하고 internal API를 통해 BlockManager 구조에 접근할 수 있습니다.<br>
-위 예시에서는 2개의 블록이 존재하며 그 중 int 타입을 가지는 <code class="language-text">c1</code>, <code class="language-text">c3</code>는 하나의 블록으로 통합되어 있습니다. 이처럼 <strong>BlockManager는 메모리 최적화와 효율적인 데이터 접근을 위해 동일한 타입을 하나의 블록으로 통합하여 관리</strong>합니다. 이번에는 동일한 타입을 가지는 <code class="language-text">c4</code> 컬럼을 추가하고 다시 확인해보겠습니다.</p>
+위 예시에서는 2개의 블록이 존재하며 그 중 int 타입을 가지는 <code class="language-text">c1</code>, <code class="language-text">c3</code>는 하나의 블록으로 통합되어 있습니다. 이처럼 BlockManager는 <strong>메모리 최적화와 효율적인 데이터 접근을 위해 동일한 타입을 하나의 블록으로 통합</strong>하여 관리합니다. 이번에는 동일한 타입을 가지는 <code class="language-text">c4</code> 컬럼을 추가하고 다시 확인해보겠습니다.</p>
 <div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python">df<span class="token punctuation">[</span><span class="token string">'c4'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">,</span><span class="token number">200</span><span class="token punctuation">,</span><span class="token number">300</span><span class="token punctuation">]</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>df<span class="token punctuation">.</span>_data<span class="token punctuation">)</span>
 
@@ -120,7 +121,8 @@ NumpyBlock<span class="token punctuation">:</span> <span class="token builtin">s
 구체적으로는 블록 통합이 연산에 유리한 경우에만 블록 통합이 이루어집니다.</p>
 <p><br><br></p>
 <h2 id="pandas-settingwithcopywarning" style="position:relative;"><a href="#pandas-settingwithcopywarning" aria-label="pandas settingwithcopywarning permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pandas SettingWithCopyWarning</h2>
-<p>앞서 Pandas가 BlockManager를 통해 어떻게 블록을 관리하는지 알아보았습니다. 이번에는 Pandas를 사용하다보면 마주칠 수 있는 <code class="language-text">SettingWithCopyWarning</code> 문제에 대해 알아보겠습니다.</p>
+<p>앞서 Pandas가 BlockManager를 통해 어떻게 블록을 관리하는지 알아보았습니다.<br>
+이번에는 CoW에서 해결하고자 하는 <code class="language-text">SettingWithCopyWarning</code> 문제에 대해 알아보겠습니다.</p>
 <div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python"><span class="token keyword">import</span> pandas <span class="token keyword">as</span> pd
 
 df <span class="token operator">=</span> pd<span class="token punctuation">.</span>DataFrame<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
@@ -130,7 +132,7 @@ df <span class="token operator">=</span> pd<span class="token punctuation">.</sp
 <span class="token number">0</span>           <span class="token number">1</span>     A
 <span class="token number">1</span>           <span class="token number">2</span>     C
 <span class="token number">2</span>           <span class="token number">3</span>     D</code></pre></div>
-<p>이번에는 위와 같은 DataFrame에서 첫 번째 행의 <code class="language-text">grade</code> 값을 E로 변경해보겠습니다.</p>
+<p>위와 같은 DataFrame에서 첫 번째 행의 <code class="language-text">grade</code> 값을 E로 변경해보겠습니다.</p>
 <div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python">grades <span class="token operator">=</span> df<span class="token punctuation">[</span><span class="token string">"grade"</span><span class="token punctuation">]</span>
 grades<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"E"</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>df<span class="token punctuation">)</span>
