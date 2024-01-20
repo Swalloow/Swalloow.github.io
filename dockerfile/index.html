@@ -99,15 +99,15 @@ app <span class="token operator">=</span> Flask<span class="token punctuation">(
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">Flask==0.12</code></pre></div>
 <br>
 <h3 id="dockerfile-작성하기" style="position:relative;"><a href="#dockerfile-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0" aria-label="dockerfile 작성하기 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Dockerfile 작성하기</h3>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">FROM ubuntu:latest
-MAINTAINER your_name "email@gmail.com"
-RUN apt-get update -y
-RUN apt-get install -y python-pip python-dev build-essential
-COPY . /app
-WORKDIR /app
-RUN pip install -r requirements.txt
-ENTRYPOINT ["python"]
-CMD ["app.py"]</code></pre></div>
+<div class="gatsby-highlight" data-language="dockerfile"><pre class="language-dockerfile"><code class="language-dockerfile"><span class="token instruction"><span class="token keyword">FROM</span> ubuntu:latest</span>
+<span class="token instruction"><span class="token keyword">MAINTAINER</span> your_name <span class="token string">"email@gmail.com"</span></span>
+<span class="token instruction"><span class="token keyword">RUN</span> apt-get update -y</span>
+<span class="token instruction"><span class="token keyword">RUN</span> apt-get install -y python-pip python-dev build-essential</span>
+<span class="token instruction"><span class="token keyword">COPY</span> . /app</span>
+<span class="token instruction"><span class="token keyword">WORKDIR</span> /app</span>
+<span class="token instruction"><span class="token keyword">RUN</span> pip install -r requirements.txt</span>
+<span class="token instruction"><span class="token keyword">ENTRYPOINT</span> [<span class="token string">"python"</span>]</span>
+<span class="token instruction"><span class="token keyword">CMD</span> [<span class="token string">"app.py"</span>]</span></code></pre></div>
 <p>위와 같이 Dockerfile을 작성하시면 됩니다.
 간단히 설명하자면, ubuntu 이미지를 받아와서 파이썬 환경설정을 하고
 현재 경로에 있는 폴더를 복사해서 파이썬 패키지를 설치하고 앱을 실행시키는 이미지입니다.</p>

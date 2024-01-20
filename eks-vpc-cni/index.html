@@ -84,7 +84,28 @@ VPC 내에 생성한 인스턴스는 eth0이라는 기본 네트워크 인터페
 오늘의 주제는 EKS의 VPC 네트워크 구성과 CNI 플러그인 입니다.</p>
 <br>
 <h2 id="aws-vpc" style="position:relative;"><a href="#aws-vpc" aria-label="aws vpc permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>AWS VPC</h2>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1YFGsyvNbctia5Q3dPrRT8KxtirnkII71" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 86%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAiCAMAAAAau2s5AAACu1BMVEX/////+/j++fT7+/v2tnj1qmP01rns7Ozu7u7m5ub717T71K/85M394s76vpL+8ef6+vrq6ur8/Pzl5eX1oGT4rHX3mVXn4t7w8PDp5eH+9u/p49302cXyzrTz07v++PP++PL+9/H+9/Lp4tzy7Of+/v6HhZ/V1d319fX9/f3o6Ojy6+Xz7unx8fG5t8Pb29/l5eb39/f2rWX3t3r8+/vv7+/07eb07uny8vLU0tHS0tPMzc3t7e3+9ez1nUb1nkj4t3n79e/X1NTT1NXOz8/r7Oz//fr5wYv1mT7zhRn4xZPy7Obn5eXh4eHi4+P6+vv/+/f5voT0kS/6zaH17+no5+bR0NDZ2NjS0dHPz8/7/Pzn5+f27+no6Ofo6Onz8/Pd3d3T0tG7u7u5urrW1tf09PT7+Pbn4tzl4+PIyMjd3N3V1dPW19fe3t7s5d////7n5ub96Nj848/849H96Nf85tX98Ob4qXL3oGLlvaD//v3x6uPl5eTa29vk5OTb29va2tra2drp6erq6enp4dv+9/D1omf4rnnpsov29vbg4ODp6enf396vr66ysrOurayurq/m5+fj4d+ys7KgoaHm5+jo4+D/+vfX0tf38/H++vb++vfnyrfltpXg1c3w6uXMysvIx8fDxMXHx8nIxsbP0NF+e5rMy9b08/L08vHg397Z2dj17unR0tLd3Nrt7u71lzz1m0D638P4+Pju6ePU0dHa2dfs7O31nEf1mD31m0P52rrj4+PU0dDR0dLi4d/x8fL848r1nUX2pVf5+fn83b/2pFL5v4bp6OfR0dHZ2dnS0tLQ0NC/vbzi4uLX19fY2dnNz9DP0ND17ebx7Of24tH23cr23sv24tL24M736Nzp5eLo4t3++fP29/e9vb3Ozs/a2dnOzc7Pzszk5eXGxsaqqqu6ubzk5uh26NUaAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEUCgUWUOwe9QAAAktJREFUGBmlwWtojXEcwPHv73meY89/57ic2dmwYmvtYlaLmpSVtOSNRZowL0ZaZLm8IF4wl5qSpEwtMcULTaFWUpOWuRRb8WYXu5bGdnaxhdbZaGf+z9mInkcpnw8gBv9AMEXjdzKBm6Ak5jO/LJAxXITgWII4vjBrflhFcBEWiwwskZipPrS0aDiCi4W/W0WViKBlgrTHta1oxcXABmxNdcb7A0NDgQzw42bgB/yOtYFAII++XjxZjKMpmQVzIYSbQUy89lhpo6lf8WSR3QI8BLaJVtIQWtmGBwubGQW2NL2D0jpfBh4MJoAsIMPnK0D7+n0hHiwcr8vgdjGPyuD53hdt+4jZL9qnxCocwiGRacAQxyS2aPcHI9PpA+XiGAlVikrssghVH7hhRJFJKK+JSpnItfAZmfWtte6sXJLx61gM+xKOIxI1QY5RnyTyvuZpTxHJItJP04lIinyoWIqQ26Ii2RXSAIXyBDbIs6qUeYP8aRThXrGKlHYeFWleLbKbOcNZF2QTLga1QMdJbBvbtu8CV6jGzcBGs4NKnVfqsp0canxThAeLCbRCtHUvT0n7ooOTeLHoY9Yr0Up8t3IYxs1inBmnfa25q6AUbwaOcdM0t5h5lmma9UANbha1uTDRSFC09iH2hGEHXrrSug2tJzWtcpnhSE89gpcgCsfhNb3LceSgcLP46Wq3bBwc5W+E4FjByBRwJ0lE1gM7z6kILkJwjPxM4MFWYt52TKkIHi4y42P/QJgZu3Cz6IzLx7G9OZ8CHJtv8h9+ABl+m+Lo0rhPAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="vpc default"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/6o1qOuWifPux7wixcSmgXV/b92e502ce80d4d069cf6625ad74d8251/vpc_default.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/6o1qOuWifPux7wixcSmgXV/b92e502ce80d4d069cf6625ad74d8251/vpc_default.png?w=175 175w,
+https://images.ctfassets.net/tushy4jlcik7/6o1qOuWifPux7wixcSmgXV/b92e502ce80d4d069cf6625ad74d8251/vpc_default.png?w=350 350w,
+https://images.ctfassets.net/tushy4jlcik7/6o1qOuWifPux7wixcSmgXV/b92e502ce80d4d069cf6625ad74d8251/vpc_default.png?w=700 700w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>아마 AWS를 production 환경에서 사용하고 있다면 VPC 구성은 이미 잘 이해하고 계시리라 생각합니다.
 VPC 내에 생성한 인스턴스는 eth0이라는 기본 네트워크 인터페이스를 가지게 됩니다.
 그리고 네트워크 인터페이스에 하나 이상의 IPv4 또는 IPv6 주소를 할당할 수 있습니다.
@@ -101,7 +122,28 @@ PrivateLink를 통해 다른 AWS 서비스와 통신할 수 있어야 합니다.
 이 문제를 해결하기 위해 AWS는 CNI 라는 네트워크 플러그인을 지원하기 시작했습니다.</p>
 <br>
 <h2 id="eks-cni" style="position:relative;"><a href="#eks-cni" aria-label="eks cni permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>EKS CNI</h2>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1pMXq0s4jrnvwLjoUGwfTfj4HQBsf2NiB" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 54.285714285714285%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAWCAMAAACFUC6CAAACT1BMVEUZGRlIMB9oPyMdHh5HRkdKSkpOTU1QUFBJSUkvLy4nIBvcfTn2l1LSfkM5KR0pIBkiHBgjHBgfGxkaGhpZOCH2lE73oGD3mFOPVS0nJyctKictLS06LSUzJBwyJBwcGhkfHBkmJiYlJSU4LCXMcDBmQSgkJCQqJyQ+Pj4hISGxYy6ZWSwbGxs0KCHRczBkPiQcHBwjHxwlJSRBQUEoKCi1ZS2bWSoxMTEpKSlcXFwzMzNNNhtFMhtMTEy80uS+zts5OTm4w8ybxuqGhoYiIiIbGhl0RSVvQyQiHRl6d3WVwumeyOtWVla7yNKVwueQj44gHRklHxldPBRyRxJvRRJfPRRjPSH2tX30uYBTNSAgHBkhHRmIiIiAgIAeHh5UVFQoIRh1SRJxRhJELhZALB7wnV/smVo3Jx0nKCdFRkU9Pj0mJyZRUlFCQ0I8PDsaGRklJCQzJRsvIxsgICBEREQzNTRDQ0IhIiE4ODg2NjYfHx8eHBkqKiqkp6mcnZ9dXV1HR0dsbGyGuOOQveRfXVolHhkjHRlqZ2Wmy+q61OpFRUW8ydQbGRkeGxljPSJBLB4tJh4sIhgwJRcvJBcZGBliYmKy0eu91eo8PDw2NzYkHhlgOyH1tHvnomowJRhePRR7TBFaORQsIxg/Pz80NDRJSklGRkVTVFM6OzvtnF/FfEY5KhdTNxRCLhYsLCweHx44OThXWVcxMjE3KRsoIRpRUVEjIyMrKysmJyc3Nzc/Lxs1KRovLy9DREM/QD8dHR1ERENMTUxCQkI9PT1ISUkWH7KiAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEUCgUWUOwe9QAAAcZJREFUKM9jYGBkYmBgZmFlY+fgZMAHuLh5ePn4BQQFhRiE8SoUERUTl5AEAilJPEAaqFJGVk4epEMBn3GKQKwkrKyiqqampg7EakoaShAZTS1tNQTQAStU09XTNzAwMAQBI2NJiEITUzMDCDC3MDBQhCjUgZhuCfSMhbkVRCHQYGsbEMPWzt6BQQlZoaOTM5DUcYEoVGNwdXNnYPDw8PTy9kFV6OvnHxAQyABWGBQcEhoWHhEZFc2gFBMbh6pQMV4H5HWwwoTEpOSU1LR0IDMjMysbRWFcTm6eAUwhQ34BA0NhEZBRXFKaWVaOrNC8wryyCq4Q5JlqeXgwwhXW1NapMUBCHUNhfQOSwsam5paAaFc0ha1tQNDe0amBUNjV7evA0NPLkN/XP2HipMkJYIUMU0Bg6rTpMxAK46RnMjD0zIqaPWfuvPkLFi6CKISAxUsQVlctXbZ8BUiwf+Uq4dVr1gJZ69TiwMrWb9houSkObqIwgzAkMW7eAnGjsMnWbWCGjmSxyXYDqEIDkMiO3J1VDAy7dkMVSu+xAKrauy8DKXh0FJEB1HFqLsiC+0EKLYpRgNKBg4cOH7FVRBXdDnKFARFAhwEAOuiNRlaZ1o8AAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="eks-cni"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/1ZE4A9apz0TNm9p20VzoK3/7f36a5c0f3555aee3265c9b1ce51e90c/cni.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/1ZE4A9apz0TNm9p20VzoK3/7f36a5c0f3555aee3265c9b1ce51e90c/cni.png?w=175 175w,
+https://images.ctfassets.net/tushy4jlcik7/1ZE4A9apz0TNm9p20VzoK3/7f36a5c0f3555aee3265c9b1ce51e90c/cni.png?w=350 350w,
+https://images.ctfassets.net/tushy4jlcik7/1ZE4A9apz0TNm9p20VzoK3/7f36a5c0f3555aee3265c9b1ce51e90c/cni.png?w=700 700w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>CNI 는 다음과 같은 통신을 지원합니다.</p>
 <ul>
 <li>단일 Host 내에 존재하는 Pod 간의 통신</li>
@@ -126,7 +168,28 @@ L-IPAM 데몬은 모든 노드에 DeamonSet으로 배포되며 gRPC를 통해 CN
 이런식으로 Warm Pool을 늘려가면서 최대 <code class="language-text">4 * (15 - 1) = 56</code> 개의 IP를 가질 수 있습니다.
 물론 이 부분은 <code class="language-text">WARM_ENI_TARGET</code> 과 같은 CNI 옵션을 통해 수정할 수 있습니다.</p>
 <br>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1YctEii4hpUFN5ajMU0j0LSEv6AjGS3PU" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 21.875%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAJCAAAAABlZTEiAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEUCgUVyeVPTwAAAJ9JREFUGNOFkNsSwiAMRPv/H6kv9VKYklAgUINGLjpWx9E8LMNyJiE7yHvBeB53h/1x1B8PQ1PWRlkRp1GFcoHJCSszeckAswonUH4g5xZnDRAXnlfOci3KTbPcqtXs2tEXFGNv3TRvtB35OVpk1Qhokf6CD5fAVj5SpBR/gX00p1oeEWCxly3Y/9+W4c0yVTkmkwLzK57lezxmVlTiCXegFl6dQwIBDAAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="eks-ping-pod"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/18o6b9yBhmnhuavqabdE5m/83bbb51cb99f44cfaa17610ff6e9d5ab/ping_pod.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/18o6b9yBhmnhuavqabdE5m/83bbb51cb99f44cfaa17610ff6e9d5ab/ping_pod.png?w=200 200w,
+https://images.ctfassets.net/tushy4jlcik7/18o6b9yBhmnhuavqabdE5m/83bbb51cb99f44cfaa17610ff6e9d5ab/ping_pod.png?w=400 400w,
+https://images.ctfassets.net/tushy4jlcik7/18o6b9yBhmnhuavqabdE5m/83bbb51cb99f44cfaa17610ff6e9d5ab/ping_pod.png?w=800 800w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>구체적으로 CNI를 통해 Pod1 과 Pod2가 어떻게 통신하는지 다이어그램으로 표현하면 위와 같습니다.
 각 Pod의 eth0에는 secondary IP address가 할당되며 Pod Side Route Table를 가지고 있습니다.
 노드의 네트워크 인터페이스까지 도달한 패킷은 EC2-VPC fabric에 의해 포워딩 됩니다.</p>

@@ -92,7 +92,28 @@
 <p>이제 몇 가지 예시를 통해 어떻게 활용할 수 있는지 알아보겠습니다.</p>
 <br>
 <h2 id="1-s3-sync-container" style="position:relative;"><a href="#1-s3-sync-container" aria-label="1 s3 sync container permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. S3 Sync Container</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1Hh0f6l9jDLHHEaH5OyGU7Nhe5nUnnJU1" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 54.478707782672544%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAWCAMAAACFUC6CAAAACXBIWXMAAB7CAAAewgFu0HU+AAAAB3RJTUUH6AEUCgUVyeVPTwAAAIRQTFRFAQEB1tbW1tbW7e3t7e3tysrKzc3Nzs7O0tLS1tbW2dnZ2tra3d3d4ODg4eHh4uLi4+Pj5OTk5eXl5ubm5+fn6Ojo6enp6urq6+vr7Ozs7e3t7u7u7+/v8PDw8fHx8vLy8/Pz9PT09fX19vb29/f3+Pj4+vr6+/v7/Pz8/f39/v7+////gmbWFQAAAAV0Uk5TAXBx4eO/YfyVAAAA60lEQVQoz42T6xqCIAyGMe1sFmaeYlqppe7+768hRU+a0n7w4XjlgwGMzRwwhjNjzMKpyCTWUMdiNm7dMSzuGMxPiDaDiflioZwJhEkQ8HHw+JXUAJ6xTny/JDWANVlHZF2ZQGWvxAwu+Ru86LpW30wlcyvZXDsQ+jbDT3iB4gh+lN6HYBqINIpzDUZ+wF33F8h3yd4LNPindS6XG8qmpFyh9lVQt9QDl0953n9nodIwG6kjSXW4kTZqxoYStSeGYAyQrMlmgXicbwhYEL3llB05mUK0UlpR9DZGF7d/Zl30s7bhKeiw2L+P6wnIUn6JVS/W6wAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="s3-sidecar"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/72F13S5hekKyVz9z9rCAKq/fc48e2c5b5f1ed47ff26a21fff2fc8f4/s3-sidecar.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/72F13S5hekKyVz9z9rCAKq/fc48e2c5b5f1ed47ff26a21fff2fc8f4/s3-sidecar.png?w=341 341w,
+https://images.ctfassets.net/tushy4jlcik7/72F13S5hekKyVz9z9rCAKq/fc48e2c5b5f1ed47ff26a21fff2fc8f4/s3-sidecar.png?w=681 681w,
+https://images.ctfassets.net/tushy4jlcik7/72F13S5hekKyVz9z9rCAKq/fc48e2c5b5f1ed47ff26a21fff2fc8f4/s3-sidecar.png?w=1362 1362w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>AWS MWAA 처럼 <strong>S3를 DAG 저장소로 활용하고 싶은 경우</strong>에 S3 Sync 사이드카 컨테이너를 통해 구현할 수 있습니다. S3 Sync 사이드카 컨테이너는 S3 버킷에 올라간 파일을 DAG 경로에 주기적으로 동기화하는 컨테이너입니다. 만약 DAG Serialiaztion 옵션이 활성화되어 있다면 scheduler에만 정의하면 됩니다.</p>
 <p>예시는 아래와 같습니다.</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">scheduler</span><span class="token punctuation">:</span>
@@ -149,7 +170,28 @@ care container and read by the worker container.</p>
 </blockquote>
 <p>대략 K8S 환경에서 사이드카 형태로 구성하는 방법에 대한 내용입니다.
 이를 그림으로 그려보면 아래와 같습니다.</p>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=14rfnQmDROdWpqN4TNQJr02_sIT9E_K0i" alt="krb"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 54.478707782672544%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAWCAQAAAAYhxY7AAAACXBIWXMAAB7CAAAewgFu0HU+AAAAB3RJTUUH6AEUCgUVyeVPTwAAAepJREFUOMutld2u0kAUhb/+0JbDT1EIaDRcaLzywlcjPojHZzORGM0xkZgYjmIYSikDbcebodBOe0jUNRedme5Zs/eaPXssy/o4m7x1nvPPyL4v371+z3y2Vp/UQf0NhFrrlumZ+cxafRtMJQFWsVOOrOzt0jL8+UWLHrYeReyYAL8XrjO1aZdMV4SVxZIDHYNSERlzztQ25vDwyNmSESHJ8eiSGlYtBmTck7AjJSQooqkXmC847HB5wZNaixwIGKGI8fX4AcIOL8lRZIwbzrTPGgubHzwFBDfNhEdSYFB4knOoMXO0RVpRvIbwEYnubehrvXya4DKny7RMuCUzDAN8MroNNJJ90XsGCMClcyLMjEQBob36SsQb4+++dkUpZMkHwCelx6tCP8GQIYIjfbwKwYocR+voFZq7Z/4hMTE9NhdqnrdThkcpEosWOZLUJBw3JghQQweThkMCbB0/yOI8T9+Eg9YnBDx9Tf2aFc6ZsHchbFnsDXvGmgzgniN9ICiumriehyD5yWNuAMWo8AVgRASsiOmwo3uh8gmV4nBEINgSsUUguMMmZMdnlihCbO4QxKQIErYIo2xYa2Vm1BkJkrColQqBXyl2ZQjcbHFxbwy0aZdCHvAwsoW9vL1iQ3jRrmF5a/3vR+oPMu3n/rlu1tgAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="kerberos"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/3Unp3SJDghgcGuQxCJNHNZ/e6347df7cf93baac02b581d8f6e42f1a/kerberos.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/3Unp3SJDghgcGuQxCJNHNZ/e6347df7cf93baac02b581d8f6e42f1a/kerberos.png?w=341 341w,
+https://images.ctfassets.net/tushy4jlcik7/3Unp3SJDghgcGuQxCJNHNZ/e6347df7cf93baac02b581d8f6e42f1a/kerberos.png?w=681 681w,
+https://images.ctfassets.net/tushy4jlcik7/3Unp3SJDghgcGuQxCJNHNZ/e6347df7cf93baac02b581d8f6e42f1a/kerberos.png?w=1362 1362w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>kerberos 컨테이너는 keytab이 존재하는 볼륨에 접근하고 kinit 명령어를 통해 ccache를 갱신합니다. airflow 인스턴스들의 worker는 해당 볼륨의 갱신된 토큰을 통해 인증을 달성할 수 있습니다. prod, dev와 같이 여러 airflow를 사용하더라도 kerberos의 컨테이너에서 한번만 캐시 업데이트를 수행하면 됩니다.</p>
 <p>예시는 아래와 같습니다.</p>
 <div class="gatsby-highlight" data-language="yaml"><pre class="language-yaml"><code class="language-yaml"><span class="token key atrule">worker</span><span class="token punctuation">:</span>

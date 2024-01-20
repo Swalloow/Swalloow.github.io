@@ -90,7 +90,28 @@
 이에 대해 가장 유명한 패턴은 MapReduce 패턴이며 이미 많이 사용하고 있다.</p>
 <br>
 <h2 id="work-queue-systems" style="position:relative;"><a href="#work-queue-systems" aria-label="work queue systems permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Work Queue Systems</h2>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1lgFxyQ5EfZ5IXTf4SPxZ1liOLuSq6-Z5" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 32.285714285714285%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,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'); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="work queue"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/5UjzV59mErstGoxMdDY6WO/5d88056bed8ecd4f17c625e4ccaa331f/work_queue.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/5UjzV59mErstGoxMdDY6WO/5d88056bed8ecd4f17c625e4ccaa331f/work_queue.png?w=175 175w,
+https://images.ctfassets.net/tushy4jlcik7/5UjzV59mErstGoxMdDY6WO/5d88056bed8ecd4f17c625e4ccaa331f/work_queue.png?w=350 350w,
+https://images.ctfassets.net/tushy4jlcik7/5UjzV59mErstGoxMdDY6WO/5d88056bed8ecd4f17c625e4ccaa331f/work_queue.png?w=700 700w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>배치 프로세싱의 가장 간단한 형태가 바로 Work Queue System 이다.
 Queue 형태의 작업 대기열이 있고 이를 관리해주는 컨테이너가 Worker에 작업을 분배해주는 형태이다.
 일반적으로 작업 대기열에서 각 작업은 일정 시간 내에 수행되어야 하며 처리량에 따라 Worker는 Scale-out 할 수 있어야 한다.
@@ -112,7 +133,28 @@ Queue 형태의 작업 대기열이 있고 이를 관리해주는 컨테이너�
 하지만 단일 작업 이상을 처리해야 한다거나 단일 입력에서 여러 출력을 생성해야 하는 경우도 있다.
 이러한 경우 여러 작업 대기열을 연결하는 이벤트 스트림 방식을 통해 작업을 수행한다.
 이전 단계의 작업이 완료되면 이벤트가 발생하고 이벤트를 통해 다음 단계의 대기열로 이동하는 형태이다.</p>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1fOMS2fS1bVaKHobo225bRPD-2z8Zaoz0" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 29.714285714285715%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAMCAMAAAAnHQ9/AAAA51BMVEX////8/Pz+/v739/fG1d/V3+X7+/v29/fn6+76+vr09PTG0NjO1dnu7u729vbq7O20xtL19fXEz9fP1trt7e3n6eqiuMfa2trm5ubx8fG3ydTJ1Nvj5eayyNfb5ey0y9q3z9/n6uzV4uq5ytXV4Ofe5uu+0N2+0d3o6+zH1uCyxdLG09z29fXH0tmluMTp6enY3uKmuMSnu8nT19rr6+vq6ur9/f3c3NzfwcLqxMXU3OHAztfl5eXs7Ozj4+Py8vK7ztvX2tzk5OT02tvv4ODS2d6+ytL5+fno6er4+PjU2+DAy9Pz8/MTtrPbAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEUCgUXJ+suYwAAALlJREFUGNNtkQcPgjAQhY+quKt1Ae69FSdO3Fv//++RhFqE8tqkl8t395JXAIETuEpA5uvx+mhHNC6VPxCklQC/+VA4EsUMpM1YnLBpBiaSKdEJpjOS7ASVbO7Pmpb5Ar+xWCpXOLBaq3Ngo9lqc2Cn23OCqA+DoQ3Eqjwa48l0NrdATVosV7DebGXdApWdutfI4XjSNWsjQucLXG+E3G3WGPDjyazNwDWCXm9mTWP+GIcFjkROrj/4Be95D66Gir6mAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="sharder"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/5eVXMAvajMHgvNOM4GtgBi/b080f0f83fb26c7fc1d2825318c44568/sharder.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/5eVXMAvajMHgvNOM4GtgBi/b080f0f83fb26c7fc1d2825318c44568/sharder.png?w=175 175w,
+https://images.ctfassets.net/tushy4jlcik7/5eVXMAvajMHgvNOM4GtgBi/b080f0f83fb26c7fc1d2825318c44568/sharder.png?w=350 350w,
+https://images.ctfassets.net/tushy4jlcik7/5eVXMAvajMHgvNOM4GtgBi/b080f0f83fb26c7fc1d2825318c44568/sharder.png?w=700 700w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>스트림 처리에 대한 여러 패턴이 존재하지만 위 그림은 그 중 하나인 Sharder에 대한 내용이다.
 Sharder는 작업 큐 2개를 두고 만일 두 개의 큐가 모두 healthy 하다면, id 기준으로 작업을 분배한다.
 만일 어느 하나가 unhealthy 하다면, 새로운 큐를 생성해서 다른 한쪽으로 작업을 분배한다.
@@ -123,7 +165,28 @@ Spark의 DAG와 같은 그림을 떠올린다면 어떤 내용인지 바로 이�
 AWS의 Lambda, Stream, Kinesis Firehose를 떠올리면 된다.</p>
 <br>
 <h2 id="coordinated-batch-processing" style="position:relative;"><a href="#coordinated-batch-processing" aria-label="coordinated batch processing permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Coordinated Batch Processing</h2>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1o4P4CyxS-V3ZMHQc5J0M7BwCdp937Q0H" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 37.42857142857143%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAPCAMAAAChiX3RAAABd1BMVEX////7+/v4+Pj6+vr39/f39/b8/Pz4+fnu7/C+ztquwMzZ4uidtsf29vbx8vKkwNPV2t7t8fOyxtTU4OfK1t/m7PC+0Nz5+vr19vbD1+Tj5+rU1NTr7vGnvcve3t7P2N3EzdPk6eu1wsr29/e5x9Di5efp6env8vS80N37+/zK1+G8ytTh5+yuw9H09PW1y9vc4OPc5eu5ytXn6+7x8/S50+Xj5ui90t/O2eDS3+i8zdrH1d6yydnR2N3v7+/s7Ozr6+vz9fa90Ny1yNTm6erD0ty4y9jT2uDX4ObBztbb5ezI0tnj6u7Q2uLf5ejM197e5uv+/v7u7u6pw9Okvs+9zdepxNaqxdixxNG1ytiqw9TDztbm5ubY2NjW3eHX3+XV2dzf5+3b3+LE0ty7zdnT2+D19fXn5+e2zNupx9y0xM65yNPq6urZ4uedt8nb3uDg5enk5uf9/f3n7O+9zNbG2eauz+bQ2uHk6ey2xM3z8/Pe5eqmvcxTDsRsAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEUCgUWUOwe9QAAAQVJREFUGBkFwSFuFAEAQNH3Z2cG2NkGgYYbUNWggAMQRI+B4SB4guwJSOrRReBIFUHhQEBANem23eG9AAAgyDp0ZzwcYGq+AeauAYbDigddLVX9g8abFdh2vQIOYNvVtqrl1x0GgGV5PAOA3c5u93tZlmUDI8BSewCwZKmlvoIRYFsA4CTPOpx0OwEjwLZe1sUtwFFVdTMDtcKrqso5ssLw/NGfi9P1HLQJHE/TdPlk+vgNAtafxw+fzp9PL6EROBzVi84AgP22er0CtYI3tQ59+rFHVuBtH24BDYCzeb5/7/33PQCY5xXACNjP9Q4AYAqAQVU1fflbVTUAbDYBCAAAZgAA/Adg0D1COxhvJgAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="coordinate"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/4oBRvo1UJSlho5IccmzkBv/eb6e03b6b41c19c70abe2e98dc171718/coordinate.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/4oBRvo1UJSlho5IccmzkBv/eb6e03b6b41c19c70abe2e98dc171718/coordinate.png?w=175 175w,
+https://images.ctfassets.net/tushy4jlcik7/4oBRvo1UJSlho5IccmzkBv/eb6e03b6b41c19c70abe2e98dc171718/coordinate.png?w=350 350w,
+https://images.ctfassets.net/tushy4jlcik7/4oBRvo1UJSlho5IccmzkBv/eb6e03b6b41c19c70abe2e98dc171718/coordinate.png?w=700 700w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>처음에는 단일 대기열로 처리했지만 더 복잡한 배치 작업을 처리하기 위해 대기열을 분할하고 연결했다.
 하지만 최종 단계에서는 결국 원하는 결과를 생성하기 위해 여러 출력을 하나로 합쳐야 한다.
 합치는 작업은 여러 개의 작업 큐가 모두 종료되고 난 이후에 수행되어야 한다.
