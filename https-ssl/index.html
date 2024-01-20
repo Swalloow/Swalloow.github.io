@@ -100,7 +100,28 @@ HTTPS는 보안을 강화하기 위해 통신에서 일반 텍스트를 이용�
 <p>그렇다면 HTTPS에 포함된 SSL 프로토콜이 어떤 과정을 통해 동작하는지 간단히 알아보겠습니다.
 다시 설명하자면, <em>SSL 인증서는 클라이언트와 서버간의 통신을 제3자가 보증해주는 전자화된 문서</em> 라고 보시면 됩니다.
 처음 클라이언트와 서버가 데이터를 주고 받기 위해서는 준비과정이 필요합니다. 이를 핸드쉐이크(HandShake) 라고 부릅니다.</p>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1eofXRfzRY7SzkK1zqV_OO9qUr9d2X2J2" alt="ssl-process"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 68.06640625%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAbACgDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYBBQIDBAn/xAAuEAABAwMCBAUCBwAAAAAAAAABAgMEAAUREiEGExRRByIxYZFxgRUjJEGhwfD/xAAWAQADAAAAAAAAAAAAAAAAAAAAAQL/xAAfEQABAwMFAAAAAAAAAAAAAAAAAQIREiExIkFRwfD/2gAMAwEAAhEDEQA/APTm5v3Vax0Ud5GNjqLWk+482aQGnvEVzx6YQi125ngREBJlznVr6l1wtnCEAAoOlwDPpsfl1uM3iZiW8mJBiPxwTy1kkEjbGfMN/wDfXCPcrolp5V3RFgr9GsvFtB2zkkKPxnvVMdRNplIv7I360RMRx2M9JXi0/eIvCinrDbl3S5NuakR29WVeRXYj1Okb7b1ExTM5z9Q/YpKgMDnSlqIGfc98V2NXMguIenW8+Q6Ex5qyvV+wwTvUiNtsf4gNxT1KGzHWBqQsAaDjcAgd/r/dFXEC8w7mtSYz3NKUhR8ihgfcUUkSC3Oq2OiS6tllSm2VPrHohBAJ+SB/NUiLoWlly+NR7eggJRzlp0k/XJGdjTBS5xg4tpuKW3HGiXMEtrKSRgnGRTIN349w3kjr7Zkbkc1vaodu1jkNONMSoLj6kKCENrQVE4PoPsfg9qUVTpQecT1cnACcfnK7n3qwtrrrs9pDkh9aFBWUqeUQfKr3oAu+HITsCQ5rtjkTmAAudRzBtk7grPfG3eimGigD/9k='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="ssl-process"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/5Jnjvd8nYI1qyWv4uZURKl/cecf5ad78296d2448566d6132c43a5a0/ssl-process.jpeg"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/5Jnjvd8nYI1qyWv4uZURKl/cecf5ad78296d2448566d6132c43a5a0/ssl-process.jpeg?w=256 256w,
+https://images.ctfassets.net/tushy4jlcik7/5Jnjvd8nYI1qyWv4uZURKl/cecf5ad78296d2448566d6132c43a5a0/ssl-process.jpeg?w=512 512w,
+https://images.ctfassets.net/tushy4jlcik7/5Jnjvd8nYI1qyWv4uZURKl/cecf5ad78296d2448566d6132c43a5a0/ssl-process.jpeg?w=1024 1024w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <ol>
 <li>
 <p>먼저, 클라이언트가 서버에 접속(Client Hello)한 직후에 서버는 클라이언트에게 인증서 정보를 전달(Server Hello)합니다.</p>

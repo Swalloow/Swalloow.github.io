@@ -173,7 +173,28 @@ array<span class="token punctuation">(</span><span class="token punctuation">[</
 <span class="token keyword">print</span><span class="token punctuation">(</span>copy<span class="token punctuation">)</span>
 array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre></div>
 <p>위 코드 결과를 보면 <code class="language-text">origin</code>, <code class="language-text">view</code>는 변경된 값으로 반영되어 있지만 <code class="language-text">copy</code>는 반영안되어 있는 것을 확인할 수 있습니다. <strong>view는 자체적으로 데이터가 없는 numpy 배열</strong> 입니다. 반면에 <strong>copy는 원본 배열의 요소를 새 배열에 복사하여 전체 복사본의 데이터</strong>를 가지고 있습니다.</p>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1k84OBHC_yWsft7SawKk8SlGbomNsbRMC" alt="view-copy"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 44.583333333333336%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAASCAAAAAAMdMN6AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH6AEUCC0zRTGwdgAAASVJREFUKM+t0c1OAkEQBGDf/2l8BY8mRgkmyp+CsDM7Mz3dPbvsH+xCeYHjGkis83eo6n7AjXm4Bw5ifSpaoGIfRAG0JnfiWCw751KqLzAimgAZ8s0hmMqTmNehyBfsSjujz9BGukDCdj5Hlj42ZbabuXOuL2iDl+MQyHehIrnAswSb0QFolTQGCDpRis5xYE+e8mZkDI+N6bkQlgoo1BtPsGMwIc09VubtqdmuWGU2BrWvs4iI4quO8Vv+OLgkjjoArTMZVf/xGWJNqQVYoycCUFPI1ZI4tm6bdH/tCFkYZDp9bn6WUYzJHnv2E2OSm9C73e/4AnlIyzUI5a4RXitwnuLom+x0ihUNrqv12pGTsgxAo96GEkDvAwtHYYosErp7x9yUX0lStk5vCENkAAAAEnRFWHRleGlmOkV4aWZPZmZzZXQANzjJ1HsnAAAAGXRFWHRleGlmOlBpeGVsWERpbWVuc2lvbgAxNDU4szskLwAAABh0RVh0ZXhpZjpQaXhlbFlEaW1lbnNpb24ANjUwowVD2wAAAFx0RVh0ZXhpZjpVc2VyQ29tbWVudAA2NSwgODMsIDY3LCA3MywgNzMsIDAsIDAsIDAsIDgzLCA5OSwgMTE0LCAxMDEsIDEwMSwgMTEwLCAxMTUsIDEwNCwgMTExLCAxMTZAuB9yAAAAKHRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCBBcHBsZSBJbmMuLCAyMDIzk7OPCgAAABd0RVh0aWNjOmRlc2NyaXB0aW9uAERpc3BsYXkXG5W4AAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="view-copy"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/RKHHbP0caT2iSgCohNwSj/a66eab638f2a77b5f452ccabfc866a67/view-copy.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/RKHHbP0caT2iSgCohNwSj/a66eab638f2a77b5f452ccabfc866a67/view-copy.png?w=240 240w,
+https://images.ctfassets.net/tushy4jlcik7/RKHHbP0caT2iSgCohNwSj/a66eab638f2a77b5f452ccabfc866a67/view-copy.png?w=480 480w,
+https://images.ctfassets.net/tushy4jlcik7/RKHHbP0caT2iSgCohNwSj/a66eab638f2a77b5f452ccabfc866a67/view-copy.png?w=960 960w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>이처럼 view, copy에 따라 원본 객체인지 아닌지 달라지며 이는 일관된 동작을 보장하지 못하게 됩니다.<br>
 결국 <code class="language-text">SettingWithCopyWarning</code>은 코드에서 사용자가 의도하지 않은 동작이 발생할 가능성이 있음을 경고하는 warning 입니다. 이 문제를 해결하기 위해 Pandas 2.0에 <code class="language-text">Copy-on-Write</code>가 추가되었습니다.</p>
 <p><br><br></p>
@@ -219,35 +240,161 @@ https://images.ctfassets.net/tushy4jlcik7/2D9OCQfiqBrPnFVvYCKhpd/dc7eedf889af33d
 그리고 블록에 대해 <code class="language-text">weakref</code>를 가지는 Block Reference Tracker가 추가됩니다.<br>
 이제 다음 예시에서 새로운 블록을 추가해보겠습니다.</p>
 <div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python">df2 <span class="token operator">=</span> df<span class="token punctuation">.</span>reset_index<span class="token punctuation">(</span>drop<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span></code></pre></div>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=17yEuS5fK1OIsepinstkOMpxkbx36Wi3L" alt="ref2"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 53.276955602537%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAVCAAAAAARcfPCAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH6AEUCC0zRTGwdgAAAOJJREFUKM+lkssOgjAQRfn/r3BvXLnRjRs16kZIiCBoMAgRGIEorwpUkFcIESokzmI6bU467dxLpQODqiufGQi6ykBwaGvtfDhikQWeBqM8sSELvwVaNx1iQQBRBC4nYBXiKEm17tYn7kJfqxvZSJptkEEAVVWWTLaoDbScTwUCWB6vvTyUMNB0TGhtAvAAcVGjiSJ3faZmq9WD4NU9x+Sd5/0CFbun5YeEgW9HjWfajy+u1drZ5fnuunGfMlymjIZcTJSwoQwTebjHFJUyTtLnnlKZcb/NjEb+CZqFb+K/jPsBbicygU39RNwAAAASdEVYdGV4aWY6RXhpZk9mZnNldAA3OMnUeycAAAAYdEVYdGV4aWY6UGl4ZWxYRGltZW5zaW9uADk0NsUuceQAAAAYdEVYdGV4aWY6UGl4ZWxZRGltZW5zaW9uADUwNNtZzd4AAABcdEVYdGV4aWY6VXNlckNvbW1lbnQANjUsIDgzLCA2NywgNzMsIDczLCAwLCAwLCAwLCA4MywgOTksIDExNCwgMTAxLCAxMDEsIDExMCwgMTE1LCAxMDQsIDExMSwgMTE2QLgfcgAAACh0RVh0aWNjOmNvcHlyaWdodABDb3B5cmlnaHQgQXBwbGUgSW5jLiwgMjAyM5OzjwoAAAAXdEVYdGljYzpkZXNjcmlwdGlvbgBEaXNwbGF5FxuVuAAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="ref2"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/4239ZGl27LRzj0fIxiW2Ut/149499a3ad41a0c2635bdd04fd9e9006/ref2.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/4239ZGl27LRzj0fIxiW2Ut/149499a3ad41a0c2635bdd04fd9e9006/ref2.png?w=237 237w,
+https://images.ctfassets.net/tushy4jlcik7/4239ZGl27LRzj0fIxiW2Ut/149499a3ad41a0c2635bdd04fd9e9006/ref2.png?w=473 473w,
+https://images.ctfassets.net/tushy4jlcik7/4239ZGl27LRzj0fIxiW2Ut/149499a3ad41a0c2635bdd04fd9e9006/ref2.png?w=946 946w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p><code class="language-text">BlockValuesRefs</code>는 이제 <code class="language-text">df</code>를 위한 블록과 <code class="language-text">df2</code>를 위해 새로 생성된 블록을 가리킵니다.
 이를 통해 동일한 메모리를 가리키는 모든 DataFrame을 항상 인식할 수 있습니다.
 동일한 numpy 배열을 가리키는 블록이 몇 개 남아 있는지 참조 추적 객체를 통해 알아낼 수 있습니다.
 이러한 과정을 통해 <strong>둘 중 하나가 내부에서 수정되면 내부적으로 복사본을 트리거</strong>할 수 있습니다.</p>
 <div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python">df2<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span></code></pre></div>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1kzXavfld6ZqUbCiY0BTMDDqXVG01A5Rc" alt="ref3"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 46.99646643109541%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAATCAAAAADHKBDfAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH6AEUCC0zRTGwdgAAALtJREFUKM+tkc0OgjAQhHn/FyLxYjSBG1IjkajEH4wF2q4gSlGiYlvPGwg6p0n6ZXZ3arU9ZQ0Amf/nxHueV4JCHPMOEJbbEw1ht95LJRoLpRIbzecrL0wNyH07aAADRSEFzKCuZM2J7TxQkINS9tI2VU7I33rsDS7G/RNrvWPVASaut4FjC4fvqWd9zBNLpAAUIh3rZWUoWrQeNiEjJ2nMR01dckNB8xDkunCWkQhPvOqpF2MLveN7QI8fk+7mlpyP+4AAAAASdEVYdGV4aWY6RXhpZk9mZnNldAA3OMnUeycAAAAZdEVYdGV4aWY6UGl4ZWxYRGltZW5zaW9uADExMzIDf6hcAAAAGHRFWHRleGlmOlBpeGVsWURpbWVuc2lvbgA1MzIZFzsoAAAAXHRFWHRleGlmOlVzZXJDb21tZW50ADY1LCA4MywgNjcsIDczLCA3MywgMCwgMCwgMCwgODMsIDk5LCAxMTQsIDEwMSwgMTAxLCAxMTAsIDExNSwgMTA0LCAxMTEsIDExNkC4H3IAAAAodEVYdGljYzpjb3B5cmlnaHQAQ29weXJpZ2h0IEFwcGxlIEluYy4sIDIwMjOTs48KAAAAF3RFWHRpY2M6ZGVzY3JpcHRpb24ARGlzcGxheRcblbgAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="ref3"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/2KJYLOXOASBuJ8ixTCW5pE/ec5eb23be8f4a9289113ce8f2970269b/ref3.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/2KJYLOXOASBuJ8ixTCW5pE/ec5eb23be8f4a9289113ce8f2970269b/ref3.png?w=283 283w,
+https://images.ctfassets.net/tushy4jlcik7/2KJYLOXOASBuJ8ixTCW5pE/ec5eb23be8f4a9289113ce8f2970269b/ref3.png?w=566 566w,
+https://images.ctfassets.net/tushy4jlcik7/2KJYLOXOASBuJ8ixTCW5pE/ec5eb23be8f4a9289113ce8f2970269b/ref3.png?w=1132 1132w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>이제 <code class="language-text">df2</code>의 블록은 전체 복사를 통해 복사되어 자체 데이터와 <code class="language-text">BlockValuesRefs</code>가 있는 새로운 블록을 생성합니다. <code class="language-text">df</code>와 <code class="language-text">df2</code>는 더 이상 메모리를 공유하지 않습니다.<br>
 이해를 위해 몇 가지 상황을 더 살펴보겠습니다.</p>
 <div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python">df <span class="token operator">=</span> <span class="token boolean">None</span>
 df2<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span></code></pre></div>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1ovkD6IBlBw-yYhmcrvvLy3p6bvyipIPZ" alt="ref4"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 50%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH6AEUCC0zRTGwdgAAAPdJREFUKM+NkttqwkAQhn3/FxKhFyIeA23BIK3R1ljrsslMqtlNo1XH7a7BHiCT+F0Mu/DxDzNMw9xI4/d50P/IWVGfmkR0Iiqq4kX661FakWgNCesIEqoUo77nbeIXSGJwoekHWmRpaxs5f1suRQCW8b3xHgwyrckfTHqj6OCGwee7zgS5YcDZwyTLdCTM/ElDibhVSqXhqx+GIrXP+HG6QNQlYsH5mgG5YqY259nOlu7s8pF7xa3HZAPXqEgUe83usQjClsQtrb8++aPI+iNP4QI3iRTHXcX1XAjE6j0OjrmpE/32uDNsa1Mr4k+pEcFdgr5BZPkGs4ALXD98v7wAAAASdEVYdGV4aWY6RXhpZk9mZnNldAA3OMnUeycAAAAZdEVYdGV4aWY6UGl4ZWxYRGltZW5zaW9uADEwNjCRxFcCAAAAGHRFWHRleGlmOlBpeGVsWURpbWVuc2lvbgA1MzD3GVoEAAAAXHRFWHRleGlmOlVzZXJDb21tZW50ADY1LCA4MywgNjcsIDczLCA3MywgMCwgMCwgMCwgODMsIDk5LCAxMTQsIDEwMSwgMTAxLCAxMTAsIDExNSwgMTA0LCAxMTEsIDExNkC4H3IAAAAodEVYdGljYzpjb3B5cmlnaHQAQ29weXJpZ2h0IEFwcGxlIEluYy4sIDIwMjOTs48KAAAAF3RFWHRpY2M6ZGVzY3JpcHRpb24ARGlzcGxheRcblbgAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="ref4"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/59lcqpTQ7nXgJwhI2HjJq8/8ca826f0fe02648afe9c3a01323eaeee/ref4.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/59lcqpTQ7nXgJwhI2HjJq8/8ca826f0fe02648afe9c3a01323eaeee/ref4.png?w=265 265w,
+https://images.ctfassets.net/tushy4jlcik7/59lcqpTQ7nXgJwhI2HjJq8/8ca826f0fe02648afe9c3a01323eaeee/ref4.png?w=530 530w,
+https://images.ctfassets.net/tushy4jlcik7/59lcqpTQ7nXgJwhI2HjJq8/8ca826f0fe02648afe9c3a01323eaeee/ref4.png?w=1060 1060w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>이 경우에는 <code class="language-text">df2</code>를 수정하기 전 <code class="language-text">df</code>가 <code class="language-text">None</code>이 됩니다.
 결국 <code class="language-text">df</code> <code class="language-text">BlockValuesRefs</code>의 <code class="language-text">weakref</code>는 None으로 평가되며, 이를 통해 복사를 실행하지 않아도 <code class="language-text">df2</code>를 수정할 수 있습니다.
 마지막으로 <code class="language-text">BlockValuesRefs</code> 객체는 복사를 트리거하지 않고 하나의 DataFrame만 가리키면 됩니다.</p>
 <div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python">df2 <span class="token operator">=</span> df<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre></div>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1_YPv-Y5ovBA4DN526bCnrZ9nptWRi2Ia" alt="ref5"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 50.67437379576107%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH6AEUCC0zRTGwdgAAANRJREFUKM+tktsOgjAMQPn///HRIEYjgah4SRQUlBAWt9UYEscdJ4P4OEBjH5o+nK3t2RQ+MJQfQMv7940l5w+AAFPWDe5140Ahoh6H5hiCOoikdejbThA6AjFQph05lYB0bdqGH7S1po5dKdhkjbE4Zii7nF5YAsYAdd+qqZkYIJXqYVG/HhTW6TahveDGF5kMepkIYAQ07RE+b4WfW+Eci2XuMuE4vBLcCNdRMe0QvlC3M3eX51mSEG1lXruFW0VRlhWNrWUhA5+iKeSfxQDY9//xDeBlC0hORSNyAAAAEnRFWHRleGlmOkV4aWZPZmZzZXQANzjJ1HsnAAAAGXRFWHRleGlmOlBpeGVsWERpbWVuc2lvbgAxMDM44mgrdQAAABh0RVh0ZXhpZjpQaXhlbFlEaW1lbnNpb24ANTI2B2HOcAAAAFx0RVh0ZXhpZjpVc2VyQ29tbWVudAA2NSwgODMsIDY3LCA3MywgNzMsIDAsIDAsIDAsIDgzLCA5OSwgMTE0LCAxMDEsIDEwMSwgMTEwLCAxMTUsIDEwNCwgMTExLCAxMTZAuB9yAAAAKHRFWHRpY2M6Y29weXJpZ2h0AENvcHlyaWdodCBBcHBsZSBJbmMuLCAyMDIzk7OPCgAAABd0RVh0aWNjOmRlc2NyaXB0aW9uAERpc3BsYXkXG5W4AAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="ref5"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/46iwHfm29GfeSWfKvX58fz/ac17e591224ce0112dbf2f63468c985a/ref5.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/46iwHfm29GfeSWfKvX58fz/ac17e591224ce0112dbf2f63468c985a/ref5.png?w=260 260w,
+https://images.ctfassets.net/tushy4jlcik7/46iwHfm29GfeSWfKvX58fz/ac17e591224ce0112dbf2f63468c985a/ref5.png?w=519 519w,
+https://images.ctfassets.net/tushy4jlcik7/46iwHfm29GfeSWfKvX58fz/ac17e591224ce0112dbf2f63468c985a/ref5.png?w=1038 1038w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p><code class="language-text">copy</code>를 실행하는 경우는 간단합니다. DataFrame <code class="language-text">df2</code>에 대한 새로운 <code class="language-text">BlockValuesRefs</code>가 즉시 생성되며 데이터를 공유하지 않습니다.</p>
 <br>
 <p><strong>Optimizing inplace copies</strong><br>
 앞서 복사를 트리거하는 시점에 대해 알아보았습니다.<br>
 이번에는 복사본을 최대한 효율적으로 생성하는 방법에 대해 알아보겠습니다.</p>
 <div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python">df<span class="token punctuation">.</span>iloc<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span></code></pre></div>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1tCBFUcgljXx7Qmw-7r1w6XyYOtJljhdg" alt="ref6"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 33.489618218352305%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAANCAAAAAD+9HM0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AEUCC0zRTGwdgAAAMFJREFUKM+N0N0OwUAQBWDv/0zceACpvwYpqZQlutudGa0UWcdFi9o2Ya42J1/OZKeHP6cH4KzaedEBHVNud6xF9N7kdb7ugHeVnkzMaSbpJjVVrBaRTcasDKv15Ojq1YAACMPwWr0AOOc0WdbEmuy+AUXEColI9t5FwHISTMcXyAcCgHq11WOIyJIlIvUFH1rmN/8HW1DzPAAAxrJgH5aIWlDi/kw8lyVxYnx4tbLKPUiDYUA+RAm/EOYwiluNv+YJxiv6nSLv3aYAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="ref6"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/3fJ8S8VGWGaCkq06jPf8zB/835a17c800496fb37b83b3a434f60083/ref6.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/3fJ8S8VGWGaCkq06jPf8zB/835a17c800496fb37b83b3a434f60083/ref6.png?w=373 373w,
+https://images.ctfassets.net/tushy4jlcik7/3fJ8S8VGWGaCkq06jPf8zB/835a17c800496fb37b83b3a434f60083/ref6.png?w=747 747w,
+https://images.ctfassets.net/tushy4jlcik7/3fJ8S8VGWGaCkq06jPf8zB/835a17c800496fb37b83b3a434f60083/ref6.png?w=1493 1493w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>위 예시는 DataFrame에 n개의 정수 컬럼이 있으며 모두 하나의 블록으로 통합되어 있습니다.
 다른 블록에서도 DataFrame을 참조하고 있기 때문에 하나의 값을 수정하기 위해 전체 블록을 복사해야 하는 상황입니다.
 이 방식은 위 그림과 같이 복사할 필요가 없는 n-1개의 컬럼을 복사해야 합니다.
 CoW에서는 이러한 상황을 최적화하기 위해 <code class="language-text">Block Splitting</code>을 추가했습니다.</p>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1DEWdc4QgzGydTtopihYCiqSpfK63y0LU" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 48.84135472370767%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAAAAADaLSBnAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH6AEUCC0zRTGwdgAAANNJREFUKM+t0mFLwmAUxXG//9cJKoiQEMKEalBhwp4a2mxu5yrPllNa7e8b36UPozqvf9x7uZweHdP7BTz/54n1+HlsGj3IPY1mTpIrriaL6if88r6UXjLFs2QxVaqp4izzh1db/3o4MMAnr+kS+DwGORu0BpTxPM5DMJcKJ0m5VEg6dCMArsQAiPhehd6zYQ/rMNym0mUNrFJN7gNQxXuyFKDq7aO149CGJxeRAXn/9GYdgs1dVBtg81tHAFaS5IEik3tsupRiQ6NO7dnSrv9e3HB21tUMpLgn8qcAAAASdEVYdGV4aWY6RXhpZk9mZnNldAA3OMnUeycAAAAZdEVYdGV4aWY6UGl4ZWxYRGltZW5zaW9uADExMjIaZJkdAAAAGHRFWHRleGlmOlBpeGVsWURpbWVuc2lvbgA1NDi2g0TxAAAAXHRFWHRleGlmOlVzZXJDb21tZW50ADY1LCA4MywgNjcsIDczLCA3MywgMCwgMCwgMCwgODMsIDk5LCAxMTQsIDEwMSwgMTAxLCAxMTAsIDExNSwgMTA0LCAxMTEsIDExNkC4H3IAAAAodEVYdGljYzpjb3B5cmlnaHQAQ29weXJpZ2h0IEFwcGxlIEluYy4sIDIwMjOTs48KAAAAF3RFWHRpY2M6ZGVzY3JpcHRpb24ARGlzcGxheRcblbgAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="ref7"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/3hAt9dVwj7X0HOcRNPPKsR/8827b8e9237d7982ba4dd37b31dc596d/ref7.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/3hAt9dVwj7X0HOcRNPPKsR/8827b8e9237d7982ba4dd37b31dc596d/ref7.png?w=281 281w,
+https://images.ctfassets.net/tushy4jlcik7/3hAt9dVwj7X0HOcRNPPKsR/8827b8e9237d7982ba4dd37b31dc596d/ref7.png?w=561 561w,
+https://images.ctfassets.net/tushy4jlcik7/3hAt9dVwj7X0HOcRNPPKsR/8827b8e9237d7982ba4dd37b31dc596d/ref7.png?w=1122 1122w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>위 그림과 같이 <code class="language-text">Block Splitting</code>을 통해 분할되어 내부적으로 첫 번째 컬럼만 복사됩니다.
 다른 모든 컬럼은 이전 배열의 view로 간주되며 새로운 블록은 다른 열과 참조를 공유하지 않습니다.
 이전 블록은 view일 뿐이므로 그대로 다른 객체와 참조를 공유합니다.
