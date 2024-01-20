@@ -92,7 +92,28 @@ Weak learner를 결합한다면, Single learner보다 더 나은 성능을 얻�
 <br>
 <h2 id="bagging" style="position:relative;"><a href="#bagging" aria-label="bagging permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bagging</h2>
 <p>Bagging은 샘플을 여러 번 뽑아 각 모델을 학습시켜 결과를 <strong>집계(Aggregating)</strong> 하는 방법입니다. 아래의 그림을 통해 자세히 알아보겠습니다.</p>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1o0_6bLmI40ELBC2n2mUAE8IyVoQvZcyC" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 67.3768308921438%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbCAMAAAA5zj1cAAACVVBMVEX////q8vrW5vT4+/2tzepbm9Xl7/h5rd1zqdt3rNx5rt16rt1tptpvp9pqpNlyqdtlode00exppNno8fn2+v39/v/6/P75+/33+v3v9fv2+f38/f71+f37/f7y9/z0+Pzx9/v+/v76+vrt8vf7+/v9/f2IiIiBgYF/f39+fn7X19eAgIB/f4B8fHyFhYXOzs6QkJCXl5eSkpKWlpaLi4uDg4OVlZWTk5OJiYmEhISUlJSZmZmMjIyRkZGNjY2Pj4+CgoKYmJh9fX3R0dHNzc3w8PDx8fHU1NTy8vLv7+/b29v/3nj//fX/227/1FL/3Xb/9tv/++3/4ID/1FD/+eb///7/0UP//PT//vz/1FP//vn/3XX/9NT//PH/1lj/993/1llfzfZu0vZr0fZYy/XK7/xUyvVx0/do0PZs0vZWy/Vy0/fI7vxNyPVmz/Zjz/ZGxvTG7fxQyfVkz/ZezfZSyvW66vtSyfVlz/ZazPUcufIlu/IrvfMtvvMXt/Gx5/oNtPEmvPIvvvMStvEPtfElvPIxv/MsvvMWt/Eku/IywPMZuPEju/I0wPMqvfIeufKg4fkdufIhuvI1wfMovfIYt/EfuvILtPEiu/IVt/EOtPEguvITtvELs/EiuvIVtvEbufIauPIRtfFPyfVdzfXJ7vzM7/zN8PzC7PtczfV00/b9/v7w9vvstLTaaWnXZ2j55+fff3/LKyvKKSnIICDKJyfHHBz119fWWVnQQ0PONzfPPDzHHh7EERHQQUHMMDDPPT3KKirDCwv8/Pzqs7PYamr25eX9WfNmAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH6AEUDTMrhNfVFAAAAbFJREFUGBmNwb1u01AAhuH3Oz5O7PyUliYgKFLLUi6CASgjoRSkCoTEwAUxcB+wMrIAM2wMMFSqqBAVFEVtfhzbh+OkIPkoA88j6iQqKghY6iJRUUHAEjCqZIQsgQZyRhkhQ11XsnJll//QYxkBfeFJLEgsZFSa36hYoCk8TTgXY0d4jSO8HnMCtg7wtg5YuC7kcELOqEDOfAXEtoQklEuFpUQyuaWQya00MaZsfgIstCSNWlIeDy8WRWnPZj3Goygt0/g47asYOzxDEqudcWpdJ2FoV6I2V/NpZ4MsnkUJw+m4TUXcFSCHJ4dnhCcHHG6WQPSGhXsDvPtUdvEe7FHZxXv4iDkDJAmwnz4GnrSfAp0O3rNVvJUV/hlQGbDcgDnxXEILM8UTooak4QVJeSwPjV4Clis6lzXzWNLUpVI3mXX01wjPsiHy6enlSVpGR5fGSnXYP+7/Xv9+tvlzXSdr/PiV4Fk+3pLDlB05tsv07Q43ymsfbrJa8PnO+9s5X3aEJ3oETtaoab3YZ6lXLCPqXgs5MHsELHVWUhlJhCyhWN6MkCXQVmVGSO+okaioIPAHGSR3NgT0ZroAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="boosting"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/2Qi9V8VS1XzgWdLT3UiSpk/fe2d857d275ee85b2122f350bc18c718/boosting.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/2Qi9V8VS1XzgWdLT3UiSpk/fe2d857d275ee85b2122f350bc18c718/boosting.png?w=188 188w,
+https://images.ctfassets.net/tushy4jlcik7/2Qi9V8VS1XzgWdLT3UiSpk/fe2d857d275ee85b2122f350bc18c718/boosting.png?w=376 376w,
+https://images.ctfassets.net/tushy4jlcik7/2Qi9V8VS1XzgWdLT3UiSpk/fe2d857d275ee85b2122f350bc18c718/boosting.png?w=751 751w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>먼저 대상 데이터로부터 복원 랜덤 샘플링을 합니다.
 이렇게 추출한 데이터가 일종의 표본 집단이 됩니다.
 이제 여기에 동일한 모델을 학습시킵니다.
@@ -113,7 +134,28 @@ Continuous Data인 경우, 평균 (Average)으로 집계합니다.</p>
 원래 단일 DecisionTree 모델은 boundary가 discrete 한 모양일 수 밖에 없지만,
 RandomForest는 여러 트리 모델을 결합하여 이를 넘어설 수 있게 되었습니다.</p>
 <p>결과는 아래와 같습니다.</p>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1N8tTC0bAf_Y03R41hHB06_gypMtJvlUf" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 110.00000000000001%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAsACgDASIAAhEBAxEB/8QAGgAAAwADAQAAAAAAAAAAAAAAAAMEAQIFB//EAC0QAAIBAwIFAgUFAQAAAAAAAAECAwAEERIhEyIxQWEFUTKBkbHwFBVicaHx/8QAFwEBAQEBAAAAAAAAAAAAAAAAAAECA//EABoRAQEAAgMAAAAAAAAAAAAAAAABESECMVH/2gAMAwEAAhEDEQA/APUTcTJxDKHCqX3DfyOn/MVhZ53VtLFgHA1KxO3/AHFVzenxTsWZnz2wenv96XF6cYhIOJyuc8igEHOc71WcbSyXrIV30k5AHEOx8/UGnPNKsoIVmQqunmIG/U9d/nWsvp8XFEcUsiOyndl1bbdvmPpVD+nrLEscjyNpAGcgZ6+PNZnbpyss0ntblnulhfPxMMhyenTv4opsPpfAuUljuGAQYK6Rv7/mKK3b4y6FJu2kS1kaLOsLtinVpLpMZV20hhjNZEUt26zISApBK48fgFWQSGSIM2M98VzZrZf1EaRuTG6trkLLynG2R3zk1dZx8KIxmfjEHOcAY8VMxbFFFFFVBSLxWa0lVCASvf270+sMAylTuCMGg5kt04YZc5Dn4Qdhg1dbMXt1ZjqJ7+9L/b4N8lztgc52/qmwQJbx8OPVjOeZi33oG0UUUH//2Q=='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="agg result"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/24IAgyNrQgeMlBCt81CroN/3d82eca18a1289219478efdbd24fbe2f/agg_result.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/24IAgyNrQgeMlBCt81CroN/3d82eca18a1289219478efdbd24fbe2f/agg_result.png?w=240 240w,
+https://images.ctfassets.net/tushy4jlcik7/24IAgyNrQgeMlBCt81CroN/3d82eca18a1289219478efdbd24fbe2f/agg_result.png?w=480 480w,
+https://images.ctfassets.net/tushy4jlcik7/24IAgyNrQgeMlBCt81CroN/3d82eca18a1289219478efdbd24fbe2f/agg_result.png?w=960 960w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <br>
 <h2 id="boosting" style="position:relative;"><a href="#boosting" aria-label="boosting permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Boosting</h2>
 <p>Bagging이 일반적인 모델을 만드는데 집중되어있다면,

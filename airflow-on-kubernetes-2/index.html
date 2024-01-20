@@ -92,7 +92,28 @@ Kubernetes Operator를 활용한 방식으로 위와 다른 구성을 가지고 
 아직 정식 릴리즈는 아니지만 큰 이슈는 없는 것으로 보여 공식 차트 기준으로 설명하겠습니다.</p>
 <br>
 <h2 id="airflow-executor-on-kubernetes" style="position:relative;"><a href="#airflow-executor-on-kubernetes" aria-label="airflow executor on kubernetes permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Airflow Executor on Kubernetes</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1Zi0Ql_Gfn9kQvz3i0P2Xgsh62n63TDYk" alt="task_lifecycle"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 47.56972111553785%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAATCAMAAADVnb8xAAAAq1BMVEX////7+/v4+Pj8/Pz+/v7p7/qTrumqwO7//vv49fH29PD18u7//fr6+vrz8/Pi6PWNquiRreift+v8+/n69/P59/P08e36+PP29vaguOyPq+iLqejx9fz19fX09PSSruiJp+fx9Pz5+fnt7e3y8vL9/f3Bz++Ipud8neW3yfDT3vaet+uYsunJ1/Tu7u739/fr6+vx8fH6+/7V3vLw8PDv7+/z8vD//vz///4XpzsXAAAACXBIWXMAABcRAAAXEQHKJvM/AAAAB3RJTUUH6AEUDTMjigxdJgAAANdJREFUGBmdwYsyw0AABdC7uVcp2XizRVt2s96W0uD/v4wZ0k66GYNz8HumoLA2GKwLHRvDza1hiSVbFTLbO7t7lh37B4dHxyUyxjgnaXRyeoaWQc648WQi2tH0/AItIkfvQi0Bxk8qRV5eXd+AyJGRpADIWkXc3t0/gMjRuJCCsOSrUEhYRWQkI2EV0cM/Biehg+jBSFLQJ7SIHt49SfT1rI7CN6IHOfZSBIgFogd95RQFEAuRPxH+4vklzGGbZMrX1MyTVWpC1Cw1TSjQ6+0dEgDhi/AvH2u9DuzjMVPaAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="task lifecycle"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/3elcSIiD8oPaLurWJrAgdG/eafa8785a7d101ad8e9d8690383f21f3/task_lifecycle.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/3elcSIiD8oPaLurWJrAgdG/eafa8785a7d101ad8e9d8690383f21f3/task_lifecycle.png?w=628 628w,
+https://images.ctfassets.net/tushy4jlcik7/3elcSIiD8oPaLurWJrAgdG/eafa8785a7d101ad8e9d8690383f21f3/task_lifecycle.png?w=1255 1255w,
+https://images.ctfassets.net/tushy4jlcik7/3elcSIiD8oPaLurWJrAgdG/eafa8785a7d101ad8e9d8690383f21f3/task_lifecycle.png?w=2510 2510w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>먼저 공식 차트 기준으로 executor마다 컴포넌트가 어떤 형태로 올라가는지 알아보겠습니다.
 컴포넌트는 크게 아래와 같이 구분하고 있으며 위의 그림과 같은 라이프사이클에 따라 동작합니다.</p>
 <ul>
@@ -103,24 +124,108 @@ Kubernetes Operator를 활용한 방식으로 위와 다른 구성을 가지고 
 </ul>
 <br>
 <h2 id="localexecutor" style="position:relative;"><a href="#localexecutor" aria-label="localexecutor permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>LocalExecutor</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1U7o-jJvDijVh842ueaZwG2joq4cdJZpc" alt="localexecutor"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 50%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAMAAADImI+JAAABTVBMVEX////U4PqYtfLn7vz5+vuCpe+5zfaVs/H5+fr6+vuJqvB6oO6pwfT8/f/x9f3+/v+mv/SVs/L19/75+v6ivPP7/P7j6/t3nu5rlezA0PLz9PX4+frS3/nQ3PP5+vqZtvGEpuzl6O7p6+7o6+7j5+7y8/WQr/CLquzo6u7n6u7k6O709ffX4euOstbL3vBymetvmOzL1u33+PltluttluzW3u5Xf6UrbrJKi8jh5e5gjet4nu6wxOzw8fP7+/v19fbV3u5nkuxtl+2/zu3y8/Tx8fFfhalTkcvl5+q7yeepvujn6ey3yOmvwuno6u3y9fm70efp8fng4uXMzdDO0NPW2Nvi5OfP0dPNztHd3+Lq6uri4uLj4+P8/Pzz9Pbx8vT7+/zm5ubZ2dnf39/h4eGXtfKWtPLk6/zw8/qQr/G1yvS3y/abt/Le3t76+vq1dLaJAAAACXBIWXMAABibAAAYmwFJdYOUAAAAB3RJTUUH6AEUDTMjigxdJgAAAQ5JREFUKM9jYCAeMDIxE6WOhZWNnYOFhZOTk4UDTLKgkEgKubh58BiDxOTlYyBKISe/gKAQkpSwCJMokiwSU0xcQlIKCqQZGGTEJWRhXDkUhfzyCopKSsoqSkCgysDAq6auoaSkqQXiaoMV6ujqQVwhBxLTNzCEKGQwAtKKxiamYIUgN5qZWyAUWlpZ2wApWzs7O3sg7eDo5AykXOzs7exc3czdEQo9PL28kUz08PH1g5voHxAI8RdIYVBwSCiSwrDwiEi4G6OiYyAKY+NAIB5EAH3NkBAHB6i+htJ2SGGZmBSTnJKCFo6wsHclGIUQKjUtnZBCYCrhYMmwzswikHqgIDuHl7jkm5ubx0AVAAAGeTBCylpe6gAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="local"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/45idFgE5WjfADlRxw6HqW2/f7b3eaaf9173a8e53d8496fa6797c0a6/local.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/45idFgE5WjfADlRxw6HqW2/f7b3eaaf9173a8e53d8496fa6797c0a6/local.png?w=295 295w,
+https://images.ctfassets.net/tushy4jlcik7/45idFgE5WjfADlRxw6HqW2/f7b3eaaf9173a8e53d8496fa6797c0a6/local.png?w=590 590w,
+https://images.ctfassets.net/tushy4jlcik7/45idFgE5WjfADlRxw6HqW2/f7b3eaaf9173a8e53d8496fa6797c0a6/local.png?w=1180 1180w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>LocalExecutor는 Scheduler에서 각 task가 subprocess 형태로 돌아가는 구조입니다. Scale-Out이 어렵기 때문에 간단한 테스트 용도로 사용하는 경우가 많습니다.</p>
 <br>
 <h2 id="celeryexecutor--dag-pv" style="position:relative;"><a href="#celeryexecutor--dag-pv" aria-label="celeryexecutor  dag pv permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CeleryExecutor + DAG PV</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1Yitccb8iF2rDnzC22wp5lWyxLowiRQhV" alt="celeryexecutor3"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 68.25396825396825%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbCAMAAAA5zj1cAAACIlBMVEX////Wn5js19TNfHLpwr37+/vXoJm4U0bZgXfv7+/ZyMbr6uqUsvGDpu/j6/vz8/Px9Ph7oO6pwfS1yfT6+vv6+/vw8/qQrey/0PT5+vv8/P3B0/egu/P7/P+4y/RaiepfjOr+/v77+/z+/v/h6vv39/fn5+f4+Pjx9f19ou6nwPT4+v65zfbw9P3x8fHm5ub7/PzH1/iFp+98oe75+vr29veowPSat/L8/f3l7Pxzmu1+oevp6+7f4OPx8vTF1fhul+yet+zf4eP29vjC1ejc6fT09fa7y+15n+2rwOzv8POiuux4nuzF0u2htskoaatFh8bv9PmKqeqbuPJ3nerv8fPu7/JxmeuTsvGYs+v09Pb6+vr3+PiXrL9Eh8bW2+SetOLN1ebEzuOjueXe4uj7/P3B1Ofb6PTX2dzT1NfW2NrY2t3T1djc3uH19fXk5OTh4eH39/j5+frn7fyCpe+txPXN2/mNrfCxx/WMrO/x8/WivPN1nO18oOzs7vD4+Pm4y/LO2e7e4+6pv+zh5u7k6O6qwOzZ4O7o6u6xxez2+f64yvDZ4e7Y3+7l6O6HqOuRr+ueuOx6oO57n+u4ye1mket5nuurwvSbteuuw+2wxOzD0e6UsOvU3e5zmux9oevt7/GRruthjerBz+3Jy87O0NPKzM/P0dPJys3Iyczb3eDMztDc3uDIyszn6ez19vjw8vT3+Pne3t7j4+Pg4ODf398vyU9hAAAACXBIWXMAABibAAAYmwFJdYOUAAAAB3RJTUUH6AEUDTMjigxdJgAAAadJREFUOMtjYCAPMBKpjomZhZWVGIVs7BwMRCnk5OLGo5CHlw+Zy49LnYCgkLCIiKgIFIiJS4ggA0kpmEIRaRlZIMUKBXLyCjCmIkhaUQmmUFRZWgVIqaqpg7kamloM2jq6QJaePlihAdxEQyNjSRMTUxMggAqamRuZQEUsECaKWFpZ29jY2AKxjR1EyN7BEchxAok4AxVauLiCFTK4AQXcPTwRChm8gGxvH1+oQj//gEC4wqDgECAZCvVGGJAdHhEJJKOiY6Jj/eMQCuMTEtFMTEpOgZqYmpaOsDojMwtNYXZOLlRhXn4BRKFSIQyIQBUWgThuIMIAyde4ogwS6UgKi0tK0ZSUlVfAIx1JYZlxZRgSqGJgqK6pBTLqQLx6ZKsbGm2amlta29o7OhttbMIYGLq6e2xsej37oJ6BKwT6ul9wwsRJk6fUTAUrBPt62vQZWBTOnDprtsOcufPm29gsgAb4wkWLsSjMWLJ02fIVK1etRpi4Zu06VIWiDOvrkMEGoJgdnLcRKZkBcfSmzVu2binIL9iEEZoIEzeCs4GoCA6AyApEAgAzoY1sEHNz+AAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="celery3"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/5p5hiUjVWUHOBKRYwHovZV/4d4786a674ddec022cb25333b9e715b1/celery3.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/5p5hiUjVWUHOBKRYwHovZV/4d4786a674ddec022cb25333b9e715b1/celery3.png?w=315 315w,
+https://images.ctfassets.net/tushy4jlcik7/5p5hiUjVWUHOBKRYwHovZV/4d4786a674ddec022cb25333b9e715b1/celery3.png?w=630 630w,
+https://images.ctfassets.net/tushy4jlcik7/5p5hiUjVWUHOBKRYwHovZV/4d4786a674ddec022cb25333b9e715b1/celery3.png?w=1260 1260w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>CeleryExecutor는 Scheduler가 task queue에 작업을 전달하고 worker에서 작업이 수행되는 구조입니다. 지난 번 글에서 언급했듯이 여러 노드에 걸쳐 있는 DAG 파일을 동기화하기 위해 <strong>PV, git-sync</strong> 2가지 옵션을 지원합니다. 이 옵션은 KubernetesExecutor에서도 지원합니다.</p>
 <br>
-<p>위의 그림에서는 AWS EFS를 기준으로 표현했지만 NFS를 지원하는 스토리지에서 모두 활용 가능합니다. 이 방식은 스토리지를 별도로 두기 때문에 git과 다르게 배포 주기를 가져갈 수 있습니다.
+<p>위의 그림에서는 AWS EFS를 기준으로 표현했지만 다른 스토리지에서도 활용 가능합니다. 이 방식은 스토리지를 별도로 두기 때문에 git과 다르게 배포 주기를 가져갈 수 있습니다.
 그리고 worker pod이 <strong>statefulset</strong> 형태로 변경되었습니다. 이를 통해 각 worker에 PV를 연결하고 airflow UI에서 각 task의 로그를 볼 수 있습니다.</p>
 <br>
 <h2 id="celeryexecutor--dag-git-sync" style="position:relative;"><a href="#celeryexecutor--dag-git-sync" aria-label="celeryexecutor  dag git sync permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CeleryExecutor + DAG git-sync</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1VodhbkJMzMbMWKookXTiGr8rPChS8Uwe" alt="celeryexecutor4"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 67.06349206349206%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAbCAMAAAA5zj1cAAAClFBMVEX///+62vTB3vXV6fgsj95EnOLt9Pn9/f3+/v+ayu+x1vP7+/uNrfB+o+/g6fvi4uLk5OTo6Oj09PTx8/h6oO6owPS1yvT6+vv6+/v5+vv09fX8/P3E1feivPP8/f/l7PzF0/D+/v77+/x1nO6GqPDS3vfw9P2vxvX29vbm5ubz8/P9/v9tluxaierl7fza5fqhvPPF1vi/0fdzm+1sluzy8/Xs7u/29/j+//+fuvOCpe97oOz6+/6btvCzxu3p6+7b4u7d4+7U3e7k6O7x8vTo7/yUse7H1O7T3O7l6O7Q2u729vjj6vB9pc2jxOP9/v709fbf5e5vl+zj5+7D0e11nO10m+vv8PO+ze1/o+96n+ydt+yJqeuasMQoaatChcXq8fja4e5ij+tlkOvC0O1lketqlOrv8fL39/fu7/K9ze1qlOxuluqctutxme2Fpuv09Pb6+vr3+Pj5+fmwwM4tbK1YlMz0+Pva3N+3vsu8w9He3+Lk5um3wNLJz9jZ2922v9HAxM22wNXV2d7m6Ovo6ero6ezn6ezp6u37/Pz19fX4+Pj4+fn09/75+/7t8v3u8/3d5/uZtvLx8fFymu1vmO28z/eDpu+cuPLy8vLV4fqJqe7o6+9mkepmkeza5PqowfR2ne6Ao+vY4fXe4+7P2e2Mq+uNrOvH1O2UsOu3ye3Fy9i5wtX8/Pz9/f/I1vHi5u7G0+2HqOyPrvGbtuyRsPF2nOuzxuyJqvDq7O65zfaWsuu7y+1qk+q/zu3O2O5vl+umvezc4+53neuQruukvOxslerN2O7X2dvJy83O0NLKzM7O0NPIyszHycvb3eDLzdDIyczu8PLz9PX4+Pnd3d3j4+Pf39/e3t7h4eHg4OD3+Pl1mjDaAAAACXBIWXMAABibAAAYmwFJdYOUAAAAB3RJTUUH6AEUDTMjigxdJgAAAflJREFUOMtjYCAPMDIRp46ZhZWNHbc0B4LJycXAjVMdDy8fjMnOL8AgKCiEXZ2wiKiYuLiEOARIiksBsTgYQwSkYQrFZWTlkPTJK6Cao6gEY0lCbeWGAGUVVSiLHU2huJqsOpDSAGJNLQZtHV09Bn0DQ6gIikIjYxNTU1MzIDY1Z2CwkGBgsLSyholIIim0sbWzd3C0t3dytncB8oHB4+rmbu/haW/vZW/vDVTo4+vnD1LIEGAfGBQUHBIaBlPIEG4fERllH60SA1YYGxefAPZMgH1iUrJjSmqafTrQDxlAnGmflZ1jn5uXb19QWFRcUlpWDjWxorKquqa2DsnE+oZG+4qmZrCJhS2tDFCFINDW3oGkEARa2kFu7GTg7hKCKPSXBgOJ7u5iUPiBAhXE7wERikCFMF8z9FqAGZDU0NcPJCYg+EgKJxpPAjMmg8kpU/kYpk2fAWTNRFc4a+pseziYM3fefIYFCxfB+ObIVi9eYr90mVPi8hXBK1fZr16zlmHd+g329huXO9hDPANXCPT1ps3Ltmzdtn1Hqn3LTnA42tuH7dqNReGevfv2Hzh46PARe/tMaPAcPXYci8ITJ0+dPnP23PkLCIXnL7ajKzS/hAxMgWKX4bwrSKkHiAuvXrt+4/rNa7euYuQUhMLb4PyCyDPiuPIMkQAA9+OvohIt3QoAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="celery4"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/3ZgJBdBXHTXvfqzRkRlroV/029606fb3f630f35939c4be45de6ab8f/celery4.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/3ZgJBdBXHTXvfqzRkRlroV/029606fb3f630f35939c4be45de6ab8f/celery4.png?w=315 315w,
+https://images.ctfassets.net/tushy4jlcik7/3ZgJBdBXHTXvfqzRkRlroV/029606fb3f630f35939c4be45de6ab8f/celery4.png?w=630 630w,
+https://images.ctfassets.net/tushy4jlcik7/3ZgJBdBXHTXvfqzRkRlroV/029606fb3f630f35939c4be45de6ab8f/celery4.png?w=1260 1260w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>git-sync 옵션을 사용한다면 위와 같은 그림으로 구성됩니다.
 airflow의 각 컴포넌트에 git-sync 컨테이너가 sidecar 형태로 추가됩니다.
 이 방식은 <strong>DAG 전용 git repository가 있다면 자동으로 배포를 구성할 수 있다</strong>는 장점이 있습니다. 처음 차트를 배포할때 init container 단계에서 git clone을 수행하고 이후부터는 git-sync 사이드카 컨테이너를 통해 주기적으로 pull을 수행하게 됩니다.</p>
 <br>
 <h2 id="celeryexecutor--keda-autoscaler" style="position:relative;"><a href="#celeryexecutor--keda-autoscaler" aria-label="celeryexecutor  keda autoscaler permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CeleryExecutor + KEDA AutoScaler</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1gT38whMNgcmMLDhegS7TKjVXRO2bm38o" alt="keda"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 583px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 85.76329331046313%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,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'); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="keda1"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/w8juWviWwsFWzYn3oA0hQ/5f47b74cd9e3b94ebcfb10aa7254d0d9/keda1.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/w8juWviWwsFWzYn3oA0hQ/5f47b74cd9e3b94ebcfb10aa7254d0d9/keda1.png?w=146 146w,
+https://images.ctfassets.net/tushy4jlcik7/w8juWviWwsFWzYn3oA0hQ/5f47b74cd9e3b94ebcfb10aa7254d0d9/keda1.png?w=292 292w,
+https://images.ctfassets.net/tushy4jlcik7/w8juWviWwsFWzYn3oA0hQ/5f47b74cd9e3b94ebcfb10aa7254d0d9/keda1.png?w=583 583w"
+        sizes="(max-width: 583px) 100vw, 583px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <br>
 <p><strong>KEDA AutoScaler</strong>는 공식 차트에만 추가된 옵션입니다.
 기존의 Horizontal Pod Autoscaler는 리소스(CPU, Memory) 메트릭을 기반으로 스케일 여부를 결정하게 됩니다. 반면에 KEDA는 <strong>특정 이벤트를 기반으로 스케일 여부를 결정</strong>할 수 있습니다. 예를 들어 airflow는 metadb를 통해 현재 실행 중이거나 대기 중인 task가 얼마나 존재하는지 알 수 있습니다. 이러한 이벤트를 활용하여 worker의 scale을 결정한다면 queue에 task가 많이 추가되는 시점에 더 빠르게 확장할 수 있습니다.</p>
@@ -133,16 +238,79 @@ airflow의 각 컴포넌트에 git-sync 컨테이너가 sidecar 형태로 추가
 <p>여기까지 CeleryExecutor에 대해 알아보았습니다. CeleryExecutor 또한 Kubernetes 위에 배포하면 Helm 차트를 통한 선언형 리소스 관리, 쉬운 버전 업데이트, DAG 배포 자동화, 쉬운 리소스 확장 등의 장점을 가질 수 있습니다. 하지만 Celery에 대한 의존성이 남아있기 때문에 Redis, Celery Worker에 대한 리소스를 계속 점유하고 있어야 합니다. 다시 말해서, <strong>Scale to Zero</strong>가 어렵다는 단점이 있습니다. KubernetesExecutor는 task가 존재할때만 pod이 생성되고 task가 완료되면 종료되기 때문에 더 리소스를 효율적으로 사용한다고 볼 수 있습니다.</p>
 <br>
 <h2 id="kubernetesexecutor-kubernetespodoperator" style="position:relative;"><a href="#kubernetesexecutor-kubernetespodoperator" aria-label="kubernetesexecutor kubernetespodoperator permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>KubernetesExecutor, KubernetesPodOperator</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1dSfx9OxnCYpw7g0gMmOtnF7mNDb_k5Cg" alt="kubernetesexecutor"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 407px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 51.35135135135135%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAVCAMAAAADxFwsAAABRFBMVEX////R3vns8f3f6Pve5/vM2vhlkesybOU7cuaQr/Ht8v18oe41buVUhOmWs/LH1/hymu21yvZPgenu8/03cOZ7oe5zmu02b+br8fyVs/I6cuaat/KCpe96oO6Dpu/p8PzC0/dgjeutxPW/0fedufOEp++90Pdpk+yhvPOIqfBSg+mivPPh6vv+/v9VhemRsPFZiOo/deesw/ScuPKlv/SFqO9QgumCpu/09/7j6/t/o+83b+Y+dOZijuv6/P7s8v1Ie+g8c+aKq/B7oO5Geufq8PxYh+pEeefo7/zO3PlmketslezL2fj+///m7fzb5vra5fry8vLv7+/u7u7k5OTn5+f8/Pz19fXt7e3r6+v4+Pjl5eXOzs6+vr6pqamampqoqKjT09Ozs7Ojo6OkpKT7+/v9/f2ysrKgoKCfn5+xsbH39/fRl5OdAAAACXBIWXMAABibAAAYmwFJdYOUAAAAB3RJTUUH6AEUDTMjigxdJgAAAM5JREFUKM9jYBimgJEJlc/MgiwJZ7EygsA3hDIOEPcPjAvXxP+DgYEDSaEw42cGPkZOxhfoCrm4QQa+lH8I5fMy8gH5j+RhCuHO4nvHy/uOgYEdxv/Jyc7BwaHOyYCukFPzJqeGGAMPjC/Dw/eTh4eBG0PhRS62a5yXzeAKubgey3JxiWEq/P+TQZ7LgfsQjH+Qk52Tk4NjN2Yo+jKysvohC/izsgZghmMgIwwsg4pEM/xg/c+4Aj0cueEKoQJpjMDwYfiZOpu4WM0eUmkQAMmNIn40kIGaAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="kubeexec2"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/7aImqhPOqW08NxOj0rGEjK/aa9cf6a2be5efeea4fcf8496d9c4526b/kubeexec2.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/7aImqhPOqW08NxOj0rGEjK/aa9cf6a2be5efeea4fcf8496d9c4526b/kubeexec2.png?w=102 102w,
+https://images.ctfassets.net/tushy4jlcik7/7aImqhPOqW08NxOj0rGEjK/aa9cf6a2be5efeea4fcf8496d9c4526b/kubeexec2.png?w=204 204w,
+https://images.ctfassets.net/tushy4jlcik7/7aImqhPOqW08NxOj0rGEjK/aa9cf6a2be5efeea4fcf8496d9c4526b/kubeexec2.png?w=407 407w"
+        sizes="(max-width: 407px) 100vw, 407px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <br>
 <p>위의 그림처럼 KubernetesExecutor는 Broker와 같은 리소스를 점유하고 있을 필요가 없습니다. 리소스를 할당하고 스케줄링 하는 역할은 Kubernetes Scheduler가 수행하게 됩니다. Airflow Scheduler는 API Server에게 task 수행을 위한 Pod 생성을 요청합니다. worker는 <code class="language-text">images.airflow</code>에 설정한 이미지로 Pod이 생성되기 때문에 추가로 필요한 파이썬 패키지가 존재한다면 별도의 이미지를 만들어주어야 합니다. 만일 task pod 마다 다른 이미지와 리소스 설정을 가지도록 하고 싶다면 <strong>KubernetesPodOperator</strong>를 사용하시면 됩니다. KubernetesPodOperator는 worker를 통해 pod이 생성되는 구조이므로 파라메터를 통해 사용자가 원하는 설정으로 변경할 수 있습니다.</p>
 <br>
 <h2 id="kubernetesexecutor-process" style="position:relative;"><a href="#kubernetesexecutor-process" aria-label="kubernetesexecutor process permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>KubernetesExecutor Process</h2>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1mviHViGJS1tTQtl4JrgUFR9IdaersPoY" alt="kubeexecutor2"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 19.869174161896975%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAICAMAAAC8jE1pAAABMlBMVEXs3sjl3Lro37zj27nj1sD////z6Nrk27nl3brl2MTr3sbm3rvm2Lj08/T78vHg077z7Ovs5OPm3Nvh2djl3t719fX09PTx8fH29vb5+fn38/Pr4eDu6Ojy6+rs4+L7+/v+/Pzt5+b79vfy7O718PL17/Hz7u/18PH07vD28PL38vT89/j57fH18fLy8vLt7e3w8PDv7+/z8/P4+Pj++/z48fP38fP48/T48vT58/X57vHx7e749fbu7u7r6+vq6urs7Oz48PP68PP9+vv46e789vj79ff9+fv68er68ub14tn36d/05uH57Or36t/57uP37+n68en67+T57uT8/Pz9+fn68eX37+jm2sra0bjc1LrY0Lfb0MDw5t3Z0Lfd0sTl2cja0rncz7j08/P79fTYzL1fQRlSAAAACXBIWXMAABcRAAAXEQHKJvM/AAAAB3RJTUUH6AEUDTMjigxdJgAAAMVJREFUGBldwbFOg1AAhtH/g3uxvcaAqGk6mFQHV4wP4NzBwVd1cPUdcHRxs2nSoVhNMYWL0EBjPAfRUY9WpYHdOiil8YYTk9ARErA63zqWGpx9uZAPKQ1dhNUlndpQWUSrWUpT4FXKcu1luZHSXH/cwmaGPHCjmFRTHywmktE/R1CWyac/9cVF8R1deYmZQ1jd75pgHTcBdeiLxEKjg+BFe1nOnNa7etfAswYP5RiepEcqaxJab+rdsYt0EI9GICmuf45/AcsMMsor7EW1AAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="k8s-happy-path"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/2usGvGAxaTlKGcNVJZcawO/37094fe04db84de87652672da1f50543/k8s-happy-path.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/2usGvGAxaTlKGcNVJZcawO/37094fe04db84de87652672da1f50543/k8s-happy-path.png?w=306 306w,
+https://images.ctfassets.net/tushy4jlcik7/2usGvGAxaTlKGcNVJZcawO/37094fe04db84de87652672da1f50543/k8s-happy-path.png?w=612 612w,
+https://images.ctfassets.net/tushy4jlcik7/2usGvGAxaTlKGcNVJZcawO/37094fe04db84de87652672da1f50543/k8s-happy-path.png?w=1223 1223w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <br>
 <p>KubernetesExecutor는 위와 같은 프로세스를 통해 동작합니다. 일반적으로 Pod이 생성되는 과정과 동일하며 airflow에서는 내부적으로 python kubernetes client library를 통해 k8s_model 이라는 객체로 K8S API를 추상화하여 사용하고 있습니다.</p>
 <br>
-<p><img src="https://drive.google.com/uc?export=view&#x26;id=1hzzK8Jx5olsXsQTiVdPyKPqNA-CA-ulT" alt="kubeexecutor3"></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 25.021949078138718%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAKCAMAAADxROxiAAABTVBMVEXs3snh2Lfn3rzj2rno3rzv6On////w49Lk27ng0rv78vTn37zh2bfk1Lf29vb37OPg17bm3bvf0b7y6ujr4t7q39vp4Nvq4d349vb9/f3+/v78/Pz07uzp4d7+/Pzs49/r4d3q4Nz7+/v59PPr5OH9+Pnm4OLq5Obp4+Xr5efs5ujn4ePz7e/89vj46+/79/n//v7++/z9+vvx6ezt5+nn4uP28PL46e79+/zm0tjl3eDr6+vs7Ozt7e3u7u7o6Ojy5enm4eLk3uDo4uTh293l3+H9+fr79ffr4+bj3d/m5OXp6enq6ur47+b47+H26dz259v27e/26OP25dny4tv68PP05dn05Nj049n58/X47Ory4NXz6uLl2crUy7Pa0bnVzLTZ0Lfu6Onr4NTSyrLUyLf89fbZ0LjY0LfUzLTXyLT19fX17OXUy7TWyr2LLkr2AAAACXBIWXMAABcRAAAXEQHKJvM/AAAAB3RJTUUH6AEUDTMjigxdJgAAAPFJREFUGBltwd1KwmAAx+H/793ctFoFexeZgoQG4cdp0FF0Ad1z95ASgwgPXBR+UFSgK2c4B3rQ8yBy2iD1WargZg4wlyqAG7I2C5lEGlszp/ymggXESLIfHOGpAUisDJkDPNZHdjVVaMZ20magXLfvSkFfO3oXy/OVU+ObwyD00yib2oms5EqedpUetNWuNGjSWroLudJCu8rNU9BLLakn1SQ9uVeuIzzdMgzs8MxkiTLjmFhb7dmrcp2BkZ5NtPcZLryfVlQN3/f1j24k7gDxpI2LzCFW4ZLUh77U4ytwj1mLtXHFbylW4Zq1WLrhwP8DAqlB7pNn/wEAAAApdEVYdGNvcHlsZWZ0AEdlbmVyYXRlZCBieSBodHRwOi8vcGxhbnR1bWwuY29tETA5HAAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="k8s-failed-pod"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/5DNugNWbyej6H0ls4cPuix/426601ff509e37357de86d7521439406/k8s-failed-pod.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/5DNugNWbyej6H0ls4cPuix/426601ff509e37357de86d7521439406/k8s-failed-pod.png?w=285 285w,
+https://images.ctfassets.net/tushy4jlcik7/5DNugNWbyej6H0ls4cPuix/426601ff509e37357de86d7521439406/k8s-failed-pod.png?w=570 570w,
+https://images.ctfassets.net/tushy4jlcik7/5DNugNWbyej6H0ls4cPuix/426601ff509e37357de86d7521439406/k8s-failed-pod.png?w=1139 1139w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <br>
 <p>task가 완료되기 전에 Airflow DB 상태 업데이트 단계에서 OOM 등의 이유로 Pod Crash가 언제나 발생할 수 있기 때문에 이에 대한 장애 시나리오도 준비되어 있습니다. DB 업데이트에 실패하더라도 airflow scheduler는 Kubernetes Watch API를 통해 pod의 상태를 전달받아 다시 DB 상태를 업데이트 할 수 있습니다. CeleryExecutor의 경우, task 상태에 대한 처리를 celery에 주기적으로 확인하는 방식이라면 <strong>KubernetesExecutor는 이벤트 스트림으로 전달받기 때문에 스케줄러에 대한 부하가 더 낮다</strong>고 볼 수 있습니다.</p>
 <br>

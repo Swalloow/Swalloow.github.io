@@ -116,7 +116,28 @@ CloudFormation 역시 Terraform과 같은 기능을 제공하다보니 도입하
 만일 멀티클라우드 이슈에 대한 대응까지 고려하고 있다면 Terraform을 추천드립니다.</p>
 <br>
 <h2 id="terraform-remote-backend" style="position:relative;"><a href="#terraform-remote-backend" aria-label="terraform remote backend permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Terraform Remote Backend</h2>
-<p><img src="http://drive.google.com/uc?export=view&#x26;id=1NRXR-axT-hjEycpr3SigMI3x6e5m8Utx" alt=""></p>
+<p><span
+        class="gatsby-resp-image-wrapper"
+        style="position: relative; display: block; ; max-width: 650px; margin-left: auto; margin-right: auto;"
+      >
+        <span
+          class="gatsby-resp-image-background-image"
+          style="padding-bottom: 65.11461318051576%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAaCAMAAADyku75AAABAlBMVEX////669/88en89O7onGLpoGnxyKnf39/w8PDv7+/z2sfhoXHjqHzgmmb+/fz5+fni4uLo6Oj6+vr09PT19fX59fTs3Nnc3NzX19ft4uDEdWelVUfSqaLy8vLl1tO5UUCiRTXAh3307ezPmZDEe27jycXs7Ozf3d3u7u7q6urk5OTj4+Pg4ODl5eXy8/Tr6+v8/PzW1tbPz8/V1dXw8fLl5uf6+vv4+PjT09PR0dH+/v7i4+TR09eprbLS1Nf39/i8v8PBw8fa3N/f4eOytLi2ub7V19rFyMzW2Nv29vfJy8/o6ert7u/Iys7Hyc3y8vPg4ePe4OLg4eTq6+zX2dzP0dQ4mWRgAAAACXBIWXMAABcRAAAXEQHKJvM/AAAAB3RJTUUH6AEUDTMm+mapqQAAAM1JREFUOMvN0sUOAjEQBuBBu/ji7u7u7ov7+78KGwrhwKbMiTBJ2//wtZM2BfhFyeQ4p1Cq1IR7lIYJtTq9wUgjx4QmwpsBAwEsgIRWLLQhod1BV6eLZzq3x+t7BD9hnxgIhsKo1pFoLI6CCZJ0Im/9eu+vMIWFHBumxe+SIbw4Z8WRI3kxSLlCsQClcqXqh1q9Ac1Wuwydbk0C9voDGoaj8YSm6WwuIRdLgYbVer2habvbHz7h8XR+JuF0eW653iRaN8nrG77vkE/BH9QdwOoSri20iMoAAAAASUVORK5CYII='); background-size: cover; display: block;"
+        >
+          <img
+        class="gatsby-resp-image-image"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;"
+        alt="remote state"
+        title=""
+        src="https://images.ctfassets.net/tushy4jlcik7/1rbc7wRANC3NDXgbSt64Es/55b7418cd1658bc1c5f27d65f1d520ca/remote_state.png"
+        srcset="https://images.ctfassets.net/tushy4jlcik7/1rbc7wRANC3NDXgbSt64Es/55b7418cd1658bc1c5f27d65f1d520ca/remote_state.png?w=349 349w,
+https://images.ctfassets.net/tushy4jlcik7/1rbc7wRANC3NDXgbSt64Es/55b7418cd1658bc1c5f27d65f1d520ca/remote_state.png?w=698 698w,
+https://images.ctfassets.net/tushy4jlcik7/1rbc7wRANC3NDXgbSt64Es/55b7418cd1658bc1c5f27d65f1d520ca/remote_state.png?w=1396 1396w"
+        sizes="(max-width: 650px) 100vw, 650px"
+        loading="lazy"
+      />
+        </span>
+      </span></p>
 <p>Terraform은 상태를 <code class="language-text">Consul, S3, Enterprise</code> 등의 원격 스토리지에 저장할 수 있습니다.
 여러 명이 팀으로 일하는 경우, 인프라 변경 상태에 대한 동기화가 필요합니다.
 이 경우 Remote Backend를 고려하시면 좋습니다.
