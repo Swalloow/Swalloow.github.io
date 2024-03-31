@@ -101,7 +101,7 @@ https://images.ctfassets.net/tushy4jlcik7/YnWBeX1cL5dlGsbEicb7i/1da940c762abfbf1
 <li><strong>Audit</strong>: 새로 생성된 데이터에 대해 품질 테스트를 수행하여 데이터를 검증합니다. 이 단계에서 NULL 값, 중복 데이터 식별, 참조 무결성 테스트 실행 등과 같은 부분을 확인합니다.</li>
 <li><strong>Publish</strong>: 프로덕션 테이블에서 데이터를 사용할 수 있도록 배포합니다. Publish 단계는 테이블을 사용하는 사람이 모든 변경 사항을 볼 수 있거나 전혀 볼 수 없도록 Atomic하게 이루어져야 합니다. 테이블 포멧을 통해 스냅샷을 만들고 병합하는 방식으로 이를 구현할 수 있습니다.</li>
 </ul>
-<br>
+<p><br><br></p>
 <h2 id="write-audit-publish-패턴의-장점" style="position:relative;"><a href="#write-audit-publish-%ED%8C%A8%ED%84%B4%EC%9D%98-%EC%9E%A5%EC%A0%90" aria-label="write audit publish 패턴의 장점 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Write-Audit-Publish 패턴의 장점</h2>
 <p>Write-Audit-Publish 패턴을 통해 얻을 수 있는 장점은 다음과 같습니다.
 <br></p>
@@ -109,7 +109,9 @@ https://images.ctfassets.net/tushy4jlcik7/YnWBeX1cL5dlGsbEicb7i/1da940c762abfbf1
 WAP 패턴은 Audit 단계를 통해 데이터의 정확성, 품질, 표준화 준수 여부를 확인하여 불일치나 예외 사항을 모두 수정합니다. 이러한 검증 과정을 통해 신뢰할 수 있는 데이터 원본만 프로덕션에 게시되도록 보장합니다.</p>
 <br>
 <p><strong>파이프라인의 신뢰성, 안정성 강화</strong><br>
-Write, Audit, Publish 단계를 분리하면 오류 대응과 롤백 프로세스가 가능하다는 장점이 있습니다. 일반적인 소프트웨어 엔지니어링의 Blue-Green 배포는 언제든지 되돌릴 수 있으며 모든 트래픽을 새로운 버전으로 라우팅하는 구조를 가지고 있습니다. WAP 패턴도 Blue-Green 배포와 유사한 구조를 가지고 있어 데이터 파이프라인의 전반적인 신뢰성과 안정성이 강화됩니다.</p>
+Write, Audit, Publish 단계를 분리하면 오류 대응과 롤백 프로세스가 가능하다는 장점이 있습니다. 일반적인 소프트웨어 엔지니어링의 <code class="language-text">Blue-Green 배포</code>는 언제든지 되돌릴 수 있으며 모든 트래픽을 새로운 버전으로 라우팅하는 구조를 가지고 있습니다. WAP 패턴도 Blue-Green 배포와 유사한 구조를 가지고 있어 데이터 파이프라인의 전반적인 신뢰성과 안정성이 강화됩니다.</p>
+<p><strong>데이터 보안 강화</strong><br>
+여러 단계를 통해 구조화된 패턴은 원천 데이터와 감사된 데이터를 분리하여 민감하고 검증되지 않은 정보를 조기 노출로부터 보호하는 보안 계층을 제공합니다. 이를 통해 데이터 보안을 유지하는데 도움을 줄 수 있습니다.</p>
 <p><br><br></p>
 <h2 id="wap-with-apache-iceberg" style="position:relative;"><a href="#wap-with-apache-iceberg" aria-label="wap with apache iceberg permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>WAP with Apache Iceberg</h2>
 <p>Apache Iceberg 테이블 포멧에서는 공식적으로 WAP 패턴을 구현하는 데 필요한 <a href="https://iceberg.apache.org/docs/latest/branching/">Branching 기능</a>을 지원하고 있습니다. Branching 기능을 통해 Git의 Branch와 같이 분기를 통해 데이터 테스트 환경과 운영 환경을 격리할 수 있습니다. Iceberg에서 Branch는 테이블의 특정 시점을 가리키는 스냅샷과 동일하며 Branch에 데이터 쓰기를 수행할 수 있습니다. WAP 패턴에 적용 시 작업 절차는 다음과 같습니다.</p>
@@ -149,7 +151,9 @@ Branch에서 필요한 품질 테스트를 수행합니다.<br>
 이 단계에서는 Great Expectations와 같은 Data Quality 도구를 활용할 수 있습니다.</p>
 <br>
 <p><strong>Publish</strong>:<br></p>
-<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">CALL</span> catalog_name<span class="token punctuation">.</span>system<span class="token punctuation">.</span>cherrypick_snapshot<span class="token punctuation">(</span><span class="token string">'db.table'</span><span class="token punctuation">,</span> <span class="token string">'main'</span><span class="token punctuation">,</span> <span class="token string">'feature-0305'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">CALL</span> catalog_name<span class="token punctuation">.</span>system<span class="token punctuation">.</span>cherrypick_snapshot<span class="token punctuation">(</span>
+    <span class="token string">'db.table'</span><span class="token punctuation">,</span> <span class="token string">'main'</span><span class="token punctuation">,</span> <span class="token string">'feature-0305'</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> db<span class="token punctuation">.</span><span class="token keyword">table</span> <span class="token keyword">DROP</span> BRANCH feature<span class="token operator">-</span><span class="token number">0305</span><span class="token punctuation">;</span></code></pre></div>
 <p>프로덕션 테이블에 새로운 데이터를 배포합니다. 반영이 완료되고 안정성이 확인되면 작업 Branch는 삭제합니다. Publish 작업은 기본적으로 원본 데이터를 변경하거나 제거하지 않고 기존 스냅샷에서 새 스냅샷을 생성하는 Iceberg의 <a href="https://iceberg.apache.org/docs/latest/spark-procedures/#cherrypick_snapshot">cherry-pick procedure</a>에 의해 실행됩니다.</p>
 <p>만약 Iceberg 1.2 이전 버전을 사용한다면 <code class="language-text">WAP.id</code> property를 사용해야합니다.</p>
